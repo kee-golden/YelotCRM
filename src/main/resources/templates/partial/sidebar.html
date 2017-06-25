@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<body>
+<div th:fragment="sidebar">
+    <!--左侧导航开始-->
+    <nav class="navbar-default navbar-static-side" role="navigation" id="leftside" style="height: 85%;overflow-y: auto">
+        <div class="nav-close"><i class="fa fa-times-circle"></i></div>
+        <div class="sidebar-collapse">
+
+                <ul class="nav" id="side-menu">
+
+
+                    <li class="active">
+                        <a href="/itss/indexshow/index-list">
+
+                            <i class="glyphicon glyphicon-home"></i>
+                            <span class="nav-label">首页</span>
+
+
+                        </a>
+
+
+                    </li>
+
+
+                    <li>
+                        <a href="/itss/servicecate/servicecateManager">
+
+                            <i class="glyphicon glyphicon-list-alt"></i>
+                            <span class="nav-label">服务目录管理</span>
+
+
+                        </a>
+
+
+                    </li>
+
+
+                    <li class="active">
+                        <a href="/itss#" aria-expanded="true">
+
+                            <i class="glyphicon glyphicon-comment"></i>
+                            <span class="nav-label">项目管理</span>
+
+                            <span class="fa arrow"></span>
+
+
+                        </a>
+
+
+                        <ul class="nav nav-second-level collapse in" aria-expanded="true">
+
+                            <li>
+                                <a class="J_menuItem" href="/itss/proj/project">项目列表</a>
+                            </li>
+
+                            <li>
+                                <a class="J_menuItem" href="/itss/task/my-task">我的任务</a>
+                            </li>
+
+                            <li>
+                                <a class="J_menuItem" href="/itss/proj/proj-approval">项目审批</a>
+                            </li>
+
+                        </ul>
+
+
+                    </li>
+
+
+                    <li>
+                        <a href="/itss#">
+
+                            <i class="glyphicon glyphicon-folder-open"></i>
+                            <span class="nav-label">资源管理</span>
+
+                            <span class="fa arrow"></span>
+
+
+                        </a>
+
+
+                        <ul class="nav nav-second-level collapse" aria-expanded="false">
+
+                            <li>
+                                <a class="J_menuItem" href="/itss/kbm/kbm-Index">知识库管理</a>
+                            </li>
+
+                        </ul>
+
+
+                    </li>
+
+
+            </ul>
+        </div>
+    </nav>
+    <!--左侧导航结束-->
+
+</div>
+</body>
+</html>
