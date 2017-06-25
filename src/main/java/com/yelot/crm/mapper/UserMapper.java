@@ -15,6 +15,10 @@ import java.util.List;
 public interface UserMapper {
 
 
+    @Select("select * from t_user where name = #{username} and password = #{password}")
+    User findByNameAndPassword(@Param("username") String username, @Param("password") String password);
+
+
     /**
      * 查找一个用户详情
      * @param id

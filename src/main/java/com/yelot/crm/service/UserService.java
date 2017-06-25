@@ -18,6 +18,10 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    public User login(String username,String password){
+        return userMapper.findByNameAndPassword(username,password);
+    }
+
     public User find(Long id){
         return userMapper.find(id);
     }

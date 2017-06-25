@@ -11,14 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class AdminController {
 
-    @RequestMapping("/")
-    public String login(){
-        return "login";
-    }
-
-    @RequestMapping("test")
-    @ResponseBody
-    public ResultData test(){
-        return ResultData.ok();
-    }
+//    @RequestMapping("test")
+//    @ResponseBody
+//    public ResultData test(){
+//        return ResultData.ok();
+//    }
 }
