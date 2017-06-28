@@ -33,11 +33,11 @@ requirejs.config({
 
     paths: {
         'jquery': 'jquery/jquery-2.2.4.min',
+        'metisMenu': 'metisMenu/metisMenu.min',
         'bootstrap': 'bootstrap/js/bootstrap.min',
         'validate': 'validate/jquery.validate.min',
         'validateZh': 'validate/localization/messages_zh.min',
         'additionalMethods': 'validate/additional-methods.min',
-        'metisMenu': 'metisMenu/metisMenu.min',
         'slimscroll': 'slimscroll/jquery.slimscroll.min',
         'datatables.net': 'dataTables/js/dataTables.bootstrap.min',
         'datatables': 'dataTables/js/jquery.dataTables.min',

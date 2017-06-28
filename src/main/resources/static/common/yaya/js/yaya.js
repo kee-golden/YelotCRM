@@ -8,7 +8,7 @@ define(['jquery', 'bootstrap', 'layer', 'metisMenu', 'validate'], function ($, b
      * 弹出框初始化
      */
     layer.config({
-        path: ctx + '/static/layer/'
+        path: '/common/layer/'
     });
 
     /**

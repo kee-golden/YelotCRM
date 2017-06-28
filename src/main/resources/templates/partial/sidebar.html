@@ -2,100 +2,217 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="zh">
 <body>
 <div th:fragment="sidebar">
-    <!--左侧导航开始-->
+
     <nav class="navbar-default navbar-static-side" role="navigation" id="leftside" style="height: 85%;overflow-y: auto">
         <div class="nav-close"><i class="fa fa-times-circle"></i></div>
         <div class="sidebar-collapse">
-
-                <ul class="nav" id="side-menu">
-
-
-                    <li class="active">
-                        <a href="/itss/indexshow/index-list">
-
-                            <i class="glyphicon glyphicon-home"></i>
-                            <span class="nav-label">首页</span>
+            <ul class="nav" id="side-menu">
 
 
-                        </a>
+                <li>
+                    <a href="/indexshow/index-list">
+
+                        <i class="glyphicon glyphicon-home"></i>
+                        <span class="nav-label">首页</span>
 
 
-                    </li>
+                    </a>
 
 
-                    <li>
-                        <a href="/itss/servicecate/servicecateManager">
-
-                            <i class="glyphicon glyphicon-list-alt"></i>
-                            <span class="nav-label">服务目录管理</span>
+                </li>
 
 
-                        </a>
+                <li>
+                    <a href="/servicecate/servicecateManager">
+
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                        <span class="nav-label">服务目录管理</span>
 
 
-                    </li>
+                    </a>
 
 
-                    <li class="active">
-                        <a href="/itss#" aria-expanded="true">
-
-                            <i class="glyphicon glyphicon-comment"></i>
-                            <span class="nav-label">项目管理</span>
-
-                            <span class="fa arrow"></span>
+                </li>
 
 
-                        </a>
+                <li>
+                    <a href="/contract/index">
+
+                        <i class="glyphicon glyphicon-file"></i>
+                        <span class="nav-label">合同管理</span>
 
 
-                        <ul class="nav nav-second-level collapse in" aria-expanded="true">
-
-                            <li>
-                                <a class="J_menuItem" href="/itss/proj/project">项目列表</a>
-                            </li>
-
-                            <li>
-                                <a class="J_menuItem" href="/itss/task/my-task">我的任务</a>
-                            </li>
-
-                            <li>
-                                <a class="J_menuItem" href="/itss/proj/proj-approval">项目审批</a>
-                            </li>
-
-                        </ul>
+                    </a>
 
 
-                    </li>
+                </li>
 
 
-                    <li>
-                        <a href="/itss#">
+                <li>
+                    <a href="/partner/index">
 
-                            <i class="glyphicon glyphicon-folder-open"></i>
-                            <span class="nav-label">资源管理</span>
-
-                            <span class="fa arrow"></span>
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="nav-label">伙伴管理</span>
 
 
-                        </a>
+                    </a>
 
 
-                        <ul class="nav nav-second-level collapse" aria-expanded="false">
-
-                            <li>
-                                <a class="J_menuItem" href="/itss/kbm/kbm-Index">知识库管理</a>
-                            </li>
-
-                        </ul>
+                </li>
 
 
-                    </li>
+                <li>
+                    <a href="/informationdesk/selecthome">
 
+                        <i class="glyphicon glyphicon-registration-mark"></i>
+                        <span class="nav-label">服务台管理</span>
+
+
+                    </a>
+
+
+                </li>
+
+
+                <li>
+                    <a href="#">
+
+                        <i class="glyphicon glyphicon-retweet"></i>
+                        <span class="nav-label">过程管理</span>
+
+                        <span class="fa arrow"></span>
+
+
+                    </a>
+
+
+                    <ul class="nav nav-second-level collapse" aria-expanded="false">
+
+                        <li>
+                            <a class="J_menuItem" href="/EventController/event-manager">事件管理</a>
+                        </li>
+
+                        <li>
+                            <a class="J_menuItem" href="/problem/problem-main">问题管理</a>
+                        </li>
+
+                        <li>
+                            <a class="J_menuItem" href="/change/change-index">变更管理</a>
+                        </li>
+
+                        <li>
+                            <a class="J_menuItem" href="/release/release-index">发布管理</a>
+                        </li>
+
+                    </ul>
+
+
+                </li>
+
+
+                <li>
+                    <a href="#">
+
+                        <i class="glyphicon glyphicon-folder-open"></i>
+                        <span class="nav-label">资源管理</span>
+
+                        <span class="fa arrow"></span>
+
+
+                    </a>
+
+
+                    <ul class="nav nav-second-level collapse" aria-expanded="false">
+
+                        <li>
+                            <a class="J_menuItem" href="/CIManager/getCIFrame">配置项管理</a>
+                        </li>
+
+                        <li>
+                            <a class="J_menuItem" href="/kbm/kbm-Index">知识库管理</a>
+                        </li>
+
+                    </ul>
+
+
+                </li>
+
+
+                <li>
+                    <a href="#">
+
+                        <i class="glyphicon glyphicon-tags"></i>
+                        <span class="nav-label">组织管理</span>
+
+                        <span class="fa arrow"></span>
+
+
+                    </a>
+
+
+                    <ul class="nav nav-second-level collapse" aria-expanded="false">
+
+                        <li>
+                            <a class="J_menuItem" href="/group/index">基本信息</a>
+                        </li>
+
+                        <li>
+                            <a class="J_menuItem" href="/group/dept-index">部门列表</a>
+                        </li>
+
+                        <li>
+                            <a class="J_menuItem" href="/group/admin-index">用户列表</a>
+                        </li>
+
+                    </ul>
+
+
+                </li>
+
+
+                <li>
+                    <a href="/report/report-index">
+
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <span class="nav-label">报表管理</span>
+
+
+                    </a>
+
+
+                </li>
+
+
+                <li class="">
+                    <a href="#" aria-expanded="false">
+
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <span class="nav-label">系统管理</span>
+
+                        <span class="fa arrow"></span>
+
+
+                    </a>
+
+
+                    <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+
+                        <li class="active">
+                            <a class="J_menuItem" href="/ciattr/ci-attr-list">配置项属性</a>
+                        </li>
+
+                        <li>
+                            <a class="J_menuItem" href="/system/index">工单导入</a>
+                        </li>
+
+                    </ul>
+
+
+                </li>
 
             </ul>
         </div>
     </nav>
-    <!--左侧导航结束-->
 
 </div>
 </body>
