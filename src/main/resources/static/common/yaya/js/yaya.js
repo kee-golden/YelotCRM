@@ -12,7 +12,7 @@ define(['jquery', 'bootstrap', 'layer', 'metisMenu', 'validate'], function ($, b
     });
 
     /**
-     * 菜单初始化
+     * 菜单初始化,metisMenu
      */
     $('#side-menu').metisMenu();
 

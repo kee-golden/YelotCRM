@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.PrivilegeMapper">
+    <resultMap id="privilegeMap" type="com.yelot.crm.entity.Privilege">
+        <id column="id" property="id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="type" column="type"/>
+        <result property="action" column="action"/>
+        <result property="menuClass" column="menu_class"/>
+        <result property="sort" column="sort"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <association property="parent" javaType="com.yelot.crm.entity.Privilege">
+            <id column="parent_id" property="id"/>
+        </association>
+    </resultMap>
+
+    <sql id="privilegeBasicSql">
+        id, name, code, type, action,menu_class,sort, create_at, update_at, parent_id
+    </sql>
+
+    <select id="findAll" resultMap="privilegeMap">
+        SELECT
+        <include refid="privilegeBasicSql"/>
+        FROM t_privilege;
+    </select>
+
+
+    <!-- 创建用户(Create) -->
+    <insert id="insert"
+            parameterType="com.yelot.crm.entity.Privilege">
+        INSERT INTO t_privilege
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="action != null">
+                action,
+            </if>
+            <if test="menuClass != null">
+                menuClass,
+            </if>
+            <if test="parent != null">
+                parent_id,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="code != null">
+                #{code},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="action != null">
+                #{action},
+            </if>
+            <if test="menuClass != null">
+                #{menuClass},
+            </if>
+            <if test="parent != null">
+                #{parent.id},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="createAt != null">
+                #{createAt},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.yelot.crm.entity.Privilege">
+        UPDATE t_privilege SET
+        <trim suffix="" suffixOverrides=",">
+            <if test="code!=null">
+                code=#{code},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="type!=null">
+                type=#{type},
+            </if>
+            <if test="action!=null">
+                action=#{action},
+            </if>
+            <if test="parent!=null">
+                parent_id=#{parent.id},
+            </if>
+            <if test="sort!=null">
+                sort=#{sort},
+            </if>
+            <if test="createAt!=null">
+                create_at=#{createAt},
+            </if>
+            <if test="updateAt==null">
+                update_at=#{updateAt},
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+
+    <select id="find" resultMap="privilegeMap">
+        SELECT
+        <include refid="privilegeBasicSql"/>
+        FROM t_privilege
+        WHERE id = #{id}
+    </select>
+    <select id="findIds" resultType="java.lang.String">
+        SELECT
+        id
+        FROM t_privilege
+    </select>
+
+    <select id="findParents" resultMap="privilegeMap">
+        SELECT
+        <include refid="privilegeBasicSql"/>
+
+        FROM t_privilege
+        WHERE menu_role_type = 2 and parent_id IS NULL;
+    </select>
+
+    <select id="findByParentId" resultMap="privilegeMap">
+        SELECT
+        <include refid="privilegeBasicSql"/>
+
+        FROM t_privilege
+        WHERE parent_id = #{parentId};
+    </select>
+
+    <select id="findByRoleId" resultMap="privilegeMap">
+        SELECT m.*
+        FROM t_role_privilege_ref rm
+            LEFT JOIN t_privilege m
+                ON rm.privilege_id = m.id
+        WHERE role_id = #{roleId};
+    </select>
+
+    <select id="findByAdminId" resultMap="privilegeMap">
+        SELECT
+            DISTINCT m.*
+        FROM t_user_role_ref ar
+            LEFT JOIN t_role_privilege_ref rm
+                ON ar.role_id = rm.role_id
+            LEFT JOIN t_privilege m
+                ON rm.privilege_id = m.id
+        WHERE ar.user_id = #{adminId};
+    </select>
+
+    <select id="findCodeByAdminId" resultType="string">
+        SELECT DISTINCT m.code
+        FROM t_user_role_ref ar
+            LEFT JOIN t_role_privilege_ref rm
+                ON ar.role_id = rm.role_id
+            LEFT JOIN t_privilege m
+                ON rm.privilege_id = m.id
+        WHERE ar.user_id = #{adminId};
+    </select>
+
+    <select id="findParentsByadminId" resultMap="privilegeMap">
+        SELECT DISTINCT m.*
+        FROM t_user_role_ref ar
+            LEFT JOIN t_role_privilege_ref rm
+                ON ar.role_id = rm.role_id
+            LEFT JOIN t_privilege m
+                ON rm.privilege_id = m.id
+        WHERE ar.user_id = #{adminId} AND m.parent_id IS NULL AND m.id is NOT NULL;
+
+    </select>
+
+    <select id="findByParentIdAndadminId" resultMap="privilegeMap">
+        SELECT DISTINCT m.*
+        FROM t_user_role_ref ar
+            LEFT JOIN t_role_privilege_ref rm
+                ON ar.role_id = rm.role_id
+            LEFT JOIN t_privilege m
+                ON rm.privilege_id = m.id
+        WHERE ar.user_id = #{adminId} AND m.parent_id = #{parentId} AND m.id is NOT NULL;
+    </select>
+
+    <select id="findParentsByAdminIdAndType" resultMap="privilegeMap">
+      SELECT DISTINCT m.*
+        FROM t_user_role_ref ar
+            LEFT JOIN t_role_privilege_ref rm
+                ON ar.role_id = rm.role_id
+            LEFT JOIN t_privilege m
+                ON rm.privilege_id = m.id
+        WHERE ar.user_id = #{adminId} AND m.parent_id IS NULL AND m.type = #{type} AND m.menu_role_type=#{roleType}
+        ORDER  BY m.sort;
+    </select>
+
+
+    <select id="findByParentIdAndadminIdAndType" resultMap="privilegeMap">
+        SELECT DISTINCT m.*
+        FROM t_user_role_ref ar
+            LEFT JOIN t_role_privilege_ref rm
+                ON ar.role_id = rm.role_id
+            LEFT JOIN t_privilege m
+                ON rm.privilege_id = m.id
+        WHERE ar.user_id = #{adminId}
+
+        AND m.parent_id = #{parentId}
+
+        AND m.type = #{type} ORDER BY m.sort;
+    </select>
+
+    <select id="findCodeByRoleId" resultType="java.lang.String">
+          SELECT DISTINCT m.code
+        FROM  t_role_privilege_ref rm
+            LEFT JOIN t_privilege m
+                ON rm.privilege_id = m.id
+        WHERE rm.role_id = #{roleId};
+    </select>
+
+    <delete id="delete">
+        DELETE FROM t_privilege
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByParentId">
+        DELETE FROM t_privilege
+        WHERE parent_id = #{parentId}
+    </delete>
+
+</mapper>

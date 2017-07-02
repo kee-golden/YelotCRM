@@ -78,4 +78,7 @@ public interface UserMapper {
      */
     @Delete("update t_user set is_alive = 0 where id = #{id}")
     void updateAlive(@Param("is_alive") Integer is_alive, @Param("id") Long id);
+
+    @Select("select * from t_user where name = #{username}")
+    User findByUsername(String username);
 }
