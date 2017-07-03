@@ -80,7 +80,7 @@ public class UserController {
 
     @RequestMapping("index")
     public String index(){
-        return "index";
+        return "admin/admin_index";
     }
 
     private void saveCookie(String username, String password, HttpServletRequest request, HttpServletResponse response){

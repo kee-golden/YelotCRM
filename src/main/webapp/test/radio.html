@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/jquery/jquery-2.2.4.min.js"></script>
+    <style>
+        .myTab{
+            border: 1px solid blue;
+            text-align: center;
+        }
+        .container ul li{
+            margin-right: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<!--<div class="btn-group" id="color" data-toggle="buttons">-->
+    <!--<label class="btn btn-default">-->
+        <!--<input type="radio" class="toggle" value="1"> 红色-->
+    <!--</label>-->
+    <!--<label class="btn btn-default">-->
+        <!--<input type="radio" class="toggle" value="2"> 绿色-->
+    <!--</label>-->
+    <!--<label class="btn btn-default">-->
+        <!--<input type="radio" class="toggle" value="3"> 蓝色-->
+    <!--</label>-->
+<!--</div>-->
+
+<div class="container">
+    <h1 class="page-header">请选择以下服务项</h1>
+    <!--nav-pills，nav-tabs，nav-stacked :改变选项卡的样式-->
+    <ul class="nav nav-pills">
+        <li class="active">
+            <a class="myTab">
+            <div><span style="font-size: 20px">200</span><span>元</span>
+                <p style="font-size: 12px">3个月</p>
+            </div>
+            </a>
+        </li>
+        <li>
+            <a class="myTab">
+            <div><span style="font-size: 20px">400</span><span>元</span>
+            <p style="font-size: 12px">6个月</p>
+
+         </div>
+            </a>
+        </li>
+        <li>
+            <a class="myTab">
+            <div><span style="font-size: 20px">600</span><span>元</span>
+            <p style="font-size: 12px">9个月</p>
+        </div>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<script>
+
+    $(function(){
+        $(".container ul li").click(function () {
+            this.addClass("active");
+        });
+
+    });
+</script>
+
+</body>
+</html>

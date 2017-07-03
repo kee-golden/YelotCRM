@@ -214,12 +214,12 @@
                 ON ar.role_id = rm.role_id
             LEFT JOIN t_privilege m
                 ON rm.privilege_id = m.id
-        WHERE ar.user_id = #{adminId} AND m.parent_id IS NULL AND m.type = #{type} AND m.menu_role_type=#{roleType}
+        WHERE ar.user_id = #{adminId} AND m.parent_id IS NULL AND m.type = #{type}
         ORDER  BY m.sort;
     </select>
 
 
-    <select id="findByParentIdAndadminIdAndType" resultMap="privilegeMap">
+    <select id="findByParentIdAndAdminIdAndType" resultMap="privilegeMap">
         SELECT DISTINCT m.*
         FROM t_user_role_ref ar
             LEFT JOIN t_role_privilege_ref rm
