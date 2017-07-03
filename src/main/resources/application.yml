@@ -18,9 +18,10 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-  thymeleaf:
-    mode: HTML5
-    cache: false
+#  thymeleaf:
+#    mode: HTML5
+#    cache: false
+
 
   #字符集和json格式工具
   http:
@@ -32,6 +33,10 @@ spring:
       max-file-size: 10MB
   application:
     name: yelot_crm
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
 
 #mynatis配置
 mybatis:

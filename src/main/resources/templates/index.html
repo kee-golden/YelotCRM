@@ -34,7 +34,7 @@
     #page-wrapper,.wrapper,.wrapper-content{ padding: 0!important;}
 </style>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-<div id="wrapper">
+<div id="wrapper" th:with="PARENT_MENU_CODE='SHOW_INDEX',CHILD_MENU_CODE='SHOW_INDEX'">
     <!--<%@include file="/WEB-INF/common/top_logo_nav.jsp" %>-->
     <!--<%@include file="/WEB-INF/common/slideBar.jsp" %>-->
     <div th:include="~{partial/top :: top}"></div>
