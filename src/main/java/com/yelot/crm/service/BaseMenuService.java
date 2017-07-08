@@ -98,7 +98,7 @@ public class BaseMenuService {
         shiroSession.setAttribute(Constants.SessionMenus,menus);
         //保存当前用户
         shiroSession.setAttribute(Constants.SessionUsername,user);
-        shiroSession.setAttribute("kee","kee1234");
+//        shiroSession.setAttribute("kee","kee1234");
 
         //添加权限
         Set<String> privileges = privilegeMapper.findCodeByAdminId(user.getId());

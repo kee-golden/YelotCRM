@@ -313,19 +313,19 @@
 <nav class="navbar navbar-inverse navbar-fixed-bottom">
 
     <div class=" col-xs-2">
-        <p class="navbar-text ">无锡云惠软件有限公司</p>
+        <p class="navbar-text ">版权所有 ©上海御金匠实业有限公司</p>
     </div>
     <div class=" col-xs-3">
-        <p class="navbar-text ">江苏新世纪信息科技有限公司旗下品牌</p>
+        <p class="navbar-text "></p>
     </div>
     <div class=" col-xs-3">
-        <p class="navbar-text">ICP备案号：苏ICP备 16033181号</p>
+        <p class="navbar-text">ICP备案号：沪ICP备15047698号</p>
     </div>
     <div class="col-xs-2">
-        <a  href="${ctx}/help" class="help"><p class="navbar-text">帮助中心</p></a>
+        <%--<a  href="${ctx}/help" class="help"><p class="navbar-text">帮助中心</p></a>--%>
     </div>
     <div class="col-xs-2">
-        <p class="navbar-text"> 售后电话：18961737727</p>
+        <p class="navbar-text"> 售后电话：021-62895588</p>
        </div>
 
 </nav>

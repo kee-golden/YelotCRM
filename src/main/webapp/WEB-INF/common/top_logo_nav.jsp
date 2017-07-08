@@ -38,17 +38,17 @@
         <div class="row">
             <div class="col-xs-6"style="line-height: 60px; ">
                 <div class="pull-left"><img src="${ctx}/img/logo.png"></div>
-                <h3 style="float: left; margin-left: 50px; line-height: 45px;">${admin.group.name}</h3>
+                <h3 style="float: left; margin-left: 50px; line-height: 45px;">${user.shop.name}</h3>
             </div>
             <div class="col-xs-6">
                 <ul class="nav navbar-nav pull-right hidden-xs">
 
                     <li><a href="${ctx}/help"  target="view_window" class="nav_new_font"><i class="glyphicon glyphicon-home"></i>帮助中心</a></li>
-                    <li><a href="http://www.itss-china.com/read.php?id=246&classid=34" target='_blank'class="nav_new_font"><i class="glyphicon glyphicon-phone-alt"></i>联系我们</a></li>
+                    <%--<li><a href="http://www.itss-china.com/read.php?id=246&classid=34" target='_blank'class="nav_new_font"><i class="glyphicon glyphicon-phone-alt"></i>联系我们</a></li>--%>
                     <li><a href="" class="nav_new_font" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-bookmark"></i>关于版本</a></li>
                     <li class="dropdown">
                         <a href="" data-toggle="dropdown" class="nav_new_font"><i class="glyphicon glyphicon-user man_icon"></i><span
-                                id="username">${sessionScope.admin.nickname}</span><span class="caret"></span></a>
+                                id="username">${sessionScope.user.name}</span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#" id="resetPsd"><i class="glyphicon glyphicon-pencil ic_mag"></i>修改密码</a></li>
                             <li><a href="${ctx}/logout"><i class="glyphicon glyphicon-ban-circle ic_mag"></i>退出登陆</a></li>
