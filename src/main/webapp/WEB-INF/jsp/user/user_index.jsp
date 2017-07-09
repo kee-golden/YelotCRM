@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/common/taglibs.jsp" %>
-<%--<%@ taglib prefix="ts" uri="http://www.touch-spring.com" %>--%>
 <%@ taglib prefix="sys" tagdir="/WEB-INF/tags/sys" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -9,12 +8,13 @@
 
     <%@include file="/WEB-INF/common/static.jsp" %>
 
-    <c:set var="PARENT_MENU_CODE" value="GROUP_MANAGE"/>
-    <c:set var="CHILD_MENU_CODE" value="ADMIN_LIST"/>
+    <c:set var="PARENT_MENU_CODE" value="User_Manage"/>
+
+    <c:set var="CHILD_MENU_CODE" value="User_List"/>
 
     <script>
         var ctx = '${ctx}';
-        var adminId = '${sessionScope.admin.id}';
+        var adminId = '${sessionScope.user.id}';
     </script>
 
     <style>
@@ -77,13 +77,12 @@
 </div>
         <script src="${ctx}/static/require/require.js"></script>
         <script src="${ctx}/static/require/require.config.js"></script>
-        <%--<script src="${ctx}/module-js/admin/admin.js"></script>--%>
         <script>
 
             require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
                 $.ajax({
-                    url: ctx + '/group/admin-list',
+                    url: ctx + '/user/list',
                     success: function (data) {
                         $('#content').html(data);
                     }
@@ -99,12 +98,12 @@
                     var sta = $(this).attr('sta');
                     var name = '';
                     if (sta == '1') {
-                        name = '/admin-list';
+                        name = '/list';
 
                     }
 
                     $.ajax({
-                        url: ctx + '/group/' + name,
+                        url: ctx + '/user/' + name,
                         success: function (data) {
                             $('#content').html(data);
                         }

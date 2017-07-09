@@ -10,10 +10,10 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
         return this.optional(element) || (length == 11 && mobile.test(value));
     }, "请正确填写手机号码");
 
-    var $JAdminList = $('#J_adminList');
+    var $JUserList = $('#J_userList');
 
 
-    var table = $JAdminList.DataTable({
+    var table = $JUserList.DataTable({
         "scrollX": true,
         'processing': true,
         'searching': false,
@@ -23,30 +23,20 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
         'serverSide': true,
         'lengthMenu': [10, 20, 50, 100],
         'ajax':{
-            'url':ctx + '/group/admin-list-data',
+            'url':ctx + '/user/list-data',
             'data': function (d) {
                 d.extra_search = $('#keywords').val();
             }
         },
         'columns': [
-            {'data': 'username'},
-            {'data': 'nickname'},
+            {'data': 'name'},
+            {'data': 'realname'},
             {'data': 'phone'},
-            {'data': 'deptName'},
-            {'data': 'roleNames'/*,
-                'render': function (data, type, full, meta) {
-                    var dataedit=data;
-                   if(data.length>=10){
-                       data=data.substring(0,10)+"..."
-                   }
-                   return data+'<span data-cont="'+dataedit+'" class="span1"></span>'
-                }*/
-            },
-            {'data': 'createAt'},
+            {'data': 'create_at'},
             {'data': 'id',
                 'render': function (data, type, full, meta) {
 
-                    if(data == adminId){ //admin_index.jsp 中定义了adminId变量
+                    if(data == adminId){ //user_index.jsp 中定义了adminId变量
                         console.log("adminId"+adminId);
                         return "";
                     }
@@ -185,7 +175,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
     }
 
-    $JAdminList.on('click', '.J_edit', function () {
+    $JUserList.on('click', '.J_edit', function () {
         $.ajax({
             url: ctx + '/admin/edit',
             data: {
@@ -243,7 +233,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
     /**
      * 删除用户
      */
-    $JAdminList.on('click', '.J_delete', function () {
+    $JUserList.on('click', '.J_delete', function () {
         var nid = $(this).data('id');
         console.log("1111"+nid);
         yaya.layer.confirm('确认删除用户？', {
@@ -279,7 +269,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
     });
 
 
-    $JAdminList.on('click', '.J_changePassword', function () {
+    $JUserList.on('click', '.J_changePassword', function () {
         $.ajax({
             url: ctx + '/admin/reset-password',
             data: {
@@ -297,13 +287,13 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
     });
 
-    /*$JAdminList.on('mouseover', 'tr', function () {
+    /*$JUserList.on('mouseover', 'tr', function () {
 
              var cont=$(this).find(".span1").attr("data-cont");
             $(this).find(".span1").html(cont).stop(true,true).animate({opacity: "show", top: "0"}, "slow");
     });
 
-    $JAdminList.on('mouseleave', 'tr', function () {
+    $JUserList.on('mouseleave', 'tr', function () {
         $(this).find(".span1").stop(true,true).animate({opacity: "hide", top: "-30"}, "fast")
     });*/
 });

@@ -2,11 +2,11 @@
 <%@include file="/WEB-INF/common/taglibs.jsp" %>
 <style>
     .sear_icon{ font-size: 18px; color: #428bca; vertical-align: middle; padding: 0 3px; cursor: pointer;margin-top: -10px}
-    #J_adminList tr td{ position: relative; white-space: nowrap}
-    #J_adminList tr td .span1{ padding:0 15px; font-size: 12px; line-height: 18px; position: absolute; left: 50%; background: #FFFFFF;
+    #J_userList tr td{ position: relative; white-space: nowrap}
+    #J_userList tr td .span1{ padding:0 15px; font-size: 12px; line-height: 18px; position: absolute; left: 50%; background: #FFFFFF;
         padding: 5px;z-index: 999; border-radius: 5px; border: 1px solid #e5e5e5; display: none}
-    #J_adminList{ width: 100%!important;}
-    #J_adminList tr th{ white-space: nowrap}
+    #J_userList{ width: 100%!important;}
+    #J_userList tr th{ white-space: nowrap}
 </style>
 
 <div class="ibox-content">
@@ -37,14 +37,12 @@
     </div>
     <div class="clearfix"></div>
 
-    <table id="J_adminList" class="table table-striped table-bordered table-hover">
+    <table id="J_userList" class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
             <th>用户名</th>
             <th>姓名</th>
             <th>手机号</th>
-            <th>部门</th>
-            <th>角色</th>
             <th>创建时间</th>
             <th>操作</th>
         </tr>
@@ -56,4 +54,4 @@
 
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
-<script src="${ctx}/module-js/admin/admin.js"></script>
+<script src="${ctx}/module-js/user/user.js"></script>

@@ -33,6 +33,12 @@ public class LoginController {
 		return "login";
 	}
 
+    @RequestMapping("index")
+    public String index(){
+	    //暂时调整到角色列表
+        return "role/list";
+    }
+
 	@RequestMapping("login")
 	public String login(String username, String password, String remember,
 						Model model, HttpServletRequest request, HttpServletResponse response) {

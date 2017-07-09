@@ -1,5 +1,6 @@
 package com.yelot.crm.mapper;
 
+import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -81,4 +82,10 @@ public interface UserMapper {
 
     @Select("select * from t_user where name = #{username}")
     User findByUsername(String username);
+
+    @Select("select count(*) from t_user")
+    int countBySearch(String extra_search);
+
+    @Select("select * from t_user limit #{pageHelper.offset},#{pageHelper.size}")
+    List<User> findBySearch(@Param("pageHelper") PageHelper pageHelper);
 }
