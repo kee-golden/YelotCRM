@@ -34,8 +34,9 @@ public interface UserMapper {
      * 新建
      * @param user
      */
-    @Insert("insert into t_user(name,password,realname,phone,emp_no,is_alive,create_at,update_at,shop_id) " +
-            "values(#{name},#{password},#{realname},#{phone},#{emp_no},,#{is_alive},#{create_at},#{update_at}},#{shop.id})")
+
+//    @Insert("insert into t_user(name,password,realname,phone,emp_no,is_alive,create_at,update_at,shop_id) " +
+//            "values(#{name},#{password},#{realname},#{phone},#{emp_no},#{is_alive},#{create_at},#{update_at},#{shop_id})")
     void save(User user);
 
     /**
@@ -83,9 +84,9 @@ public interface UserMapper {
     @Select("select * from t_user where name = #{username}")
     User findByUsername(String username);
 
-    @Select("select count(*) from t_user")
+    @Select("select count(*) from t_user where is_alive = 1")
     int countBySearch(String extra_search);
 
-    @Select("select * from t_user limit #{pageHelper.offset},#{pageHelper.size}")
+    @Select("select * from t_user where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")
     List<User> findBySearch(@Param("pageHelper") PageHelper pageHelper);
 }

@@ -55,16 +55,14 @@
         </trim>
     </insert>
 
-    <insert id="insertAdminRole">
-        INSERT INTO t_admin_role (
-            id,
-            admin_id,
-            role_id
+    <insert id="insertUserRole">
+        INSERT INTO t_user_role_ref (
+        user_id,
+        role_id
         )
         VALUES (
-            #{id},
-            #{admiid},
-            #{roleId}
+        #{userId},
+        #{roleId}
         )
     </insert>
 
@@ -82,9 +80,9 @@
         WHERE id=#{id}
     </update>
 
-    <delete id="deleteAdminRoleByAdmiid">
-        DELETE FROM t_admin_role
-        WHERE admin_id = #{admiid}
+    <delete id="deleteUserRoleByUserId">
+        DELETE FROM t_user_role_ref
+        WHERE user_id = #{userId}
     </delete>
 
     <delete id="delete">

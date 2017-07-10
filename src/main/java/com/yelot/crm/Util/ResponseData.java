@@ -20,6 +20,10 @@ public class ResponseData {
 
     }
 
+    public static ResponseData ok(){
+        return new ResponseData(SUCCESS,SUCCESS_MESSAGE);
+    }
+
     public ResponseData(int code,String message){
         this.code = code;
         this.message = message;

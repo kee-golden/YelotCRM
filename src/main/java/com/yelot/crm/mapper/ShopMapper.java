@@ -16,6 +16,9 @@ public interface ShopMapper {
     @Select("select * from t_shop where id = #{id}")
     Shop find(Long id);
 
+    @Select("select * from t_shop")
+    List<Shop> findAll();
+
     @Insert("insert into t_shop(name,address,phone,create_at,update_at) " +
             "values(#{name},#{address},#{phone},#{create_at},#{update_at})")
     void save(Shop shop);

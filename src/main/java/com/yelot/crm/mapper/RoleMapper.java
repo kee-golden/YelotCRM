@@ -21,12 +21,12 @@ public interface RoleMapper extends BaseMapper<Role>{
 
     Role findByRoleName(@Param("roleName")String roleName,@Param("groupId")String groupId);
 
-    Integer insertAdminRole(
-            @Param("id")String id,
-            @Param("adminId") String adminId,
-            @Param("roleId") String roleId);
+//    Integer insertAdminRole(
+//            @Param("id")String id,
+//            @Param("adminId") String adminId,
+//            @Param("roleId") String roleId);
 
-    Integer deleteAdminRoleByAdminId(@Param("adminId") String adminId);
+    Integer deleteUserRoleByUserId(@Param("userId") Long userId);
 
     Integer deleteAdminRoleByRoleId(@Param("roleId") Long roleId);
 
@@ -38,4 +38,5 @@ public interface RoleMapper extends BaseMapper<Role>{
 
     List<Role> findAll();
 
+    void insertUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
 }

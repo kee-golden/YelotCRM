@@ -1,6 +1,7 @@
 package com.yelot.crm.service;
 
 import com.yelot.crm.entity.User;
+import com.yelot.crm.mapper.RoleMapper;
 import com.yelot.crm.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RoleMapper roleMapper;
+
     public User login(String username,String password){
         return userMapper.findByNameAndPassword(username,password);
     }
@@ -26,8 +30,19 @@ public class UserService {
         return userMapper.find(id);
     }
 
-    public void save(User user){
+    public void save(User user,String[]role){
         userMapper.save(user);
+        saveUserRoles(user,role);
+    }
+
+    private void saveUserRoles(User user, String[] role) {
+        roleMapper.deleteUserRoleByUserId(user.getId());
+        if (role != null) {
+            for (String roleId : role) {
+                roleMapper.insertUserRole(user.getId(),Long.valueOf(roleId));
+            }
+        }
+
     }
 
     public void updatePassword(String password){

@@ -13,7 +13,7 @@
 
     <div class="co_all">
         <div style="float: left">
-            <a class="collapse-link" id="J_adminAdd">
+            <a class="collapse-link" id="J_userAdd">
                 <i class="fa fa-plus xbb"></i>添加
             </a>
         </div>

@@ -2,9 +2,15 @@ package com.yelot.crm.controller;
 
 import com.yelot.crm.Util.CookieTool;
 import com.yelot.crm.Util.ResponseData;
+import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
+import com.yelot.crm.entity.Role;
+import com.yelot.crm.entity.Shop;
 import com.yelot.crm.entity.User;
+import com.yelot.crm.enums.AliveStatus;
+import com.yelot.crm.mapper.RoleMapper;
+import com.yelot.crm.mapper.ShopMapper;
 import com.yelot.crm.mapper.UserMapper;
 import com.yelot.crm.service.UserService;
 import com.yelot.crm.vo.Table;
@@ -21,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +43,12 @@ public class UserController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Autowired
+    private ShopMapper shopMapper;
 
     @RequestMapping("test")
     public String test(){
@@ -70,6 +84,20 @@ public class UserController {
         return new Table(pageCount, pageCount, userList);
     }
 
+    @RequestMapping("add")
+    public String add(Model model) {
+        User user = new User();
+
+//        List<Role> roles = roleDao.findByGroupId(group.getId());
+        List<Role> roles = roleMapper.findAll();
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("roles", roles);
+        model.addAttribute("bean", user);
+        model.addAttribute("shopList", shopList);
+
+        return "user/user_edit";
+    }
+
 
 
     @RequestMapping("find")
@@ -78,9 +106,46 @@ public class UserController {
     }
 
     @RequestMapping("save")
-    public ResponseData save(User user){
-        userService.save(user);
-        return new ResponseData(ResponseData.SUCCESS,ResponseData.SUCCESS_MESSAGE);
+    @ResponseBody
+    public ResultData save(User user, Long shopId, String[] role){
+        user.setPassword("1234");
+        user.setCreate_at(new Date());
+        user.setUpdate_at(new Date());
+        user.setIs_alive(AliveStatus.ALIVE.getCode());
+        user.setShop_id(shopId);
+        userService.save(user,role);
+        return ResultData.ok();
+    }
+
+    /**
+     * validate 异步验证用户名是否存在
+     * 注册验证
+     *
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("check-username")
+    public String checkUsername(String name, HttpServletResponse response) throws IOException {
+        User user = userMapper.findByUsername(name);
+        if (user == null) {//表示可用，验证成功通过,没用用户注册过
+            response.getWriter().write("true");
+        } else {
+            response.getWriter().write("false");
+        }
+        return null;
+    }
+
+    @RequestMapping("user-delete")
+    @ResponseBody
+    public ResultData delete(Long id){
+        try {
+            userMapper.updateAlive(0,id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultData.errorRequest();
+        }
+        return ResultData.ok();
     }
 
     /**

@@ -69,9 +69,9 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
         table.draw();
     });
 
-    $('#J_adminAdd').click(function () {
+    $('#J_userAdd').click(function () {
         $.ajax({
-            url: ctx + '/admin/add',
+            url: ctx + '/user/add',
             method: 'get',
             dataType: 'html',
             success: function (str) {
@@ -85,21 +85,21 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     success: function (layer, index) {
                         //初始化值
                         //if(${username})
-                        $("#J_username").val("");
-                        $("#J_password").val("");
-                        checkAdminFrom();
+                        $("#J_name").val("");
+                        checkUserFrom();
                     },
                     yes: function (index) {
-                        var isValid = $("#J_adminForm").valid();
+                        var isValid = $("#J_userForm").valid();
 
                         if (isValid) {
 
                             $.ajax({
-                                url: ctx + '/admin/save',
-                                data: $('#J_adminForm').serialize(),
+                                url: ctx + '/user/save',
+                                data: $('#J_userForm').serialize(),
                                 method: 'post',
                                 dataType: 'json',
                                 success: function (data) {
+                                    console.log(data.code);
                                     if (data.code) {
                                         table.draw();
                                         yaya.layer.close(index);
@@ -110,7 +110,8 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
                                     }
                                 },
-                                error: function () {
+                                error: function (data) {
+                                    console.log(data.code);
 
                                 }
                             });
@@ -127,27 +128,24 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
     })
     ;
 
-    function checkAdminFrom() {
+    function checkUserFrom() {
         yaya.validate({
-            el: '#J_adminForm',
+            el: '#J_userForm',
             rules: {
-                username:{
+                name:{
                     required:true,
                     remote:{
-                        url:ctx+"/admin/check-username",
+                        url:ctx+"/user/check-username",
                         type:"post",
                         data:{
-                            username:function () {
-                                return $("#J_username").val();
+                            name:function () {
+                                return $("#J_name").val();
                             }
                         }
                     }
 
                 },
-                password: {
-                    required: true
-                },
-                nickname:{
+                realname:{
                     required: true
                 },
                 phone:{
@@ -156,14 +154,11 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                 }
             },
             messages: {
-                username: {
+                name: {
                     required:"用户名不能为空",
                     remote:"用户名已存在"
                 },
-                password: {
-                    required: "密码不能为空"
-                },
-                nickname:{
+                realname:{
                     required:"姓名不能为空"
                 },
                 phone:{
@@ -177,7 +172,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
     $JUserList.on('click', '.J_edit', function () {
         $.ajax({
-            url: ctx + '/admin/edit',
+            url: ctx + '/user/edit',
             data: {
                 id: $(this).data('id')
             },
@@ -193,28 +188,28 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     btn: ['保存'],
                     success: function (layero, index) {
 
-                        checkAdminFrom();
+                        checkUserFrom();
 
                     },
                     yes: function (index) {
-                        var isValid = $("#J_adminForm").valid();
+                        var isValid = $("#J_userForm").valid();
                         if(!isValid){
                             return;
                         }
                         $.ajax({
-                            url: ctx + '/admin/save',
-                            data: $('#J_adminForm').serialize(),
+                            url: ctx + '/user/save',
+                            data: $('#J_userForm').serialize(),
                             method: 'post',
                             dataType: 'json',
                             success: function (data) {
-                                if (data.code) {
-                                    table.draw();
-                                    yaya.layer.close(index);
-                                }
-                                else {
-                                    yaya.layer.msg(data.data);//出错信息
-
-                                }
+                                // if (data.code) {
+                                //     table.draw();
+                                //     yaya.layer.close(index);
+                                // }
+                                // else {
+                                //     yaya.layer.msg(data.data);//出错信息
+                                //
+                                // }
                             },
                             error: function () {
 
@@ -234,32 +229,34 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
      * 删除用户
      */
     $JUserList.on('click', '.J_delete', function () {
-        var nid = $(this).data('id');
-        console.log("1111"+nid);
+        var id = $(this).data('id');
+        console.log("id:"+id);
         yaya.layer.confirm('确认删除用户？', {
                 btn: ['确定', '取消'] //按钮
             },
             function (index) {
                 $.ajax({
-                    url: ctx + '/admin/admin-delete',
+                    url: ctx + '/user/user-delete',
                     data: {
-                        nid: nid
+                        id: id
                     },
                     method: 'get',
                     dataType: 'json',
                     success: function (data) {
-                        if (data.code == 200) {
+                        if (data.code == 1200) {
                             yaya.layer.msg("删除成功")
                             setTimeout(function () {
                                 table.draw();
                             }, 50)
-                        }
-                        else if (data.code == 201) {
+                        } else {
                             yaya.layer.msg("删除失败");//出错信息
 
                         }
+                        // yaya.layer.msg("success:"+data.code);
                     },
                     error: function () {
+
+                        yaya.layer.msg("error,,,");
 
                     }
 
@@ -271,7 +268,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
     $JUserList.on('click', '.J_changePassword', function () {
         $.ajax({
-            url: ctx + '/admin/reset-password',
+            url: ctx + '/user/reset-password',
             data: {
                 id: $(this).data('id')
             },

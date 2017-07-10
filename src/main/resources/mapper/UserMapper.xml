@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.UserMapper">
+    <resultMap id="userResultMap" type="com.yelot.crm.entity.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="realname" column="realname"/>
+        <result property="phone" column="phone"/>
+        <result property="emp_no" column="emp_no"/>
+        <result property="shop_id" column="shop_id"/>
+        <result property="is_alive" column="is_alive"/>
+        <result property="create_at" column="create_at"/>
+        <result property="update_at" column="update_at"/>
+    </resultMap>
+
+    <sql id="userBasicMap">
+        id, name, code, create_at, update_at
+    </sql>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user(name,password,realname,phone,emp_no,is_alive,create_at,update_at,shop_id)
+            values(#{name},#{password},#{realname},#{phone},#{emp_no},#{is_alive},#{create_at},#{update_at},#{shop_id})
+    </insert>
+
+
+
+
+</mapper>

@@ -3,7 +3,7 @@
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="row">
-            <form role="form" id="J_adminForm">
+            <form role="form" id="J_userForm">
                 <input type="hidden" name="id" value="${bean.id}">
 
                 <c:if test="${empty bean.id}">
@@ -11,18 +11,18 @@
                         <h3 class="m-t-none m-b">基础信息</h3>
                         <div class="form-group">
                             <label><span style="color: red">*</span>用户名</label>
-                            <input type="text" placeholder="请输入用户名" class="form-control" name="username" id="J_username"
-                                   value="${bean.username}" autocomplete="off">
+                            <input type="text" placeholder="请输入用户名" class="form-control" name="name" id="J_name"
+                                   value="${bean.name}" autocomplete="off">
                         </div>
-                        <div class="form-group">
-                            <label><span style="color: red">*</span>密码</label>
-                            <input type="password" placeholder="请输入密码" class="form-control" name="password" id="J_password"
-                                   value="${bean.password}" autocomplete="off">
-                        </div>
+                        <%--<div class="form-group">--%>
+                            <%--<label><span style="color: red">*</span>密码</label>--%>
+                            <%--<input type="password" placeholder="请输入密码" class="form-control" name="password" id="J_password"--%>
+                                   <%--value="${bean.password}" autocomplete="off">--%>
+                        <%--</div>--%>
                         <div class="form-group">
                             <label><span style="color: red">*</span>姓名</label>
-                            <input type="text" placeholder="请输入姓名" class="form-control" name="nickname"
-                                   value="${bean.nickname}">
+                            <input type="text" placeholder="请输入姓名" class="form-control" name="realname"
+                                   value="${bean.realname}">
                         </div>
                         <div class="form-group">
                             <label><span style="color: red">*</span>手机号</label>
@@ -30,16 +30,16 @@
                                    value="${bean.phone}">
                         </div>
                         <div class="form-group">
-                            <label>部门</label>
-                            <select name="deptId" id="deptId" class="from-control">
-                                <option value="">不限</option>
-                                <c:forEach items="${departmentList}" var="department">
-                                    <option value="${department.id}"
-                                            <c:if test="${bean.department.id == department.id}">
+                            <label>门店</label>
+                            <select name="shopId" id="shopId" class="from-control">
+                                <c:forEach items="${shopList}" var="shop">
+                                    <option value="${shop.id}"
+                                            <c:if test="${bean.shop.id == shop.id}">
                                                 selected="selected"
                                             </c:if>
-                                    >${department.name}</option>
+                                    >${shop.name}</option>
                                 </c:forEach>
+                                <option value="">不限</option>
                             </select>
                         </div>
                     </div>
@@ -49,12 +49,12 @@
                         <h3 class="m-t-none m-b">基础信息</h3>
                         <div class="form-group">
                             <label>用户名</label>
-                            <input type="text" placeholder="请输入用户名" name="username" class="form-control" value="${bean.username}"
+                            <input type="text" placeholder="请输入用户名" name="name" class="form-control" value="${bean.name}"
                                    readonly>
                         </div>
                         <div class="form-group">
                             <label>姓名</label>
-                            <input type="text" placeholder="请输入姓名" name="nickname" class="form-control" value="${bean.nickname}"
+                            <input type="text" placeholder="请输入姓名" name="realname" class="form-control" value="${bean.realname}"
                                    >
                         </div>
                         <div class="form-group">
@@ -64,15 +64,15 @@
                         </div>
                         <div class="form-group">
                             <label>部门</label>
-                            <select name="deptId" class="from-control">
-                                <option value="">不限</option>
-                                <c:forEach items="${departmentList}" var="department">
-                                    <option value="${department.id}"
-                                            <c:if test="${bean.department.id == department.id}">
+                            <select name="shopId" class="from-control">
+                                <c:forEach items="${shopList}" var="shop">
+                                    <option value="${shop.id}"
+                                            <c:if test="${bean.shop.id == shop.id}">
                                                 selected="selected"
                                             </c:if>
-                                    >${department.name}</option>
+                                    >${shop.name}</option>
                                 </c:forEach>
+                                <option value="">不限</option>
                             </select>
                         </div>
                     </div>
