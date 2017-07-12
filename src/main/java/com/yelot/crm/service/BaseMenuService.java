@@ -90,7 +90,7 @@ public class BaseMenuService {
 //        admin.setGroup(group);
 
         Long shopId = user.getShop_id();
-        Shop shop = shopMapper.find(shopId);
+        Shop shop = shopMapper.findById(shopId);
         user.setShop(shop);
 
         Subject currentUser = SecurityUtils.getSubject();
