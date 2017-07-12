@@ -2,6 +2,8 @@ package com.yelot.crm.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 门店实体类
  * Created by kee on 17/5/26.
@@ -72,6 +74,7 @@ public class Shop {
         this.phone = phone;
     }
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getCreate_at() {
         return create_at;
     }
@@ -80,6 +83,7 @@ public class Shop {
         this.create_at = create_at;
     }
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getUpdate_at() {
         return update_at;
     }

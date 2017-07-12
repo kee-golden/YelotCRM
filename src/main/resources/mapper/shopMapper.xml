@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.ShopMapper">
+	<resultMap id="shopResultMap" type="com.yelot.crm.entity.Shop">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="address" column="address" />
+		<result property="phone" column="phone" />
+		<result property="create_at" column="create_at" />
+		<result property="update_at" column="update_at" />
+	</resultMap>
+
+    <select id="countTotalPage" resultType="java.lang.Integer">
+        select count(*) 
+        from t_shop 
+        where is_alive = '1'
+        <if test="extra_search != null and extra_search != ''">and name like CONCAT('%', #{extra_search}, '%')</if>
+    </select>
+    
+    <select id="findByPage" resultMap="shopResultMap">
+        select * 
+        from t_shop
+        where is_alive = '1'
+        <if test="extra_search != null and extra_search != ''">and name like CONCAT('%', #{extra_search}, '%')</if>
+        limit #{pageHelper.offset},#{pageHelper.size} 
+    </select>
+    
+    <select id="findByName" resultMap="shopResultMap">
+        select * from t_shop where is_alive = '1' and name = #{name}
+    </select>
+    
+    <insert id="save" parameterType="com.yelot.crm.entity.Shop">
+        insert into t_shop(name, address, phone, is_alive, create_at, update_at) 
+        values(#{name}, #{address}, #{phone}, '1', #{create_at}, #{update_at})
+    </insert>
+    
+    <select id="findById" resultMap="shopResultMap">
+        select * from t_shop where is_alive = '1' and id = #{id}
+    </select>
+    
+    <select id="findByNameAndId" resultMap="shopResultMap">
+        select * from t_shop where is_alive = '1' and name = #{name} and id != #{id}
+    </select>
+
+	<update id="update" parameterType="com.yelot.crm.entity.Shop">
+		update t_shop set
+		<trim suffix="" suffixOverrides=",">
+			<if test="name != null">name = #{name},</if>
+			<if test="address != null">address = #{address},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="update_at != null">update_at = #{update_at},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<update id="updateAlive">
+		update t_shop set is_alive = #{is_alive} where id = #{id}
+	</update>
+
+	<select id="findAll" resultMap="shopResultMap">
+		select * from t_shop where is_alive = '1'
+	</select>
+
+</mapper>
