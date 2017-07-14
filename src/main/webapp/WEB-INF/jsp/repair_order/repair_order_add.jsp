@@ -163,7 +163,7 @@
 					</div> -->
 
 					<form id="J_customerForm" role="form" class="form-inline">
-						<table id="customer_table">
+						<table id="customer_table" style="width: 100%">
 							<tr>
 								<td class="customer_table_td_lable4"><label for="username" class="form-label"><span class="titl">顾客姓名:</span></label></td>
 								<td class="customer_table_td_input4"><input type="text" class="form-control" name="username" id="username" placeholder="请输入顾客姓名" autocomplete="off"></td>
@@ -178,11 +178,11 @@
 							</tr>
 							<tr>
 								<td class="customer_table_td_lable4"></td>
-								<td colspan="2" style="text-align: center;">
+								<td colspan="4" style="text-align: right;">
 									<input type="button" class="form-button" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="button" class="form-button" value="重置">
 								</td>
-								<td class="customer_table_td_input4"></td>
+								<%--<td class="customer_table_td_input4"></td>--%>
 							</tr>
 						</table>
 					</form>
@@ -246,11 +246,11 @@
 							</tr>
 							<tr>
 								<td class="customer_table_td_lable4"></td>
-								<td colspan="3" style="text-align: center;">
+								<td colspan="6" style="text-align: right;">
 									<input type="button" class="form-button" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="button" class="form-button" value="重置">
 								</td>
-								<td class="customer_table_td_input4"></td>
+								<%--<td class="customer_table_td_input4"></td>--%>
 							</tr>
 						</table>
 					</form>
@@ -275,11 +275,11 @@
 							</tr>
 							<tr>
 								<td class="customer_table_td_lable4"></td>
-								<td colspan="3" style="text-align: center;">
+								<td colspan="6" style="text-align: right;">
 									<input type="button" class="form-button" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="button" class="form-button" value="重置">
 								</td>
-								<td class="customer_table_td_input4"></td>
+								<%--<td class="customer_table_td_input4"></td>--%>
 							</tr>
 						</table>
 					</form>
@@ -310,11 +310,11 @@
 							</tr>
 							<tr>
 								<td class="customer_table_td_lable4"></td>
-								<td colspan="2" style="text-align: center;">
+								<td colspan="4" style="text-align: right;">
 									<input type="button" class="form-button" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="button" class="form-button" value="重置">
 								</td>
-								<td class="customer_table_td_input4"></td>
+								<%--<td class="customer_table_td_input4"></td>--%>
 							</tr>
 						</table>
 					</form>

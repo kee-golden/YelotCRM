@@ -15,4 +15,9 @@ public class RepairOrderController {
 
         return "repair_order/repair_order_add";
     }
+
+    @RequestMapping("list")
+    public String list(){
+        return "repair_order/repair_order_list";
+    }
 }

@@ -29,7 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kee on 17/5/14.
@@ -96,6 +98,26 @@ public class UserController {
         model.addAttribute("shopList", shopList);
 
         return "user/user_edit";
+    }
+
+    /**
+     * 编 管 员
+     *
+     * @return .
+     */
+    @RequestMapping("edit")
+    public String edit(Model model, Long id) {
+//        Admin admin = adminService.find(id);
+        User user = userMapper.find(id);
+        //评估版，没有根据组织过滤角色，所有角色，所有企业共享
+        List<Role> roles = roleMapper.findAll();
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("roles", roles);
+        model.addAttribute("bean", user);
+        model.addAttribute("shopList", shopList);
+
+        return "user/user_edit";
+
     }
 
 
