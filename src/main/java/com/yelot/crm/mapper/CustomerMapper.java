@@ -1,6 +1,8 @@
 package com.yelot.crm.mapper;
 
+import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Customer;
+import com.yelot.crm.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -16,8 +18,8 @@ public interface CustomerMapper {
     @Select("select * from t_customer where id = #{id}")
     Customer find(Long id);
 
-    @Insert("insert into t_customer(name,sex,phone,address,qq,email,comment,is_alive,create_at,update_at) values(#{name},#{sex}," +
-            "#{phone},#{address},#{qq},#{email},#{comment},#{create_at},#{update_at})")
+//    @Insert("insert into t_customer(name,sex,phone,address,qq,email,comment,is_alive,create_at,update_at) values(#{name},#{sex}," +
+//            "#{phone},#{address},#{qq},#{email},#{comment},#{create_at},#{update_at})")
     void save(Customer customer);
 
     @Select("select * from t_customer limit #{start},#{size}")
@@ -33,4 +35,10 @@ public interface CustomerMapper {
 
     @Update("update t_customer set is_alive = #{alive} where id = #{id}")
     void updateAlive(@Param("alive") Integer alive, @Param("id") Long id);
+
+    @Select("select count(*) from t_customer where is_alive = 1")
+    int countBySearch(String extra_search);
+
+    @Select("select * from t_customer where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")
+    List<Customer> findBySearch(@Param("pageHelper") PageHelper pageHelper);
 }

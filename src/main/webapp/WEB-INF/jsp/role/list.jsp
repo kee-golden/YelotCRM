@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <title>ITSS管理后台</title>
+    <title>CRM管理后台</title>
 
     <%@include file="/WEB-INF/common/static.jsp" %>
 
@@ -60,7 +60,7 @@
         </div>
         <div class="footer">
             <div class="pull-right">
-                &copy; 2015-2016 <a href="javascript:void(0);" target="_blank">无锡新世纪信息有限公司</a>
+                &copy; 2015-2016 <a href="javascript:void(0);" target="_blank">上海御金匠实业有限公司</a>
             </div>
         </div>
         <!--右侧部分结束-->

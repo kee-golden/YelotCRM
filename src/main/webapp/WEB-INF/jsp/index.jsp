@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <title>ITSS管理后台</title>
+    <title>CRM管理后台</title>
 
     <%@include file="/WEB-INF/common/static.jsp" %>
 

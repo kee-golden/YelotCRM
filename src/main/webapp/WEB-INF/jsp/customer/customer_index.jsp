@@ -8,9 +8,9 @@
 
     <%@include file="/WEB-INF/common/static.jsp" %>
 
-    <c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
-    <c:set var="CHILD_MENU_CODE" value="RepairOrder_List" />
+    <c:set var="PARENT_MENU_CODE" value="Shop_Manage"/>
 
+    <c:set var="CHILD_MENU_CODE" value="Customer_List"/>
 
     <script>
         var ctx = '${ctx}';
@@ -58,9 +58,7 @@
 
                 <div class="ibox float-e-margins">
                     <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a sta="1">正在进行</a></li>
-                        <li><a sta="1">已完成</a></li>
-                        <li><a sta="1">已取消</a></li>
+                        <li class="active"><a sta="1">用户列表</a></li>
                     </ul>
                     <div id="content" class="ibox-content">
 
@@ -84,7 +82,7 @@
             require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
                 $.ajax({
-                    url: ctx + '/user/list',
+                    url: ctx + '/customer/list',
                     success: function (data) {
                         $('#content').html(data);
                     }
@@ -105,7 +103,7 @@
                     }
 
                     $.ajax({
-                        url: ctx + '/user/' + name,
+                        url: ctx + '/customer/' + name,
                         success: function (data) {
                             $('#content').html(data);
                         }

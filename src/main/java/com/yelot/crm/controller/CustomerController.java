@@ -2,11 +2,18 @@ package com.yelot.crm.controller;
 
 
 import com.yelot.crm.Util.ResponseData;
+import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Customer;
+import com.yelot.crm.entity.User;
+import com.yelot.crm.mapper.CustomerMapper;
 import com.yelot.crm.service.CustomerService;
+import com.yelot.crm.vo.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -14,16 +21,46 @@ import java.util.List;
 /**
  * Created by kee on 17/5/29.
  */
-@RestController
+@Controller
 @RequestMapping("customer")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
     @RequestMapping("find")
     public Customer find(Long id){
         return customerService.find(id);
+    }
+
+    @RequestMapping("index")
+    public String index(){
+        return "customer/customer_index";
+    }
+
+    @RequestMapping("list")
+    public String list(){
+        return "customer/customer_list";
+    }
+
+    @ResponseBody
+    @RequestMapping("list-data")
+    public Table userListData(Model model,
+                              @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
+                              @RequestParam(value = "start", defaultValue = "0") int start,
+                              @RequestParam(value = "length", defaultValue = "10") int length) {
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(start);
+        pageHelper.setSize(length);
+        int pageCount = customerMapper.countBySearch(extra_search);
+        List<Customer> customerList = customerMapper.findBySearch(pageHelper);
+
+        model.addAttribute("customerList", customerList);
+        return new Table(pageCount, pageCount, customerList);
     }
 
     @RequestMapping("save")

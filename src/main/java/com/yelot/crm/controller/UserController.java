@@ -77,8 +77,6 @@ public class UserController {
         PageHelper pageHelper = new PageHelper();
         pageHelper.setOffset(start);
         pageHelper.setSize(length);
-//        int pageCount = adminService.countByGroupId(group.getId(),extra_search);
-//        List<Admin> admins = adminService.findByGroupId(group.getId(),extra_search,pageHelper);
         int pageCount = userMapper.countBySearch(extra_search);
         List<User> userList = userMapper.findBySearch(pageHelper);
 
