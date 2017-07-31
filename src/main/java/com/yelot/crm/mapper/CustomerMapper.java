@@ -25,9 +25,9 @@ public interface CustomerMapper {
     @Select("select * from t_customer limit #{start},#{size}")
     List<Customer> findByPage(@Param("start") Integer start, @Param("size") Integer size);
 
-    @Update("update t_customer set name = #{name},phone=#{phone},address=#{address},sex=#{sex},email=#{email}," +
-            "qq=#{qq},is_alive=#{is_alive},update_at=#{update_at} where id = #{id}")
-    void update(Customer customer);
+//    @Update("update t_customer set name = #{name},phone=#{phone},address=#{address},sex=#{sex},email=#{email}," +
+//            "qq=#{qq},is_alive=#{is_alive},update_at=#{update_at} where id = #{id}")
+    void updateCustomer(Customer customer);
 
 
     @Select("select * from t_customer where phone = #{phone}")

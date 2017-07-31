@@ -1,5 +1,7 @@
 package com.yelot.crm.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -215,6 +217,7 @@ public class Customer {
         this.type = type;
     }
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getFirstConsultAt() {
         return firstConsultAt;
     }
@@ -223,6 +226,7 @@ public class Customer {
         this.firstConsultAt = firstConsultAt;
     }
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getCreateAt() {
         return createAt;
     }
@@ -231,6 +235,7 @@ public class Customer {
         this.createAt = createAt;
     }
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getUpdateAt() {
         return updateAt;
     }

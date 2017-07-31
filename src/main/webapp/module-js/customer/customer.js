@@ -1,7 +1,12 @@
 /**
  * Created by kee on 16/12/12.
  */
-require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
+require(['jquery', 'yaya', 'datatables.net','city.min','cityselect'], function ($, yaya,datatables,citymin,cityselect) {
+
+    $("#prov-city").citySelect({
+        prov:"北京",
+        nodata:"none"
+    });
 
     // 手机号码验证
     jQuery.validator.addMethod("isMobile", function(value, element) {
@@ -34,7 +39,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
             {'data': 'province'},
             {'data': 'city'},
             {'data': 'address'},
-            {'data': 'create_at'},
+            {'data': 'createAt'},
             {'data': 'id'}
         ],
         'language': {
@@ -70,14 +75,13 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     type: 1,
                     title: '新建客户',
                     content: str, //注意，如果str是object，那么需要字符拼接。
-                    area: '550px',
+                    area: '650px',
                     shadeClose: true,
                     btn: ['保存'],
                     success: function (layer, index) {
                         //初始化值
-                        //if(${username})
                         $("#J_name").val("");
-                        //checkUserFrom();
+                        checkCustomerFrom();
                     },
                     yes: function (index) {
                         var isValid = $("#J_customerForm").valid();
@@ -102,7 +106,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                                     }
                                 },
                                 error: function (data) {
-                                    console.log(data.code);
+                                    console.log(data);
 
                                 }
                             });
@@ -130,8 +134,8 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                         url:ctx+"/customer/check-phone",
                         type:"post",
                         data:{
-                            name:function () {
-                                return $("#J_name").val();
+                            phone:function () {
+                                return $("#J_phone").val();
                             }
                         }
                     }
@@ -154,7 +158,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
     }
 
-    $JUserList.on('click', '.J_edit', function () {
+    $JCustomerList.on('click', '.J_edit', function () {
         $.ajax({
             url: ctx + '/user/edit',
             data: {
@@ -212,7 +216,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
     /**
      * 删除用户
      */
-    $JUserList.on('click', '.J_delete', function () {
+    $JCustomerList.on('click', '.J_delete', function () {
         var id = $(this).data('id');
         console.log("id:"+id);
         yaya.layer.confirm('确认删除用户？', {
@@ -250,7 +254,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
     });
 
 
-    $JUserList.on('click', '.J_changePassword', function () {
+    $JCustomerList.on('click', '.J_changePassword', function () {
         $.ajax({
             url: ctx + '/user/reset-password',
             data: {

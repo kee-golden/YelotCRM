@@ -1,7 +1,10 @@
 package com.yelot.crm.controller;
 
 
+import com.yelot.crm.Util.Constants;
+import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResponseData;
+import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Customer;
 import com.yelot.crm.mapper.CustomerMapper;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,8 +94,20 @@ public class CustomerController {
 
     }
 
+    /**
+     *
+     * @param customer
+     * @param firstConsultTime 涉及到时间字段，需要添加一个接受参数，否则无法自动转化date类型
+     * @return
+     */
+    @ResponseBody
     @RequestMapping("save")
-    public ResponseData save(Customer customer){
+    public ResultData save(Customer customer,String firstConsultTime){
+        Date date = new Date();
+        if(firstConsultTime != null || !firstConsultTime.trim().isEmpty()){
+            date = DateUtil.toDate(firstConsultTime, Constants.DefaultDateFormate);
+        }
+        customer.setFirstConsultAt(date);
         return customerService.save(customer);
     }
 
@@ -100,6 +118,17 @@ public class CustomerController {
 
     public ResponseData updateAlive(Integer alive,Long id){
         return customerService.updateAlive(alive,id);
+    }
+
+    @RequestMapping("check-phone")
+    public String checkPhone(String phone, HttpServletResponse response) throws IOException {
+        Customer customer = customerMapper.findByPhone(phone);
+        if (customer == null) {//表示可用
+            response.getWriter().write("true");
+        } else {
+            response.getWriter().write("false");
+        }
+        return null;
     }
 
     @RequestMapping("find-by-page")

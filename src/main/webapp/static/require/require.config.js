@@ -27,6 +27,7 @@ requirejs.config({
         'raty':['jquery'],
         'editor':['jquery'],
         'layuiTotal': ['jquery'],
+        'cityselect':['jquery','city.min'],
     } ,
 
 
@@ -58,5 +59,7 @@ requirejs.config({
         'raty':'raty/jquery.raty',
         'editor':'froala/js/froala_editor.min',
         'layuiTotal':'layui/layui' ,
+        'city.min':'cityselect/js/city.min',
+        'cityselect':'cityselect/js/jquery.cityselect',
     }
 });

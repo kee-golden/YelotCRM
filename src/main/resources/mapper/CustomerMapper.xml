@@ -35,6 +35,57 @@
             #{deviceName},#{comment},#{channelSource},#{firstConsultAt},#{is_alive},#{createAt},#{updateAt},#{createUserId})
     </insert>
 
+    <update id="updateCustomer" parameterType="com.yelot.crm.entity.Customer">
+        update t_customer
+        <trim suffix="" suffixOverrides=",">
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="phone!=null">
+                phone=#{phone},
+            </if>
+            <if test="province!=null">
+                province=#{province},
+            </if>
+            <if test="city!=null">
+                city=#{city},
+            </if>
+            <if test="address!=null">
+                address=#{address},
+            </if>
+            <if test="sex!=null">
+                sex=#{sex},
+            </if>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            <if test="qq!=null">
+                qq=#{qq},
+            </if>
+            <if test="wechatId!=null">
+                wechat_id=#{wechatId},
+            </if>
+            <if test="wechatNickname!=null">
+                wechat_nickname=#{wechatNickname},
+            </if>
+            <if test="deviceName!=null">
+                device_name=#{deviceName},
+            </if>
+            <if test="comment!=null">
+                comment=#{comment},
+            </if>
+            <if test="channelSource!=null">
+                channel_source=#{channelSource},
+            </if>
+            <if test="firstConsultAt!=null">
+                first_consult_at=#{firstConsultAt},
+            </if>
+
+        </trim>
+        WHERE id=#{id}
+
+    </update>
+
 
 
 

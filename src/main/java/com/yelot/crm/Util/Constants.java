@@ -7,5 +7,6 @@ public class Constants {
     public static final String SessionUsername = "user";
     public static final String SessionMenus = "menus";
     public static final String SessionPrivileges = "privileges";
+    public static final String DefaultDateFormate = "yyyy-MM-dd HH:mm";
 //    public static final String SessionUsername = "user";
 }

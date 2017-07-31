@@ -1,11 +1,15 @@
 package com.yelot.crm.service;
 
 import com.yelot.crm.Util.ResponseData;
+import com.yelot.crm.Util.ResultData;
+import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.entity.Customer;
+import com.yelot.crm.enums.AliveStatus;
 import com.yelot.crm.mapper.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,14 +25,19 @@ public class CustomerService {
         return customerMapper.find(id);
     }
 
-    public ResponseData save(Customer customer) {
-        String  phone = customer.getPhone();
-        Customer temp = customerMapper.findByPhone(phone);
-        if(temp == null){
+    public ResultData save(Customer customer) {
+        Long id = customer.getId();
+        if(id == null){
+            Date now = new Date();
+            customer.setCreateAt(now);
+            customer.setUpdateAt(now);
+            customer.setIs_alive(AliveStatus.ALIVE.getCode());
+            customer.setCreateUserId(UserUtil.getCurrentUser().getId());
             customerMapper.save(customer);
-            return new ResponseData(ResponseData.SUCCESS,ResponseData.SUCCESS_MESSAGE);
+        }else{
+            customerMapper.updateCustomer(customer);
         }
-        return new ResponseData(ResponseData.FAIL,ResponseData.FAIL_MESSAGE);
+        return ResultData.ok();
     }
 
 
@@ -37,7 +46,7 @@ public class CustomerService {
     }
 
     public ResponseData update(Customer customer) {
-        customerMapper.update(customer);
+        customerMapper.updateCustomer(customer);
         return new ResponseData(ResponseData.SUCCESS,ResponseData.SUCCESS_MESSAGE);
     }
 

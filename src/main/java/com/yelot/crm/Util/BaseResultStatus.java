@@ -7,6 +7,7 @@ package com.yelot.crm.Util;
 
 public enum BaseResultStatus {
     SUCCESS(Integer.valueOf(1200), "成功"),
+    HAS_EXITS(Integer.valueOf(1300), "已经存在"),
     ERROR_REQUEST(Integer.valueOf(1400), "错误的请求"),
     UNAUTHORIZED(Integer.valueOf(1401), "没有授权"),
     FORBIDDEN(Integer.valueOf(1403), "没有权限访问"),

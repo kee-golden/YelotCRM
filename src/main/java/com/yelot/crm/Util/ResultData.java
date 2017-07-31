@@ -60,6 +60,11 @@ public class ResultData {
         return new ResultData(BaseResultStatus.SUCCESS.getCode(), BaseResultStatus.SUCCESS.getMessage());
     }
 
+    public static ResultData hasExits(){
+        return new ResultData(BaseResultStatus.SUCCESS.getCode(), BaseResultStatus.SUCCESS.getMessage());
+
+    }
+
     public static ResultData notFound() {
         return new ResultData(BaseResultStatus.NOT_FOND.getCode(), BaseResultStatus.NOT_FOND.getMessage());
     }
