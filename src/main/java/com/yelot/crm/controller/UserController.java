@@ -88,7 +88,6 @@ public class UserController {
     public String add(Model model) {
         User user = new User();
 
-//        List<Role> roles = roleDao.findByGroupId(group.getId());
         List<Role> roles = roleMapper.findAll();
         List<Shop> shopList = shopMapper.findAll();
         model.addAttribute("roles", roles);
@@ -105,17 +104,13 @@ public class UserController {
      */
     @RequestMapping("edit")
     public String edit(Model model, Long id) {
-//        Admin admin = adminService.find(id);
         User user = userMapper.find(id);
-        //评估版，没有根据组织过滤角色，所有角色，所有企业共享
         List<Role> roles = roleMapper.findAll();
         List<Shop> shopList = shopMapper.findAll();
         model.addAttribute("roles", roles);
         model.addAttribute("bean", user);
         model.addAttribute("shopList", shopList);
-
         return "user/user_edit";
-
     }
 
 

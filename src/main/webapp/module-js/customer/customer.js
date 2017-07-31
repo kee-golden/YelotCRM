@@ -10,10 +10,10 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
         return this.optional(element) || (length == 11 && mobile.test(value));
     }, "请正确填写手机号码");
 
-    var $JUserList = $('#J_userList');
+    var $JCustomerList = $('#J_customerList');
 
 
-    var table = $JUserList.DataTable({
+    var table = $JCustomerList.DataTable({
         "scrollX": true,
         'processing': true,
         'searching': false,
@@ -60,16 +60,74 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
         table.draw();
     });
 
+    $('#J_customerAdd').click(function () {
+        $.ajax({
+            url: ctx + '/customer/add',
+            method: 'get',
+            dataType: 'html',
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '新建客户',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: '550px',
+                    shadeClose: true,
+                    btn: ['保存'],
+                    success: function (layer, index) {
+                        //初始化值
+                        //if(${username})
+                        $("#J_name").val("");
+                        //checkUserFrom();
+                    },
+                    yes: function (index) {
+                        var isValid = $("#J_customerForm").valid();
 
+                        if (isValid) {
 
-    function checkUserFrom() {
+                            $.ajax({
+                                url: ctx + '/customer/save',
+                                data: $('#J_customerForm').serialize(),
+                                method: 'post',
+                                dataType: 'json',
+                                success: function (data) {
+                                    console.log(data.code);
+                                    if (data.code) {
+                                        table.draw();
+                                        yaya.layer.close(index);
+
+                                    }
+                                    else {
+                                        yaya.layer.msg(data.data);
+
+                                    }
+                                },
+                                error: function (data) {
+                                    console.log(data.code);
+
+                                }
+                            });
+                        }
+
+                    }
+
+                });
+            },
+            error: function () {
+
+            }
+        });
+    })
+    ;
+
+    function checkCustomerFrom() {
         yaya.validate({
-            el: '#J_userForm',
+            el: '#J_customerForm',
             rules: {
-                name:{
+                phone:{
                     required:true,
+                    isMobile:true,
                     remote:{
-                        url:ctx+"/user/check-username",
+                        url:ctx+"/customer/check-phone",
                         type:"post",
                         data:{
                             name:function () {
@@ -79,25 +137,17 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     }
 
                 },
-                realname:{
+                name:{
                     required: true
-                },
-                phone:{
-                    required: true,
-                    isMobile:true
                 }
             },
             messages: {
-                name: {
-                    required:"用户名不能为空",
-                    remote:"用户名已存在"
-                },
-                realname:{
-                    required:"姓名不能为空"
-                },
-                phone:{
+                phone: {
                     required:"手机号不能为空",
-                    isMobile:"请输入正确的手机号"
+                    remote:"手机号已存在"
+                },
+                name:{
+                    required:"姓名不能为空"
                 }
             }
         });
@@ -122,7 +172,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     btn: ['保存'],
                     success: function (layero, index) {
 
-                        checkUserFrom();
+                        checkCustomerFrom();
 
                     },
                     yes: function (index) {

@@ -4,7 +4,6 @@ package com.yelot.crm.controller;
 import com.yelot.crm.Util.ResponseData;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Customer;
-import com.yelot.crm.entity.User;
 import com.yelot.crm.mapper.CustomerMapper;
 import com.yelot.crm.service.CustomerService;
 import com.yelot.crm.vo.Table;
@@ -14,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -61,6 +59,33 @@ public class CustomerController {
 
         model.addAttribute("customerList", customerList);
         return new Table(pageCount, pageCount, customerList);
+    }
+
+    /**
+     * 添加客户
+     * @param model
+     * @return
+     */
+    @RequestMapping("add")
+    public String add(Model model) {
+        Customer customer = new Customer();
+        model.addAttribute("bean",customer);
+        return "customer/customer_edit";
+    }
+
+    /**
+     * 编辑客户
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping("edit")
+    public String edit(Model model, Long id) {
+        Customer customer = customerMapper.find(id);
+        model.addAttribute("bean",customer);
+
+        return "customer/customer_edit";
+
     }
 
     @RequestMapping("save")
