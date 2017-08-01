@@ -1,12 +1,8 @@
 /**
  * Created by kee on 16/12/12.
  */
-require(['jquery', 'yaya', 'datatables.net','city.min','cityselect'], function ($, yaya,datatables,citymin,cityselect) {
+require(['jquery', 'yaya', 'datatables.net','dateTimePicker'], function ($, yaya) {
 
-    $("#prov-city").citySelect({
-        prov:"北京",
-        nodata:"none"
-    });
 
     // 手机号码验证
     jQuery.validator.addMethod("isMobile", function(value, element) {
@@ -40,7 +36,11 @@ require(['jquery', 'yaya', 'datatables.net','city.min','cityselect'], function (
             {'data': 'city'},
             {'data': 'address'},
             {'data': 'createAt'},
-            {'data': 'id'}
+            {'data' : 'id', 'render' : function(data, type,full, meta) {
+                return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a>&nbsp;&nbsp;'
+                    + '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-trash" aria-hidden="true"></i>删除</a>';
+                }
+            }
         ],
         'language': {
             'lengthMenu': '每页显示 _MENU_ 条记录',
@@ -75,7 +75,7 @@ require(['jquery', 'yaya', 'datatables.net','city.min','cityselect'], function (
                     type: 1,
                     title: '新建客户',
                     content: str, //注意，如果str是object，那么需要字符拼接。
-                    area: '650px',
+                    area: '550px',
                     shadeClose: true,
                     btn: ['保存'],
                     success: function (layer, index) {
@@ -160,7 +160,7 @@ require(['jquery', 'yaya', 'datatables.net','city.min','cityselect'], function (
 
     $JCustomerList.on('click', '.J_edit', function () {
         $.ajax({
-            url: ctx + '/user/edit',
+            url: ctx + '/customer/edit',
             data: {
                 id: $(this).data('id')
             },
@@ -169,7 +169,7 @@ require(['jquery', 'yaya', 'datatables.net','city.min','cityselect'], function (
             success: function (str) {
               yaya.layer.open({
                     type: 1,
-                    title: '用户编辑',
+                    title: '客户编辑',
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: '550px',
                     shadeClose: true,
@@ -180,24 +180,25 @@ require(['jquery', 'yaya', 'datatables.net','city.min','cityselect'], function (
 
                     },
                     yes: function (index) {
-                        var isValid = $("#J_userForm").valid();
+                        var isValid = $("#J_customerForm").valid();
                         if(!isValid){
                             return;
                         }
                         $.ajax({
-                            url: ctx + '/user/save',
-                            data: $('#J_userForm').serialize(),
+                            url: ctx + '/customer/save',
+                            data: $('#J_customerForm').serialize(),
                             method: 'post',
                             dataType: 'json',
                             success: function (data) {
-                                // if (data.code) {
-                                //     table.draw();
-                                //     yaya.layer.close(index);
-                                // }
-                                // else {
-                                //     yaya.layer.msg(data.data);//出错信息
-                                //
-                                // }
+                                if (data.code) {
+                                    table.draw();
+                                    yaya.layer.close(index);
+
+                                }
+                                else {
+                                    yaya.layer.msg(data.data);
+
+                                }
                             },
                             error: function () {
 
@@ -224,7 +225,7 @@ require(['jquery', 'yaya', 'datatables.net','city.min','cityselect'], function (
             },
             function (index) {
                 $.ajax({
-                    url: ctx + '/user/user-delete',
+                    url: ctx + '/customer/delete',
                     data: {
                         id: id
                     },

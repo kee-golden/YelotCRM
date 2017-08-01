@@ -104,7 +104,7 @@ public class CustomerController {
     @RequestMapping("save")
     public ResultData save(Customer customer,String firstConsultTime){
         Date date = new Date();
-        if(firstConsultTime != null || !firstConsultTime.trim().isEmpty()){
+        if(firstConsultTime != null && firstConsultTime.trim() != ""){
             date = DateUtil.toDate(firstConsultTime, Constants.DefaultDateFormate);
         }
         customer.setFirstConsultAt(date);

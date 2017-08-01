@@ -46,7 +46,7 @@
             <th>省</th>
             <th>城市</th>
             <th>地址</th>
-            <th>创建时间</th>
+            <th>首次咨询时间</th>
             <th>操作</th>
         </tr>
         </thead>

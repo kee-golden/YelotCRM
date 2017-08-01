@@ -32,8 +32,8 @@
                             </select>
                         </div>
                             <div class="col-md-6">
-                                <label>邮件</label>
-                                <input type="text" placeholder="请输入手机号" class="form-control" name="email"
+                                <label>邮箱</label>
+                                <input type="text" placeholder="请输入邮箱" class="form-control" name="email"
                                        value="${bean.email}">
 
                             </div>
@@ -55,13 +55,7 @@
 
                             </div>
                         </div>
-                        <%--<div class="row bottom10">--%>
-                            <%--<div class="col-md-12">--%>
-                                <%--<label>详细地址</label>--%>
-                                <%--<input type="text" placeholder="请输入详细地址" class="form-control" name="address"--%>
-                                       <%--value="${bean.address}">--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+
                         <div class="row bottom10">
                             <div class="col-md-6">
                                 <label>QQ</label>
@@ -98,7 +92,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label>客户首次咨询时间</label>
-                                <input type="text"  class="form-control" name="firstConsultTime"
+                                <input type="text"  class="form-control" name="firstConsultTime" id="firstConsultTime"
                                        value="${bean.firstConsultAt}">
                             </div>
                         </div>
@@ -144,8 +138,8 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label>邮件</label>
-                                <input type="text" placeholder="请输入手机号" class="form-control" name="email"
+                                <label>邮箱</label>
+                                <input type="text" placeholder="请输入邮箱" class="form-control" name="email"
                                        value="${bean.email}">
 
                             </div>
@@ -153,28 +147,21 @@
 
                         <div class="row bottom10">
                             <div class="col-md-6">
-                                <label>省</label>
-                                <select class="form-control">
-                                    <option value="0">女</option>
-                                    <option value="1">男</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label>市</label>
-                                <select class="form-control">
-                                    <option value="0">女</option>
-                                    <option value="1">男</option>
-                                </select>
+                                <label>省市</label>
+                                <div id="prov_city">
+                                    <select class="prov" name="province"></select>
+                                    <select class="city" disabled="disabled" name="city"></select>
+                                </div>
 
                             </div>
-                        </div>
-                        <div class="row bottom10">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label>详细地址</label>
                                 <input type="text" placeholder="请输入详细地址" class="form-control" name="address"
                                        value="${bean.address}">
+
                             </div>
                         </div>
+
                         <div class="row bottom10">
                             <div class="col-md-6">
                                 <label>QQ</label>
@@ -211,7 +198,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label>客户首次咨询时间</label>
-                                <input type="text"  class="form-control" name="firstConsultAt"
+                                <input type="text"  class="form-control" name="firstConsultTime" id="firstConsultTime"
                                        value="${bean.firstConsultAt}">
                             </div>
                         </div>
@@ -231,6 +218,7 @@
                         </div>
                     </div>
 
+
                 </c:if>
 
             </form>
@@ -240,13 +228,31 @@
 </div>
 <script type="text/javascript" src="/static/cityselect/js/jquery.cityselect.js"></script>
 <script type="text/javascript">
-    $(function(){
-        $("#prov_city").citySelect({
-            url:"/static/cityselect/js/city.min.js",
-            prov:"上海",
-            city:"黄浦区",
-            nodata:"none",
-            required:false
+    require(['jquery', 'yaya', 'datatables.net','dateTimePicker'], function ($, yaya) {
+
+        $('#firstConsultTime').datetimepicker({
+            lang: 'ch',
+            format: 'Y-m-d H:m',
+            timepicker:true
         });
+
+        //弹出层与时间控件在最上层
+        $(".layui-layer-shade").attr("style", "z-index:888; background-color:#000; opacity:0.3;");
+        $(".layui-layer").attr("style", "z-index: 999;width:550px;left:35%!important;top:12%");
+//        $("#topside").attr("style", "z-index: 777;");
+//        $("#leftside").attr("style", "z-index: 777");
+
+//        $(function(){
+            $("#prov_city").citySelect({
+                url:"/static/cityselect/js/city.min.js",
+                prov:"上海",
+                city:"黄浦区",
+                nodata:"none",
+                required:false
+            });
+//        });
     });
+
+
+
 </script>

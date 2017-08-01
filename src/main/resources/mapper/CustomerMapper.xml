@@ -28,6 +28,10 @@
          first_consult_at,is_alive,create_at, update_at,create_user_id
     </sql>
 
+    <select id="findBySearch" resultMap="userResultMap">
+        select * from t_customer where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}
+    </select>
+
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into t_customer(name, phone,province,city,address,sex,email,qq,wechat_id,wechat_nickname,device_name,comment,channel_source,
          first_consult_at,is_alive,create_at, update_at,create_user_id)
@@ -36,7 +40,7 @@
     </insert>
 
     <update id="updateCustomer" parameterType="com.yelot.crm.entity.Customer">
-        update t_customer
+        update t_customer SET
         <trim suffix="" suffixOverrides=",">
             <if test="name!=null">
                 name=#{name},
@@ -78,7 +82,7 @@
                 channel_source=#{channelSource},
             </if>
             <if test="firstConsultAt!=null">
-                first_consult_at=#{firstConsultAt},
+                first_consult_at=#{firstConsultAt}
             </if>
 
         </trim>
