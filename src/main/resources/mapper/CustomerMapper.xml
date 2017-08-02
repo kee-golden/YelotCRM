@@ -33,8 +33,14 @@
     </select>
 
     <select id="findBySearch" resultMap="customerResultMap">
-        select * from t_customer where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}
+        select * from t_customer where is_alive = 1
+        <if test="extra_search != null and extra_search != ''">
+            and (name like CONCAT('%', #{extra_search}, '%') OR phone like CONCAT('%', #{extra_search}, '%'))
+        </if>
+        limit #{pageHelper.offset},#{pageHelper.size}
     </select>
+
+
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into t_customer(name, phone,province,city,address,sex,email,qq,wechat_id,wechat_nickname,device_name,comment,channel_source,

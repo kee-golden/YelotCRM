@@ -62,7 +62,7 @@ public class CustomerController {
         pageHelper.setOffset(start);
         pageHelper.setSize(length);
         int pageCount = customerMapper.countBySearch(extra_search);
-        List<Customer> customerList = customerMapper.findBySearch(pageHelper);
+        List<Customer> customerList = customerMapper.findBySearch(pageHelper,extra_search);
 
         model.addAttribute("customerList", customerList);
         return new Table(pageCount, pageCount, customerList);

@@ -40,6 +40,6 @@ public interface CustomerMapper {
     int countBySearch(String extra_search);
 
 //    @Select("select * from t_customer where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")
-    List<Customer> findBySearch(@Param("pageHelper") PageHelper pageHelper);
+    List<Customer> findBySearch(@Param("pageHelper") PageHelper pageHelper,@Param("extra_search") String extra_search);
 
 }
