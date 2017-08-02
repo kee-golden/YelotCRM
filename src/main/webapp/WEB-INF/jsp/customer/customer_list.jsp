@@ -42,6 +42,7 @@
         <thead>
         <tr>
             <th>姓名</th>
+            <th>性别</th>
             <th>手机号</th>
             <th>省</th>
             <th>城市</th>

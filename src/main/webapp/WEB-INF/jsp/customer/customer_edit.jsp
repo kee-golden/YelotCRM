@@ -26,7 +26,7 @@
                         <div class="row bottom10">
                         <div class="col-md-6">
                             <label>性别</label>
-                            <select class="form-control">
+                            <select class="form-control" name="sex">
                                 <option value="0">女</option>
                                 <option value="1">男</option>
                             </select>
@@ -93,7 +93,7 @@
                             <div class="col-md-6">
                                 <label>客户首次咨询时间</label>
                                 <input type="text"  class="form-control" name="firstConsultTime" id="firstConsultTime"
-                                       value="${bean.firstConsultAt}">
+                                       value="<fmt:formatDate value='${bean.firstConsultAt}' pattern='yyyy-MM-dd HH:mm'  />">
                             </div>
                         </div>
                         <div class="row bottom10">
@@ -132,7 +132,7 @@
                         <div class="row bottom10">
                             <div class="col-md-6">
                                 <label>性别</label>
-                                <select class="form-control">
+                                <select class="form-control" name="sex">
                                     <option value="0">女</option>
                                     <option value="1">男</option>
                                 </select>
@@ -189,7 +189,7 @@
                         <div class="row bottom10">
                             <div class="col-md-6">
                                 <label>客户来源</label>
-                                <select class="form-control">
+                                <select class="form-control" name="channelSource">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -199,7 +199,8 @@
                             <div class="col-md-6">
                                 <label>客户首次咨询时间</label>
                                 <input type="text"  class="form-control" name="firstConsultTime" id="firstConsultTime"
-                                       value="${bean.firstConsultAt}">
+                                       value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bean.firstConsultAt}"/>"
+                                       />
                             </div>
                         </div>
                         <div class="row bottom10">
@@ -242,14 +243,29 @@
 //        $("#topside").attr("style", "z-index: 777;");
 //        $("#leftside").attr("style", "z-index: 777");
 
-//        $(function(){
-            $("#prov_city").citySelect({
-                url:"/static/cityselect/js/city.min.js",
-                prov:"上海",
-                city:"黄浦区",
-                nodata:"none",
-                required:false
-            });
+            var province = '${bean.province}';
+            var city = '${bean.city}';
+            console.log(province+","+city);
+            if(province != '' || city != ''){
+                $("#prov_city").citySelect({
+                    url:"/static/cityselect/js/city.min.js",
+                    prov:province,
+                    city:city,
+                    nodata:"none",
+                    required:false
+                });
+            }else {
+                console.log("default  province")
+                $("#prov_city").citySelect({
+                    url:"/static/cityselect/js/city.min.js",
+                    prov:"上海",
+                    city:"黄浦区",
+                    nodata:"none",
+                    required:false
+                });
+
+            }
+
 //        });
     });
 

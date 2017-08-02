@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface CustomerMapper {
 
-    @Select("select * from t_customer where id = #{id}")
+//    @Select("select * from t_customer where id = #{id}")
     Customer find(Long id);
 
 //    @Insert("insert into t_customer(name,sex,phone,address,qq,email,comment,is_alive,create_at,update_at) values(#{name},#{sex}," +
@@ -41,4 +41,5 @@ public interface CustomerMapper {
 
 //    @Select("select * from t_customer where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")
     List<Customer> findBySearch(@Param("pageHelper") PageHelper pageHelper);
+
 }

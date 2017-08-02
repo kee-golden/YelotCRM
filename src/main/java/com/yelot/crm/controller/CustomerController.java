@@ -7,6 +7,7 @@ import com.yelot.crm.Util.ResponseData;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Customer;
+import com.yelot.crm.enums.AliveStatus;
 import com.yelot.crm.mapper.CustomerMapper;
 import com.yelot.crm.service.CustomerService;
 import com.yelot.crm.vo.Table;
@@ -138,5 +139,12 @@ public class CustomerController {
         }
         Integer start = (page - 1) * size;
         return customerService.findByPage(start,size);
+    }
+
+    @ResponseBody
+    @RequestMapping("delete")
+    public ResultData delete(Long id){
+        customerMapper.updateAlive(AliveStatus.DEAD.getCode(),id);
+        return ResultData.ok();
     }
 }

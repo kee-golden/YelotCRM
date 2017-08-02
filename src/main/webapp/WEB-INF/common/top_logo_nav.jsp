@@ -1,28 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sys" tagdir="/WEB-INF/tags/sys" %>
 <link href="${ctx}/module-css/nav.css" rel="stylesheet">
-<script src="${ctx}/static/jquery/jquery-2.2.4.min.js"></script>
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
-<script>
-    require(['jquery', 'yaya'], function ($, yaya) {
-        $(function (e) {
 
-            $.ajax({
-                url:ctx+'/indexshow/tPublic',
-                success:function (e) {
-                    console.log(e.data);
-                    console.log(e.data[0].pubvalue);
-                    $("#version").val(e.data[1].pubvalue);
-                    $("#copyright").val(e.data[0].pubvalue);
-                }
-            })
-
-        })
-    })
-
-
-</script>
 <%--
 <boot>框架头</boot>--%>
 <style>

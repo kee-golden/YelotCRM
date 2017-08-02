@@ -31,11 +31,20 @@ require(['jquery', 'yaya', 'datatables.net','dateTimePicker'], function ($, yaya
         },
         'columns': [
             {'data': 'name'},
+            {'data': 'sex',
+                'render':function (data) {
+                    if(data == 0){
+                        return '女';
+                    }else{
+                        return '男'
+                    }
+                }
+            },
             {'data': 'phone'},
             {'data': 'province'},
             {'data': 'city'},
             {'data': 'address'},
-            {'data': 'createAt'},
+            {'data': 'firstConsultAt'},
             {'data' : 'id', 'render' : function(data, type,full, meta) {
                 return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a>&nbsp;&nbsp;'
                     + '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-trash" aria-hidden="true"></i>删除</a>';
