@@ -4,13 +4,7 @@
 
     require(['jquery','yaya','echarts','bootstrap'], function ($, yaya,echarts,DrawEChart) {
 
-        var span=document.getElementById("myTab").querySelectorAll("span")
-        for(var i=0;i<span.length;i++){
-            console.log(span[i].innerHTML)
-            if(span[i].innerHTML==0){
-                span[i].style.display="none";
-            }
-        }
+
         /* 菜单下拉功能*/
         $("h6 i").click(
             function(){
@@ -19,46 +13,51 @@
             }
         );
 
-        /* 图标功能*/
-        $(function(){
+        $('#customerSearchBtn').click(function () {
             $.ajax({
-                url:ctx+'/example1',
-                success:function(data){
+                url: ctx + '/customer/search',
+                method: 'get',
+                dataType: 'json',
+                data: {
+                    phone: $("#phone").val(),
+                },
+                success: function (data) {
 
-                    $('#content').html(data);
+                    if(data.code == 1200){
+                        $("#customerId").data("id",data.data.customer.id);//复制customer id
+                        $("#customerContainer").css("display","block");
+                        $("#customerTip").css("display","none");
+                        $("#J_name").val(data.data.customer.name);
+                        $("#J_phone").val(data.data.customer.phone);
+                        $("#J_address").val(data.data.customer.address);
+                        $("#prov_city").citySelect({
+                            url:"/static/cityselect/js/city.min.js",
+                            prov:data.data.customer.province,
+                            city:data.data.customer.city,
+                            nodata:"none",
+                            required:false
+                        });
+
+
+                    }else {
+                        $("#customerTip").css("display","block");
+                        $("#customerContainer").css("display","none");
+                    }
+
+
                 }
             });
+
         });
 
-        $('#myTab a:first').tab('show');//初始化显示哪个tab
+        $('.city').change(function () {
+            console.log("secondCategory change (),,,")
 
-        $('#myTab a').click(function (e) {
-            e.preventDefault();//阻止a链接的跳转行为
-            //var val= $(e).parent().attr('');
-            var sta=$(this).attr('sta');
-            var name='';
-            if(sta=='1'){
-                name='/example1';
-            }else if(sta=='2'){
-                name='/example2';
-            }else if(sta=='3'){
-                name='/example3';
-            }else if(sta=='4'){
-                name='/change/change-approvaleds';
-            }
-            $.ajax({
-                url:ctx+name,
-                success:function(data){
-                    $('#content').html(data);
-                }
-            });
-            $(this).parent().parent().children().removeClass();
-            $(this).parent().addClass("active");
+            var p1=$(this).children('option:selected').val();//这就是selected的值
+
+            console.log(p1);
+
         });
-
-        /*表格插件*/
-
-
 
 
 

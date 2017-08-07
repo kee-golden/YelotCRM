@@ -30,8 +30,8 @@ public interface CustomerMapper {
     void updateCustomer(Customer customer);
 
 
-    @Select("select * from t_customer where phone = #{phone}")
-    Customer findByPhone(String phone);
+//    @Select("select * from t_customer where phone = #{phone}")
+    List<Customer> findByPhone(String phone);
 
     @Update("update t_customer set is_alive = #{alive} where id = #{id}")
     void updateAlive(@Param("alive") Integer alive, @Param("id") Long id);

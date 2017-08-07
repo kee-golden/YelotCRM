@@ -7,6 +7,7 @@
 <title>CRM管理后台</title>
 
 <%@include file="/WEB-INF/common/static.jsp"%>
+<link href="${ctx}/module-css/repair-order.css" rel="stylesheet">
 
 <c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
 <c:set var="CHILD_MENU_CODE" value="RepairOrder_Add" />
@@ -17,116 +18,7 @@
 
 
 </head>
-<style>
-.btn-default {
-	color: #333;
-	background-color: #fff;
-	border-color: #ccc;
-}
 
-.top_row {
-	padding: 15px;
-}
-
-.top_con {
-	box-shadow: 0 1px 5px 0 #e5e5e5;
-	background: #FFFFFF;
-}
-
-.tab-content {
-	background: #FFFFFF
-}
-
-#myTab {
-	position: relative;
-}
-
-#myTab li {
-	margin-right: 20px
-}
-
-#myTab span {
-	display: inline-block;
-	font-size: 11px;
-	color: #FFFFFF;
-	background: #c46f82;
-	text-align: center;
-	border-radius: 50%;
-	width: 23px;
-	height: 23px;
-	line-height: 23px;
-	position: absolute;
-	right: -12px;
-	top: -12px;
-}
-
-.top_con h6 {
-	height: 28px;
-	background: #f1efef;
-	font-size: 14px;
-	line-height: 28px;
-	font-weight: 600;
-	padding-left: 10px;
-	margin-bottom: 20px
-}
-
-.work {
-	margin-right: 10px;
-}
-
-#box01, #box02 {
-	height: 350px;
-	padding-top: 10px
-}
-
-#box02 {
-	padding-left: 50px;
-}
-
-.iconfont {
-	margin-right: 10px;
-	font-size: 24px;
-	cursor: pointer
-}
-
-.container h6 {
-	overflow: hidden
-}
-
-#page-wrapper, .wrapper, .wrapper-content {
-	padding: 0 !important;
-}
-
-#customer_table{
-	border-collapse:separate; 
-	border-spacing:5px;
-}
-
-.customer_table_td_lable4{
-	width: 20%;
-    text-align:right;
-}
-
-.customer_table_td_input4{
-	width: 20%;
-    text-align:left;
-}
-
-.customer_table_td_lable8{
-	width: 8%;
-    text-align:right;
-}
-
-.customer_table_td_input8{
-	width: 8%;
-    text-align:left;
-}
-
-.customer_table_td_input5{
-	width: 20%;
-    text-align:center;
-}
-</style>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
 	<div id="wrapper">
 		<%@include file="/WEB-INF/common/top_logo_nav.jsp"%>
@@ -138,54 +30,59 @@
 		<div id="page-wrapper" class="wrapper wrapper-content cover_banner " style="height: 82%; overflow-y: auto;">
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
 				<h6>
-					<span class="glyphicon glyphicon-briefcase work "></span>顾客信息<i class="pull-right iconfont ">&#xe658;</i>
+					<span class="glyphicon glyphicon-briefcase work "></span>客户信息<i class="pull-right iconfont ">&#xe658;</i>
 					<div class="clearfix"></div>
 				</h6>
-				<div class="row top_row">
-					<%-- tab组件--%>
-					<%-- <ul class="nav nav-tabs" id="myTab">
-						<c:if test="${power!=1}">
-							<li class="active"><a sta="1">待处理 <span id="countAccepted">${countAccepted}</span></a></li>
-						</c:if>
-						<c:if test="${stausList=='2'}">
-							<li><a sta="2">待审批<span id="count">${count}</span></a></li>
-						</c:if>
-						<li><a sta="3">我的请求<span id="countRequest">${countRequest}</span></a></li>
-						<c:if test="${stausList1=='11'}">
-							<li><a sta="4">待发布<span id="total">${total}</span></a></li>
-						</c:if>
-					</ul>
-					<div class="clearfix"></div> --%>
+				<div class="row top_row col-md-12 b-r">
+					<div><h5>查询该客户是否已存在，不存在需要到客户管理中，创建一个客户</h5></div>
 
-					<%--tab页面内容--%>
-					<!-- <div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="content"></div>
-					</div> -->
-
-					<form id="J_customerForm" role="form" class="form-inline">
-						<table id="customer_table" style="width: 100%">
-							<tr>
-								<td class="customer_table_td_lable4"><label for="username" class="form-label"><span class="titl">顾客姓名:</span></label></td>
-								<td class="customer_table_td_input4"><input type="text" class="form-control" name="username" id="username" placeholder="请输入顾客姓名" autocomplete="off"></td>
-								<td class="customer_table_td_lable4"><label for="username" class="form-label"><span class="titl">联系方式:</span></label></td>
-								<td class="customer_table_td_input4"><input type="text" class="form-control" name="username" id="username" placeholder="请输入联系方式" autocomplete="off"></td>
-							</tr>
-							<tr>
-								<td class="customer_table_td_lable4"><label for="username" class="form-label"><span class="titl">其他联系方式:</span></label></td>
-								<td class="customer_table_td_input4"><input type="text" class="form-control" name="username" id="username" placeholder="请输入其他联系方式" autocomplete="off"></td>
-								<td class="customer_table_td_lable4"><label for="username" class="form-label"><span class="titl">回寄地址:</span></label></td>
-								<td class="customer_table_td_input4"><input type="text" class="form-control" name="username" id="username" placeholder="请输入回寄地址" autocomplete="off"></td>
-							</tr>
-							<tr>
-								<td class="customer_table_td_lable4"></td>
-								<td colspan="4" style="text-align: right;">
-									<input type="button" class="form-button" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="button" class="form-button" value="重置">
-								</td>
-								<%--<td class="customer_table_td_input4"></td>--%>
-							</tr>
-						</table>
+					<form class="form-inline bottom10" role="form">
+						<div class="form-group">
+							<input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号"/>
+							<input id="customerSearchBtn" type="button" class="form-control btn-group" value="查询"/>
+						</div>
 					</form>
+					<hr/>
+
+					<div id="customerContainer" class="col-md-12 b-r">
+
+						<div class="row bottom10">
+							<h3 class="m-t-none m-b">基础信息</h3>
+							<input type="hidden" id="customerId" data-id=""/>
+							<div class="col-md-2">
+								<label><span style="color: red"></span>用户名</label>
+								<input type="text" placeholder="请输入用户名" class="form-control" name="name" id="J_name"
+									    autocomplete="off">
+							</div>
+
+							<div class="col-md-3">
+								<label><span style="color: red"></span>手机号</label>
+								<input type="text" placeholder="请输入手机号" class="form-control" name="phone" id="J_phone"
+									   >
+							</div>
+
+							<div class="col-md-2">
+								<label>省市</label>
+								<div id="prov_city">
+									<select class="prov" name="province" id="firstCategory"></select>
+									<select class="city" disabled="disabled" name="city" id="secondCategory"></select>
+								</div>
+
+							</div>
+							<div class="col-md-5">
+								<label>详细地址</label>
+								<input type="text" placeholder="请输入详细地址" class="form-control" name="address" id="J_address"
+									   value="${bean.address}">
+
+							</div>
+						</div>
+
+					</div>
+
+					<div id="customerTip">
+						<div><h5>该客户不存在，创建一个客户，请点击<a href="${ctx}/customer/index">创建客户</a></h5></div>
+					</div>
+
 				</div>
 			</div>
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
@@ -194,68 +91,29 @@
 					<div class="clearfix"></div>
 				</h6>
 				<div class="row">
-					<form id="J_customerForm" role="form" class="form-inline">
-						<h3>《基本属性》：</h3>
-						<table id="customer_table">
-							<tr>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">品类:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">品牌:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">产品编号:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">尺寸:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-							</tr>
-							<tr>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">材质:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">主石:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">配石:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">长度:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-							</tr>
-							<tr>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">个性刻字:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">克重:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">自带包装:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-								<td class="customer_table_td_lable8"><label for="username" class="form-label"><span class="titl">关联件:</span></label></td>
-								<td class="customer_table_td_input8"><input type="text" class="form-control" name="username" id="username" autocomplete="off"></td>
-							</tr>
-						</table>
-						<h3>《服务项》：</h3>
-						<table id="customer_table">
-							<tr>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="清洁保养"></td>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="补色"></td>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="补伤"></td>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="封边油"></td>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="淡化污染"></td>
-							</tr>
-							<tr>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="粘合加固"></td>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="更换拉链"></td>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="变形整形"></td>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="翻新五金"></td>
-								<td class="customer_table_td_input5"><input type="button" style="width: 200px" value="修皮质配件"></td>
-							</tr>
-							<tr>
-								<td class="customer_table_td_lable4"></td>
-								<td colspan="6" style="text-align: right;">
-									<input type="button" class="form-button" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="button" class="form-button" value="重置">
-								</td>
-								<%--<td class="customer_table_td_input4"></td>--%>
-							</tr>
-						</table>
-					</form>
-					<!-- <div class="col-lg-6  col-md-12" id="box01"></div>
-					<div class="col-lg-6 col-md-12" id="box02"></div> -->
+					<div>
+						<%--<h3 class="m-t-none m-b">基础信息</h3>--%>
+
+						<div id="category" class="row">
+							<label class="col-xs-1">分类:</label>
+							<select class="prov col-xs-1" name="province"></select>
+							<select class="city col-xs-1" disabled="disabled" name="city"></select>
+							<label class="col-xs-1">品牌：</label>
+							<span>
+							<select id="brand" name="brand">
+								<%--<option value="A">A</option>--%>
+								<%--<option value="B">B</option>--%>
+								<%--<option value="C">C</option>--%>
+								<c:forEach items="${brandList}" var="item">
+									<option value="${item.name}">${item.name}</option>
+								</c:forEach>
+							</select>
+						</span>
+						</div>
+					</div>
+
+
+
 				</div>
 			</div>
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
@@ -264,26 +122,7 @@
 					<div class="clearfix"></div>
 				</h6>
 				<div class="row">
-					<form id="J_customerForm" role="form" class="form-inline">
-						<table id="customer_table">
-							<tr>
-								<td class="customer_table_td_input5"><img src="src/main/webapp/WEB-INF/image/A.png"></td>
-								<td class="customer_table_td_input5"><img src="src/main/webapp/WEB-INF/image/A.png"></td>
-								<td class="customer_table_td_input5"><img src="src/main/webapp/WEB-INF/image/A.png"></td>
-								<td class="customer_table_td_input5"><img src="src/main/webapp/WEB-INF/image/A.png"></td>
-								<td class="customer_table_td_input5"><input type="file"></td>
-							</tr>
-							<tr>
-								<td class="customer_table_td_lable4"></td>
-								<td colspan="6" style="text-align: right;">
-									<input type="button" class="form-button" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="button" class="form-button" value="重置">
-								</td>
-								<%--<td class="customer_table_td_input4"></td>--%>
-							</tr>
-						</table>
-					</form>
-					
+
 					<div class="col-lg-6  col-md-12"></div>
 					<div class="col-lg-6 col-md-12"></div>
 				</div>
@@ -328,8 +167,21 @@
 		<%@include file="/WEB-INF/common/bottom.jsp"%>
 	</div>
 </body>
-
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
-<script src="${ctx}/module-js/order/repair_order.js"></script>
+<script src="${ctx}/static/jquery/jquery-2.2.4.min.js"></script>
+
+<script type="text/javascript" src="${ctx}/static/cityselect/js/jquery.cityselect.js"></script>
+<script src="${ctx}/module-js/order/repair_order_add.js"></script>
+
+<script>
+	var jsonObj = eval(${categoryJson});//转化为json 对象
+	 $("#category").citySelect({
+        url:jsonObj,
+		prov:'${firstCategory}',
+        city:'${secondCategory}',
+        nodata:"none"
+    });
+
+</script>
 </html>

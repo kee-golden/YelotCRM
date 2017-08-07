@@ -18,7 +18,7 @@
 
                         <div class="col-md-6">
                             <label><span style="color: red">*</span>手机号</label>
-                            <input type="text" placeholder="请输入手机号" class="form-control" name="phone"
+                            <input type="text" placeholder="请输入手机号" class="form-control" name="phone" id="J_phone"
                                    value="${bean.phone}">
                         </div>
                         </div>
@@ -124,7 +124,7 @@
 
                             <div class="col-md-6">
                                 <label><span style="color: red">*</span>手机号</label>
-                                <input type="text" placeholder="请输入手机号" class="form-control" name="phone"
+                                <input type="text" placeholder="请输入手机号" class="form-control" name="phone" id="J_phone"
                                        value="${bean.phone}">
                             </div>
                         </div>

@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by kee on 17/5/30.
  */
@@ -13,9 +15,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryMapper {
 
-    @Select("select * from t_category")
-    Category find(Long id);
 
-    @Insert("insert into t_category(name,sort) values(#{name},#{sort})")
-    void save(Category category);
+    /**
+     * 获取第一级分类
+     * @return
+     */
+    List<Category> findAllFirstClass();
+
+    /**
+     * 获取某一个分类下的所有分类
+     * @param parentId
+     * @return
+     */
+    List<Category> findChildren(Long parentId);
+
 }

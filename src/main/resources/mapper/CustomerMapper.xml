@@ -40,6 +40,10 @@
         limit #{pageHelper.offset},#{pageHelper.size}
     </select>
 
+    <select id="findByPhone" resultMap="customerResultMap">
+        SELECT * FROM t_customer where phone = #{phone} and is_alive = 1
+    </select>
+
 
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">

@@ -123,8 +123,8 @@ public class CustomerController {
 
     @RequestMapping("check-phone")
     public String checkPhone(String phone, HttpServletResponse response) throws IOException {
-        Customer customer = customerMapper.findByPhone(phone);
-        if (customer == null) {//表示可用
+        List<Customer> customerList = customerMapper.findByPhone(phone);
+        if (customerList != null && customerList.size() == 0) {//表示可用
             response.getWriter().write("true");
         } else {
             response.getWriter().write("false");
@@ -146,5 +146,23 @@ public class CustomerController {
     public ResultData delete(Long id){
         customerMapper.updateAlive(AliveStatus.DEAD.getCode(),id);
         return ResultData.ok();
+    }
+
+    /**
+     * 该函数，在维修单创建时使用
+     * @param phone
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("search")
+    public ResultData search(String phone){
+
+        List<Customer> customerList = customerMapper.findByPhone(phone);
+        if(customerList != null && customerList.size() > 0){
+            return ResultData.ok().putDataValue("customer",customerList.get(0));
+        }
+        return ResultData.notFound();
+
+
     }
 }

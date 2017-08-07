@@ -1,5 +1,7 @@
 package com.yelot.crm.entity;
 
+import java.util.List;
+
 /**
  * Created by kee on 17/5/26.
  */
@@ -13,6 +15,10 @@ public class Category {
      * 排序显示
      */
     private int sort;
+
+    private Long parentId;
+
+    private List<Category> children;
 
     public Category(){
 
@@ -45,5 +51,21 @@ public class Category {
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
     }
 }

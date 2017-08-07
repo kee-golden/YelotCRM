@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.CategoryMapper">
+    <resultMap id="categoryResultMap" type="com.yelot.crm.entity.Category">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sort" column="sort"/>
+        <result property="parentId" column="parent_id"/>
+    </resultMap>
+
+    <select id="findAllFirstClass" resultMap="categoryResultMap">
+        select * from t_category where parent_id = 0
+    </select>
+    
+    <select id="findChildren" resultMap="categoryResultMap">
+        SELECT * from t_category where parent_id = #{parentId}
+    </select>
+
+</mapper>

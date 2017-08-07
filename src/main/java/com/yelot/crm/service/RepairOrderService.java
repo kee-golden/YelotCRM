@@ -1,11 +1,17 @@
 package com.yelot.crm.service;
 
+import com.alibaba.fastjson.JSON;
+import com.yelot.crm.entity.Category;
 import com.yelot.crm.entity.RepareOrder;
 import com.yelot.crm.entity.RepareOrderItem;
 import com.yelot.crm.entity.RepareOrderItemImage;
+import com.yelot.crm.mapper.CategoryMapper;
 import com.yelot.crm.mapper.RepareOrderItemImgMapper;
 import com.yelot.crm.mapper.RepareOrderItemMapper;
 import com.yelot.crm.mapper.RepareOrderMapper;
+import com.yelot.crm.vo.City;
+import com.yelot.crm.vo.CityList;
+import com.yelot.crm.vo.CityListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +23,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class RepareOrderService {
+public class RepairOrderService {
 
     @Autowired
     private RepareOrderMapper repareOrderMapper;
@@ -27,6 +33,9 @@ public class RepareOrderService {
 
     @Autowired
     private RepareOrderItemImgMapper repareOrderItemImgMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     RepareOrder find(Long id){
         return repareOrderMapper.find(id);
@@ -57,4 +66,38 @@ public class RepareOrderService {
     }
 
 
+    /**
+     * 分类转化为CityList
+     * @return
+     */
+    public CityListVo convertToCityListVo() {
+        List<Category> categoryList = categoryMapper.findAllFirstClass();
+
+        for (int i = 0; categoryList!= null && i < categoryList.size(); i++) {
+            List<Category> children = categoryMapper.findChildren(categoryList.get(i).getId());
+            categoryList.get(i).setChildren(children);
+        }
+
+        /**
+         * 以下对象转化为，需要的层次结构
+         */
+        CityListVo cityListVo = new CityListVo();
+
+        for (int i = 0; categoryList != null && i < categoryList.size(); i++) {
+            List<Category> children = categoryList.get(i).getChildren();
+            String p = categoryList.get(i).getName();
+            CityList cityList = new CityList();
+            cityList.setP(p);
+            if(children != null && children.size() > 0){
+                for (int j = 0; j < children.size(); j++) {
+                    City city = new City();
+                    city.setN(children.get(j).getName());
+                    cityList.getC().add(city);
+                }
+            }
+            cityListVo.getCitylist().add(cityList);
+        }
+
+        return cityListVo;
+    }
 }
