@@ -1,6 +1,7 @@
 package com.yelot.crm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.entity.Attribute;
 import com.yelot.crm.entity.Brand;
 import com.yelot.crm.mapper.BrandMapper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -54,12 +56,19 @@ public class RepairOrderController {
         List<Brand> brandList = brandMapper.findAll();
         model.addAttribute("brandList",brandList);
 
-        List<Attribute> attributeList = categoryAttributeService.findAttributes(secondCategory);
+        List<Attribute> attributeList = categoryAttributeService.findAttributes(firstCategory,secondCategory);
         String attibutesJson = JSON.toJSONString(attributeList);
 
         model.addAttribute("attributesJson",attibutesJson);
 
         return "repair_order/repair_order_add";
+    }
+
+    @ResponseBody
+    @RequestMapping("get-attributes")
+    public ResultData getAttributes(String firstCategory,String secondCategory){
+        List<Attribute> attributeList = categoryAttributeService.findAttributes(firstCategory,secondCategory);
+        return ResultData.ok().putDataValue("attributeList",attributeList);
     }
 
     @RequestMapping("list")

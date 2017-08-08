@@ -28,12 +28,12 @@ public class CategoryAttributeService {
 
     /**
      * 通过二级分类的名称，获取属性列表，二级分类必须在系统中唯一
-     * @param secondCategoryName
+     * @param secondCategory
      * @return
      */
-    public List<Attribute> findAttributes(String secondCategoryName){
+    public List<Attribute> findAttributes(String firstCategory,String secondCategory){
 
-        Long categoryId = categoryMapper.findByName(secondCategoryName).getId();
+        Long categoryId = categoryMapper.findByName(firstCategory,secondCategory).getId();
         CategoryAttribute categoryAttribute = categoryAttributeMapper.findByCategoryId(categoryId);
         if(categoryAttribute == null){
             return null;

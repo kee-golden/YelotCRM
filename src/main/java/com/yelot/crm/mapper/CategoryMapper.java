@@ -3,6 +3,7 @@ package com.yelot.crm.mapper;
 import com.yelot.crm.entity.Category;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -29,5 +30,5 @@ public interface CategoryMapper {
      */
     List<Category> findChildren(Long parentId);
 
-    Category findByName(String secondCategoryName);
+    Category findByName(@Param("firstCategory") String firstCategory, @Param("secondCategory") String secondCategory);
 }

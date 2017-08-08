@@ -2,10 +2,14 @@
  * Created by kee on 17/7/13.
  */
 
-    require(['jquery','yaya','echarts','bootstrap'], function ($, yaya,echarts,DrawEChart) {
+require(['jquery','yaya','echarts','bootstrap'], function ($, yaya,echarts,DrawEChart) {
+
+    //获取当前默认的属性json对象
+    generateAttributes(attributesJson);
 
 
-        /* 菜单下拉功能*/
+
+    /* 菜单下拉功能*/
         $("h6 i").click(
             function(){
                 var div=( $(this).parent().parent().find(".row"));
@@ -51,87 +55,80 @@
         });
 
         $('.city').change(function () {
-            console.log("secondCategory change (),,,")
 
-            var p1=$(this).children('option:selected').val();//这就是selected的值
+            var secondCategory=$(".city").children('option:selected').val();//这就是selected的值
+            var firstCategory=$(".prov").children('option:selected').val();//这就是selected的值
+            ajaxAttribute(firstCategory,secondCategory);
 
-            console.log(p1);
+
+
+        });
+    $('.prov').change(function () {
+
+        var secondCategory=$(".city").children('option:selected').val();//这就是selected的值
+        var firstCategory=$(".prov").children('option:selected').val();//这就是selected的值
+        ajaxAttribute(firstCategory,secondCategory);
+    });
+
+    function ajaxAttribute(firstCategory,secondCategory) {
+
+        $.ajax({
+            url:'/repair-order/get-attributes',
+            dataType:"json",
+            method:'get',
+            data:{
+                firstCategory:firstCategory,
+                secondCategory:secondCategory,
+            },
+            success:function (data) {
+
+                attributesJson = data.data.attributeList;
+                generateAttributes(attributesJson);
+
+            }
+
 
         });
 
-
-
-
-    });
-
-function table_PendingCount() {
-    $.ajax({
-        url:ctx+'/indexshow/index-PendingCount',
-        async:false,
-        success:function(result){
-            var s=$("#countAccepted");
-            s.html(result);
-        }
-    });
-    var span=$("#countAccepted");
-    var val=$(span).html();
-    if(val!=0){
-        $(span).show();
-    }else if (val==0){
-        $(span).hide();
     }
-}
 
-function table_AuditCount() {
-    $.ajax({
-        url: ctx + '/indexshow/index-AuditCount',
-        async:false,
-        success: function (result) {
-            var s = $("#count");
-            s.html(result);
-        }
-    });
-    var span=$("#count");
-    var val=$(span).html();
-    if (val != 0) {
-        $(span).show();
-    }else if (val==0){
-        $(span).hide();
-    }
-}
-function table_RequestCount() {
-    $.ajax({
-        url: ctx + '/indexshow/index-RequestCount',
-        async:false,
-        success: function (result) {
-            var s = $("#countRequest");
-            s.html(result);
-        }
-    });
-    var span=$("#countRequest");
-    var val=$(span).html();
-    if(val!=0){
-        $(span).show();
-    }else if (val==0){
-        $(span).hide();
-    }
-}
 
-function table_total() {
-    $.ajax({
-        url: ctx + '/indexshow/index-total',
-        async:false,
-        success: function (result) {
-            var s = $("#total");
-            s.html(result);
+    /**
+     *
+     * @param attributesJson
+     */
+    function generateAttributes(attributesJson) {
+            //var attributesDiv = $("#attributes");
+        $("#attributes").empty();//清空
+            for(var i=0;i<attributesJson.length;i++){
+                var labelStr = '<label>'+attributesJson[i].attributeName+':</label>';
+                $("#attributes").append(labelStr);
+                if(attributesJson[i].type == 1){
+                    var selectStr = '<select name=\"'+attributesJson[i].attributeName+'\">';
+                    var optionStr = '';
+                    var valuesArray = attributesJson[i].selectionValues.split(',');
+                    for(var j = 0;j<valuesArray.length;j++){
+                        optionStr = optionStr + '<option value=\"'+valuesArray[j]+'\">'+valuesArray[j]+'</option>';
+                    }
+                    $("#attributes").append(selectStr+optionStr);
+                    $("#attributes").append('</select>');
+
+                }else if(attributesJson[i].type == 2){
+                    var selectStr2 = '<input type=\"text\" name = \"'+attributesJson[i].attributeName+"\"/>";
+                    $("#attributes").append(selectStr2);
+
+                }
+            }
+
         }
-    });
-    var span=$("#total");
-    var val=$(span).html();
-    if(val!=0){
-        $(span).show();
-    }else if (val==0){
-        $(span).hide();
-    }
-}
+
+
+
+
+});
+
+
+
+
+
 

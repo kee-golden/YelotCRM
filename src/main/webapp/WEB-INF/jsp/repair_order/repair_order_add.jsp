@@ -14,6 +14,8 @@
 
 <script>
 	var ctx = '${ctx}';
+    var attributesJson = eval('${attributesJson}');
+
 </script>
 
 
@@ -110,9 +112,10 @@
 							</select>
 						</span>
 						</div>
+						<div id="attributes">
+
+						</div>
 					</div>
-
-
 
 				</div>
 			</div>
@@ -175,8 +178,8 @@
 <script src="${ctx}/module-js/order/repair_order_add.js"></script>
 
 <script>
-	var attrbutesJson = eval(${attributesJson});
-	console.log("attrbutes:"+JSON.stringify(attrbutesJson));
+	<%--var attrbutesJson = eval(${attributesJson});--%>
+//	console.log("attrbutes:"+JSON.stringify(attrbutesJson));
 	var jsonObj = eval(${categoryJson});//转化为json 对象
 	 $("#category").citySelect({
         url:jsonObj,
