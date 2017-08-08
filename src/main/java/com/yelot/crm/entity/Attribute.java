@@ -3,12 +3,14 @@ package com.yelot.crm.entity;
 /**
  * Created by kee on 17/5/26.
  */
-public class Atrribute {
+public class Attribute {
     private Long id;
     /**
      * 熟悉名称,属性值，唯一
      */
-    private String attribute_name;
+    private String attributeName;
+
+    private String selectionValues;
     /**
      * 属性类别：1：下拉选择，2，文本输入框
      */
@@ -22,12 +24,20 @@ public class Atrribute {
         this.id = id;
     }
 
-    public String getAttribute_name() {
-        return attribute_name;
+    public String getAttributeName() {
+        return attributeName;
     }
 
-    public void setAttribute_name(String attribute_name) {
-        this.attribute_name = attribute_name;
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
+
+    public String getSelectionValues() {
+        return selectionValues;
+    }
+
+    public void setSelectionValues(String selectionValues) {
+        this.selectionValues = selectionValues;
     }
 
     public int getType() {

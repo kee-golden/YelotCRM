@@ -29,4 +29,5 @@ public interface CategoryMapper {
      */
     List<Category> findChildren(Long parentId);
 
+    Category findByName(String secondCategoryName);
 }

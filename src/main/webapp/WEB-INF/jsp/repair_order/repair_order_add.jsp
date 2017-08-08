@@ -175,6 +175,8 @@
 <script src="${ctx}/module-js/order/repair_order_add.js"></script>
 
 <script>
+	var attrbutesJson = eval(${attributesJson});
+	console.log("attrbutes:"+JSON.stringify(attrbutesJson));
 	var jsonObj = eval(${categoryJson});//转化为json 对象
 	 $("#category").citySelect({
         url:jsonObj,

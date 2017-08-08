@@ -15,5 +15,9 @@
     <select id="findChildren" resultMap="categoryResultMap">
         SELECT * from t_category where parent_id = #{parentId}
     </select>
+    
+    <select id="findByName" resultMap="categoryResultMap">
+        select * from t_category where name = #{secondCategoryName} and parent_id > 0;
+    </select>
 
 </mapper>

@@ -1,8 +1,10 @@
 package com.yelot.crm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.yelot.crm.entity.Attribute;
 import com.yelot.crm.entity.Brand;
 import com.yelot.crm.mapper.BrandMapper;
+import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,11 @@ public class RepairOrderController {
     @Autowired
     private BrandMapper brandMapper;
 
+    @Autowired
+    private CategoryAttributeService categoryAttributeService;
+
+
+
     @RequestMapping("add")
     public String add(Model model){
 
@@ -46,8 +53,11 @@ public class RepairOrderController {
         //获取品牌
         List<Brand> brandList = brandMapper.findAll();
         model.addAttribute("brandList",brandList);
-        
 
+        List<Attribute> attributeList = categoryAttributeService.findAttributes(secondCategory);
+        String attibutesJson = JSON.toJSONString(attributeList);
+
+        model.addAttribute("attributesJson",attibutesJson);
 
         return "repair_order/repair_order_add";
     }
