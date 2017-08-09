@@ -4,7 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.entity.Attribute;
 import com.yelot.crm.entity.Brand;
+import com.yelot.crm.entity.Category;
+import com.yelot.crm.entity.CategoryServiceItem;
 import com.yelot.crm.mapper.BrandMapper;
+import com.yelot.crm.mapper.CategoryMapper;
+import com.yelot.crm.mapper.CategoryServiceItemMapper;
 import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
@@ -39,6 +43,12 @@ public class RepairOrderController {
     @Autowired
     private CategoryAttributeService categoryAttributeService;
 
+    @Autowired
+    private CategoryServiceItemMapper categoryServiceItemMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
+
 
 
     @RequestMapping("add")
@@ -51,6 +61,12 @@ public class RepairOrderController {
         model.addAttribute("categoryJson",categoryJson);
         model.addAttribute("firstCategory",firstCategory);
         model.addAttribute("secondCategory",secondCategory);
+
+        Category category = categoryMapper.findByName(firstCategory,secondCategory);
+
+        List<CategoryServiceItem> categoryServiceItemList = categoryServiceItemMapper.findByCategoryId(category.getId());
+        model.addAttribute("categoryServiceItemList",categoryServiceItemList);
+
 
         //获取品牌
         List<Brand> brandList = brandMapper.findAll();
