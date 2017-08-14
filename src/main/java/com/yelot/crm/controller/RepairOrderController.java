@@ -65,7 +65,8 @@ public class RepairOrderController {
         Category category = categoryMapper.findByName(firstCategory,secondCategory);
 
         List<CategoryServiceItem> categoryServiceItemList = categoryServiceItemMapper.findByCategoryId(category.getId());
-        model.addAttribute("categoryServiceItemList",categoryServiceItemList);
+        String categoryServiceJson = JSON.toJSONString(categoryServiceItemList);
+        model.addAttribute("categoryServiceJson",categoryServiceJson);
 
 
         //获取品牌
@@ -84,7 +85,15 @@ public class RepairOrderController {
     @RequestMapping("get-attributes")
     public ResultData getAttributes(String firstCategory,String secondCategory){
         List<Attribute> attributeList = categoryAttributeService.findAttributes(firstCategory,secondCategory);
-        return ResultData.ok().putDataValue("attributeList",attributeList);
+
+        Category category = categoryMapper.findByName(firstCategory,secondCategory);
+
+        List<CategoryServiceItem> categoryServiceItemList = categoryServiceItemMapper.findByCategoryId(category.getId());
+
+        ResultData resultData = ResultData.ok();
+        resultData.putDataValue("attributeList",attributeList);
+        resultData.putDataValue("categoryServiceItemList",categoryServiceItemList);
+        return resultData;
     }
 
     @RequestMapping("list")
