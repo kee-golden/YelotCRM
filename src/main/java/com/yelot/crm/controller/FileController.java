@@ -54,8 +54,6 @@ public class FileController {
         ResultData resultData = ResultData.ok();
         String realPath;
 
-
-
         boolean isDebug = true;
         String deployPath = "";
         if (isDebug) {
@@ -76,42 +74,13 @@ public class FileController {
         String fileNameTemp = System.currentTimeMillis() + suffix;
         File file = new File(filePath + File.separator + fileNameTemp);
         try {
-            resultData.putDataValue("path","/data/"+File.separator + fileNameTemp);
+            resultData.putDataValue("path","/data"+File.separator + fileNameTemp);
             multiFile.transferTo(file);
-//            sendSuccessJSON(response, "/data/excel/" + fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return resultData;
     }
-
-
-    /**
-     * 多文件上传
-     * @param model
-     * @param multiFile
-     * @param request
-     * @param response
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/images/upload")
-    public ResultData imagesUpload(Model model, @RequestParam(value = "multiFile", required = false) MultipartFile []multiFile, HttpServletRequest request, HttpServletResponse response) {
-
-        ShiroHttpServletRequest shiroRequest = (ShiroHttpServletRequest) request;
-        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-        MultipartHttpServletRequest multipartRequest = commonsMultipartResolver.resolveMultipart((HttpServletRequest) shiroRequest.getRequest());
-
-        Iterator<String> itr = multipartRequest.getFileNames();
-        MultipartFile multipartFile = null;
-
-        while (itr.hasNext()) {
-            multipartFile = multipartRequest.getFile(itr.next());
-
-        }
-            return ResultData.ok();
-    }
-
 
 
 }

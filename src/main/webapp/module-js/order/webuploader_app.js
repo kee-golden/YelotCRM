@@ -4,7 +4,7 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
         var $wrap = $('#uploader'),
 
             // 图片容器
-            $queue = $( '<ul class="filelist"></ul>' )
+            $queue = $( '<ul class="filelist" data-path=\"\"></ul>' )
                 .appendTo( $wrap.find( '.queueList' ) ),
 
             // 状态栏，包括进度和控制按钮
@@ -56,7 +56,6 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
 
         // 实例化
         uploader = WebUploader.create({
-            auto:true,
             pick: {
                 id: '#filePicker',
                 label: '点击选择图片'
@@ -75,6 +74,18 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
                 extensions: 'gif,jpg,jpeg,png',
                 mimeTypes: 'image/*'
             }
+        });
+
+
+        uploader.on('uploadSuccess', function (file, responseData) {
+            var origPath = $('.filelist').data('path');
+            if(origPath == ""){
+                origPath = responseData.data.path;
+            }else{
+                origPath = origPath + ","+responseData.data.path;
+            }
+            $('.filelist').data("path",origPath);
+            alert("path:"+origPath);
         });
 
         // 添加“添加文件”的按钮，
@@ -302,7 +313,10 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
 
                 case 'confirm':
                     $progress.hide();
-                    $upload.text( '开始上传' ).addClass( 'disabled' );
+                    $upload.text( '开始上传' );
+                    // alert("confirm");
+                    $( '#filePicker2' ).removeClass( 'element-invisible' );
+
 
                     stats = uploader.getStats();
                     if ( stats.successNum && !stats.uploadFailNum ) {
@@ -313,7 +327,9 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
                 case 'finish':
                     stats = uploader.getStats();
                     if ( stats.successNum ) {
-                        alert( '上传成功' );
+                        // alert( '上传成功' );
+                        //把数据保存在filelist中
+
                     } else {
                         // 没有成功的图片，重设
                         state = 'done';
@@ -362,6 +378,8 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
         };
 
         uploader.on( 'all', function( type ) {
+            // alert(type);
+
             var stats;
             switch( type ) {
                 case 'uploadFinished':
