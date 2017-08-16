@@ -30,7 +30,8 @@ spring:
     converters:
       preferred-json-mapper: jackson
     multipart:
-      max-file-size: 10MB
+      max-file-size: 5MB
+      max-request-size: 50MB
   application:
     name: yelot_crm
   mvc:
@@ -51,7 +52,7 @@ logging:
   level: debug
   file:
 server:
-  session-timeout : 3600
+  session-timeout : 360000
   port: 8081
 
 

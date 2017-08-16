@@ -56,6 +56,7 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
 
         // 实例化
         uploader = WebUploader.create({
+            auto:true,
             pick: {
                 id: '#filePicker',
                 label: '点击选择图片'
@@ -63,15 +64,17 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
             dnd: '#dndArea',
             paste: '#uploader',
             swf: '/static/webuploader/Uploader.swf',
-            chunked: true,
-            // runtimeOrder: 'flash',
-            sendAsBinary: true,
-            server: '../../server/fileupload.php',
-            // server: 'http://liaoxuezhi.fe.baidu.com/webupload/fileupload.php',
-            // server: 'http://www.2betop.net/fileupload.php',
-            fileNumLimit: 20,
-            fileSizeLimit: 200 * 1024 * 1024,    // 200 M
-            fileSingleSizeLimit: 50 * 1024 * 1024    // 50 M
+            server: '/file/upload',
+            fileVal: "multiFile",
+            duplicate:true,
+            fileNumLimit: 15,
+            fileSizeLimit: 100 * 1024 * 1024,    // 100 M
+            fileSingleSizeLimit: 5 * 1024 * 1024,   // 5 M
+            accept:{
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,png',
+                mimeTypes: 'image/*'
+            }
         });
 
         // 添加“添加文件”的按钮，

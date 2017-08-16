@@ -24,4 +24,11 @@ public class HelloController {
 
     }
 
+    @RequestMapping("/upload")
+    public String upload(Map<String, Object> map) {
+        map.put("hello", "hello world,jsp,,,");
+        return "upload";
+
+    }
+
 }

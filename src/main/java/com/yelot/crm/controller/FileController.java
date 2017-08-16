@@ -3,12 +3,15 @@ package com.yelot.crm.controller;
 
 import com.yelot.crm.Util.ResponseData;
 import com.yelot.crm.Util.ResultData;
+import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +20,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
+ *
+ List<MultipartFile> files = ((MultipartHttpServletRequest)request).getFiles("fileName");
+ if(files != null){
+
+ }
+ *
  * @author WangFei on 2014/11/7 0007.
  *         文件控制器
  */
@@ -29,12 +40,21 @@ import java.util.Map;
 public class FileController {
 
 
+    /**
+     * 单文件上传
+     * @param model
+     * @param multiFile
+     * @param request
+     * @return
+     */
     @ResponseBody
-    @RequestMapping("/doc/upload")
-    public ResultData excelUpload(Model model, @RequestParam(value = "fileName", required = false) MultipartFile excelFile, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping("/upload")
+    public ResultData fileUpload(Model model, @RequestParam(value = "multiFile", required = false) MultipartFile multiFile, HttpServletRequest request) {
 
         ResultData resultData = ResultData.ok();
         String realPath;
+
+
 
         boolean isDebug = true;
         String deployPath = "";
@@ -44,8 +64,8 @@ public class FileController {
             realPath = deployPath+File.separator;
         }
 //        String realPath = request.getServletContext().getRealPath("/");
-        String suffix = (excelFile.getOriginalFilename().substring
-                (excelFile.getOriginalFilename().lastIndexOf("."))).toLowerCase();
+        String suffix = (multiFile.getOriginalFilename().substring
+                (multiFile.getOriginalFilename().lastIndexOf("."))).toLowerCase();
         /**拼成完整的文件保存路径加文件**/
         String filePath = realPath + "data" + File.separator;
         File docFile = new File(filePath);
@@ -53,16 +73,43 @@ public class FileController {
             docFile.mkdirs();
         }
         //String fileName = excelFile.getOriginalFilename();
-        String fileName = System.currentTimeMillis() + suffix;
-        File file = new File(filePath + File.separator + fileName);
+        String fileNameTemp = System.currentTimeMillis() + suffix;
+        File file = new File(filePath + File.separator + fileNameTemp);
         try {
-            resultData.putDataValue("path","/data/"+File.separator + fileName);
-            excelFile.transferTo(file);
+            resultData.putDataValue("path","/data/"+File.separator + fileNameTemp);
+            multiFile.transferTo(file);
 //            sendSuccessJSON(response, "/data/excel/" + fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return resultData;
+    }
+
+
+    /**
+     * 多文件上传
+     * @param model
+     * @param multiFile
+     * @param request
+     * @param response
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/images/upload")
+    public ResultData imagesUpload(Model model, @RequestParam(value = "multiFile", required = false) MultipartFile []multiFile, HttpServletRequest request, HttpServletResponse response) {
+
+        ShiroHttpServletRequest shiroRequest = (ShiroHttpServletRequest) request;
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        MultipartHttpServletRequest multipartRequest = commonsMultipartResolver.resolveMultipart((HttpServletRequest) shiroRequest.getRequest());
+
+        Iterator<String> itr = multipartRequest.getFileNames();
+        MultipartFile multipartFile = null;
+
+        while (itr.hasNext()) {
+            multipartFile = multipartRequest.getFile(itr.next());
+
+        }
+            return ResultData.ok();
     }
 
 
