@@ -8,8 +8,8 @@
 
 	<%@include file="/WEB-INF/common/static.jsp"%>
 	<link href="${ctx}/module-css/repair-order.css" rel="stylesheet">
-	<%-- <link rel="stylesheet" type="text/css" href="${ctx}/module-css//webuploader.css">
-	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css"> --%>
+	<link rel="stylesheet" type="text/css" href="${ctx}/module-css//webuploader.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
 
 	<c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
 	<c:set var="CHILD_MENU_CODE" value="RepairOrder_Add" />
@@ -19,33 +19,7 @@
 	    var attributesJson = eval('${attributesJson}');
 	    var categoryServiceJson = eval('${categoryServiceJson}');
 	</script>
-	<style>
-        #content-main{ position: relative}
-        .xbb{ margin-right: 2px}
-        #search_Big{background:#FFFFFF; margin: 10px 0;padding: 8px 0px 0px 0px; font-weight: bold; margin-bottom: 5px}
-        #search_Big ul,#search_Big ul li{ padding: 0; margin: 0}
-        #search_Big ul li{ float: left; margin-right: 15px}
-        #search_Big ul li span{ font-size: 13px; font-family: 微软雅黑; font-weight: bold; margin-right: 15px; margin-left: 10px;
-            vertical-align: middle; display: inline-block; width: 65px; text-align: right; float: left; line-height: 24px}
-        #search_Big  input{ border: 1px solid #e5e5e5;  height: 24px; padding-left: 3px}
-        .sear{ line-height:26px; font-size: 13px; margin-right: 15px}
-        .line{ width: 100%; margin-top: 10px; border: 1px solid #efefef}
-        .lrx{display: none}
-        .mwdth tr{ border: 1px solid #FFFFFF  !important;}
-        .inpt_width{ width: 165px; border: 1px solid #e5e5e5; height: 24px; font-weight: normal}
-        #cont{ margin-top: 10px; padding-bottom: 5px}
-        #cont ul{ margin-bottom: 10px}
-        #cont ul li span{float: left}
-        #cont select{ float: left; padding: 0}
-        #otherTab select{float: left; padding: 0}
-        #otherTab ul{ margin-bottom: 10px}
-        #otherTab ul li span{float: left}
-        .search_right{ margin:5px 15px 0 0}
-        #search_Big{  box-shadow: 0 1px 5px  0 #e5e5e5;}
-        #searchFrom{ margin-left: 15px; float: right}
-
-        .ibox{ padding: 0}
-    </style>
+	
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
