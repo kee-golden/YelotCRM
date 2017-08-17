@@ -155,7 +155,7 @@
 						</div>
 					</div>
 					<div id="image-desc">
-						<label class="col-md-2">外观描述:</label> <input type="text" class="col-md-6 bottom10" placeholder="" />
+						<label class="col-md-2">外观描述:</label> <input type="text" id="imageDesc" class="col-md-6 bottom10" placeholder="" />
 
 					</div>
 				</div>
@@ -170,11 +170,11 @@
 
 					<div id="repairContent">
 						<div class="row bottom10">
-							<label class="col-md-2">维修内容:</label> <input type="text" class="col-md-8" name="repairDesc">
+							<label class="col-md-2">维修内容:</label> <input type="text" class="col-md-8" id="repairDesc">
 						</div>
 						<div class="row bottom10">
 							<label class="col-md-2">预付款:</label> <input type="text" class="col-md-2" name="pre-flee"> <label class="col-md-2">交货时间:</label> <input
-								type="text" class="col-md-2" name="finishedDate">
+								type="text" class="col-md-2" id="pickupDate">
 						</div>
 
 

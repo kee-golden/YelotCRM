@@ -27,31 +27,49 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         }
 
         var firstCategory = $('#firstCategory').val();
-        var secondeCategory = $('#secondCategory').val();
-        console.log(firstCategory+","+secondeCategory);
+        var secondCategory = $('#secondCategory').val();
+        console.log(firstCategory+","+secondCategory);
 
         var valuesAttributeJson =  getAttributeValues(attributesJson);
+        console.log("values json:"+JSON.stringify(valuesAttributeJson));
         var serviceItemJson = $('#serviceItem').val();
         console.log("serviceItemJson:"+serviceItemJson);
 
+        var imagePaths = $('.filelist').data('path');
+        console.log("imagepaths:"+imagePaths);
+        var imageDesc = $('#imageDesc').val();
+        console.log("imageDesc:"+imageDesc);
+        var repairDesc = $('#repairDesc').val();
+        console.log("repirDesc:"+repairDesc);
+        var pickupDate = $('#pickupDate').val();
+        console.log("pickupDate:"+pickupDate);
+        $.ajax({
+            url: ctx + '/repair-order/save',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                customerId: customerId,
+                firstCategory: firstCategory,
+                secondCategory: secondCategory,
+                valuesAttributeJson:JSON.stringify(valuesAttributeJson),
+                serviceItemJson:JSON.stringify(serviceItemJson),
+                imagePaths:imagePaths,
+                imageDesc:imageDesc,
+                repairDesc:repairDesc,
+                pickupDate:pickupDate
 
+            },
+            success: function (data) {
+
+            }
+
+        });
 
     });
 
     function getAttributeValues(attributesJson) {
         //
         var attrValuesJson = [];
-        // var attr1 = {};
-        // var attr2 = {};
-        // attr1.id = 1;
-        // attr1.attributeName="AA";
-        // attr1.selectionValues="A1";
-        // attr2.id=2;
-        // attr2.attributeName="BB";
-        // attr2.selectionValues="B1";
-        //
-        // attrValuesJson.push(attr1);
-        // attrValuesJson.push(attr2);
 
         for(var i = 0;i<attributesJson.length;i++){
             var objJson = {};
@@ -62,7 +80,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
             attrValuesJson.push(objJson);
         }
 
-        console.log(JSON.stringify(attrValuesJson));
+        // console.log(JSON.stringify(attrValuesJson));
 
         return attrValuesJson;
     }

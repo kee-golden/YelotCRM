@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.RepairOrderMapper">
+    <resultMap id="orderResultMap" type="com.yelot.crm.entity.RepairOrder">
+        <id property="id" column="id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="status" column="status"/>
+        <result property="createUserId" column="create_user_id"/>
+        <result property="approveUserId" column="approve_user_id"/>
+        <result property="pickupAt" column="pickup_at"/>
+        <result property="pickupType" column="pickup_type"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="customerPhone" column="customer_phone"/>
+        <result property="customerAddress" column="customer_address"/>
+        <result property="advancePayment" column="advance_payment"/>
+        <result property="nonPayment" column="non_payment"/>
+        <result property="advancePaymentType" column="advance_payment_type"/>
+        <result property="totalPayment" column="total_payment"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="imagesJson" column="images_json"/>
+        <result property="productInfoJson" column="product_info_json"/>
+        <result property="serviceItemIds" column="service_item_ids"/>
+        <result property="imageDesc" column="image_desc"/>
+        <result property="firstCategoryId" column="first_category_id"/>
+        <result property="secondCategoryId" column="second_category_id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="repairDesc" column="repair_desc"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+    </resultMap>
+
+    <select id="find" resultMap="orderResultMap">
+        SELECT * from t_repair_order where id = #{id};
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_repair_order(order_no,status,create_user_id,approve_user_id,pickup_at,
+            pickup_type,customer_id,customer_name,customer_phone,customer_address,advance_payment,non_payment,
+            advance_payment_type,non_payment_type,total_payment,shop_id,images_json,image_desc,product_info_json,
+            service_item_ids,first_category_id,second_category_id,brand_id,repair_desc,create_at,update_at)
+            values(#{orderNo},#{status},#{createUserId},#{approveUserId},#{pickupAt},#{pickupType},
+            #{customerId},#{customerName},#{customerPhone},#{customerAddress},#{advancePayment},#{nonPayment},
+            #{advancePaymentType},#{nonPaymentType},#{totalPayment},#{shopId},#{imagesJson},#{imageDesc},#{productInfoJson},
+            #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt})
+
+    </insert>
+
+</mapper>

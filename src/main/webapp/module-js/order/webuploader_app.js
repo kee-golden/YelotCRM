@@ -85,7 +85,8 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
                 origPath = origPath + ","+responseData.data.path;
             }
             $('.filelist').data("path",origPath);
-            alert("path:"+origPath);
+            console.log("path:"+$('.filelist').data('path'));
+            // alert("path:"+origPath);
         });
 
         // 添加“添加文件”的按钮，

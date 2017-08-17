@@ -1,14 +1,14 @@
 package com.yelot.crm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResultData;
-import com.yelot.crm.entity.Attribute;
-import com.yelot.crm.entity.Brand;
-import com.yelot.crm.entity.Category;
-import com.yelot.crm.entity.CategoryServiceItem;
+import com.yelot.crm.Util.UserUtil;
+import com.yelot.crm.entity.*;
 import com.yelot.crm.mapper.BrandMapper;
 import com.yelot.crm.mapper.CategoryMapper;
 import com.yelot.crm.mapper.CategoryServiceItemMapper;
+import com.yelot.crm.mapper.CustomerMapper;
 import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,8 +50,15 @@ public class RepairOrderController {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private CustomerMapper customerMapper;
 
 
+    /**
+     * 调整到新建页面
+     * @param model
+     * @return
+     */
     @RequestMapping("add")
     public String add(Model model){
 
@@ -79,6 +87,62 @@ public class RepairOrderController {
         model.addAttribute("attributesJson",attibutesJson);
 
         return "repair_order/repair_order_add";
+    }
+
+
+    /**
+     *
+     *
+     * customerId: customerId,
+     firstCategory: firstCategory,
+     secondeCategory: secondeCategory,
+     valuesAttributeJson:valuesAttributeJson,
+     serviceItemJson:serviceItemJson,
+     imagePaths:imagePaths,
+     imageDesc:imageDesc,
+     repairDesc:repairDesc,
+     pickupDate:pickupDate
+     * @return
+     */
+
+    @ResponseBody
+    @RequestMapping("save")
+    public ResultData save(Long customerId,String firstCategory,String secondCategory,String valuesAttributeJson,
+                           String serviceItemJson,String imagePaths,String imageDesc,String repairDesc,String pickupDate){
+        RepairOrder repairOrder = new RepairOrder();
+
+        User user = UserUtil.getCurrentUser();
+        repairOrder.setCreateUserId(user.getId());
+        repairOrder.setShopId(user.getShop_id());
+
+        Category category = categoryMapper.findByName(firstCategory,secondCategory);
+
+        repairOrder.setFirstCategoryId(category.getParentId());
+        repairOrder.setSecondCategoryId(category.getId());
+        Customer customer = customerMapper.find(customerId);
+        repairOrder.setCustomerId(customerId);
+        repairOrder.setCustomerName(customer.getName());
+        repairOrder.setCustomerAddress(customer.getAddress());
+        repairOrder.setCustomerPhone(customer.getPhone());
+        repairOrder.setProductInfoJson(valuesAttributeJson);
+        repairOrder.setServiceItemIds(serviceItemJson);
+        repairOrder.setImagesJson(imagePaths);
+        repairOrder.setImageDesc(imageDesc);
+        repairOrder.setRepairDesc(repairDesc);
+        repairOrder.setPickupAt(DateUtil.toDate(pickupDate,"yyyy-MM-dd"));
+        Date now = new Date();
+        repairOrder.setCreateAt(now);
+        repairOrder.setUpdateAt(now);
+
+        String orderNo = user.getShop_id()+DateUtil.toString(now,"yyyyMMddHHMMSS");
+        repairOrder.setOrderNo(orderNo);
+
+        repairOrder.setStatus(2);//submit
+
+        repairOrderService.save(repairOrder);
+
+        return ResultData.ok();
+
     }
 
     @ResponseBody

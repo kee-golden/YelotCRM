@@ -10,6 +10,9 @@ import java.util.Date;
  */
 public class DateUtil {
     public static Date toDate(String dateStr, String format) {
+        if(dateStr == null || dateStr.isEmpty()){
+            return null;
+        }
         SimpleDateFormat sdf = new SimpleDateFormat(format);//小写的mm表示的是分钟
         try {
             Date date = sdf.parse(dateStr);
