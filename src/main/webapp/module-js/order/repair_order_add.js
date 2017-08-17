@@ -177,25 +177,37 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         var prifixAttribute = 'attId_';// 属性前缀
         //var attributesDiv = $("#attributes");
         $("#attributes").empty();//清空
+        	if (attributesJson.length != 0) {
+                $("#attributes").append('<table style="width: 100%" border="1">');
+			}
             for(var i=0;i<attributesJson.length;i++){
-                var labelStr = '<label>'+attributesJson[i].attributeName+':</label>';
+            	if (i % 4 == 0) {
+                    $("#attributes").append('<tr>');
+				}
+                var labelStr = '<td align="right" style="width: 8%"><label>'+attributesJson[i].attributeName+':</label></td>';
                 $("#attributes").append(labelStr);
                 if(attributesJson[i].type == 1){
-                    var selectStr = '<select name=\"'+attributesJson[i].attributeName+'\" id=\"'+prifixAttribute+attributesJson[i].id+'\">';
+                    var selectStr = '<td align="left" style="width: 15%"><select name=\"'+attributesJson[i].attributeName+'\" id=\"'+prifixAttribute+attributesJson[i].id+'\">';
                     var optionStr = '';
                     var valuesArray = attributesJson[i].selectionValues.split(',');
                     for(var j = 0;j<valuesArray.length;j++){
                         optionStr = optionStr + '<option value=\"'+valuesArray[j]+'\">'+valuesArray[j]+'</option>';
                     }
                     $("#attributes").append(selectStr+optionStr);
-                    $("#attributes").append('</select>');
+                    $("#attributes").append('</select></td>');
 
                 }else if(attributesJson[i].type == 2){
-                    var selectStr2 = '<input type=\"text\" name = \"'+attributesJson[i].attributeName+'\" id=\"'+prifixAttribute+attributesJson[i].id+"\"/>";
+                    var selectStr2 = '<td align="left"><input type=\"text\" name = \"'+attributesJson[i].attributeName+'\" id=\"'+prifixAttribute+attributesJson[i].id+"\"/></td>";
                     $("#attributes").append(selectStr2);
 
                 }
+            	if (i % 4 == 0) {
+                    $("#attributes").append('</tr>');
+				}
             }
+        	if (attributesJson.length != 0) {
+                $("#attributes").append('</table>');
+			}
 
     }
 

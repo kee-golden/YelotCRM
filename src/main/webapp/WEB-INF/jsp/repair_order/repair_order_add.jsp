@@ -4,25 +4,48 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-<title>CRM管理后台</title>
+	<title>CRM管理后台</title>
 
-<%@include file="/WEB-INF/common/static.jsp"%>
-<link href="${ctx}/module-css/repair-order.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="${ctx}/module-css//webuploader.css">
-	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
+	<%@include file="/WEB-INF/common/static.jsp"%>
+	<link href="${ctx}/module-css/repair-order.css" rel="stylesheet">
+	<%-- <link rel="stylesheet" type="text/css" href="${ctx}/module-css//webuploader.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css"> --%>
 
-<c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
-<c:set var="CHILD_MENU_CODE" value="RepairOrder_Add" />
+	<c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
+	<c:set var="CHILD_MENU_CODE" value="RepairOrder_Add" />
 
-<script>
-	var ctx = '${ctx}';
-    var attributesJson = eval('${attributesJson}');
-    var categoryServiceJson = eval('${categoryServiceJson}');
+	<script>
+		var ctx = '${ctx}';
+	    var attributesJson = eval('${attributesJson}');
+	    var categoryServiceJson = eval('${categoryServiceJson}');
+	</script>
+	<style>
+        #content-main{ position: relative}
+        .xbb{ margin-right: 2px}
+        #search_Big{background:#FFFFFF; margin: 10px 0;padding: 8px 0px 0px 0px; font-weight: bold; margin-bottom: 5px}
+        #search_Big ul,#search_Big ul li{ padding: 0; margin: 0}
+        #search_Big ul li{ float: left; margin-right: 15px}
+        #search_Big ul li span{ font-size: 13px; font-family: 微软雅黑; font-weight: bold; margin-right: 15px; margin-left: 10px;
+            vertical-align: middle; display: inline-block; width: 65px; text-align: right; float: left; line-height: 24px}
+        #search_Big  input{ border: 1px solid #e5e5e5;  height: 24px; padding-left: 3px}
+        .sear{ line-height:26px; font-size: 13px; margin-right: 15px}
+        .line{ width: 100%; margin-top: 10px; border: 1px solid #efefef}
+        .lrx{display: none}
+        .mwdth tr{ border: 1px solid #FFFFFF  !important;}
+        .inpt_width{ width: 165px; border: 1px solid #e5e5e5; height: 24px; font-weight: normal}
+        #cont{ margin-top: 10px; padding-bottom: 5px}
+        #cont ul{ margin-bottom: 10px}
+        #cont ul li span{float: left}
+        #cont select{ float: left; padding: 0}
+        #otherTab select{float: left; padding: 0}
+        #otherTab ul{ margin-bottom: 10px}
+        #otherTab ul li span{float: left}
+        .search_right{ margin:5px 15px 0 0}
+        #search_Big{  box-shadow: 0 1px 5px  0 #e5e5e5;}
+        #searchFrom{ margin-left: 15px; float: right}
 
-
-</script>
-
-
+        .ibox{ padding: 0}
+    </style>
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
@@ -40,45 +63,42 @@
 					<div class="clearfix"></div>
 				</h6>
 				<div class="row top_row col-md-12 b-r">
-					<div><h5>查询该客户是否已存在，不存在需要到客户管理中，创建一个客户</h5></div>
+					<div>
+						<h5>查询该客户是否已存在，不存在需要到客户管理中，创建一个客户</h5>
+					</div>
 
 					<form class="form-inline bottom10" role="form">
 						<div class="form-group">
-							<input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号"/>
-							<input id="customerSearchBtn" type="button" class="form-control btn-group" value="查询"/>
+							<input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号" /> <input id="customerSearchBtn" type="button"
+								class="form-control btn-group" value="查询" />
 						</div>
 					</form>
-					<hr/>
+					<hr />
 
 					<div id="customerContainer" class="col-md-12 b-r">
-
 						<div class="row bottom10">
 							<h3 class="m-t-none m-b">基础信息</h3>
-							<input type="hidden" id="customerId" data-id=""/>
+							<input type="hidden" id="customerId" data-id="" />
 							<div class="col-md-2">
-								<label><span style="color: red"></span>用户名</label>
-								<input type="text" placeholder="请输入用户名" class="form-control" name="name" id="J_name"
-									    autocomplete="off" readonly>
+								<label><span style="color: red"></span>用户名</label> <input type="text" placeholder="请输入用户名" class="form-control" name="name" id="J_name"
+									autocomplete="off" readonly>
 							</div>
 
 							<div class="col-md-3">
-								<label><span style="color: red"></span>手机号</label>
-								<input type="text" placeholder="请输入手机号" class="form-control" name="phone" id="J_phone"
-									   readonly>
+								<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="phone" id="J_phone"
+									readonly>
 							</div>
 
 							<div class="col-md-2">
 								<label>省市</label>
 								<div id="prov_city">
-									<select class="prov" name="province"  readonly=""></select>
-									<select class="city" disabled="disabled" name="city" readonly=""></select>
+									<select class="prov" name="province" readonly=""></select> <select class="city" disabled="disabled" name="city" readonly=""></select>
 								</div>
 
 							</div>
 							<div class="col-md-5">
-								<label>详细地址</label>
-								<input type="text" placeholder="请输入详细地址" class="form-control" name="address" id="J_address"
-									   value="${bean.address}" readonly>
+								<label>详细地址</label> <input type="text" placeholder="请输入详细地址" class="form-control" name="address" id="J_address" value="${bean.address}"
+									readonly>
 
 							</div>
 						</div>
@@ -86,7 +106,11 @@
 					</div>
 
 					<div id="customerTip">
-						<div><h5>该客户不存在，创建一个客户，请点击<a href="${ctx}/customer/index">创建客户</a></h5></div>
+						<div>
+							<h5>
+								该客户不存在，创建一个客户，请点击<a href="${ctx}/customer/index">创建客户</a>
+							</h5>
+						</div>
 					</div>
 
 				</div>
@@ -101,30 +125,33 @@
 						<%--<h3 class="m-t-none m-b">基础信息</h3>--%>
 
 						<div id="category" class="row bottom10">
-							<label class="col-xs-1">分类:</label>
-							<select class="prov col-xs-1" name="firstCategory" id="firstCategory"></select>
-							<select class="city col-xs-1" disabled="disabled" name="secondCategory" id="secondCategory"></select>
-							<label class="col-xs-1">品牌：</label>
-							<span>
-							<select id="brand" name="brand">
+							<label class="col-xs-1">分类:</label> <select class="prov col-xs-1" name="firstCategory" id="firstCategory"></select> <select
+								class="city col-xs-1" disabled="disabled" name="secondCategory" id="secondCategory"></select> <label class="col-xs-1">品牌：</label> <span>
+								<select id="brand" name="brand">
 
-								<c:forEach items="${brandList}" var="item">
-									<option value="${item.id}">${item.name}</option>
-								</c:forEach>
+									<c:forEach items="${brandList}" var="item">
+										<option value="${item.id}">${item.name}</option>
+									</c:forEach>
 							</select>
-						</span>
+							</span>
 						</div>
-						<div id="attributes" class="bottom10">
+						<div id="attributes" class="bottom10"></div>
+						<!-- <table style="width: 100%" border="1">
+							<tr style="height: 20px">
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table> -->
+						<hr />
+						<label>服务项:</label> <select id="serviceItem" name="serviceItem" multiple class="col-md-6">
+							<%--<c:forEach items="${categoryServiceItemList}" var="item">--%>
+							<%--<option value="${item.serviceItemId}">${item.serviceName}</option>--%>
+							<%--</c:forEach>--%>
 
-						</div>
-						<hr/>
-						<label>服务项:</label>
-							<select id="serviceItem" name="serviceItem" multiple class="col-md-6">
-								<%--<c:forEach items="${categoryServiceItemList}" var="item">--%>
-									<%--<option value="${item.serviceItemId}">${item.serviceName}</option>--%>
-								<%--</c:forEach>--%>
-
-							</select>
+						</select>
 					</div>
 
 				</div>
@@ -142,19 +169,19 @@
 								<p>或将照片拖到这里，单次最多可选20张</p>
 							</div>
 						</div>
-						<div class="statusBar" style="display:none;">
+						<div class="statusBar" style="display: none;">
 							<div class="progress">
-								<span class="text">0%</span>
-								<span class="percentage"></span>
-							</div><div class="info"></div>
+								<span class="text">0%</span> <span class="percentage"></span>
+							</div>
+							<div class="info"></div>
 							<div class="btns">
-								<div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+								<div id="filePicker2"></div>
+								<div class="uploadBtn">开始上传</div>
 							</div>
 						</div>
 					</div>
 					<div id="image-desc">
-						<label class="col-md-2">外观描述:</label>
-						<input type="text" class="col-md-6 bottom10" placeholder=""/>
+						<label class="col-md-2">外观描述:</label> <input type="text" class="col-md-6 bottom10" placeholder="" />
 
 					</div>
 				</div>
@@ -167,24 +194,22 @@
 				</h6>
 				<div class="row">
 
-						<div id="repairContent">
-							<div class="row bottom10">
-								<label class="col-md-2">维修内容:</label>
-								<input type="text" class="col-md-8" name="repairDesc">
-							</div>
-							<div class="row bottom10">
-								<label class="col-md-2">预付款:</label>
-								<input type="text" class="col-md-2" name="pre-flee">
-								<label class="col-md-2">交货时间:</label> <input type="text" class="col-md-2" name="finishedDate">
-							</div>
-
-
+					<div id="repairContent">
+						<div class="row bottom10">
+							<label class="col-md-2">维修内容:</label> <input type="text" class="col-md-8" name="repairDesc">
 						</div>
+						<div class="row bottom10">
+							<label class="col-md-2">预付款:</label> <input type="text" class="col-md-2" name="pre-flee"> <label class="col-md-2">交货时间:</label> <input
+								type="text" class="col-md-2" name="finishedDate">
+						</div>
+
+
+					</div>
 					<%--<div class="col-lg-6  col-md-12"></div>--%>
 					<%--<div class="col-lg-6 col-md-12"></div>--%>
 				</div>
 				<div class="col-md-2 bottom10">
-					<input type="button" class="form-control col-md-2 " id="saveBtn" value="保存"/>
+					<input type="button" class="form-control col-md-2 " id="saveBtn" value="保存" />
 				</div>
 			</div>
 		</div>
