@@ -127,8 +127,18 @@ public class RepairOrderService {
 	 * 
 	 * @return 总的记录条数
 	 */
-	public Integer countTotalPage(String extra_search, Long userId) {
-		return repareOrderMapper.countTotalPage(extra_search, userId);
+	public Integer countTotalPageMy(String extra_search, String type, Long userId) {
+		Long create_user_id = null;
+		Long approve_user_id = null;
+		
+		if ("my".equals(type)) {
+			create_user_id = userId;
+		}
+		if("check".equals(type)){
+			approve_user_id = userId;
+		}
+		
+		return repareOrderMapper.countTotalPageMy(extra_search, create_user_id, approve_user_id);
 	}
 
 	/**
@@ -137,14 +147,23 @@ public class RepairOrderService {
 	 * @param pageHelper
 	 * @return
 	 */
-	public List<RepairOrder> findByPage(String extra_search, Long userId,
-			PageHelper pageHelper) {
-		List<RepairOrder> RepairOrderList = repareOrderMapper.findByPage(
-				extra_search, userId, pageHelper);
+	public List<RepairOrder> findByPageMy(String extra_search, String type, Long userId, PageHelper pageHelper) {
+
+		Long create_user_id = null;
+		Long approve_user_id = null;
+		
+		if ("my".equals(type)) {
+			create_user_id = userId;
+		}
+		if("check".equals(type)){
+			approve_user_id = userId;
+		}
+		
+		List<RepairOrder> RepairOrderList = repareOrderMapper.findByPageMy(extra_search, create_user_id, approve_user_id, pageHelper);
+		
 		for (RepairOrder repairOrder : RepairOrderList) {
 			String serviceItemIds = repairOrder.getServiceItemIds();
-			List<String> serviceItemIdsList = JSON.parseArray(serviceItemIds,
-					String.class);
+			List<String> serviceItemIdsList = JSON.parseArray(serviceItemIds, String.class);
 			String serviceItemNames = "";
 			if (serviceItemIdsList != null && serviceItemIdsList.size() > 0) {
 				for (int i = 0; i < serviceItemIdsList.size(); i++) {

@@ -164,9 +164,19 @@ public class RepairOrderController {
         return resultData;
     }
 
-    @RequestMapping("list")
-    public String list(){
-        return "repair_order/repair_order_list";
+    @RequestMapping("mylist")
+    public String mylist(){
+        return "repair_order/repair_order_mylist";
+    }
+
+    @RequestMapping("checklist")
+    public String checklist(){
+        return "repair_order/repair_order_checklist";
+    }
+
+    @RequestMapping("alllist")
+    public String alllist(){
+        return "repair_order/repair_order_alllist";
     }
 
     /**
@@ -176,6 +186,7 @@ public class RepairOrderController {
     @ResponseBody
     @RequestMapping("query")
     public Table queryOrder(Model model,
+        @RequestParam(value = "type", defaultValue = "")String type,
         @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
         @RequestParam(value = "start", defaultValue = "0") int start,
         @RequestParam(value = "length", defaultValue = "10") int length) {
@@ -185,8 +196,9 @@ public class RepairOrderController {
         pageHelper.setSize(length);
         
         Long userId = UserUtil.getCurrentUser().getId();
-        int pageCount = repairOrderService.countTotalPage(extra_search, userId);
-        List<RepairOrder> repairOrderList = repairOrderService.findByPage(extra_search, userId, pageHelper);
+        int pageCount = repairOrderService.countTotalPageMy(extra_search, type, userId);
+        List<RepairOrder> repairOrderList = repairOrderService.findByPageMy(extra_search, type, userId, pageHelper);
         return new Table(pageCount, pageCount, repairOrderList);
     }
+
 }

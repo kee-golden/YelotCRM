@@ -5,7 +5,6 @@ import java.util.List;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.RepairOrder;
 
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -37,7 +36,7 @@ public interface RepairOrderMapper {
 	 * @param extra_search
 	 * @return
 	 */
-	Integer countTotalPage(@Param("extra_search") String extra_search, @Param("userId") Long userId);
+	Integer countTotalPageMy(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("approve_user_id") Long approve_user_id);
 	
 	/**
 	 * 分页查询
@@ -45,7 +44,7 @@ public interface RepairOrderMapper {
 	 * @param pageHelper
 	 * @return
 	 */
-	List<RepairOrder> findByPage(@Param("extra_search") String extra_search, @Param("userId") Long userId, @Param("pageHelper") PageHelper pageHelper);
+	List<RepairOrder> findByPageMy(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("approve_user_id") Long approve_user_id, @Param("pageHelper") PageHelper pageHelper);
 	
 	/**
 	 * 查询服务名

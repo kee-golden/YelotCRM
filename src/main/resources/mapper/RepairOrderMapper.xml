@@ -26,6 +26,7 @@
         <result property="imageDesc" column="image_desc"/>
         <result property="firstCategoryId" column="first_category_id"/>
         <result property="secondCategoryId" column="second_category_id"/>
+        <result property="categoryName" column="category_name"/>
         <result property="brandId" column="brand_id"/>
         <result property="repairDesc" column="repair_desc"/>
         <result property="createAt" column="create_at"/>
@@ -47,19 +48,24 @@
             #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt})
     </insert>
 
-    <select id="countTotalPage" resultType="java.lang.Integer">
+    <select id="countTotalPageMy" resultType="java.lang.Integer">
         select count(*) 
         from t_repair_order 
-        where create_user_id = #{userId}
+        where 1 = 1 
+        <if test="create_user_id != null and create_user_id != ''">and create_user_id = #{create_user_id}</if>
+        <if test="approve_user_id != null and approve_user_id != ''">and approve_user_id = #{approve_user_id}</if>
         <if test="extra_search != null and extra_search != ''">and order_no like CONCAT('%', #{extra_search}, '%')</if>
     </select>
     
-    <select id="findByPage" resultMap="orderResultMap">
-        select t.*, t1.realname create_user_name, t2.name shop_name
-        from t_repair_order t, t_user t1, t_shop t2
+    <select id="findByPageMy" resultMap="orderResultMap">
+        select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name
+        from t_repair_order t, t_user t1, t_shop t2, t_category t3, t_category t4
         where t.create_user_id = t1.id
         and t.shop_id = t2.id
-        and create_user_id = #{userId}
+        and t.first_category_id = t3.id
+        and t.second_category_id = t4.id
+        <if test="create_user_id != null and create_user_id != ''">and create_user_id = #{create_user_id}</if>
+        <if test="approve_user_id != null and approve_user_id != ''">and approve_user_id = #{approve_user_id}</if>
         <if test="extra_search != null and extra_search != ''">and order_no like CONCAT('%', #{extra_search}, '%')</if>
         order by id desc 
         limit #{pageHelper.offset},#{pageHelper.size} 

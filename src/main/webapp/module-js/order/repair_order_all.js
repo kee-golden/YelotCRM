@@ -14,7 +14,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         'serverSide': true,
         'lengthMenu': [10, 20, 50, 100],
         'ajax':{
-            'url':ctx + '/repair-order/query',
+            'url':ctx + '/repair-order/query?type=all',
 			'method': 'get',
             'data': function (d) {
                 d.extra_search = $('#keywords').val();
@@ -24,6 +24,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'orderNo'},
     			{'data' : 'customerName'},
     			{'data' : 'customerPhone'},
+    			{'data' : 'categoryName'},
     			{'data' : 'serviceItemNames'},
     			{'data' : 'status',
                     'render':function (data) {
@@ -36,6 +37,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                         }
                     }
     			},
+    			{'data' : 'createUserName'},
     			{'data' : 'createAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
     				return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'

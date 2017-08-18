@@ -108,6 +108,8 @@ public class RepairOrder {
     private Long firstCategoryId;
 
     private Long secondCategoryId;
+    
+    private String categoryName;
 
     private Long brandId;
 
@@ -318,7 +320,15 @@ public class RepairOrder {
         this.secondCategoryId = secondCategoryId;
     }
 
-    public Long getBrandId() {
+    public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public Long getBrandId() {
         return brandId;
     }
 

@@ -8,7 +8,7 @@
 <%@include file="/WEB-INF/common/static.jsp"%>
 
 <c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
-<c:set var="CHILD_MENU_CODE" value="RepairOrder_List" />
+<c:set var="CHILD_MENU_CODE" value="RepairOrder_AllList" />
 
 <script>
 	var ctx = '${ctx}';
@@ -187,7 +187,7 @@
 
 				<div class="ibox float-e-margins">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="active"><a>我的订单列表</a></li>
+						<li class="active"><a>全部订单列表</a></li>
 					</ul>
 
 					<div id="content" class="ibox-content">
@@ -217,8 +217,10 @@
 									<th>订单号</th>
 									<th>客户姓名</th>
 									<th>客户电话</th>
+									<th>产品分类</th>
 									<th>服务项</th>
 									<th>当前状态</th>
+									<th>创建者</th>
 									<th>创建时间</th>
 									<th>编辑</th>
 								</tr>
@@ -238,7 +240,7 @@
 	</div>
 	<script src="${ctx}/static/require/require.js"></script>
 	<script src="${ctx}/static/require/require.config.js"></script>
-	<script src="${ctx}/module-js/order/repair_order.js"></script>
+	<script src="${ctx}/module-js/order/repair_order_all.js"></script>
 
 </body>
 
