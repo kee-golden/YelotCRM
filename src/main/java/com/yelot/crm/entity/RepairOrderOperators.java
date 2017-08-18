@@ -6,10 +6,11 @@ import java.util.Date;
  * 审核记录表，操作详情记录表
  * Created by kee on 17/5/30.
  */
-public class RepareOrderOperators {
+public class RepairOrderOperators {
     private Long id;
-    private Long repare_order_id;
+    private Long repair_order_id;
     private Long approve_user_id;
+    private Long next_approve_user_id;
     private String operator_comment;
     private int operator_status;
     private Date create_at;
@@ -22,12 +23,21 @@ public class RepareOrderOperators {
         this.id = id;
     }
 
-    public Long getRepare_order_id() {
-        return repare_order_id;
+    public Long getNext_approve_user_id() {
+        return next_approve_user_id;
     }
 
-    public void setRepare_order_id(Long repare_order_id) {
-        this.repare_order_id = repare_order_id;
+    public void setNext_approve_user_id(Long next_approve_user_id) {
+        this.next_approve_user_id = next_approve_user_id;
+    }
+
+
+    public Long getRepair_order_id() {
+        return repair_order_id;
+    }
+
+    public void setRepair_order_id(Long repair_order_id) {
+        this.repair_order_id = repair_order_id;
     }
 
     public Long getApprove_user_id() {

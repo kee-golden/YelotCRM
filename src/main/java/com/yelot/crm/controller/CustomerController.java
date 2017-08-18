@@ -65,6 +65,7 @@ public class CustomerController {
         List<Customer> customerList = customerMapper.findBySearch(pageHelper,extra_search);
 
         model.addAttribute("customerList", customerList);
+
         return new Table(pageCount, pageCount, customerList);
     }
 

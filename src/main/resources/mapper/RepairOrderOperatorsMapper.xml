@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.RepairOrderOperatorsMapper">
+    <resultMap id="orderResultMap" type="com.yelot.crm.entity.RepairOrderOperators">
+        <id property="id" column="id"/>
+        <result property="repair_order_id" column="repair_order_id"/>
+        <result property="approve_user_id" column="approve_user_id"/>
+        <result property="next_approve_user_id" column="next_approve_user_id"/>
+        <result property="operator_comment" column="operator_comment"/>
+        <result property="operator_status" column="operator_status"/>
+        <result property="create_at" column="create_at"/>
+    </resultMap>
+
+    <select id="findByOrderId" resultMap="orderResultMap">
+        SELECT * from t_repair_order_operators where repair_order_id = #{orderId};
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_repair_order_operators(repair_order_id,approve_user_id,next_approve_user_id,operator_comment,
+        operator_status,create_at)
+            values(#{repair_order_id},#{approve_user_id},#{next_approve_user_id},#{operator_comment},
+            #{operator_status},#{create_at})
+
+    </insert>
+
+</mapper>

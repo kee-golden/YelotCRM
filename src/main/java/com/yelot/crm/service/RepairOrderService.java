@@ -1,13 +1,12 @@
 package com.yelot.crm.service;
 
+import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.entity.Category;
 import com.yelot.crm.entity.RepairOrder;
-import com.yelot.crm.entity.RepareOrderItem;
-import com.yelot.crm.entity.RepareOrderItemImage;
-import com.yelot.crm.mapper.CategoryMapper;
-import com.yelot.crm.mapper.RepareOrderItemImgMapper;
-import com.yelot.crm.mapper.RepareOrderItemMapper;
-import com.yelot.crm.mapper.RepairOrderMapper;
+import com.yelot.crm.entity.RepairOrderOperators;
+import com.yelot.crm.entity.User;
+import com.yelot.crm.enums.OperatorStatus;
+import com.yelot.crm.mapper.*;
 import com.yelot.crm.vo.City;
 import com.yelot.crm.vo.CityList;
 import com.yelot.crm.vo.CityListVo;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,10 +28,8 @@ public class RepairOrderService {
     private RepairOrderMapper repareOrderMapper;
 
     @Autowired
-    private RepareOrderItemMapper repareOrderItemMapper;
+    private RepairOrderOperatorsMapper repairOrderOperatorsMapper;
 
-    @Autowired
-    private RepareOrderItemImgMapper repareOrderItemImgMapper;
 
     @Autowired
     private CategoryMapper categoryMapper;
@@ -60,8 +58,26 @@ public class RepairOrderService {
 //    }
 
     public void save(RepairOrder repairOrder) {
+
+        User user = UserUtil.getCurrentUser();
+        repairOrder.setApproveUserId(user.getShop().getUser_id());//首次创建后的审批人为该店店长
         repareOrderMapper.save(repairOrder);
 
+        submitOperator(repairOrder);
+
+
+    }
+
+    private void submitOperator(RepairOrder repairOrder){
+        RepairOrderOperators repairOrderOperators = new RepairOrderOperators();
+        repairOrderOperators.setRepair_order_id(repairOrder.getId());
+        repairOrderOperators.setApprove_user_id(repairOrder.getCreateUserId());
+        repairOrderOperators.setOperator_status(OperatorStatus.SUBMIT.getCode());
+        User user = UserUtil.getCurrentUser();
+        repairOrderOperators.setNext_approve_user_id(user.getShop().getUser_id());
+        repairOrderOperators.setCreate_at(new Date());
+
+        repairOrderOperatorsMapper.save(repairOrderOperators);
     }
 
 
