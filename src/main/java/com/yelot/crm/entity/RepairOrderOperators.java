@@ -15,6 +15,14 @@ public class RepairOrderOperators {
     private int operator_status;
     private Date create_at;
 
+    private String orderNo;
+
+    private String createUserName;
+
+    private String approveUserName;
+
+
+
     public Long getId() {
         return id;
     }
@@ -70,5 +78,29 @@ public class RepairOrderOperators {
 
     public void setCreate_at(Date create_at) {
         this.create_at = create_at;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    public String getApproveUserName() {
+        return approveUserName;
+    }
+
+    public void setApproveUserName(String approveUserName) {
+        this.approveUserName = approveUserName;
     }
 }

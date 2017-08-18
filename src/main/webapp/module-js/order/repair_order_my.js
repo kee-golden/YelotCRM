@@ -39,8 +39,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			},
     			{'data' : 'createAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
-    				return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
-    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
+    				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
+    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_workflow"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
     			}
     			}],
         'language': {
@@ -60,6 +60,45 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     
     $("#J_orderSerch").click(function(){
         table.draw();
-    });	
-	
-})
+    });
+
+    $JOrderList.on('click', '.J_workflow', function () {
+        $.ajax({
+            url: ctx + '/repair-order-operators/workflow',
+            data: {
+                orderId: $(this).data('id')
+            },
+            method: 'get',
+            dataType: 'html',
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '审批流程',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: '650px',
+                    shadeClose: true,
+                    btn: ['保存'],
+                    success: function (layero, index) {
+
+
+                    },
+                    yes: function (index) {
+                        var isValid = $("#J_userForm").valid();
+                        if(!isValid){
+                            return;
+                        }
+
+                    }
+
+                });
+            },
+            error: function () {
+
+            }
+        });
+
+
+    });
+
+
+    });
