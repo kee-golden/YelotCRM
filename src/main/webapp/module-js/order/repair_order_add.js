@@ -17,6 +17,12 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         tags: true,
     });
 
+    $('#pickupDate').datetimepicker({
+        lang: 'ch',
+        format: 'Y-m-d',
+        timepicker:false
+    });
+
     $("#saveBtn").click(function () {
 
         var customerId = $('#customerId').data("id");
@@ -60,6 +66,13 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
             },
             success: function (data) {
+                if(data.code == 1200){
+                    yaya.layer.msg("提交成功");
+                    setTimeout(function () {
+                        window.location.href = ctx+'/repair-order/list';
+                    },2000);
+
+                }
 
             }
 
