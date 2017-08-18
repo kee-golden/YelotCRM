@@ -1,138 +1,64 @@
 /**
  * Created by kee on 17/7/13.
  */
-
-    require(['jquery','yaya','echarts','bootstrap'], function ($, yaya,echarts,DrawEChart) {
-
-        var span=document.getElementById("myTab").querySelectorAll("span")
-        for(var i=0;i<span.length;i++){
-            console.log(span[i].innerHTML)
-            if(span[i].innerHTML==0){
-                span[i].style.display="none";
+require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
+	var $JOrderList = $('#J_orderList');
+	// 初始化
+    var table = $JOrderList.DataTable({
+        'scrollX': true,
+        'processing': true,
+        'searching': false,
+        'lengthChange': false,
+        'sort': false,
+        'serverSide': true,
+        'serverSide': true,
+        'lengthMenu': [10, 20, 50, 100],
+        'ajax':{
+            'url':ctx + '/repair-order/query',
+			'method': 'get',
+            'data': function (d) {
+                d.extra_search = $('#keywords').val();
+            }
+        },
+    	'columns': [
+    			{'data' : 'orderNo'},
+    			{'data' : 'customerName'},
+    			{'data' : 'customerPhone'},
+    			{'data' : 'serviceItemNames'},
+    			{'data' : 'status',
+                    'render':function (data) {
+                        if(data == 2) {
+                            return '进行中';
+                        } if(data == 1) {
+                            return '已完成';
+                        } else {
+                            return '已取消'
+                        }
+                    }
+    			},
+    			{'data' : 'createAt'},
+    			{'data' : 'id', 'render' : function(data, type,full, meta) {
+    				return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
+    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
+    			}
+    			}],
+        'language': {
+            'lengthMenu': '每页显示 _MENU_ 条记录',
+            'zeroRecords': '没有检索到数据',
+            'info': '第 _START_ 至 _END_ 条数据 共 _TOTAL_ 条记录',
+            'infoEmpty': '没有数据',
+            'processing': '正在加载数据...',
+            'paginate': {
+                'first': '首页',
+                'previous': '前页',
+                'next': '后页',
+                'last': '尾页'
             }
         }
-        /* 菜单下拉功能*/
-        $("h6 i").click(
-            function(){
-                var div=( $(this).parent().parent().find(".row"));
-                div.slideToggle();
-            }
-        );
-
-        /* 图标功能*/
-        $(function(){
-            $.ajax({
-                url:ctx+'/example1',
-                success:function(data){
-
-                    $('#content').html(data);
-                }
-            });
-        });
-
-        $('#myTab a:first').tab('show');//初始化显示哪个tab
-
-        $('#myTab a').click(function (e) {
-            e.preventDefault();//阻止a链接的跳转行为
-            //var val= $(e).parent().attr('');
-            var sta=$(this).attr('sta');
-            var name='';
-            if(sta=='1'){
-                name='/example1';
-            }else if(sta=='2'){
-                name='/example2';
-            }else if(sta=='3'){
-                name='/example3';
-            }else if(sta=='4'){
-                name='/change/change-approvaleds';
-            }
-            $.ajax({
-                url:ctx+name,
-                success:function(data){
-                    $('#content').html(data);
-                }
-            });
-            $(this).parent().parent().children().removeClass();
-            $(this).parent().addClass("active");
-        });
-
-        /*表格插件*/
-
-
-
-
-
-
     });
-
-function table_PendingCount() {
-    $.ajax({
-        url:ctx+'/indexshow/index-PendingCount',
-        async:false,
-        success:function(result){
-            var s=$("#countAccepted");
-            s.html(result);
-        }
-    });
-    var span=$("#countAccepted");
-    var val=$(span).html();
-    if(val!=0){
-        $(span).show();
-    }else if (val==0){
-        $(span).hide();
-    }
-}
-
-function table_AuditCount() {
-    $.ajax({
-        url: ctx + '/indexshow/index-AuditCount',
-        async:false,
-        success: function (result) {
-            var s = $("#count");
-            s.html(result);
-        }
-    });
-    var span=$("#count");
-    var val=$(span).html();
-    if (val != 0) {
-        $(span).show();
-    }else if (val==0){
-        $(span).hide();
-    }
-}
-function table_RequestCount() {
-    $.ajax({
-        url: ctx + '/indexshow/index-RequestCount',
-        async:false,
-        success: function (result) {
-            var s = $("#countRequest");
-            s.html(result);
-        }
-    });
-    var span=$("#countRequest");
-    var val=$(span).html();
-    if(val!=0){
-        $(span).show();
-    }else if (val==0){
-        $(span).hide();
-    }
-}
-
-function table_total() {
-    $.ajax({
-        url: ctx + '/indexshow/index-total',
-        async:false,
-        success: function (result) {
-            var s = $("#total");
-            s.html(result);
-        }
-    });
-    var span=$("#total");
-    var val=$(span).html();
-    if(val!=0){
-        $(span).show();
-    }else if (val==0){
-        $(span).hide();
-    }
-}
-
+    
+    $("#J_orderSerch").click(function(){
+        table.draw();
+    });	
+	
+})

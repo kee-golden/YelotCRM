@@ -6,6 +6,7 @@
         <result property="orderNo" column="order_no"/>
         <result property="status" column="status"/>
         <result property="createUserId" column="create_user_id"/>
+        <result property="createUserName" column="create_user_name"/>
         <result property="approveUserId" column="approve_user_id"/>
         <result property="pickupAt" column="pickup_at"/>
         <result property="pickupType" column="pickup_type"/>
@@ -18,6 +19,7 @@
         <result property="advancePaymentType" column="advance_payment_type"/>
         <result property="totalPayment" column="total_payment"/>
         <result property="shopId" column="shop_id"/>
+        <result property="shopName" column="shop_name"/>
         <result property="imagesJson" column="images_json"/>
         <result property="productInfoJson" column="product_info_json"/>
         <result property="serviceItemIds" column="service_item_ids"/>
@@ -43,7 +45,28 @@
             #{customerId},#{customerName},#{customerPhone},#{customerAddress},#{advancePayment},#{nonPayment},
             #{advancePaymentType},#{nonPaymentType},#{totalPayment},#{shopId},#{imagesJson},#{imageDesc},#{productInfoJson},
             #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt})
-
     </insert>
+
+    <select id="countTotalPage" resultType="java.lang.Integer">
+        select count(*) 
+        from t_repair_order 
+        where create_user_id = #{userId}
+        <if test="extra_search != null and extra_search != ''">and order_no like CONCAT('%', #{extra_search}, '%')</if>
+    </select>
+    
+    <select id="findByPage" resultMap="orderResultMap">
+        select t.*, t1.realname create_user_name, t2.name shop_name
+        from t_repair_order t, t_user t1, t_shop t2
+        where t.create_user_id = t1.id
+        and t.shop_id = t2.id
+        and create_user_id = #{userId}
+        <if test="extra_search != null and extra_search != ''">and order_no like CONCAT('%', #{extra_search}, '%')</if>
+        order by id desc 
+        limit #{pageHelper.offset},#{pageHelper.size} 
+    </select>
+
+    <select id="findServiceItemName" resultType="String">
+        SELECT name from t_service_item where id = #{id};
+    </select>
 
 </mapper>

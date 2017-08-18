@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
+import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.*;
 import com.yelot.crm.mapper.BrandMapper;
 import com.yelot.crm.mapper.CategoryMapper;
@@ -12,10 +13,13 @@ import com.yelot.crm.mapper.CustomerMapper;
 import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
+import com.yelot.crm.vo.Table;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -163,5 +167,26 @@ public class RepairOrderController {
     @RequestMapping("list")
     public String list(){
         return "repair_order/repair_order_list";
+    }
+
+    /**
+     * 订单分页查询
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("query")
+    public Table queryOrder(Model model,
+        @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
+        @RequestParam(value = "start", defaultValue = "0") int start,
+        @RequestParam(value = "length", defaultValue = "10") int length) {
+    	
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(start);
+        pageHelper.setSize(length);
+        
+        Long userId = UserUtil.getCurrentUser().getId();
+        int pageCount = repairOrderService.countTotalPage(extra_search, userId);
+        List<RepairOrder> repairOrderList = repairOrderService.findByPage(extra_search, userId, pageHelper);
+        return new Table(pageCount, pageCount, repairOrderList);
     }
 }

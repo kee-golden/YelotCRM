@@ -2,6 +2,8 @@ package com.yelot.crm.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Created by kee on 17/5/30.
  */
@@ -16,6 +18,11 @@ public class RepairOrder {
      * 该字段为冗余字段，主要是为了统计方便（快速获得shop_id），通过create_user_id还需要经过一次查询
      */
     private Long shopId;
+    
+    /**
+     * 门店名称
+     */
+    private String shopName;
 
     /**
      * 订单状态,提交（2）,最终（1），取消（0）
@@ -25,7 +32,11 @@ public class RepairOrder {
      * 订单创建者
      */
     private Long createUserId;
-
+    
+    /**
+     * 订单创建者姓名
+     */
+    private String createUserName;
 
     /**
      * 当前订单待审核者，订单当前状态，所有者，要审核订单的用户id
@@ -91,6 +102,8 @@ public class RepairOrder {
     private String productInfoJson;
 
     private String serviceItemIds;
+    
+    private String serviceItemNames;
 
     private Long firstCategoryId;
 
@@ -137,7 +150,15 @@ public class RepairOrder {
         this.createUserId = createUserId;
     }
 
-    public Long getApproveUserId() {
+    public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public Long getApproveUserId() {
         return approveUserId;
     }
 
@@ -232,8 +253,16 @@ public class RepairOrder {
     public void setShopId(Long shopId) {
         this.shopId = shopId;
     }
+    
+    public String getShopName() {
+		return shopName;
+	}
 
-    public String getImagesJson() {
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+
+	public String getImagesJson() {
         return imagesJson;
     }
 
@@ -265,7 +294,15 @@ public class RepairOrder {
         this.serviceItemIds = serviceItemIds;
     }
 
-    public Long getFirstCategoryId() {
+    public String getServiceItemNames() {
+		return serviceItemNames;
+	}
+
+	public void setServiceItemNames(String serviceItemNames) {
+		this.serviceItemNames = serviceItemNames;
+	}
+
+	public Long getFirstCategoryId() {
         return firstCategoryId;
     }
 
@@ -305,6 +342,7 @@ public class RepairOrder {
         this.nonPaymentType = nonPaymentType;
     }
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getCreateAt() {
         return createAt;
     }
@@ -313,6 +351,7 @@ public class RepairOrder {
         this.createAt = createAt;
     }
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getUpdateAt() {
         return updateAt;
     }
