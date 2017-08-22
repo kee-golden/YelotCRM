@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.ConsultOrderMapper">
+    <resultMap id="orderResultMap" type="com.yelot.crm.entity.ConsultOrder">
+        <id property="id" column="id"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="customerSex" column="customer_sex"/>
+        <result property="customerPhone" column="customer_phone"/>
+        <result property="customerAgesAlmost" column="customer_ages_almost"/>
+        <result property="wechatNo" column="wechat_no"/>
+        <result property="repairCommands" column="repair_commands"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="firstCategory" column="first_category"/>
+        <result property="secondCategory" column="second_category"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="channelUrl" column="channel_url"/>
+        <result property="keywords" column="keywords"/>
+        <result property="priceLimit" column="price_limit"/>
+        <result property="timeLimt" column="time_limit"/>
+        <result property="qulityLimt" column="qulity_limit"/>
+        <result property="specialCommands" column="special_commands"/>
+        <result property="imagesPath" column="images_path"/>
+        <result property="vistorAt" column="vistor_at"/>
+        <result property="createAt" column="create_at"/>
+        <result property="createUserId" column="create_user_id"/>
+        <result property="expressNo" column="express_no"/>
+        <result property="status" column="status"/>
+        <result property="shopId" column="shop_id"/>
+
+    </resultMap>
+
+    <select id="find" resultMap="orderResultMap">
+        SELECT * from t_consult_order where id = #{id};
+    </select>
+    
+    <select id="countTotalPageAll" resultType="java.lang.Integer">
+        SELECT count(*) FROM t_consult_order
+        where 1 = 1
+        <if test="extra_search != null and extra_search != ''">and order_no like CONCAT('%', #{extra_search}, '%')</if>
+        
+    </select>
+    
+    <select id="findByPageAll" resultMap="orderResultMap">
+
+        SELECT * from t_consult_order
+        where 1 = 1
+        <if test="extra_search != null and extra_search != ''"> and customer_phone like CONCAT('%', #{extra_search}, '%')</if>
+        order by id DESC
+        limit #{pageHelper.offset},#{pageHelper.size}
+
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_consult_order(customer_name,customer_sex,customer_phone,customer_ages_almost,wechat_no,repair_commands,
+        province,city,brand_id,first_category,second_category,repair_commands,channel_url,keywords,price_limit,time_limit,
+        qulity_limit,special_commands,images_path,vistor_at,create_at,create_user_id,express_no,status,shop_id)
+        VALUES (#{customerName},#{customerSex},#{customerPhone},#{customerAgesAlmost},#{wechatNo},#{repairCommands},#{province},#{city},
+        #{brandId},#{firstCategory},#{secondCategory},#{brandId},#{channelUrl},#{keywords},#{priceLimit},#{timeLimt},#{qulityLimt},
+        #{specialCommands},#{imagesPath},#{vistorAt},#{createAt},#{createUserId},#{expressNo},#{status},#{shopId});
+
+    </insert>
+
+</mapper>

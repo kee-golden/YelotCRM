@@ -40,26 +40,7 @@ public class RepairOrderService {
 		return repareOrderMapper.find(id);
 	}
 
-	// void save(RepairOrder repareOrder, RepareOrderItem repareOrderItem,
-	// RepareOrderItemImage repareOrderItemImage){
-	// //step 1:首先保存订单表
-	// repareOrderMapper.save(repareOrder);
-	// RepairOrder repareOrder1 =
-	// repareOrderMapper.findByOrderNo(repareOrder.getOrder_no());
-	//
-	// //step 2:保存item表
-	// repareOrderItem.setRepare_order_id(repareOrder1.getId());
-	// repareOrderItemMapper.save(repareOrderItem);
-	//
-	// //step 3:保存图片
-	// List<RepareOrderItem> repareOrderItemList =
-	// repareOrderItemMapper.findByOrderId(repareOrder1.getId());
-	// if(repareOrderItemList != null && repareOrderItemList.size()>0){
-	// //当前不用修改，一个订单中只有一个item,取第一个也是唯一的一个即可。后期如果扩展成多个，需要修改.
-	// repareOrderItemImage.setRepare_order_item_id(repareOrderItemList.get(0).getId());
-	// }
-	// repareOrderItemImgMapper.save(repareOrderItemImage);
-	// }
+
 
 	public void save(RepairOrder repairOrder) {
 

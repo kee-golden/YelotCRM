@@ -252,7 +252,6 @@
                                 <label style="position: relative;">
                                     <span style=" display: block">验证码</span>
                                     <input type="text" placeholder="请输入验证码" class=" form-control " id="forgotVerifyCode" name="forgotVerifyCode"/>
-                                   <%-- <button class="pull-right btn btn-default" type="button" id="sendForgotBtn">获取验证码</button>--%>
                                     <span id="sendForgotBtn" style="position: absolute;right: 12px; top:36px; font-weight: normal; color: #00a0e9;cursor: pointer">获取验证码</span>
                                     <div class=" clearfix"></div>
                                 </label>
@@ -297,11 +296,7 @@
                         <span>企业内部员工，找回密码请与组织的管理员联系！</span>
                         <%--<input type="text" class=" form-control">--%>
                     </label>
-                    <%--<div class="btn-group btn-group-justified">--%>
-                    <%--<div class="btn-group">--%>
-                    <%--<button type="button" class="btn btn-primary " id="">发送验证邮件至邮箱</button>--%>
-                    <%--</div>--%>
-                    <%--</div>--%>
+
 
                 </div>
 
@@ -312,10 +307,10 @@
 </div>
 <nav class="navbar navbar-inverse navbar-fixed-bottom">
 
-    <div class=" col-xs-2">
+    <div class=" col-xs-3">
         <p class="navbar-text ">版权所有 ©上海御金匠实业有限公司</p>
     </div>
-    <div class=" col-xs-3">
+    <div class=" col-xs-2">
         <p class="navbar-text "></p>
     </div>
     <div class=" col-xs-3">
@@ -329,11 +324,7 @@
        </div>
 
 </nav>
-<%--<div id="bom">
-    <span>CopyRight © 中国ITSS云教育平台 2016</span>
-    <span style=" margin: 0 10%;">江苏新世纪信息科技有限公司旗下品牌</span>
-    <span >ICP备案号：苏ICP备15003321号-1</span>
-</div>--%>
+
 </body>
 
 <script src="${ctx}/static/require/require.js"></script>
