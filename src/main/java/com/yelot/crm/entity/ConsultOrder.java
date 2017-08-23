@@ -20,6 +20,8 @@ public class ConsultOrder {
     private String city;
     private Long firstCategory;
     private Long secondCategory;
+    private String firstCategoryName;
+    private String secondCategoryName;
     private Long brandId;
     /**
      * 浏览网页，来源渠道
@@ -27,8 +29,8 @@ public class ConsultOrder {
     private String channelUrl;
     private String keywords;
     private String priceLimit;
-    private String timeLimt;
-    private String qulityLimt;
+    private String timeLimit;
+    private String qulityLimit;
     private String specialCommands;
     private String imagesPath;
     /**
@@ -51,6 +53,21 @@ public class ConsultOrder {
 
     private Long shopId;
 
+    public String getFirstCategoryName() {
+        return firstCategoryName;
+    }
+
+    public void setFirstCategoryName(String firstCategoryName) {
+        this.firstCategoryName = firstCategoryName;
+    }
+
+    public String getSecondCategoryName() {
+        return secondCategoryName;
+    }
+
+    public void setSecondCategoryName(String secondCategoryName) {
+        this.secondCategoryName = secondCategoryName;
+    }
 
     public Long getId() {
         return id;
@@ -172,20 +189,20 @@ public class ConsultOrder {
         this.priceLimit = priceLimit;
     }
 
-    public String getTimeLimt() {
-        return timeLimt;
+    public String getTimeLimit() {
+        return timeLimit;
     }
 
-    public void setTimeLimt(String timeLimt) {
-        this.timeLimt = timeLimt;
+    public void setTimeLimit(String timeLimit) {
+        this.timeLimit = timeLimit;
     }
 
-    public String getQulityLimt() {
-        return qulityLimt;
+    public String getQulityLimit() {
+        return qulityLimit;
     }
 
-    public void setQulityLimt(String qulityLimt) {
-        this.qulityLimt = qulityLimt;
+    public void setQulityLimit(String qulityLimit) {
+        this.qulityLimit = qulityLimit;
     }
 
     public String getSpecialCommands() {
