@@ -146,7 +146,7 @@
         <include refid="privilegeBasicSql"/>
 
         FROM t_privilege
-        WHERE menu_role_type = 2 and parent_id IS NULL;
+        WHERE parent_id IS NULL;
     </select>
 
     <select id="findByParentId" resultMap="privilegeMap">

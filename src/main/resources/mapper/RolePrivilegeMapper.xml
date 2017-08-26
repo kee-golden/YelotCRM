@@ -3,28 +3,30 @@
 <mapper namespace="com.yelot.crm.mapper.RolePrivilegeMapper">
 
     <resultMap id="rolePrivilegeBasicMap" type="com.yelot.crm.entity.RolePrivilegeRef">
-        <id column="nid" property="id"/>
-        <association property="privilege" javaType="com.yelot.crm.entity.Privilege">
-            <id column="privilege_id" property="id"/>
-        </association>
-        <association property="role" javaType="com.yelot.crm.entity.Role">
-            <id column="role_id" property="id"/>
-        </association>
+        <id column="id" property="id"/>
+        <id column="role_id" property="roleId"/>
+        <id column="privilege_id" property="privilegeId"/>
+        <!--<association property="privilege" javaType="com.yelot.crm.entity.Privilege">-->
+            <!--<id column="privilege_id" property="id"/>-->
+        <!--</association>-->
+        <!--<association property="role" javaType="com.yelot.crm.entity.Role">-->
+            <!--<id column="role_id" property="id"/>-->
+        <!--</association>-->
         <collection property="createAt" column="create_at"/>
         <collection property="updateAt" column="update_at"/>
     </resultMap>
 
     <insert id="insert"
             parameterType="com.yelot.crm.entity.RolePrivilegeRef">
-        INSERT t_role_privilege
+        INSERT t_role_privilege_ref
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 nid,
             </if>
-            <if test="privilege != null">
+            <if test="privilegeId != null">
                 privilege_id,
             </if>
-            <if test="role != null">
+            <if test="roleId != null">
                 role_id,
             </if>
             <if test="createAt != null">
@@ -38,11 +40,11 @@
             <if test="id != null">
                 #{id},
             </if>
-            <if test="privilege != null">
-                #{privilege.id},
+            <if test="privilegeId != null">
+                #{privilegeId},
             </if>
-            <if test="role != null">
-                #{role.id},
+            <if test="roleId != null">
+                #{roleId},
             </if>
             <if test="createAt != null">
                 #{createAt},
@@ -54,13 +56,13 @@
     </insert>
 
     <update id="update" parameterType="com.yelot.crm.entity.RolePrivilegeRef">
-        UPDATE t_role_privilege SET
+        UPDATE t_role_privilege_ref SET
         <trim suffix="" suffixOverrides=",">
-            <if test="privilege!=null">
-                privilege_id=#{privilege.id},
+            <if test="privilegeId!=null">
+                privilege_id=#{privilegeId},
             </if>
-            <if test="role!=null">
-                role_id=#{role.id},
+            <if test="roleId!=null">
+                role_id=#{roleId},
             </if>
             <if test="createAt!=null">
                 create_at=#{createAt},
@@ -74,12 +76,12 @@
 
 
     <delete id="deleteByRoleId">
-        DELETE FROM t_role_privilege
+        DELETE FROM t_role_privilege_ref
         WHERE role_id = #{roleId}
     </delete>
 
     <delete id="deleteByPrivilegeId">
-        DELETE FROM t_role_privilege
+        DELETE FROM t_role_privilege_ref
         WHERE privilege_id = #{privilegeId}
     </delete>
 

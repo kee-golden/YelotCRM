@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.RoleStatusMapper">
+    <resultMap id="roleStatusResultMap" type="com.yelot.crm.entity.RoleStatus">
+        <result property="id" column="id"/>
+        <result property="roleId" column="role_id"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="find" resultMap="roleStatusResultMap">
+        SELECT * from t_role_status_ref where id = #{id};
+    </select>
+
+</mapper>

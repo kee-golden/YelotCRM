@@ -117,12 +117,12 @@
         WHERE rm.menu_id = #{menuId};
     </select>
 
-    <select id="findByAdmiid" resultMap="roleResultMap">
-        SELECT *
-        FROM t_admin_role ar
+    <select id="findByUserId" resultMap="roleResultMap">
+        SELECT r.*
+        FROM t_user_role_ref ur
             LEFT JOIN t_role r
-                ON ar.role_id = r.id
-        WHERE ar.admin_id = #{admiid};
+                ON ur.role_id = r.id
+        WHERE ur.user_id = #{userId};
     </select>
 
     <select id="findByRoleName" resultMap="roleResultMap">

@@ -32,6 +32,7 @@ public class MyRealm extends AuthorizingRealm {
 	private UserMapper userMapper;
 
 
+
 	/**
 	 *  这个函数,登录成功后,怎么被回调了两次???
 	 */

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 /**
+ * 维修中心角色：1）收货分练，2）预检确认 3）QC质检 4）货品入库 5）货品出库。
  * Created by feng- on 2016/4/5.
  */
 @Service
@@ -33,7 +34,6 @@ public class RoleService {
      * @param privilege
      */
     public void save(Role role, String[] privilege) {
-//        Group group = AdminUtil.getCurrentAdmin().getGroup();
         Role target;
         if (null == role.getId() || role.getId().equals("")) {
             target = role;
@@ -44,8 +44,8 @@ public class RoleService {
             target = roleMapper.find(role.getId());
             target.setCode(role.getCode());
             target.setName(role.getName());
-//            target.setGroup(group);
             rolePrivilegeMapper.deleteByRoleId(role.getId());
+            roleMapper.update(role);
 
         }
 
@@ -55,8 +55,8 @@ public class RoleService {
                 Privilege p = new Privilege();
 //                p.setId(privilegeId);
 //                rolePrivilege.setId(IdWorker.nextId());
-                rolePrivilegeRef.setPrivilege_id(Long.valueOf(privilegeId));
-                rolePrivilegeRef.setRole_id(role.getId());
+                rolePrivilegeRef.setPrivilegeId(Long.valueOf(privilegeId));
+                rolePrivilegeRef.setRoleId(role.getId());
 
                 rolePrivilegeMapper.insert(rolePrivilegeRef);
             }

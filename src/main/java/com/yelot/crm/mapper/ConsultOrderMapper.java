@@ -19,4 +19,6 @@ public interface ConsultOrderMapper {
     int countTotalPageAll(@Param("extra_search")String extra_search);
 
     List<ConsultOrder> findByPageAll(@Param("extra_search") String extra_search, @Param("pageHelper") PageHelper pageHelper);
+
+    void save(ConsultOrder consultOrder);
 }

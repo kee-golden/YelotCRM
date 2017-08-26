@@ -28,7 +28,7 @@ import java.util.List;
 public class RepairOrderService {
 
 	@Autowired
-	private RepairOrderMapper repareOrderMapper;
+	private RepairOrderMapper repairOrderMapper;
 
 	@Autowired
 	private RepairOrderOperatorsMapper repairOrderOperatorsMapper;
@@ -37,7 +37,7 @@ public class RepairOrderService {
 	private CategoryMapper categoryMapper;
 
 	RepairOrder find(Long id) {
-		return repareOrderMapper.find(id);
+		return repairOrderMapper.find(id);
 	}
 
 
@@ -45,8 +45,8 @@ public class RepairOrderService {
 	public void save(RepairOrder repairOrder) {
 
 		User user = UserUtil.getCurrentUser();
-		repairOrder.setApproveUserId(user.getShop().getUser_id());// 首次创建后的审批人为该店店长
-		repareOrderMapper.save(repairOrder);
+		repairOrder.setApproveRoleId(user.getShop().getUser_id());// 首次创建后的审批人为该店店长
+		repairOrderMapper.save(repairOrder);
 
 		submitOperator(repairOrder);
 
@@ -119,7 +119,7 @@ public class RepairOrderService {
 			approve_user_id = userId;
 		}
 		
-		return repareOrderMapper.countTotalPageMy(extra_search, create_user_id, approve_user_id);
+		return repairOrderMapper.countTotalPageMy(extra_search, create_user_id, approve_user_id);
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class RepairOrderService {
 			approve_user_id = userId;
 		}
 		
-		List<RepairOrder> RepairOrderList = repareOrderMapper.findByPageMy(extra_search, create_user_id, approve_user_id, pageHelper);
+		List<RepairOrder> RepairOrderList = repairOrderMapper.findByPageMy(extra_search, create_user_id, approve_user_id, pageHelper);
 		
 		for (RepairOrder repairOrder : RepairOrderList) {
 			String serviceItemIds = repairOrder.getServiceItemIds();
@@ -148,7 +148,7 @@ public class RepairOrderService {
 			String serviceItemNames = "";
 			if (serviceItemIdsList != null && serviceItemIdsList.size() > 0) {
 				for (int i = 0; i < serviceItemIdsList.size(); i++) {
-					String serviceItemName = repareOrderMapper
+					String serviceItemName = repairOrderMapper
 							.findServiceItemName(serviceItemIdsList.get(i));
 					if (i == serviceItemIdsList.size() - 1) {
 						serviceItemNames += serviceItemName;
@@ -162,4 +162,11 @@ public class RepairOrderService {
 		return RepairOrderList;
 	}
 
+    public int countTotalPageCheckList(String extra_search, String statusString) {
+		return repairOrderMapper.countTotalPageCheckList(extra_search,statusString);
+    }
+
+	public List<RepairOrder> findByPageCheckList(String extra_search, String statusString,PageHelper pageHelper) {
+		return repairOrderMapper.findByPageCheckList(extra_search,statusString,pageHelper);
+	}
 }

@@ -1,12 +1,18 @@
 package com.yelot.crm.entity;
 
+import java.util.Date;
+
 /**
  * Created by kee on 17/5/30.
  */
 public class RolePrivilegeRef {
     private Long id;
-    private Long role_id;
-    private Long privilege_id;
+    private Long roleId;
+    private Long privilegeId;
+
+    private Date createAt;
+
+    private Date updateAt;
 
     public Long getId() {
         return id;
@@ -16,19 +22,36 @@ public class RolePrivilegeRef {
         this.id = id;
     }
 
-    public Long getRole_id() {
-        return role_id;
+
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(Long role_id) {
-        this.role_id = role_id;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
-    public Long getPrivilege_id() {
-        return privilege_id;
+    public Long getPrivilegeId() {
+        return privilegeId;
     }
 
-    public void setPrivilege_id(Long privilege_id) {
-        this.privilege_id = privilege_id;
+    public void setPrivilegeId(Long privilegeId) {
+        this.privilegeId = privilegeId;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 }

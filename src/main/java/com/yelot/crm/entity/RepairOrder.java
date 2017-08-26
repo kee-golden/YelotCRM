@@ -39,9 +39,9 @@ public class RepairOrder {
     private String createUserName;
 
     /**
-     * 当前订单待审核者，订单当前状态，所有者，要审核订单的用户id
+     * 审核，根据用户的角色进行判断具有审核权限,查询审核订单，该值存放下一个审核角色Id
      */
-    private Long approveUserId;
+    private Long approveRoleId;
 
     /**
      * 交货日期,预估的时间
@@ -160,12 +160,12 @@ public class RepairOrder {
 		this.createUserName = createUserName;
 	}
 
-	public Long getApproveUserId() {
-        return approveUserId;
+	public Long getApproveRoleId() {
+        return approveRoleId;
     }
 
-    public void setApproveUserId(Long approveUserId) {
-        this.approveUserId = approveUserId;
+    public void setApproveRoleId(Long approveRoleId) {
+        this.approveRoleId = approveRoleId;
     }
 
     public Date getPickupAt() {

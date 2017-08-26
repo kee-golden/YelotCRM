@@ -17,7 +17,7 @@ public interface RoleMapper extends BaseMapper<Role>{
 
     List<Role> findByMenuId(@Param("menuId") String menuId);
 
-    List<Role> findByAdminId(@Param("adminId") String adminId);
+    List<Role> findByUserId(Long userId);
 
     Role findByRoleName(@Param("roleName")String roleName,@Param("groupId")String groupId);
 

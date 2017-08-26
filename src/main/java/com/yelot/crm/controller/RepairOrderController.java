@@ -6,10 +6,7 @@ import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.*;
-import com.yelot.crm.mapper.BrandMapper;
-import com.yelot.crm.mapper.CategoryMapper;
-import com.yelot.crm.mapper.CategoryServiceItemMapper;
-import com.yelot.crm.mapper.CustomerMapper;
+import com.yelot.crm.mapper.*;
 import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
@@ -22,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.jws.WebParam;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +56,11 @@ public class RepairOrderController {
     @Autowired
     private CustomerMapper customerMapper;
 
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Autowired
+    private RoleStatusMapper roleStatusMapper;
 
     /**
      * 调整到新建页面
@@ -199,6 +203,53 @@ public class RepairOrderController {
         int pageCount = repairOrderService.countTotalPageMy(extra_search, type, userId);
         List<RepairOrder> repairOrderList = repairOrderService.findByPageMy(extra_search, type, userId, pageHelper);
         return new Table(pageCount, pageCount, repairOrderList);
+    }
+
+    /**
+     * 审核订单,先查询角色，并查询角色对应的订单状态值
+     * @param model
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("check-query")
+    public Table queryCheckOrder(Model model,
+                                 @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
+                                 @RequestParam(value = "start", defaultValue = "0") int start,
+                                 @RequestParam(value = "length", defaultValue = "10") int length){
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(start);
+        pageHelper.setSize(length);
+        Long userId = UserUtil.getCurrentUser().getId();
+        List<Role> roleList = roleMapper.findByUserId(userId);
+        List<String> statusList = new ArrayList<String>();
+        for (int i = 0; roleList != null && i < roleList.size(); i++) {
+            Long roleId = roleList.get(i).getId();
+            String []subStatus = roleStatusMapper.find(roleId).getStatus().split(",");
+            for (int j = 0; subStatus != null && j < subStatus.length; j++) {
+                if(statusList.contains(subStatus[j])){
+                    continue;
+                }
+                statusList.add(subStatus[j]);
+            }
+
+        }
+
+        String statusTemp = "";
+        for (int i = 0; i < statusList.size(); i++) {
+            statusTemp += statusList.get(i)+",";
+        }
+        //去除最后一个分隔符"，"
+        String statusString = "";
+        if(statusTemp.length() >= 2){
+            statusString = statusTemp.substring(0,statusTemp.lastIndexOf(","));
+        }
+
+
+        int pageCount = repairOrderService.countTotalPageCheckList(extra_search, statusString);
+        List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckList(extra_search,statusString,pageHelper);
+
+        return new Table(pageCount, pageCount, repairOrderList);
+
     }
 
 }
