@@ -96,4 +96,27 @@
         limit #{pageHelper.offset},#{pageHelper.size}
     </select>
 
+    <select id="countTotalPageCheckListAndShop" resultType="java.lang.Integer">
+        select count(*)
+        from t_repair_order
+        where 1 = 1
+        <if test="statusString != null and statusString != ''">and status in (#{statusString})</if>
+        <if test="extra_search != null and extra_search != ''">and order_no like CONCAT('%', #{extra_search}, '%')</if>
+        <if test="shopId != null and shopId != ''">and shop_id =  #{shopId}</if>
+    </select>
+
+    <select id="findByPageCheckListAndShop" resultMap="orderResultMap">
+        select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name
+        from t_repair_order t, t_user t1, t_shop t2, t_category t3, t_category t4
+        where t.create_user_id = t1.id
+        and t.shop_id = t2.id
+        and t.first_category_id = t3.id
+        and t.second_category_id = t4.id
+        <if test="statusString != null and statusString != ''">and status in (#{statusString})</if>
+        <if test="extra_search != null and extra_search != ''">and order_no like CONCAT('%', #{extra_search}, '%')</if>
+        <if test="shopId != null and shopId != ''">and t.shop_id =  #{shopId}</if>
+        order by id desc
+        limit #{pageHelper.offset},#{pageHelper.size}
+    </select>
+
 </mapper>

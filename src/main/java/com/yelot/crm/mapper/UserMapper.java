@@ -87,6 +87,6 @@ public interface UserMapper {
     @Select("select count(*) from t_user where is_alive = 1")
     int countBySearch(String extra_search);
 
-    @Select("select * from t_user where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")
+//    @Select("select * from t_user where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")
     List<User> findBySearch(@Param("pageHelper") PageHelper pageHelper);
 }

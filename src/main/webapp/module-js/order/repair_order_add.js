@@ -69,7 +69,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 if(data.code == 1200){
                     yaya.layer.msg("提交成功");
                     setTimeout(function () {
-                        window.location.href = ctx+'/repair-order/list';
+                        window.location.href = ctx+'/repair-order/mylist';
                     },2000);
 
                 }
@@ -144,14 +144,14 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
         });
 
-        $('.city').change(function () {
+        $('#secondCategory').change(function () {
 
-            var secondCategory=$(".city").children('option:selected').val();//这就是selected的值
-            var firstCategory=$(".prov").children('option:selected').val();//这就是selected的值
+            var secondCategory=$("#secondCategory").children('option:selected').val();//这就是selected的值
+            var firstCategory=$("#firstCategory").children('option:selected').val();//这就是selected的值
             ajaxAttributeAndService(firstCategory,secondCategory);
 
         });
-    $('.prov').change(function () {
+    $('#firstCategory').change(function () {
 
         //延迟执行，获取secondCategory 否则无法正确获取值.
         setTimeout(provChangeDelay,1000);
@@ -160,8 +160,8 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
     function provChangeDelay() {
 
-        var firstCategory=$(".prov").children('option:selected').val();//这就是selected的值
-        var secondCategory=$(".city").children('option:selected').val();//这就是selected的值
+        var firstCategory=$("#firstCategory").children('option:selected').val();//这就是selected的值
+        var secondCategory=$("#secondCategory").children('option:selected').val();//这就是selected的值
 
         console.log(firstCategory+","+secondCategory);
         ajaxAttributeAndService(firstCategory,secondCategory);

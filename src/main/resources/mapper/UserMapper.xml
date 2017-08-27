@@ -9,6 +9,7 @@
         <result property="phone" column="phone"/>
         <result property="emp_no" column="emp_no"/>
         <result property="shop_id" column="shop_id"/>
+        <result property="shopName" column="shopName"/>
         <result property="is_alive" column="is_alive"/>
         <result property="create_at" column="create_at"/>
         <result property="update_at" column="update_at"/>
@@ -22,6 +23,11 @@
         insert into t_user(name,password,realname,phone,emp_no,is_alive,create_at,update_at,shop_id)
             values(#{name},#{password},#{realname},#{phone},#{emp_no},#{is_alive},#{create_at},#{update_at},#{shop_id})
     </insert>
+
+    <select id="findBySearch" resultMap="userResultMap">
+        select u.*,s.name shopName from t_user u,t_shop s where u.shop_id = s.id and u.is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}
+
+    </select>
 
 
 

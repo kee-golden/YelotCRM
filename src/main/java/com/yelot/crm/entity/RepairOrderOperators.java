@@ -1,5 +1,7 @@
 package com.yelot.crm.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -10,14 +12,14 @@ public class RepairOrderOperators {
     private Long id;
     private Long repair_order_id;
     private Long approve_user_id;
-    private Long next_approve_user_id;
+//    private Long next_approve_user_id;
     private String operator_comment;
     private int operator_status;
-    private Date create_at;
+    private Date createAt;
 
     private String orderNo;
 
-    private String createUserName;
+//    private String createUserName;
 
     private String approveUserName;
 
@@ -31,13 +33,13 @@ public class RepairOrderOperators {
         this.id = id;
     }
 
-    public Long getNext_approve_user_id() {
-        return next_approve_user_id;
-    }
-
-    public void setNext_approve_user_id(Long next_approve_user_id) {
-        this.next_approve_user_id = next_approve_user_id;
-    }
+//    public Long getNext_approve_user_id() {
+//        return next_approve_user_id;
+//    }
+//
+//    public void setNext_approve_user_id(Long next_approve_user_id) {
+//        this.next_approve_user_id = next_approve_user_id;
+//    }
 
 
     public Long getRepair_order_id() {
@@ -72,13 +74,17 @@ public class RepairOrderOperators {
         this.operator_status = operator_status;
     }
 
-    public Date getCreate_at() {
-        return create_at;
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+    public Date getCreateAt() {
+        return createAt;
     }
 
-    public void setCreate_at(Date create_at) {
-        this.create_at = create_at;
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
+
+
+
 
     public String getOrderNo() {
         return orderNo;
@@ -88,13 +94,13 @@ public class RepairOrderOperators {
         this.orderNo = orderNo;
     }
 
-    public String getCreateUserName() {
-        return createUserName;
-    }
-
-    public void setCreateUserName(String createUserName) {
-        this.createUserName = createUserName;
-    }
+//    public String getCreateUserName() {
+//        return createUserName;
+//    }
+//
+//    public void setCreateUserName(String createUserName) {
+//        this.createUserName = createUserName;
+//    }
 
     public String getApproveUserName() {
         return approveUserName;

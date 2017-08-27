@@ -34,6 +34,8 @@ public class User {
 
     private Long shop_id;
 
+    private String shopName;
+
     /**
      * 所属的门店
      */
@@ -149,5 +151,13 @@ public class User {
 
     public void setShop_id(Long shop_id) {
         this.shop_id = shop_id;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 }

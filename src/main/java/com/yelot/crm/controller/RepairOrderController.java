@@ -219,7 +219,8 @@ public class RepairOrderController {
         PageHelper pageHelper = new PageHelper();
         pageHelper.setOffset(start);
         pageHelper.setSize(length);
-        Long userId = UserUtil.getCurrentUser().getId();
+        User user = UserUtil.getCurrentUser();
+        Long userId = user.getId();
         List<Role> roleList = roleMapper.findByUserId(userId);
         List<String> statusList = new ArrayList<String>();
         for (int i = 0; roleList != null && i < roleList.size(); i++) {
@@ -242,6 +243,13 @@ public class RepairOrderController {
         String statusString = "";
         if(statusTemp.length() >= 2){
             statusString = statusTemp.substring(0,statusTemp.lastIndexOf(","));
+        }
+
+        //根据客服主管仅仅能查看自己门店的订单，需要特殊处理一下。
+        if(statusList.contains("2")){//状态为2，客服主管审核状态，必须审核本门店的订单
+            int pageCount = repairOrderService.countTotalPageCheckListAndShop(extra_search, statusString,user.getShop_id());
+            List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckListAndShop(extra_search,statusString,pageHelper,user.getShop_id());
+            return new Table(pageCount, pageCount, repairOrderList);
         }
 
 

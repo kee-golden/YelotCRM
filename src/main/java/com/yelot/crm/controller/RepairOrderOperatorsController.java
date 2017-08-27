@@ -6,6 +6,7 @@ import com.yelot.crm.entity.User;
 import com.yelot.crm.mapper.RepairOrderMapper;
 import com.yelot.crm.mapper.RepairOrderOperatorsMapper;
 import com.yelot.crm.mapper.UserMapper;
+import com.yelot.crm.service.RepairOrderOperatorsService;
 import com.yelot.crm.vo.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ import java.util.List;
 public class RepairOrderOperatorsController {
 
     @Autowired
-    private RepairOrderOperatorsMapper repairOrderOperatorsMapper;
+    private RepairOrderOperatorsService repairOrderOperatorsService;
 
     @Autowired
     private RepairOrderMapper repairOrderMapper;
@@ -35,25 +36,21 @@ public class RepairOrderOperatorsController {
     @RequestMapping("workflow")
     public String workflow(Model model,Long orderId){
 
-        List<RepairOrderOperators> repairOrderOperatorsList = repairOrderOperatorsMapper.findByOrderId(orderId);
-
-        for (RepairOrderOperators repairOrderOperators:repairOrderOperatorsList) {
-            Long repairOrderId = repairOrderOperators.getRepair_order_id();
-            Long approveUserId = repairOrderOperators.getApprove_user_id();
-            Long nextApproveUserId = repairOrderOperators.getNext_approve_user_id();
-
-            String orderNo = repairOrderMapper.find(repairOrderId).getOrderNo();
-            String approveUserName = userMapper.find(approveUserId).getName();
-            String createUserName = userMapper.find(nextApproveUserId).getName();
-
-            repairOrderOperators.setCreateUserName(createUserName);
-            repairOrderOperators.setOrderNo(orderNo);
-            repairOrderOperators.setApproveUserName(approveUserName);
-
-        }
+        List<RepairOrderOperators> repairOrderOperatorsList = repairOrderOperatorsService.getRepairOrderOperators(orderId);
         model.addAttribute("repairOrderOperatorsList",repairOrderOperatorsList);
 
         return "repair_order/repair_order_workflow";
+
+    }
+
+    @RequestMapping("approve")
+    public String approve(Model model,Long orderId){
+        List<RepairOrderOperators> repairOrderOperatorsList = repairOrderOperatorsService.getRepairOrderOperators(orderId);
+        model.addAttribute("repairOrderOperatorsList",repairOrderOperatorsList);
+        model.addAttribute("orderId",orderId);
+
+        return "repair_order/repair_order_approve";
+
 
     }
 

@@ -58,10 +58,10 @@ public class RepairOrderService {
 		repairOrderOperators.setApprove_user_id(repairOrder.getCreateUserId());
 		repairOrderOperators
 				.setOperator_status(OperatorStatus.SUBMIT.getCode());
-		User user = UserUtil.getCurrentUser();
-		repairOrderOperators.setNext_approve_user_id(user.getShop()
-				.getUser_id());
-		repairOrderOperators.setCreate_at(new Date());
+//		User user = UserUtil.getCurrentUser();
+//		repairOrderOperators.setNext_approve_user_id(user.getShop()
+//				.getUser_id());
+		repairOrderOperators.setCreateAt(new Date());
 
 		repairOrderOperatorsMapper.save(repairOrderOperators);
 	}
@@ -140,9 +140,40 @@ public class RepairOrderService {
 			approve_user_id = userId;
 		}
 		
-		List<RepairOrder> RepairOrderList = repairOrderMapper.findByPageMy(extra_search, create_user_id, approve_user_id, pageHelper);
-		
-		for (RepairOrder repairOrder : RepairOrderList) {
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageMy(extra_search, create_user_id, approve_user_id, pageHelper);
+		setRepairServiceItem(repairOrderList);
+//		for (RepairOrder repairOrder : RepairOrderList) {
+//			String serviceItemIds = repairOrder.getServiceItemIds();
+//			List<String> serviceItemIdsList = JSON.parseArray(serviceItemIds, String.class);
+//			String serviceItemNames = "";
+//			if (serviceItemIdsList != null && serviceItemIdsList.size() > 0) {
+//				for (int i = 0; i < serviceItemIdsList.size(); i++) {
+//					String serviceItemName = repairOrderMapper
+//							.findServiceItemName(serviceItemIdsList.get(i));
+//					if (i == serviceItemIdsList.size() - 1) {
+//						serviceItemNames += serviceItemName;
+//					} else {
+//						serviceItemNames += serviceItemName + ",";
+//					}
+//				}
+//			}
+//			repairOrder.setServiceItemNames(serviceItemNames);
+//		}
+		return repairOrderList;
+	}
+
+    public int countTotalPageCheckList(String extra_search, String statusString) {
+		return repairOrderMapper.countTotalPageCheckList(extra_search,statusString);
+    }
+
+	public List<RepairOrder> findByPageCheckList(String extra_search, String statusString,PageHelper pageHelper) {
+		List<RepairOrder> repairOrderList =  repairOrderMapper.findByPageCheckList(extra_search,statusString,pageHelper);
+		setRepairServiceItem(repairOrderList);
+		return repairOrderList;
+	}
+
+	private void setRepairServiceItem(List<RepairOrder> repairOrderList){
+		for (RepairOrder repairOrder : repairOrderList) {
 			String serviceItemIds = repairOrder.getServiceItemIds();
 			List<String> serviceItemIdsList = JSON.parseArray(serviceItemIds, String.class);
 			String serviceItemNames = "";
@@ -159,14 +190,15 @@ public class RepairOrderService {
 			}
 			repairOrder.setServiceItemNames(serviceItemNames);
 		}
-		return RepairOrderList;
 	}
 
-    public int countTotalPageCheckList(String extra_search, String statusString) {
-		return repairOrderMapper.countTotalPageCheckList(extra_search,statusString);
-    }
+	public int countTotalPageCheckListAndShop(String extra_search, String statusString, Long shopId) {
+		return repairOrderMapper.countTotalPageCheckListAndShop(extra_search,statusString,shopId);
+	}
 
-	public List<RepairOrder> findByPageCheckList(String extra_search, String statusString,PageHelper pageHelper) {
-		return repairOrderMapper.findByPageCheckList(extra_search,statusString,pageHelper);
+	public List<RepairOrder> findByPageCheckListAndShop(String extra_search, String statusString, PageHelper pageHelper, Long shopId) {
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageCheckListAndShop(extra_search,statusString,pageHelper,shopId);
+		setRepairServiceItem(repairOrderList);
+		return repairOrderList;
 	}
 }

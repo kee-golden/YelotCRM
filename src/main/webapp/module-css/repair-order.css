@@ -110,7 +110,7 @@
 .bottom10{margin-bottom: 10px;}
 
 #customerContainer{
-    display: block;
+    display: none;
 }
 #customerTip{
     display: none;

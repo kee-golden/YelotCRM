@@ -4,8 +4,15 @@
 <div class="ibox float-e-margins">
 	<div class="ibox-content">
 		<div class="row">
-			<form role="form" id="J_userForm">
-				<input type="hidden" name="id" value="">
+			<form role="form" id="J_checkForm">
+				<input type="hidden" name="id" value="${orderId}">
+				<div class="row">
+					<%--<label class="col-md-2">备注：</label>--%>
+					<textarea rows="3" cols="20" class="col-md-11" style="margin-left: 30px" placeholder="输入审批备注"></textarea>
+					<%--<input type="textarea" class="col-md-10" name="comment" />--%>
+				</div>
+
+				<div class="layui-layer-btn"><a class="btn-group" id="approveBtn">通过</a><a class="btn-group" id="refuseBtn">拒绝</a></div>
 
 
 			</form>
@@ -50,3 +57,15 @@
 		</div>
 	</div>
 </div>
+<script>
+    require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
+        $('#approveBtn').click(function () {
+
+
+        });
+
+        $('#refuseBtn').click(function () {
+
+        });
+    });
+</script>

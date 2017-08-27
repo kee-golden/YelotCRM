@@ -32,6 +32,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
             {'data': 'name'},
             {'data': 'realname'},
             {'data': 'phone'},
+            {'data': 'shopName'},
             {'data': 'create_at'},
             {'data': 'id',
                 'render': function (data, type, full, meta) {

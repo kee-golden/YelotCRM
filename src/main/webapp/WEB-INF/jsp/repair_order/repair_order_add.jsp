@@ -99,8 +99,10 @@
 						<%--<h3 class="m-t-none m-b">基础信息</h3>--%>
 
 						<div id="category" class="row bottom10">
-							<label class="col-xs-1">分类:</label> <select class="prov col-xs-1" name="firstCategory" id="firstCategory"></select> <select
-								class="city col-xs-1" disabled="disabled" name="secondCategory" id="secondCategory"></select> <label class="col-xs-1">品牌：</label> <span>
+							<label class="col-xs-1">分类:</label>
+							<select class="prov col-xs-1" name="firstCategory" id="firstCategory"></select>
+							<select class="city col-xs-1" disabled="disabled" name="secondCategory" id="secondCategory"></select>
+							<label class="col-xs-1">品牌：</label> <span>
 								<select id="brand" name="brand">
 
 									<c:forEach items="${brandList}" var="item">
