@@ -17,6 +17,11 @@ public class RepairOrderOperators {
     private int operator_status;
     private Date createAt;
 
+    /**
+     * 订单状态，用户当前在什么状态下进行操作订单
+     */
+    private int order_status;
+
     private String orderNo;
 
 //    private String createUserName;
@@ -41,6 +46,14 @@ public class RepairOrderOperators {
 //        this.next_approve_user_id = next_approve_user_id;
 //    }
 
+
+    public int getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(int order_status) {
+        this.order_status = order_status;
+    }
 
     public Long getRepair_order_id() {
         return repair_order_id;

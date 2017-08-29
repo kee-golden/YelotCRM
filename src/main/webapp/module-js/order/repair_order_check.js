@@ -54,7 +54,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
     $JOrderList.on('click', '.J_workflow', function () {
         $.ajax({
-            url: ctx + '/repair-order-operators/approve',
+            url: ctx + '/repair-order-operators/to-approve',
             data: {
                 orderId: $(this).data('id')
             },

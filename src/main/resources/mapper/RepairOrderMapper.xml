@@ -48,6 +48,11 @@
             #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt})
     </insert>
 
+    <update id="updateOrderStatus">
+        update t_repair_order set status = #{approveStatus} where id = #{orderId}
+
+    </update>
+
     <select id="countTotalPageMy" resultType="java.lang.Integer">
         select count(*) 
         from t_repair_order 

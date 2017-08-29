@@ -8,6 +8,7 @@
         <result property="operator_comment" column="operator_comment"/>
         <result property="operator_status" column="operator_status"/>
         <result property="createAt" column="create_at"/>
+        <result property="order_status" column="order_status"/>
     </resultMap>
 
     <select id="findByOrderId" resultMap="orderResultMap">
@@ -16,9 +17,9 @@
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into t_repair_order_operators(repair_order_id,approve_user_id,operator_comment,
-        operator_status,create_at)
+        operator_status,create_at,order_status)
             values(#{repair_order_id},#{approve_user_id},#{operator_comment},
-            #{operator_status},#{createAt})
+            #{operator_status},#{createAt},#{order_status})
 
     </insert>
 

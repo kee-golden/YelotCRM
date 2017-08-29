@@ -61,6 +61,7 @@ public class RepairOrderService {
 //		User user = UserUtil.getCurrentUser();
 //		repairOrderOperators.setNext_approve_user_id(user.getShop()
 //				.getUser_id());
+		repairOrderOperators.setOrder_status(repairOrder.getStatus());
 		repairOrderOperators.setCreateAt(new Date());
 
 		repairOrderOperatorsMapper.save(repairOrderOperators);

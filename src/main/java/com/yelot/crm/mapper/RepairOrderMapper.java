@@ -72,4 +72,6 @@ public interface RepairOrderMapper {
 	 */
 	List<RepairOrder> findByPageCheckListAndShop(@Param("extra_search") String extra_search, @Param("statusString") String statusString,
 												 @Param("pageHelper") PageHelper pageHelper,@Param("shopId") Long shopId);
+
+    void updateOrderStatus(@Param("orderId") Long orderId, @Param("approveStatus") int approveStatus);
 }

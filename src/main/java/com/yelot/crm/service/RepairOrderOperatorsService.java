@@ -1,5 +1,6 @@
 package com.yelot.crm.service;
 
+import com.yelot.crm.entity.RepairOrder;
 import com.yelot.crm.entity.RepairOrderOperators;
 import com.yelot.crm.mapper.RepairOrderMapper;
 import com.yelot.crm.mapper.RepairOrderOperatorsMapper;
@@ -30,13 +31,18 @@ public class RepairOrderOperatorsService {
             Long repairOrderId = repairOrderOperators.getRepair_order_id();
             Long approveUserId = repairOrderOperators.getApprove_user_id();
 
-            String orderNo = repairOrderMapper.find(repairOrderId).getOrderNo();
+            RepairOrder repairOrder = repairOrderMapper.find(repairOrderId);
             String approveUserName = userMapper.find(approveUserId).getName();
-            repairOrderOperators.setOrderNo(orderNo);
+            repairOrderOperators.setOrderNo(repairOrder.getOrderNo());
+            repairOrderOperators.setOrder_status(repairOrder.getStatus());
             repairOrderOperators.setApproveUserName(approveUserName);
 
         }
 
         return repairOrderOperatorsList;
+    }
+
+    public void save(RepairOrderOperators repairOrderOperators){
+        repairOrderOperatorsMapper.save(repairOrderOperators);
     }
 }
