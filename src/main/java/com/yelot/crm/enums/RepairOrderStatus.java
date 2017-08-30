@@ -26,7 +26,8 @@ public enum RepairOrderStatus {
     CHECKOUT_REJECT(30,"出库拒绝"),
     SHOP_RECEIVE_APPROVE(32,"门店收货确认"),
     SHOP_RECEIVE_REJECT(34,"门店收货拒绝，没有收到货"),
-    CUSTOMER_RECEIVE_APPROVE(36,"客户已收货确认");
+    CUSTOMER_RECEIVE_APPROVE(36,"客户已收货确认"),
+    CUSTOMER_RECEIVE_REJECT(38,"客户已收货确认");
 
 
     private int code;

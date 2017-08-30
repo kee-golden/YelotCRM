@@ -52,8 +52,10 @@ public class RepairOrderOperatorsController {
     @RequestMapping("to-approve")
     public String toApprove(Model model,Long orderId){
         List<RepairOrderOperators> repairOrderOperatorsList = repairOrderOperatorsService.getRepairOrderOperators(orderId);
+        RepairOrder repairOrder = repairOrderMapper.find(orderId);
         model.addAttribute("repairOrderOperatorsList",repairOrderOperatorsList);
         model.addAttribute("orderId",orderId);
+        model.addAttribute("orderStatus",repairOrder.getStatus());
 
         return "repair_order/repair_order_approve";
 
@@ -73,6 +75,26 @@ public class RepairOrderOperatorsController {
         repairOrderMapper.updateOrderStatus(orderId,approveStatus);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(approveStatus);
+        repairOrderOperators.setOperator_comment(comment);
+        repairOrderOperatorsService.save(repairOrderOperators);
+
+        return ResultData.ok();
+    }
+
+    @RequestMapping("reject")
+    @ResponseBody
+    public ResultData reject(Model model,Long orderId,String comment){
+        RepairOrder repairOrder = repairOrderMapper.find(orderId);
+        RepairOrderOperators repairOrderOperators = new RepairOrderOperators();
+        repairOrderOperators.setOrderNo(repairOrder.getOrderNo());
+        repairOrderOperators.setOperator_status(OperatorStatus.REJECT.getCode());
+        repairOrderOperators.setCreateAt(new Date());
+        repairOrderOperators.setApprove_user_id(UserUtil.getCurrentUser().getId());
+        int orderStatus = repairOrder.getStatus();
+        int rejectStatus = getNextRejectStatus(orderStatus);
+        repairOrderMapper.updateOrderStatus(orderId,rejectStatus);
+        repairOrderOperators.setRepair_order_id(orderId);
+        repairOrderOperators.setOrder_status(rejectStatus);
         repairOrderOperators.setOperator_comment(comment);
         repairOrderOperatorsService.save(repairOrderOperators);
 
@@ -106,5 +128,32 @@ public class RepairOrderOperatorsController {
         return RepairOrderStatus.SUBMIT.getCode();
 
     }
+
+    public int getNextRejectStatus(int orderStatus){
+        if(orderStatus == RepairOrderStatus.SUBMIT.getCode()){
+            return RepairOrderStatus.SHOP_MANAGE_REJECT.getCode();
+        }else if(orderStatus == RepairOrderStatus.SHOP_MANAGE_APPROVE.getCode()){
+            return RepairOrderStatus.CENTER_REJECT.getCode();
+        }else if(orderStatus == RepairOrderStatus.CENTER_APPROVE.getCode()){
+            return RepairOrderStatus.CHECK_REJECT.getCode();
+        }else if(orderStatus == RepairOrderStatus.CHECK_APPROVE.getCode()){
+            return RepairOrderStatus.QC_REJECT.getCode();
+        }else if(orderStatus == RepairOrderStatus.QC_APPROVE.getCode()){
+            return RepairOrderStatus.CHECKIN_REJECT.getCode();
+        }else if(orderStatus == RepairOrderStatus.CHECKIN_APPROVE.getCode()){
+            return RepairOrderStatus.CHECKOUT_REJECT.getCode();
+        }else if(orderStatus == RepairOrderStatus.CHECKOUT_APPROVE.getCode()){
+            return RepairOrderStatus.SHOP_RECEIVE_REJECT.getCode();
+        }else if(orderStatus == RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode()){
+            return RepairOrderStatus.CUSTOMER_RECEIVE_REJECT.getCode();
+        }
+
+        return RepairOrderStatus.CANCEL.getCode();
+
+
+
+    }
+
+
 
 }

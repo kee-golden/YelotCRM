@@ -4,6 +4,10 @@
 <div class="ibox float-e-margins">
 	<div class="ibox-content">
 		<div class="row">
+			<c:if test="${orderStatus == 2 || orderStatus == 4 || orderStatus == 12 || orderStatus == 16 || orderStatus==20 ||
+			orderStatus == 24 || orderStatus == 28 || orderStatus == 32}">
+
+
 			<form role="form" id="J_checkForm">
 				<input type="hidden" name="id" id="orderId" value="${orderId}">
 				<div class="row">
@@ -14,6 +18,8 @@
 
 				<div class="layui-layer-btn"><a class="btn-group" id="approveBtn">通过</a><a class="btn-group" id="refuseBtn">拒绝</a></div>
 			</form>
+
+			</c:if>
 
 			<table id="J_orderOperatorsList" class="table table-striped table-bordered table-hover">
 				<thead>
@@ -79,12 +85,33 @@
 
 					}
                 }
-			})
+			});
 
 
         });
 
         $('#refuseBtn').click(function () {
+
+            $.ajax({
+                url:ctx+"/repair-order-operators/reject",
+                type:'json',
+                method:'POST',
+                data:{
+                    orderId:$('#orderId').val(),
+                    comment:$('#comment').val(),
+
+                },
+                success:function (data) {
+                    if(data.code == 1200){
+                        yaya.layer.msg("审核拒绝成功");
+                        setTimeout(function () {
+                            window.location.href = ctx+'/repair-order/checklist';
+                        },1000);
+
+                    }
+                }
+            });
+
 
         });
     });

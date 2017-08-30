@@ -12,7 +12,7 @@
     </resultMap>
 
     <select id="findByOrderId" resultMap="orderResultMap">
-        SELECT * from t_repair_order_operators where repair_order_id = #{orderId};
+        SELECT * from t_repair_order_operators where repair_order_id = #{orderId} order by create_at DESC ;
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
