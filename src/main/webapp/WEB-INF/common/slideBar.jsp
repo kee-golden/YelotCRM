@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!--左侧导航开始-->
-<nav class="navbar-default navbar-static-side" role="navigation" id="leftside" style="height: 85%;overflow-y: auto">
+<nav class="navbar-default navbar-static-side" role="navigation" id="leftside" style="height: 100%;overflow-y: auto">
     <div class="nav-close"><i class="fa fa-times-circle"></i></div>
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
