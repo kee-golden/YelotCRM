@@ -11,11 +11,8 @@
 			<form role="form" id="J_checkForm">
 				<input type="hidden" name="id" id="orderId" value="${orderId}">
 				<div class="row">
-					<%--<label class="col-md-2">备注：</label>--%>
 					<textarea id="comment" rows="3" cols="20" class="col-md-11" style="margin-left: 30px" placeholder="输入审批备注"></textarea>
-					<%--<input type="textarea" class="col-md-10" name="comment" />--%>
 				</div>
-
 				<div class="layui-layer-btn"><a class="btn-group" id="approveBtn">通过</a><a class="btn-group" id="refuseBtn">拒绝</a></div>
 			</form>
 
@@ -26,10 +23,10 @@
 				<tr>
 					<th class="col-md-2">订单号</th>
 					<th class="col-md-2">操作人姓名</th>
-					<th>操作备注</th>
-					<th>操作方式</th>
-					<th>订单状态</th>
-					<th>创建时间</th>
+					<th class="col-md-2">操作备注</th>
+					<th class="col-md-2">操作方式</th>
+					<th class="col-md-2">订单状态</th>
+					<th class="col-md-2">创建时间</th>
 				</tr>
 
 				</thead>
@@ -52,7 +49,7 @@
 							</c:if>
 						</th>
 
-						<th><fmt:formatDate value="${item.createAt}" pattern="yyyy-MM-dd HH:mm:ss"/></th>
+						<th><fmt:formatDate value="${item.createAt}" pattern="yyyy-MM-dd HH:mm"/></th>
 
 
 					</tr>

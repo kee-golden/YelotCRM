@@ -63,8 +63,11 @@ public class UserService {
     }
 
 
+    public void editPassword(Long id, String newPsdMd5) {
+        userMapper.editPassword(id,newPsdMd5);
+    }
 
-
-
-
+    public int checkPassword(Long id, String psdMd5) {
+        return userMapper.checkPassword(id,psdMd5);
+    }
 }

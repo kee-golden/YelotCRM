@@ -209,18 +209,18 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <div class="checkbox pull-left" style=" width: 100%; margin-left:25px;">
-                                    <label style=" margin-left: 20px;">
-                                        <input type="checkbox" value="rememberMe" name="remember" style=" margin-top: 4px">自动登录
+                        <%--<div class="form-group">--%>
+                            <%--<div class="col-sm-offset-2 col-sm-10">--%>
+                                <%--<div class="checkbox pull-left" style=" width: 100%; margin-left:25px;">--%>
+                                    <%--<label style=" margin-left: 20px;">--%>
+                                        <%--<input type="checkbox" value="rememberMe" name="remember" style=" margin-top: 4px">自动登录--%>
 
-                                    </label>
-                                    <a class="pull-right" id="forget_a">忘记密码?</a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
+                                    <%--</label>--%>
+                                    <%--<a class="pull-right" id="forget_a">忘记密码?</a>--%>
+                                    <%--<div class="clearfix"></div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                         <div class="pull-right login_in">
                             <button type="submit" class="">登陆</button>
 

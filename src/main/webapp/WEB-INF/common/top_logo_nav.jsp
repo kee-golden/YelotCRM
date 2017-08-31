@@ -65,7 +65,7 @@
         //修改用户密码
         $("#resetPsd").click(function () {
             $.ajax({
-                    url: ctx + '/admin/to-edit-psd',
+                    url: ctx + '/user/to-edit-psd',
                     method: 'get',
                     dataType: 'html',
                     success: function (str) {
@@ -88,7 +88,7 @@
                                 }
                                 var loadIndex = yaya.layer.load(2);
                                 $.ajax({
-                                    url: ctx + '/admin/edit-psd',
+                                    url: ctx + '/user/edit-psd',
                                     traditional: true,
                                     data: {
                                         oldPsd: $('#oldPsd').val(),
@@ -131,7 +131,7 @@
                     oldPsd:{
                         required:true,
                         remote:{
-                            url:ctx+"/admin/check-password",
+                            url:ctx+"/user/check-password",
                             type:"post",
                             data:{
                                 password:function () {

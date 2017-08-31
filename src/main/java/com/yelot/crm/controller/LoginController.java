@@ -7,6 +7,7 @@ import com.yelot.crm.entity.User;
 import com.yelot.crm.service.LoginService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,8 +44,8 @@ public class LoginController {
 	public String login(String username, String password, String remember,
 						Model model, HttpServletRequest request, HttpServletResponse response) {
 		Subject subject = SecurityUtils.getSubject();
-//        String psdMd5 = new Md5Hash(password).toString();
-		String psdMd5 = password;// 暂时不用md5 加密
+        String psdMd5 = new Md5Hash(password).toString();
+//		String psdMd5 = password;// 暂时不用md5 加密
 
 		UsernamePasswordToken token = new UsernamePasswordToken(username, psdMd5);
 		try {
@@ -65,7 +66,7 @@ public class LoginController {
 
 			return "redirect:/" + firstUrl;
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 
 			model.addAttribute("username", username);
 			model.addAttribute("status", 500);

@@ -1,6 +1,5 @@
 package com.yelot.crm.controller;
 
-import com.yelot.crm.Util.CookieTool;
 import com.yelot.crm.Util.ResponseData;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
@@ -14,10 +13,7 @@ import com.yelot.crm.mapper.ShopMapper;
 import com.yelot.crm.mapper.UserMapper;
 import com.yelot.crm.service.UserService;
 import com.yelot.crm.vo.Table;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by kee on 17/5/14.
@@ -123,7 +116,11 @@ public class UserController {
     @RequestMapping("save")
     @ResponseBody
     public ResultData save(User user, Long shopId, String[] role){
-        user.setPassword("1234");
+
+//        user.setPassword("1234");
+        String newPassword = "123456";
+        String psdMd5 = new Md5Hash(newPassword).toString();
+        user.setPassword(psdMd5);
         user.setCreate_at(new Date());
         user.setUpdate_at(new Date());
         user.setIs_alive(AliveStatus.ALIVE.getCode());
@@ -193,6 +190,61 @@ public class UserController {
     @RequestMapping("find-by-name")
     public List<User> findByNameLike(String name){
         return userService.findByNameLike(name);
+    }
+
+    @ResponseBody
+    @RequestMapping("reset-password")
+    public ResultData resetPassword(Long id) {
+
+        String newPassword = "123456";
+        String psdMd5 = new Md5Hash(newPassword).toString();
+        User user = userMapper.find(id);
+        user.setPassword(psdMd5);
+        userMapper.save(user);
+
+        return ResultData.ok();
+    }
+
+    @ResponseBody
+    @RequestMapping("edit-psd")
+    public ResultData editPassword(String oldPsd, String newPsd) {
+
+
+        if (!oldPsd.equals(newPsd)) {//修改的密码与原密码不相同
+            String newPsdMd5 = new Md5Hash(newPsd).toString();
+            userService.editPassword(UserUtil.getCurrentUser().getId(), newPsdMd5);
+
+        } else {
+            return ResultData.serverError();
+        }
+
+        return ResultData.ok();
+
+    }
+
+    @RequestMapping("check-password")
+    public String checkPassword(String password, HttpServletResponse response) throws IOException {
+        String psdMd5 = new Md5Hash(password).toString();
+        int hasResult = userService.checkPassword(UserUtil.getCurrentUser().getId(), psdMd5);
+        if (hasResult > 0) {//表示可用，密码是正确的
+            response.getWriter().write("true");
+        } else {
+            response.getWriter().write("false");
+        }
+        return null;
+    }
+
+
+
+    /**
+     * to-修改密码
+     *
+     * @return
+     */
+    @RequestMapping("to-edit-psd")
+    public String toEditPassword() {
+        return "user/user_edit_password";
+
     }
 
 

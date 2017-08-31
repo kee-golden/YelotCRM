@@ -87,6 +87,9 @@ public interface UserMapper {
     @Select("select count(*) from t_user where is_alive = 1")
     int countBySearch(String extra_search);
 
-//    @Select("select * from t_user where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")
     List<User> findBySearch(@Param("pageHelper") PageHelper pageHelper);
+
+    int checkPassword(@Param("id") Long id, @Param("psdMd5") String psdMd5);
+
+    void editPassword(@Param("id") Long id, @Param("newPsdMd5") String newPsdMd5);
 }
