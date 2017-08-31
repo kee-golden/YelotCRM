@@ -58,6 +58,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     
     $("#J_orderSerch").click(function(){
         table.draw();
-    });	
-	
+    });
+
+
+
 })

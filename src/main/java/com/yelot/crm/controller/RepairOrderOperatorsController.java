@@ -41,10 +41,11 @@ public class RepairOrderOperatorsController {
 
     @RequestMapping("workflow")
     public String workflow(Model model,Long orderId){
+        RepairOrder repairOrder = repairOrderMapper.find(orderId);
 
         List<RepairOrderOperators> repairOrderOperatorsList = repairOrderOperatorsService.getRepairOrderOperators(orderId);
         model.addAttribute("repairOrderOperatorsList",repairOrderOperatorsList);
-
+        model.addAttribute("orderNo",repairOrder.getOrderNo());
         return "repair_order/repair_order_workflow";
 
     }
