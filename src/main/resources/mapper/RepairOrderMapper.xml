@@ -31,6 +31,8 @@
         <result property="repairDesc" column="repair_desc"/>
         <result property="createAt" column="create_at"/>
         <result property="updateAt" column="update_at"/>
+        <result property="precheckImages" column="precheck_images"/>
+        <result property="qccheckImages" column="qccheck_images"/>
     </resultMap>
 
     <select id="find" resultMap="orderResultMap">
@@ -48,8 +50,15 @@
             #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt})
     </insert>
 
-    <update id="updateOrderStatus">
-        update t_repair_order set status = #{approveStatus} where id = #{orderId}
+    <update id="updateOrderStatusAndImagesPath">
+        update t_repair_order set status = #{approveStatus}
+        <if test="approveStatus == 16 or approveStatus == 18">
+        , precheck_images = #{imagesPath}
+        </if>
+        <if test="approveStatus == 20 or approveStatus == 22">
+            , qccheck_images = #{imagesPath}
+        </if>
+         where id = #{orderId}
 
     </update>
 

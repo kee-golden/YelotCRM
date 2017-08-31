@@ -112,20 +112,10 @@
 							</span>
 						</div>
 						<div id="attributes" class="bottom10"></div>
-						<!-- <table style="width: 100%" border="1">
-							<tr style="height: 20px">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</table> -->
+
 						<hr />
 						<label>服务项:</label> <select id="serviceItem" name="serviceItem" multiple class="col-md-6">
-							<%--<c:forEach items="${categoryServiceItemList}" var="item">--%>
-							<%--<option value="${item.serviceItemId}">${item.serviceName}</option>--%>
-							<%--</c:forEach>--%>
+
 
 						</select>
 					</div>

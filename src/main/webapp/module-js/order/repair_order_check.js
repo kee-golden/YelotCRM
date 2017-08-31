@@ -65,7 +65,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     type: 1,
                     title: '审批流程',
                     content: str, //注意，如果str是object，那么需要字符拼接。
-                    area: '650px',
+                    area: '750px',
                     shadeClose: true,
                     // btn: ['保存'],
                     success: function (layero, index) {

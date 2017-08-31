@@ -119,6 +119,10 @@ public class RepairOrder {
 
     private Date updateAt;
 
+    private String precheckImages;
+
+    private String qccheckImages;
+
     public Long getId() {
         return id;
     }
@@ -368,5 +372,21 @@ public class RepairOrder {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public String getPrecheckImages() {
+        return precheckImages;
+    }
+
+    public void setPrecheckImages(String precheckImages) {
+        this.precheckImages = precheckImages;
+    }
+
+    public String getQccheckImages() {
+        return qccheckImages;
+    }
+
+    public void setQccheckImages(String qccheckImages) {
+        this.qccheckImages = qccheckImages;
     }
 }
