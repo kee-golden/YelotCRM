@@ -34,7 +34,7 @@ public class RepairOrderOperatorsService {
             RepairOrder repairOrder = repairOrderMapper.find(repairOrderId);
             String approveUserName = userMapper.find(approveUserId).getName();
             repairOrderOperators.setOrderNo(repairOrder.getOrderNo());
-            repairOrderOperators.setOrder_status(repairOrder.getStatus());
+//            repairOrderOperators.setOrder_status(repairOrder.getStatus());
             repairOrderOperators.setApproveUserName(approveUserName);
 
         }

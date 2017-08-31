@@ -12,7 +12,7 @@
 				<div class="row">
 					<textarea id="comment" rows="3" cols="20" class="col-md-11" style="margin-left: 30px" placeholder="输入审批备注"></textarea>
 				</div>
-				<div class="layui-layer-btn"><a class="btn-group" id="approveBtn">通过</a><a class="btn-group" id="refuseBtn">拒绝</a></div>
+				<div><span style="margin-left: 600px;"><a class="btn" id="approveBtn">通过</a><a class="btn" id="refuseBtn">拒绝</a></span></div>
 			</form>
 
 
@@ -107,6 +107,12 @@
     require([ 'jquery', 'yaya','webuploader', 'datatables.net' ], function($, yaya,WebUploader) {
         $('#approveBtn').click(function () {
 
+            var comment = $('#comment').val();
+            if(comment == ''){
+                yaya.layer.msg("备注不能为空！");
+                return;
+			}
+
             var path = $('.filelist').data("path");
             console.log(path);
 
@@ -134,6 +140,14 @@
         });
 
         $('#refuseBtn').click(function () {
+
+            yaya.layer.msg("refuse button click");
+
+            var comment = $('#comment').val();
+            if(comment == ''){
+                yaya.layer.msg("备注不能为空！");
+                return;
+            }
 
             $.ajax({
                 url:ctx+"/repair-order-operators/reject",
