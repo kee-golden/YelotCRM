@@ -182,7 +182,7 @@
         <!--layer插件-->
         <div class="layui-tab layui-tab-brief" >
             <ul class="layui-tab-title">
-                <li class="layui-this">用户登陆</li>
+                <li class="layui-this">用户登录</li>
                 <%--<li class="group-register">组织注册</li>--%>
             </ul>
            <div class="layui-tab-content" style="height: 100px;">
@@ -190,7 +190,7 @@
                     <c:if test="${status eq 500 or status eq 600}">
                         <div class="text-danger">${errorMsg}</div>
                     </c:if>
-                    <form class="form-horizontal" id="login-form" role="form" action="${ctx}/login" method="post"> <!--登陆页面-->
+                    <form class="form-horizontal" id="login-form" role="form" action="${ctx}/login" method="post"> <!--登录页面-->
                         <div class="form-group">
                             <label for="username" class="col-sm-2 control-label "><span class="titl">用户名:</span></label>
                             <div class="col-sm-10">
@@ -222,7 +222,7 @@
                             <%--</div>--%>
                         <%--</div>--%>
                         <div class="pull-right login_in">
-                            <button type="submit" class="">登陆</button>
+                            <button type="submit" class="">登录</button>
 
                         </div>
                         <div class="clearfix"></div>
@@ -262,7 +262,7 @@
                                         </div>
                                     </div>
                                     <div class="help_center">
-                                        <a href="" class="pull-right">返回登陆页</a>
+                                        <a href="" class="pull-right">返回登录页</a>
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
@@ -283,7 +283,7 @@
                                 </div>
                                 <div class="help_center">
                                     <a href="" class="pull-left"></a>
-                                    <a href="" class="pull-right">返回登陆页</a>
+                                    <a href="" class="pull-right">返回登录页</a>
                                     <div class="clearfix"></div>
                                 </div>
                             </form>
