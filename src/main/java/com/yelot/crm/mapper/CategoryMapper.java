@@ -31,4 +31,6 @@ public interface CategoryMapper {
     List<Category> findChildren(Long parentId);
 
     Category findByName(@Param("firstCategory") String firstCategory, @Param("secondCategory") String secondCategory);
+
+    Category find(Long id);
 }

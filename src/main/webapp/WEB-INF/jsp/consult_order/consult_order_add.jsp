@@ -28,8 +28,7 @@
 
 		<!--右侧部分开始-->
 
-
-		<div id="page-wrapper" class="wrapper wrapper-content cover_banner " style="height: 82%; overflow-y: auto;">
+		<div id="page-wrapper" class="wrapper wrapper-content cover_banner " style="height: 88%; overflow-y: auto;">
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
 
 			</div>
@@ -44,7 +43,7 @@
 						<div class="row bottom10">
 							<input type="hidden" id="customerId" data-id="" />
 							<div class="col-md-2">
-								<label><span style="color: red"></span>用户名</label> <input type="text" placeholder="请输入用户名" class="form-control" name="customerName" id="customerName"
+								<label><span style="color: red">*</span>用户名</label> <input type="text" placeholder="请输入用户名" class="form-control" name="customerName" id="customerName"
 																						  autocomplete="off" >
 							</div>
 
@@ -60,7 +59,7 @@
 							</div>
 
 							<div class="col-md-2">
-								<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone"
+								<label><span style="color: red">*</span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone"
 																						  >
 							</div>
 
@@ -74,7 +73,6 @@
 							<div class="col-md-4">
 								<label>详细地址</label> <input type="text" placeholder="请输入详细地址" class="form-control" name="customerAddress" id="customerAddress" value="${bean.address}"
 														   >
-
 							</div>
 						</div>
 						<div id="category" class="row bottom10">
@@ -143,11 +141,7 @@
 
 						</div>
 
-
-
 						</div>
-
-
 				<%--</div>--%>
 
 			</div>
@@ -212,11 +206,18 @@
             required:false
         });
 
+        $('#vistorAt').datetimepicker({
+            lang: 'ch',
+            format: 'Y-m-d',
+            timepicker:false
+        });
+
         $("#saveBtn").click(function () {
 
             var customerName = $("#customerName").val();
             var customerPhone = $('#customerPhone').val();
             var customerSex = $('#customerSex').val();
+            var customerAddress = $('#customerAddress').val();
             var wechatNo = $('#wechatNo').val();
             var repairCommands = $('#repairCommands').val();
             var province = $('#province').val();
@@ -231,8 +232,20 @@
             var qulityLimit = $('#qulityLimit').val();
             var specialCommands = $('#specialCommands').val();
             var vistorDate = $('#vistorAt').val();
-            var imagePaths = $('.filelist').data('path');
+            var imagesPath = $('.filelist').data('path');
             var expressNo = $('#expressNo').val();
+
+            if(customerName == ''){
+                yaya.layer.msg('用户名不能为空');
+                return;
+			}
+			if(customerPhone == ''){
+                yaya.layer.msg('用户手机号不能为空');
+                return;
+			}else if(!checkIsMobile(customerPhone)){
+			    yaya.layer.msg("手机号输入不正确");
+			    return;
+			}
 
 
             $.ajax({
@@ -243,8 +256,10 @@
                     customerName: customerName,
                     customerPhone: customerPhone,
                     customerSex: customerSex,
+                    customerAddress: customerAddress,
                     wechatNo:wechatNo,
                     repairCommands:repairCommands,
+                    province:province,
                     city:city,
                     brandId:brandId,
                     firstCategoryName:firstCategory,
@@ -255,7 +270,7 @@
                     timeLimit:timeLimit,
                     qulityLimit:qulityLimit,
                     specialCommands:specialCommands,
-                    imagePaths:imagePaths,
+                    imagesPath:imagesPath,
                     vistorDate:vistorDate,
                     expressNo:expressNo,
 
@@ -273,8 +288,14 @@
 
             });
 
-
         });
+
+
+        function checkIsMobile(value){
+            var length = value.length;
+            var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+            return (length == 11 && mobile.test(value));
+        }
 
         });
 

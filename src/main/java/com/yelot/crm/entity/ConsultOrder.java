@@ -13,6 +13,7 @@ public class ConsultOrder {
     private String customerName;
     private int customerSex;
     private String customerPhone;
+    private String customerAddress;
     private String customerAgesAlmost;
     private String wechatNo;
     private String repairCommands;
@@ -23,6 +24,7 @@ public class ConsultOrder {
     private String firstCategoryName;
     private String secondCategoryName;
     private Long brandId;
+    private String brandName;
     /**
      * 浏览网页，来源渠道
      */
@@ -42,6 +44,7 @@ public class ConsultOrder {
      */
     private Date createAt;
     private Long createUserId;
+    private String createUserName;
     /**
      * 快递单号
      */
@@ -52,6 +55,22 @@ public class ConsultOrder {
     private int status;
 
     private Long shopId;
+
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
 
     public String getFirstCategoryName() {
         return firstCategoryName;
@@ -269,5 +288,13 @@ public class ConsultOrder {
 
     public void setShopId(Long shopId) {
         this.shopId = shopId;
+    }
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
     }
 }

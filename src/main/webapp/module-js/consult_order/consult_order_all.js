@@ -22,23 +22,24 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     	'columns': [
     			{'data' : 'customerName'},
     			{'data' : 'customerPhone'},
-    			{'data' : 'categoryName'},
-    			{'data' : 'status',
+                {'data' : 'wechatNo'},
+                {'data' : 'repairCommands'},
+                {'data' : 'status',
                     'render':function (data) {
                         if(data == 2) {
                             return '进行中';
                         } if(data == 1) {
                             return '已接单';
                         } else {
-                            return '未接单'
+                            return '未接单';
                         }
                     }
     			},
-    			{'data' : 'wechatNo'},
+    			{'data' : 'createUserName'},
     			{'data' : 'createAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
-    				return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
-    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
+    				return '<a href='+ctx+'/consult-order/detail?id='+data+' "data-id="' + data + '" class="J_detail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
+    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-edit" aria-hidden="true"></i>受理处理</a>';
     			}
     			}],
         'language': {
@@ -58,6 +59,11 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     
     $("#J_orderSerch").click(function(){
         table.draw();
+    });
+
+    $('.J_detail').click(function () {
+
+
     });
 
 

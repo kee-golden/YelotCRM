@@ -187,7 +187,7 @@
 
 				<div class="ibox float-e-margins">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="active"><a>全部订单列表</a></li>
+						<li class="active"><a>咨询单列表</a></li>
 					</ul>
 
 					<div id="content" class="ibox-content">
@@ -216,7 +216,8 @@
 								<tr>
 									<th>客户姓名</th>
 									<th>客户电话</th>
-									<th>产品分类</th>
+									<th>微信号</th>
+									<th>维修需求</th>
 									<th>当前状态</th>
 									<th>创建者</th>
 									<th>创建时间</th>

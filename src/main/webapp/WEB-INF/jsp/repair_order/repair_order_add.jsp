@@ -29,7 +29,7 @@
 
 		<!--右侧部分开始-->
 
-		<div id="page-wrapper" class="wrapper wrapper-content cover_banner " style="height: 82%; overflow-y: auto;">
+		<div id="page-wrapper" class="wrapper wrapper-content cover_banner " style="height: 88%; overflow-y: auto;">
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
 				<h6>
 					<span class="glyphicon glyphicon-briefcase work "></span>客户信息<i class="pull-right iconfont ">&#xe658;</i>

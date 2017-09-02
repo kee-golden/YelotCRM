@@ -12,5 +12,8 @@
     <select id="findAll" resultMap="brandResultMap">
         SELECT * from t_brand order by first_letter ASC ;
     </select>
+    <select id="find" resultMap="brandResultMap">
+        SELECT * from t_brand where id = #{id} ;
+    </select>
 
 </mapper>

@@ -15,4 +15,5 @@ public interface BrandMapper {
 
     List<Brand> findAll();
 
+    Brand find(Long id);
 }

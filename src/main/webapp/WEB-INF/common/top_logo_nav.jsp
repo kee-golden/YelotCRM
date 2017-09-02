@@ -18,7 +18,7 @@
     <div class="container-fluid top_max ">
         <div class="row">
             <div class="col-xs-6"style="line-height: 60px; ">
-                <div class="pull-left"><img src="${ctx}/img/logo.png"></div>
+                <div class="pull-left"><a href="${ctx}/login"> <img src="${ctx}/img/logo.png"></a></div>
                 <h3 style="float: left; margin-left: 50px; line-height: 45px;">${user.shop.name}</h3>
             </div>
             <div class="col-xs-6">

@@ -8,7 +8,7 @@
 
     <%@include file="/WEB-INF/common/static.jsp" %>
 
-    <c:set var="PARENT_MENU_CODE" value="Shop_Manage"/>
+    <c:set var="PARENT_MENU_CODE" value="Customer_Manage"/>
 
     <c:set var="CHILD_MENU_CODE" value="Customer_List"/>
 

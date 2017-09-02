@@ -10,6 +10,8 @@ import com.yelot.crm.entity.Brand;
 import com.yelot.crm.entity.ConsultOrder;
 import com.yelot.crm.entity.RepairOrder;
 import com.yelot.crm.mapper.BrandMapper;
+import com.yelot.crm.mapper.CategoryMapper;
+import com.yelot.crm.mapper.ConsultOrderMapper;
 import com.yelot.crm.service.ConsultOrderService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
@@ -34,10 +36,16 @@ public class ConsultOrderController {
     private ConsultOrderService consultOrderService;
 
     @Autowired
+    private ConsultOrderMapper consultOrderMapper;
+
+    @Autowired
     private RepairOrderService repairOrderService;
 
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @RequestMapping("add")
     public String add(Model model){
@@ -56,10 +64,26 @@ public class ConsultOrderController {
     @RequestMapping("save")
     @ResponseBody
     public ResultData save(ConsultOrder consultOrder,String vistorDate){
-        Date vistorAt = DateUtil.toDate(vistorDate, Constants.DefaultDateFormate);
+        Date vistorAt = DateUtil.toDate(vistorDate, Constants.DateFormate);
         consultOrder.setVistorAt(vistorAt);
         consultOrderService.save(consultOrder);
         return ResultData.ok();
+    }
+
+    @RequestMapping("detail")
+    public String detail(Model model,Long id){
+        ConsultOrder consultOrder = consultOrderMapper.find(id);
+        consultOrder.setBrandName(brandMapper.find(consultOrder.getBrandId()).getName());
+        String imagesPath = consultOrder.getImagesPath();
+        if(imagesPath != null){
+            String images[] = consultOrder.getImagesPath().split(",");
+            model.addAttribute("images",images);
+        }
+
+        model.addAttribute("bean",consultOrder);
+
+        return "consult_order/consult_order_detail";
+
     }
 
     @RequestMapping("alllist")
