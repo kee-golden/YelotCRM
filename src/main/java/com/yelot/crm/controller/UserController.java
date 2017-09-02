@@ -12,6 +12,7 @@ import com.yelot.crm.mapper.RoleMapper;
 import com.yelot.crm.mapper.ShopMapper;
 import com.yelot.crm.mapper.UserMapper;
 import com.yelot.crm.service.UserService;
+import com.yelot.crm.vo.RoleVo;
 import com.yelot.crm.vo.Table;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,7 @@ public class UserController {
     @RequestMapping("edit")
     public String edit(Model model, Long id) {
         User user = userMapper.find(id);
-        List<Role> roles = roleMapper.findAll();
+        List<RoleVo> roles = roleMapper.findAllByUserId(id);
         List<Shop> shopList = shopMapper.findAll();
         model.addAttribute("roles", roles);
         model.addAttribute("bean", user);
@@ -118,14 +119,21 @@ public class UserController {
     public ResultData save(User user, Long shopId, String[] role){
 
 //        user.setPassword("1234");
-        String newPassword = "123456";
-        String psdMd5 = new Md5Hash(newPassword).toString();
-        user.setPassword(psdMd5);
-        user.setCreate_at(new Date());
-        user.setUpdate_at(new Date());
-        user.setIs_alive(AliveStatus.ALIVE.getCode());
-        user.setShop_id(shopId);
-        userService.save(user,role);
+        if(user.getId() == null){
+            String newPassword = "123456";
+            String psdMd5 = new Md5Hash(newPassword).toString();
+            user.setPassword(psdMd5);
+            user.setCreate_at(new Date());
+            user.setUpdate_at(new Date());
+            user.setIs_alive(AliveStatus.ALIVE.getCode());
+            user.setShop_id(shopId);
+            userService.save(user,role);
+        }else {//更新user
+            user.setShop_id(shopId);
+            user.setUpdate_at(new Date());
+            userService.update(user,role);
+        }
+
         return ResultData.ok();
     }
 
@@ -198,10 +206,9 @@ public class UserController {
 
         String newPassword = "123456";
         String psdMd5 = new Md5Hash(newPassword).toString();
-        User user = userMapper.find(id);
-        user.setPassword(psdMd5);
-        userMapper.save(user);
-
+        if(id != null){
+            userService.updatePassword(psdMd5,id);
+        }
         return ResultData.ok();
     }
 

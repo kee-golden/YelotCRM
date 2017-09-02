@@ -29,7 +29,6 @@
 
 		<!--右侧部分开始-->
 
-
 		<div id="page-wrapper" class="wrapper wrapper-content cover_banner " style="height: 82%; overflow-y: auto;">
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
 				<h6>
@@ -47,7 +46,7 @@
 								class="form-control btn-group" value="查询" />
 						</div>
 					</form>
-					<hr />
+					<hr/>
 
 					<div id="customerContainer" class="col-md-12 b-r">
 						<div class="row bottom10">
@@ -66,7 +65,7 @@
 							<div class="col-md-2">
 								<label>省市</label>
 								<div id="prov_city">
-									<select class="prov" name="province" readonly=""></select> <select class="city" disabled="disabled" name="city" readonly=""></select>
+									<select class="prov" name="province" readonly></select> <select class="city" disabled="disabled" name="city" readonly></select>
 								</div>
 
 							</div>
@@ -186,10 +185,7 @@
 </body>
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
-<%--<script src="${ctx}/static/jquery/jquery-2.2.4.min.js"></script>--%>
 
-
-<%--<script type="text/javascript" src="${ctx}/static/cityselect/js/jquery.cityselect.js"></script>--%>
 <script src="${ctx}/module-js/order/repair_order_add.js"></script>
 <script src="${ctx}/module-js/order/webuploader_app.js"></script>
 

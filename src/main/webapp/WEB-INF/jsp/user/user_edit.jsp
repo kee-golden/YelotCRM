@@ -34,7 +34,7 @@
                             <select name="shopId" id="shopId" class="from-control">
                                 <c:forEach items="${shopList}" var="shop">
                                     <option value="${shop.id}"
-                                            <c:if test="${bean.shop.id == shop.id}">
+                                            <c:if test="${bean.shop_id == shop.id}">
                                                 selected="selected"
                                             </c:if>
                                     >${shop.name}</option>
@@ -67,7 +67,7 @@
                             <select name="shopId" class="from-control">
                                 <c:forEach items="${shopList}" var="shop">
                                     <option value="${shop.id}"
-                                            <c:if test="${bean.shop.id == shop.id}">
+                                            <c:if test="${bean.shop_id == shop.id}">
                                                 selected="selected"
                                             </c:if>
                                     >${shop.name}</option>
@@ -84,8 +84,8 @@
                         <c:forEach items="${roles}" var="item" varStatus="s">
                             <div class="check-box">
                                 <label>
-                                    <input type="checkbox" name="role" value="${item.id}" <c:if test="${item.name eq '企业管理员'}">disabled="true"</c:if>
-                                           <c:if test="${adminRoleMap[item.code]}">checked="checked"</c:if>> ${item.name}
+                                    <input type="checkbox" name="role" value="${item.id}"
+                                           <c:if test="${not empty item.userId}">checked="checked"</c:if>> ${item.name}
                                 </label>
                             </div>
                         </c:forEach>

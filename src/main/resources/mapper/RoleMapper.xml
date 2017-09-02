@@ -9,9 +9,22 @@
         <result property="updateAt" column="update_at"/>
     </resultMap>
 
+    <resultMap id="roleVoResultMap" type="com.yelot.crm.vo.RoleVo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="userId" column="userId"/>
+    </resultMap>
+
     <sql id="roleBasicMap">
         id, name, code, create_at, update_at
     </sql>
+
+    <select id="findAllByUserId" resultMap="roleVoResultMap">
+        select t_role.*,t.user_id userId from t_role left join (select * from t_user_role_ref where user_id = #{userId}) t
+        on t_role.id = t.role_id order by t_role.id
+
+    </select>
 
 
     <insert id="insert"

@@ -203,14 +203,13 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                             method: 'post',
                             dataType: 'json',
                             success: function (data) {
-                                // if (data.code) {
-                                //     table.draw();
-                                //     yaya.layer.close(index);
-                                // }
-                                // else {
-                                //     yaya.layer.msg(data.data);//出错信息
-                                //
-                                // }
+
+                                if (data.code == 1200) {
+                                    yaya.layer.close(index);
+                                    table.draw();
+                                    yaya.layer.msg("保存成功")
+
+                                }
                             },
                             error: function () {
 
@@ -268,20 +267,23 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
 
     $JUserList.on('click', '.J_changePassword', function () {
-        $.ajax({
-            url: ctx + '/user/reset-password',
-            data: {
-                id: $(this).data('id')
-            },
-            method: 'get',
-            dataType: 'json',
-            success: function (result) {
-                yaya.layer.msg(result.message);
-            },
-            error: function () {
+        if(confirm("请确认是否重置该用户的为初始密码：123456")){
+            $.ajax({
+                url: ctx + '/user/reset-password',
+                data: {
+                    id: $(this).data('id')
+                },
+                method: 'get',
+                dataType: 'json',
+                success: function (result) {
+                    yaya.layer.msg('重置成功');
+                },
+                error: function () {
 
-            }
-        });
+                }
+            });
+
+        }
 
     });
 

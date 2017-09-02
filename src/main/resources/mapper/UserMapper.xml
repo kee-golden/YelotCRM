@@ -37,6 +37,10 @@
         update t_user set password = #{newPsdMd5} where id = #{id}
     </update>
 
+    <update id="updateUser">
+        update t_user set name = #{name},realname = #{realname},phone = #{phone},shop_id = #{shop_id} where id = #{id}
+    </update>
+
 
 
 

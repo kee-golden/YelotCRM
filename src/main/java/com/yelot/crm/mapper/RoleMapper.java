@@ -2,6 +2,7 @@ package com.yelot.crm.mapper;
 
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Role;
+import com.yelot.crm.vo.RoleVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -37,6 +38,8 @@ public interface RoleMapper extends BaseMapper<Role>{
     List<Role> findByPage(@Param("pageHelper") PageHelper pageHelper);
 
     List<Role> findAll();
+
+    List<RoleVo> findAllByUserId(Long userId);
 
     void insertUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
 }

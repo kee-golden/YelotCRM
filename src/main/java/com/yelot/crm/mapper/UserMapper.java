@@ -43,16 +43,18 @@ public interface UserMapper {
      * 更新用户
      * @param user
      */
-    @Update("update t_user set name = #{name},password=#{password},realname=#{realname},phone=#{phone},emp_no=#{emp_no}," +
-            "is_alive=#{is_alive},create_at=#{create_at},update_at=#{update_at} where id = #{id}")
-    void update(User user);
+//    @Update("update t_user set name = #{name},password=#{password},realname=#{realname},phone=#{phone},emp_no=#{emp_no}," +
+//            "is_alive=#{is_alive},create_at=#{create_at},update_at=#{update_at} where id = #{id}")
+//    void update(User user);
+
+    void updateUser(User user);
 
     /**
      * 更新用户密码
      * @param password
      */
     @Update("update t_user set password = #{password} where id = #{id}")
-    void updatePassword(String password);
+    void updatePassword(@Param("password") String password,@Param("id") Long id);
 
     /**
      * 分页查找

@@ -1,20 +1,16 @@
-package com.yelot.crm.entity;
-
-import java.util.Date;
+package com.yelot.crm.vo;
 
 /**
- * Created by kee on 17/5/30.
+ * left join 查询用户是否有这角色
+ * Created by kee on 17/9/2.
  */
-public class Role {
+public class RoleVo {
+
     private Long id;
     private String name;
     private String code;
-
-    private Date createAt;
-    private Date updateAt;
-
-    // vo 对象扩展
     private Long userId;
+
 
     public Long getId() {
         return id;
@@ -38,22 +34,6 @@ public class Role {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public Date getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
-    }
-
-    public Date getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
     }
 
     public Long getUserId() {

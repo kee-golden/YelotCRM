@@ -35,6 +35,11 @@ public class UserService {
         saveUserRoles(user,role);
     }
 
+    public void update(User user,String []role){
+        userMapper.updateUser(user);
+        saveUserRoles(user,role);
+    }
+
     private void saveUserRoles(User user, String[] role) {
         roleMapper.deleteUserRoleByUserId(user.getId());
         if (role != null) {
@@ -45,8 +50,8 @@ public class UserService {
 
     }
 
-    public void updatePassword(String password){
-        userMapper.updatePassword(password);
+    public void updatePassword(String password,Long id){
+        userMapper.updatePassword(password,id);
     }
 
     public List<User> findByPage(Integer start, Integer size){
