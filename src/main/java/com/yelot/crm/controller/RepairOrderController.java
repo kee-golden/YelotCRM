@@ -260,4 +260,17 @@ public class RepairOrderController {
 
     }
 
+    /**
+     * 根据订单id查看订单详情
+     * @param model
+     * @param orderId
+     * @return
+     */
+    @RequestMapping("detail")
+    public String findRepairOrderByOrderId(Model model, Long orderId){
+        RepairOrder repairOrder = repairOrderService.findRepairOrderByOrderId(orderId);
+        model.addAttribute("repairOrder", repairOrder);
+        return "repair_order/repair_order_detail";
+    }
+
 }

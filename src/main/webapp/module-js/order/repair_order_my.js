@@ -62,6 +62,44 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         table.draw();
     });
 
+    // 查看详情
+    $JOrderList.on('click', '.J_orderDetail', function () {
+        $.ajax({
+            url: ctx + '/repair-order/detail',
+            data: {
+                orderId: $(this).data('id')
+            },
+            method: 'get',
+            dataType: 'html',
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '订单详情',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: '800px',
+                    shadeClose: true,
+                    btn: ['客户单打印'],
+                    success: function (layero, index) {
+
+
+                    },
+                    yes: function (index) {
+	                    var newstr = document.all.item("a").innerHTML;
+	                    var oldstr = document.body.innerHTML;
+	                    document.body.innerHTML = newstr;
+	                    window.print(); 
+	                    document.body.innerHTML = oldstr;
+                    }
+
+                });
+            },
+            error: function () {
+
+            }
+        });
+    });
+    
+    // 审批流程
     $JOrderList.on('click', '.J_workflow', function () {
         $.ajax({
             url: ctx + '/repair-order-operators/workflow',

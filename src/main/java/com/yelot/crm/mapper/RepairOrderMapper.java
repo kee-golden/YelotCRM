@@ -75,4 +75,11 @@ public interface RepairOrderMapper {
 
     void updateOrderStatusAndImagesPath(@Param("orderId") Long orderId, @Param("approveStatus") int approveStatus,
 										@Param("imagesPath")String imagesPath);
+
+    /**
+     * 根据订单id查看订单详情
+     * @param orderId
+     * @return
+     */
+    public RepairOrder findRepairOrderByOrderId(Long orderId);
 }

@@ -1,11 +1,17 @@
 package com.yelot.crm.entity;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Created by kee on 17/5/30.
+ */
+/**
+ * @author xyzloveabc
+ * @2017年9月1日
  */
 public class RepairOrder {
     private Long id;
@@ -67,6 +73,11 @@ public class RepairOrder {
      * 客户手机号
      */
     private String customerPhone;
+    
+    /**
+     * 其他联系方式
+     */
+    private String customerPhoneSecond;
 
     /**
      * 客户地址
@@ -100,6 +111,8 @@ public class RepairOrder {
     private String imageDesc;
 
     private String productInfoJson;
+    
+    private List<Map> productInfoList;
 
     private String serviceItemIds;
     
@@ -110,8 +123,14 @@ public class RepairOrder {
     private Long secondCategoryId;
     
     private String categoryName;
+    
+    private String firstCategoryName;
+    
+    private String secondCategoryName;
 
     private Long brandId;
+
+    private String brandName;
 
     private String repairDesc;
 
@@ -212,7 +231,15 @@ public class RepairOrder {
         this.customerPhone = customerPhone;
     }
 
-    public String getCustomerAddress() {
+    public String getCustomerPhoneSecond() {
+		return customerPhoneSecond;
+	}
+
+	public void setCustomerPhoneSecond(String customerPhoneSecond) {
+		this.customerPhoneSecond = customerPhoneSecond;
+	}
+
+	public String getCustomerAddress() {
         return customerAddress;
     }
 
@@ -292,7 +319,15 @@ public class RepairOrder {
         this.productInfoJson = productInfoJson;
     }
 
-    public String getServiceItemIds() {
+	public List<Map> getProductInfoList() {
+		return productInfoList;
+	}
+
+	public void setProductInfoList(List<Map> productInfoList) {
+		this.productInfoList = productInfoList;
+	}
+
+	public String getServiceItemIds() {
         return serviceItemIds;
     }
 
@@ -324,12 +359,28 @@ public class RepairOrder {
         this.secondCategoryId = secondCategoryId;
     }
 
-    public String getCategoryName() {
+	public String getCategoryName() {
 		return categoryName;
 	}
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public String getFirstCategoryName() {
+		return firstCategoryName;
+	}
+
+	public void setFirstCategoryName(String firstCategoryName) {
+		this.firstCategoryName = firstCategoryName;
+	}
+
+	public String getSecondCategoryName() {
+		return secondCategoryName;
+	}
+
+	public void setSecondCategoryName(String secondCategoryName) {
+		this.secondCategoryName = secondCategoryName;
 	}
 
 	public Long getBrandId() {
@@ -340,7 +391,15 @@ public class RepairOrder {
         this.brandId = brandId;
     }
 
-    public String getRepairDesc() {
+    public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
+	public String getRepairDesc() {
         return repairDesc;
     }
 

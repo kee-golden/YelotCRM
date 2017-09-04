@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kee on 17/6/5.
@@ -143,23 +144,6 @@ public class RepairOrderService {
 		
 		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageMy(extra_search, create_user_id, approve_user_id, pageHelper);
 		setRepairServiceItem(repairOrderList);
-//		for (RepairOrder repairOrder : RepairOrderList) {
-//			String serviceItemIds = repairOrder.getServiceItemIds();
-//			List<String> serviceItemIdsList = JSON.parseArray(serviceItemIds, String.class);
-//			String serviceItemNames = "";
-//			if (serviceItemIdsList != null && serviceItemIdsList.size() > 0) {
-//				for (int i = 0; i < serviceItemIdsList.size(); i++) {
-//					String serviceItemName = repairOrderMapper
-//							.findServiceItemName(serviceItemIdsList.get(i));
-//					if (i == serviceItemIdsList.size() - 1) {
-//						serviceItemNames += serviceItemName;
-//					} else {
-//						serviceItemNames += serviceItemName + ",";
-//					}
-//				}
-//			}
-//			repairOrder.setServiceItemNames(serviceItemNames);
-//		}
 		return repairOrderList;
 	}
 
@@ -193,6 +177,11 @@ public class RepairOrderService {
 		}
 	}
 
+	private void setRepairProductInfo(RepairOrder repairOrder){
+		List<Map> productInfoList = JSON.parseArray(repairOrder.getProductInfoJson(), Map.class);
+		repairOrder.setProductInfoList(productInfoList);
+	}
+
 	public int countTotalPageCheckListAndShop(String extra_search, String statusString, Long shopId) {
 		return repairOrderMapper.countTotalPageCheckListAndShop(extra_search,statusString,shopId);
 	}
@@ -201,5 +190,11 @@ public class RepairOrderService {
 		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageCheckListAndShop(extra_search,statusString,pageHelper,shopId);
 		setRepairServiceItem(repairOrderList);
 		return repairOrderList;
+	}
+	
+	public RepairOrder findRepairOrderByOrderId(Long orderId) {
+		RepairOrder repairOrder = repairOrderMapper.findRepairOrderByOrderId(orderId);
+		setRepairProductInfo(repairOrder);
+		return repairOrder;
 	}
 }

@@ -13,6 +13,7 @@
         <result property="customerId" column="customer_id"/>
         <result property="customerName" column="customer_name"/>
         <result property="customerPhone" column="customer_phone"/>
+        <result property="customerPhoneSecond" column="customer_phone_second"/>
         <result property="customerAddress" column="customer_address"/>
         <result property="advancePayment" column="advance_payment"/>
         <result property="nonPayment" column="non_payment"/>
@@ -27,7 +28,10 @@
         <result property="firstCategoryId" column="first_category_id"/>
         <result property="secondCategoryId" column="second_category_id"/>
         <result property="categoryName" column="category_name"/>
+        <result property="firstCategoryName" column="first_category_name"/>
+        <result property="secondCategoryName" column="second_category_name"/>
         <result property="brandId" column="brand_id"/>
+        <result property="brandName" column="brand_name"/>
         <result property="repairDesc" column="repair_desc"/>
         <result property="createAt" column="create_at"/>
         <result property="updateAt" column="update_at"/>
@@ -131,6 +135,16 @@
         <if test="shopId != null and shopId != ''">and t.shop_id =  #{shopId}</if>
         order by id desc
         limit #{pageHelper.offset},#{pageHelper.size}
+    </select>
+
+    <select id="findRepairOrderByOrderId" resultMap="orderResultMap">
+        select t.*, t1.realname create_user_name, t2.name first_category_name, t3.name second_category_name, t4.name brand_name
+        from t_repair_order t
+        left join t_user t1 on t.create_user_id = t1.id
+        left join t_category t2 on t.first_category_id = t2.id
+        left join t_category t3 on t.second_category_id = t3.id
+        left join t_brand t4 on t.brand_id = t4.id
+        where t.id = #{orderId}
     </select>
 
 </mapper>

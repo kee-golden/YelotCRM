@@ -215,7 +215,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
             	if (i % 4 == 0) {
                     $("#attributes").append('<tr>');
 				}
-                var labelStr = '<td align="right" style="width: 8%"><label>'+attributesJson[i].attributeName+':</label></td>';
+                var labelStr = '<td align="right" style="width: 8%"><label>'+attributesJson[i].attributeName+'：</label></td>';
                 $("#attributes").append(labelStr);
                 if(attributesJson[i].type == 1){
                     var selectStr = '<td align="left" style="width: 15%"><select name=\"'+attributesJson[i].attributeName+'\" id=\"'+prifixAttribute+attributesJson[i].id+'\">';
