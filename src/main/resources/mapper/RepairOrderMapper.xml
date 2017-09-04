@@ -7,7 +7,6 @@
         <result property="status" column="status"/>
         <result property="createUserId" column="create_user_id"/>
         <result property="createUserName" column="create_user_name"/>
-        <result property="approveRoleId" column="approve_user_id"/>
         <result property="pickupAt" column="pickup_at"/>
         <result property="pickupType" column="pickup_type"/>
         <result property="customerId" column="customer_id"/>
@@ -37,6 +36,9 @@
         <result property="updateAt" column="update_at"/>
         <result property="precheckImages" column="precheck_images"/>
         <result property="qccheckImages" column="qccheck_images"/>
+        <result property="typeName" column="type_name"/>
+        <result property="labourPayment" column="labour_payment"/>
+        <result property="materialPayment" column="material_payment"/>
     </resultMap>
 
     <select id="find" resultMap="orderResultMap">
@@ -44,14 +46,16 @@
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into t_repair_order(order_no,status,create_user_id,approve_role_id,pickup_at,
+        insert into t_repair_order(order_no,status,create_user_id,pickup_at,
             pickup_type,customer_id,customer_name,customer_phone,customer_address,advance_payment,non_payment,
             advance_payment_type,non_payment_type,total_payment,shop_id,images_json,image_desc,product_info_json,
-            service_item_ids,first_category_id,second_category_id,brand_id,repair_desc,create_at,update_at)
-            values(#{orderNo},#{status},#{createUserId},#{approveRoleId},#{pickupAt},#{pickupType},
+            service_item_ids,first_category_id,second_category_id,brand_id,repair_desc,create_at,update_at,
+            type_name,labour_payment,material_payment)
+            values(#{orderNo},#{status},#{createUserId},#{pickupAt},#{pickupType},
             #{customerId},#{customerName},#{customerPhone},#{customerAddress},#{advancePayment},#{nonPayment},
             #{advancePaymentType},#{nonPaymentType},#{totalPayment},#{shopId},#{imagesJson},#{imageDesc},#{productInfoJson},
-            #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt})
+            #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt},
+            #{typeName},#{labourPayment},#{materialPayment})
     </insert>
 
     <update id="updateOrderStatusAndImagesPath">

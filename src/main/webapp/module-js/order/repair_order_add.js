@@ -32,23 +32,24 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
             return;
         }
 
+
+
         var firstCategory = $('#firstCategory').val();
         var secondCategory = $('#secondCategory').val();
-        console.log(firstCategory+","+secondCategory);
+        var brandId = $('#brandId').val();
 
         var valuesAttributeJson =  getAttributeValues(attributesJson);
-        console.log("values json:"+JSON.stringify(valuesAttributeJson));
         var serviceItemJson = $('#serviceItem').val();
-        console.log("serviceItemJson:"+serviceItemJson);
 
         var imagePaths = $('.filelist').data('path');
-        console.log("imagepaths:"+imagePaths);
         var imageDesc = $('#imageDesc').val();
-        console.log("imageDesc:"+imageDesc);
         var repairDesc = $('#repairDesc').val();
-        console.log("repirDesc:"+repairDesc);
+        var typeName = $('#typeName').val();
+        var advancePayment = $('#advancePayment').val();
+        var labourPayment = $('#labourPayment').val();
+        var materialPayment = $('#materialPayment').val();
         var pickupDate = $('#pickupDate').val();
-        console.log("pickupDate:"+pickupDate);
+        console.log(labourPayment+","+labourPayment+","+materialPayment);
         $.ajax({
             url: ctx + '/repair-order/save',
             method: 'post',
@@ -57,11 +58,16 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 customerId: customerId,
                 firstCategory: firstCategory,
                 secondCategory: secondCategory,
+                brandId:brandId,
                 valuesAttributeJson:JSON.stringify(valuesAttributeJson),
                 serviceItemJson:JSON.stringify(serviceItemJson),
                 imagePaths:imagePaths,
                 imageDesc:imageDesc,
                 repairDesc:repairDesc,
+                typeName:typeName,
+                advancePayment:advancePayment,
+                labourPayment:labourPayment,
+                materialPayment:materialPayment,
                 pickupDate:pickupDate
 
             },

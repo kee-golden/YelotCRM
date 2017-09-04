@@ -115,8 +115,13 @@ public class RepairOrderController {
 
     @ResponseBody
     @RequestMapping("save")
-    public ResultData save(Long customerId,String firstCategory,String secondCategory,String valuesAttributeJson,
-                           String serviceItemJson,String imagePaths,String imageDesc,String repairDesc,String pickupDate){
+    public ResultData save(Long customerId,String firstCategory,String secondCategory,Long brandId,String valuesAttributeJson,
+                           String serviceItemJson,String imagePaths,String imageDesc,String repairDesc,
+                           String typeName,
+                           @RequestParam(value = "advancePayment",defaultValue = "0") Integer advancePayment,
+                           @RequestParam(value = "labourPayment",defaultValue = "0")Integer labourPayment,
+                           @RequestParam(value = "materialPayment",defaultValue = "0")Integer materialPayment,
+                           String pickupDate){
         RepairOrder repairOrder = new RepairOrder();
 
         User user = UserUtil.getCurrentUser();
@@ -127,6 +132,7 @@ public class RepairOrderController {
 
         repairOrder.setFirstCategoryId(category.getParentId());
         repairOrder.setSecondCategoryId(category.getId());
+        repairOrder.setBrandId(brandId);
         Customer customer = customerMapper.find(customerId);
         repairOrder.setCustomerId(customerId);
         repairOrder.setCustomerName(customer.getName());
@@ -137,6 +143,10 @@ public class RepairOrderController {
         repairOrder.setImagesJson(imagePaths);
         repairOrder.setImageDesc(imageDesc);
         repairOrder.setRepairDesc(repairDesc);
+        repairOrder.setTypeName(typeName);
+        repairOrder.setLabourPayment(labourPayment);
+        repairOrder.setAdvancePayment(advancePayment);
+        repairOrder.setMaterialPayment(materialPayment);
         repairOrder.setPickupAt(DateUtil.toDate(pickupDate,"yyyy-MM-dd"));
         Date now = new Date();
         repairOrder.setCreateAt(now);

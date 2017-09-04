@@ -44,10 +44,7 @@ public class RepairOrder {
      */
     private String createUserName;
 
-    /**
-     * 审核，根据用户的角色进行判断具有审核权限,查询审核订单，该值存放下一个审核角色Id
-     */
-    private Long approveRoleId;
+
 
     /**
      * 交货日期,预估的时间
@@ -106,14 +103,25 @@ public class RepairOrder {
      */
     private int totalPayment;
 
+    /**
+     * 客服上传的图片，创建时上传的图片
+     */
     private String imagesJson;
-
+    /**
+     * 图片外观描述
+     */
     private String imageDesc;
 
+    /**
+     * 根据分类，存储不同的产品信息json
+     */
     private String productInfoJson;
     
     private List<Map> productInfoList;
 
+    /**
+     * 用户服务项Ids
+     */
     private String serviceItemIds;
     
     private String serviceItemNames;
@@ -138,9 +146,24 @@ public class RepairOrder {
 
     private Date updateAt;
 
+    /**
+     * 预检的，上次的图片，以逗号分隔
+     */
     private String precheckImages;
 
+    /**
+     * QC 维修完成后，上次的图片，以逗号分隔
+     */
     private String qccheckImages;
+
+    /**
+     * 新增类别：（内部单，返修单，评估单，客修单）
+     */
+    private String typeName;
+
+    private int labourPayment;
+
+    private int materialPayment;
 
     public Long getId() {
         return id;
@@ -182,14 +205,6 @@ public class RepairOrder {
 	public void setCreateUserName(String createUserName) {
 		this.createUserName = createUserName;
 	}
-
-	public Long getApproveRoleId() {
-        return approveRoleId;
-    }
-
-    public void setApproveRoleId(Long approveRoleId) {
-        this.approveRoleId = approveRoleId;
-    }
 
     public Date getPickupAt() {
         return pickupAt;
@@ -447,5 +462,29 @@ public class RepairOrder {
 
     public void setQccheckImages(String qccheckImages) {
         this.qccheckImages = qccheckImages;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public int getLabourPayment() {
+        return labourPayment;
+    }
+
+    public void setLabourPayment(int labourPayment) {
+        this.labourPayment = labourPayment;
+    }
+
+    public int getMaterialPayment() {
+        return materialPayment;
+    }
+
+    public void setMaterialPayment(int materialPayment) {
+        this.materialPayment = materialPayment;
     }
 }

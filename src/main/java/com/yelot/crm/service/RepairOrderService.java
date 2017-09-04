@@ -46,7 +46,6 @@ public class RepairOrderService {
 	public void save(RepairOrder repairOrder) {
 
 		User user = UserUtil.getCurrentUser();
-		repairOrder.setApproveRoleId(user.getShop().getUser_id());// 首次创建后的审批人为该店店长
 		repairOrderMapper.save(repairOrder);
 
 		submitOperator(repairOrder);

@@ -102,7 +102,7 @@
 							<select class="prov col-xs-1" name="firstCategory" id="firstCategory"></select>
 							<select class="city col-xs-1" disabled="disabled" name="secondCategory" id="secondCategory"></select>
 							<label class="col-xs-1">品牌：</label> <span>
-								<select id="brand" name="brand">
+								<select id="brandId" name="brandId">
 
 									<c:forEach items="${brandList}" var="item">
 										<option value="${item.id}">${item.name}</option>
@@ -164,8 +164,17 @@
 							<label class="col-md-2">维修内容:</label> <input type="text" class="col-md-8" id="repairDesc">
 						</div>
 						<div class="row bottom10">
-							<label class="col-md-2">预付款:</label> <input type="text" class="col-md-2" name="pre-flee"> <label class="col-md-2">交货时间:</label> <input
-								type="text" class="col-md-2" id="pickupDate">
+							<label>维修单类别:</label>
+							<select name="typeName" id="typeName" >
+								<option value="维修单">维修单</option>
+								<option value="内部单">内部单</option>
+								<option value="返修单">返修单</option>
+								<option value="评估单">评估单</option>
+							</select>
+							<label>预付款:</label> <input type="text" class="col-md-1" id="advancePayment">
+							<label>工费:</label> <input type="text" class="col-md-1" id="labourPayment">
+							<label>材料费:</label> <input type="text" class="col-md-1" id="materialPayment">
+							<label>交货时间:</label> <input type="text" class="col-md-1" id="pickupDate">
 						</div>
 
 
