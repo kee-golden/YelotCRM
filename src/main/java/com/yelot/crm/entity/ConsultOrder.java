@@ -16,6 +16,7 @@ public class ConsultOrder {
     private String customerAddress;
     private String customerAgesAlmost;
     private String wechatNo;
+    private String wechatNickname;
     private String repairCommands;
     private String province;
     private String city;
@@ -54,7 +55,22 @@ public class ConsultOrder {
      */
     private int status;
 
+    /**
+     * 创建者，所在的门店id
+     */
     private Long shopId;
+
+    /**
+     * 上门预约门店
+     */
+    private Long bookShopId;
+
+    /**
+     * 物品送达方式
+     */
+    private String deliverType;
+
+    private String comment;
 
     public String getCustomerAddress() {
         return customerAddress;
@@ -296,5 +312,37 @@ public class ConsultOrder {
 
     public void setCreateUserName(String createUserName) {
         this.createUserName = createUserName;
+    }
+
+    public String getWechatNickname() {
+        return wechatNickname;
+    }
+
+    public void setWechatNickname(String wechatNickname) {
+        this.wechatNickname = wechatNickname;
+    }
+
+    public Long getBookShopId() {
+        return bookShopId;
+    }
+
+    public void setBookShopId(Long bookShopId) {
+        this.bookShopId = bookShopId;
+    }
+
+    public String getDeliverType() {
+        return deliverType;
+    }
+
+    public void setDeliverType(String deliverType) {
+        this.deliverType = deliverType;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

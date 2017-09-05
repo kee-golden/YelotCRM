@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.ConsultOrderOperatorsMapper">
+    <resultMap id="orderResultMap" type="com.yelot.crm.entity.ConsultOrderOperators">
+        <id property="id" column="id"/>
+        <result property="consultOrderId" column="consult_order_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="createAt" column="create_at"/>
+        <result property="consultOrderJson" column="consult_order_json"/>
+    </resultMap>
+
+    <select id="findByOrderId" resultMap="orderResultMap">
+        SELECT * from t_consult_order_operators where consult_order_id = #{orderId} order by create_at DESC ;
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_consult_order_operators(consult_order_id,user_id,create_at,consult_order_json)
+            values(#{consultOrderId},#{userId},#{createAt},#{consultOrderJson})
+    </insert>
+
+</mapper>

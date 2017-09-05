@@ -6,12 +6,9 @@ import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
-import com.yelot.crm.entity.Brand;
-import com.yelot.crm.entity.ConsultOrder;
-import com.yelot.crm.entity.RepairOrder;
-import com.yelot.crm.mapper.BrandMapper;
-import com.yelot.crm.mapper.CategoryMapper;
-import com.yelot.crm.mapper.ConsultOrderMapper;
+import com.yelot.crm.entity.*;
+import com.yelot.crm.mapper.*;
+import com.yelot.crm.service.ConsultOrderOperatorsService;
 import com.yelot.crm.service.ConsultOrderService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
@@ -45,6 +42,12 @@ public class ConsultOrderController {
     private BrandMapper brandMapper;
 
     @Autowired
+    private ShopMapper shopMapper;
+
+    @Autowired
+    private ConsultOrderOperatorsService consultOrderOperatorsService;
+
+    @Autowired
     private CategoryMapper categoryMapper;
 
     @RequestMapping("add")
@@ -57,6 +60,8 @@ public class ConsultOrderController {
         model.addAttribute("firstCategory",firstCategory);
         model.addAttribute("secondCategory",secondCategory);
         List<Brand> brandList = brandMapper.findAll();
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("shopList",shopList);
         model.addAttribute("brandList",brandList);
         return "consult_order/consult_order_add";
     }
@@ -67,6 +72,9 @@ public class ConsultOrderController {
         Date vistorAt = DateUtil.toDate(vistorDate, Constants.DateFormate);
         consultOrder.setVistorAt(vistorAt);
         consultOrderService.save(consultOrder);
+        //同时生成日志
+        consultOrderOperatorsService.save(consultOrder);
+
         return ResultData.ok();
     }
 

@@ -8,6 +8,7 @@
         <result property="customerPhone" column="customer_phone"/>
         <result property="customerAddress" column="customer_address"/>
         <result property="wechatNo" column="wechat_no"/>
+        <result property="wechatNickname" column="wechat_nickname"/>
         <result property="repairCommands" column="repair_commands"/>
         <result property="province" column="province"/>
         <result property="city" column="city"/>
@@ -28,6 +29,9 @@
         <result property="expressNo" column="express_no"/>
         <result property="status" column="status"/>
         <result property="shopId" column="shop_id"/>
+        <result property="bookShopId" column="book_shop_id"/>
+        <result property="deliverType" column="deliver_type"/>
+        <result property="comment" column="comment"/>
 
     </resultMap>
 
@@ -53,12 +57,14 @@
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into t_consult_order(customer_name,customer_sex,customer_phone,customer_address,wechat_no,repair_commands,
+        insert into t_consult_order(customer_name,customer_sex,customer_phone,customer_address,wechat_no,wechat_nickname,repair_commands,
         province,city,brand_id,first_category_name,second_category_name,channel_url,keywords,price_limit,time_limit,
-        qulity_limit,special_commands,images_path,vistor_at,create_at,create_user_id,express_no,status,shop_id)
-        VALUES (#{customerName},#{customerSex},#{customerPhone},#{customerAddress},#{wechatNo},#{repairCommands},#{province},#{city},
+        qulity_limit,special_commands,images_path,vistor_at,create_at,create_user_id,express_no,status,shop_id,book_shop_id,
+        deliver_type,comment)
+        VALUES (#{customerName},#{customerSex},#{customerPhone},#{customerAddress},#{wechatNo},#{wechatNickname},#{repairCommands},#{province},#{city},
         #{brandId},#{firstCategoryName},#{secondCategoryName},#{channelUrl},#{keywords},#{priceLimit},#{timeLimit},#{qulityLimit},
-        #{specialCommands},#{imagesPath},#{vistorAt},#{createAt},#{createUserId},#{expressNo},#{status},#{shopId});
+        #{specialCommands},#{imagesPath},#{vistorAt},#{createAt},#{createUserId},#{expressNo},#{status},#{shopId},#{bookShopId},
+        #{deliverType},#{comment});
 
     </insert>
 
