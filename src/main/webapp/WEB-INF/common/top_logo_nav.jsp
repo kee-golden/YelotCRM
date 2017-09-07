@@ -32,7 +32,7 @@
                                 id="username">${sessionScope.user.name}</span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#" id="resetPsd"><i class="glyphicon glyphicon-pencil ic_mag"></i>修改密码</a></li>
-                            <li><a href="${ctx}/logout"><i class="glyphicon glyphicon-ban-circle ic_mag"></i>退出登陆</a></li>
+                            <li><a href="${ctx}/logout"><i class="glyphicon glyphicon-ban-circle ic_mag"></i>退出登录</a></li>
                         </ul>
                     </li>
                 </ul>
