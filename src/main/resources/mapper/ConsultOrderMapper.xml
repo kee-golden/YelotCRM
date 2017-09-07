@@ -30,6 +30,7 @@
         <result property="status" column="status"/>
         <result property="shopId" column="shop_id"/>
         <result property="bookShopId" column="book_shop_id"/>
+        <result property="bookShopName" column="bookShopName"/>
         <result property="deliverType" column="deliver_type"/>
         <result property="comment" column="comment"/>
 
@@ -48,8 +49,8 @@
     
     <select id="findByPageAll" resultMap="orderResultMap">
 
-        SELECT co.*,u.name userName from t_consult_order co,t_user u
-        where co.create_user_id = u.id
+        SELECT co.*,u.name userName,s.name bookShopName from t_consult_order co LEFT JOIN t_user u
+        on co.create_user_id = u.id LEFT JOIN t_shop s on co.book_shop_id = s.id
         <if test="extra_search != null and extra_search != ''"> and customer_phone like CONCAT('%', #{extra_search}, '%')</if>
         order by id DESC
         limit #{pageHelper.offset},#{pageHelper.size}

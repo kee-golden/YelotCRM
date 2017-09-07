@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -80,14 +81,26 @@ public class ConsultOrderController {
 
     @RequestMapping("detail")
     public String detail(Model model,Long id){
+        CityListVo cityListVo = repairOrderService.convertToCityListVo();
+        String categoryJson = JSON.toJSONString(cityListVo);
         ConsultOrder consultOrder = consultOrderMapper.find(id);
-        consultOrder.setBrandName(brandMapper.find(consultOrder.getBrandId()).getName());
-        String imagesPath = consultOrder.getImagesPath();
-        if(imagesPath != null){
-            String images[] = consultOrder.getImagesPath().split(",");
-            model.addAttribute("images",images);
+        Brand brand = brandMapper.find(consultOrder.getBrandId());
+        if(brand != null){
+            consultOrder.setBrandName(brand.getName());
         }
+        String imagesPath = consultOrder.getImagesPath();
+        if(!StringUtils.isEmpty(imagesPath)){
+            model.addAttribute("imagesPath",consultOrder.getImagesPath());
+            String images[] = consultOrder.getImagesPath().split(",");
+            String imagesJson = JSON.toJSONString(images);
+            model.addAttribute("imagesJson",imagesJson);
+        }
+        List<Brand> brandList = brandMapper.findAll();
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("shopList",shopList);
+        model.addAttribute("brandList",brandList);
 
+        model.addAttribute("categoryJson",categoryJson);
         model.addAttribute("bean",consultOrder);
 
         return "consult_order/consult_order_detail";
