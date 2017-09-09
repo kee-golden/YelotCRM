@@ -80,10 +80,10 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
         // add by kee
         uploader.on('ready',function () {
 
-            console.log("ready invoked,,,:"+imagesJson);
             $('.statusBar').css("display","");
             $('#dndArea').addClass("element-invisible");
             var fileList = $('.filelist');
+            fileList.data("path",imagesPath);
             if(imagesJson == ''){//空对象
                 return;
             }

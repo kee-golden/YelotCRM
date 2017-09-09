@@ -69,4 +69,14 @@
 
     </insert>
 
+    <update id="update">
+        update t_consult_order set customer_name = #{customerName},customer_sex=#{customerSex},customer_phone=#{customerPhone},
+               customer_address=#{customerAddress},wechat_no=#{wechatNo},wechat_nickname=#{wechatNickname},repair_commands=#{repairCommands},
+               province=#{province},city=#{city},brand_id=#{brandId},first_category_name=#{firstCategoryName},second_category_name=#{secondCategoryName},
+               book_shop_id=#{bookShopId},channel_url=#{channelUrl},keywords=#{keywords},price_limit=#{priceLimit},time_limit=#{timeLimit},qulity_limit=#{qulityLimit},
+               special_commands=#{specialCommands},images_path=#{imagesPath},vistor_at=#{vistorAt},express_no=#{expressNo},
+               deliver_type=#{deliverType},comment=#{comment}
+         where id = #{id};
+    </update>
+
 </mapper>

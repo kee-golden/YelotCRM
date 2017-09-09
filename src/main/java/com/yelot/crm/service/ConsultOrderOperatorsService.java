@@ -34,4 +34,8 @@ public class ConsultOrderOperatorsService {
         consultOrderOperators.setConsultOrderJson(JSON.toJSONString(consultOrder));
         consultOrderOperatorsMapper.save(consultOrderOperators);
     }
+
+    public List<ConsultOrderOperators> findByOrderId(Long orderId) {
+        return consultOrderOperatorsMapper.findByOrderId(orderId);
+    }
 }

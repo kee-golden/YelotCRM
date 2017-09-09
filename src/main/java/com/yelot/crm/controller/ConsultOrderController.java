@@ -1,6 +1,7 @@
 package com.yelot.crm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.sun.tools.javac.main.Main;
 import com.yelot.crm.Util.Constants;
 import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResultData;
@@ -78,6 +79,17 @@ public class ConsultOrderController {
         return ResultData.ok();
     }
 
+    @RequestMapping("update")
+    @ResponseBody
+    public ResultData update(ConsultOrder consultOrder,String vistorDate){
+
+        Date vistorAt = DateUtil.toDate(vistorDate, Constants.DateFormate);
+        consultOrder.setVistorAt(vistorAt);
+        consultOrderService.update(consultOrder);
+        consultOrderOperatorsService.save(consultOrder);
+        return ResultData.ok();
+    }
+
     @RequestMapping("detail")
     public String detail(Model model,Long id){
         CityListVo cityListVo = repairOrderService.convertToCityListVo();
@@ -91,10 +103,13 @@ public class ConsultOrderController {
         if(!StringUtils.isEmpty(imagesPath)){
             String images[] = consultOrder.getImagesPath().split(",");
             String imagesJson = JSON.toJSONString(images);
+            model.addAttribute("imagesPath",consultOrder.getImagesPath());
             model.addAttribute("imagesJson",imagesJson);
         }else {
+            model.addAttribute("imagesPath","");
             model.addAttribute("imagesJson","[]");
         }
+
         List<Brand> brandList = brandMapper.findAll();
         List<Shop> shopList = shopMapper.findAll();
         model.addAttribute("shopList",shopList);
@@ -107,10 +122,19 @@ public class ConsultOrderController {
 
     }
 
+    @RequestMapping("logs")
+    public String operatorLogs(Long orderId,Model model){
+        List<ConsultOrderOperators> consultOrderOperatorsList = consultOrderOperatorsService.findByOrderId(orderId);
+        model.addAttribute("consultOrderOperatorsList",consultOrderOperatorsList);
+        return "consult_order/consult_order_logs";
+    }
+
     @RequestMapping("alllist")
     public String alllist(){
         return "consult_order/consult_order_alllist";
     }
+
+
 
     /**
      * 订单分页查询

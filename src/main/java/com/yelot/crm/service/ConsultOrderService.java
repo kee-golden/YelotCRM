@@ -37,4 +37,8 @@ public class ConsultOrderService {
         consultOrder.setShopId(currentUser.getShop_id());
         consultOrderMapper.save(consultOrder);
     }
+
+    public void update(ConsultOrder consultOrder) {
+        consultOrderMapper.update(consultOrder);
+    }
 }

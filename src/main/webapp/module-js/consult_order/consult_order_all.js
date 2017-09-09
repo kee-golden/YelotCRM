@@ -41,7 +41,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'createAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
     				return '<a href='+ctx+'/consult-order/detail?id='+data+' "data-id="' + data + '" class="J_detail"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a>&nbsp;&nbsp;'
-    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-edit" aria-hidden="true"></i>受理处理</a>';
+    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_check"><i class="fa fa-edit" aria-hidden="true"></i>受理处理</a>&nbsp;&nbsp;' +
+                        '<a href="javascript:;;" data-id="' + data + '" class="J_logs"><i class="fa fa-edit" aria-hidden="true"></i>操作日志</a>' ;
     			}
     			}],
         'language': {
@@ -63,11 +64,40 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         table.draw();
     });
 
-    $('.J_detail').click(function () {
+    $JOrderList.on('click', '.J_logs', function () {
+        console.log("logs,,,");
+
+        $.ajax({
+            url:'/consult-order/logs',
+            method:'post',
+            dataType:'html',
+            data:{
+                orderId:$(this).data("id"),
+            },
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '操作日志',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: '500px',
+                    shadeClose: true,
+                    success: function (layero, index) {
+
+
+                    },
+                    yes: function (index) {
+
+
+                    }
+
+                });
+            }
+
+        });
 
 
     });
 
 
 
-})
+});

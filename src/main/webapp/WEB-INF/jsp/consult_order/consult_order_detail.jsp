@@ -15,6 +15,7 @@
 
 	<script>
 		var ctx = '${ctx}';
+		var imagesPath = '${imagesPath}'
         var imagesJson = eval('${imagesJson}');
 
 	</script>
@@ -101,7 +102,7 @@
 						<div class="col-md-2">
 							<label>品牌</label><br/>
 							<select id="brand" name="brand">
-							<option value="">无</option>
+							<option value="0">无</option>
 							<c:forEach items="${brandList}" var="item">
 							<option value="${item.id}" <c:if test="${bean.brandId == item.id}">selected="selected"</c:if>>${item.name}</option>
 							</c:forEach>
@@ -112,7 +113,7 @@
 							<select id="bookShopId">
 								<option value="0">无</option>
 								<c:forEach items="${shopList}" var="item">
-									<option value="${item.id}" <c:if test="${item.id == bookShopId}">selected="selected"</c:if>> ${item.name}</option>
+									<option value="${item.id}" <c:if test="${item.id == bean.bookShopId}">selected="selected"</c:if>> ${item.name}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -250,7 +251,56 @@
             return (length == 11 && mobile.test(value));
         }
 
+        $('#saveBtn').click(function () {
+
+            console.log($('.filelist').data("path"));
+            $.ajax({
+				url:'/consult-order/update',
+                method: 'post',
+                dataType: 'json',
+                data: {
+				    id:$('#orderId').data("id"),
+                    customerName: $('#customerName').val(),
+                    customerSex:$('#customerSex').val(),
+                    customerPhone:$('#customerPhone').val(),
+                    customerAddress: $('#customerAddress').val(),
+                    province: $('#province').val(),
+                    city: $('#city').val(),
+                    wechatNo: $('#wechatNo').val(),
+                    wechatNickname: $('#wechatNickname').val(),
+                    firstCategoryName: $('#firstCategory').val(),
+                    secondCategoryName: $('#secondCategory').val(),
+                    brandId:$('#brand').val(),
+                    bookShopId:$('#bookShopId').val(),
+                    vistorDate:$('#vistorAt').val(),
+                    repairCommands:$('#repairCommands').val(),
+                    keywords:$('#keywords').val(),
+                    channelUrl:$('#channelUrl').val(),
+                    priceLimit:$('#priceLimit').val(),
+                    timeLimit:$('#timeLimit').val(),
+                    qulityLimit:$('#qulityLimit').val(),
+                    specialCommands:$('#specialCommands').val(),
+                    deliverType:$('#deliverType').val(),
+                    expressNo:$('#expressNo').val(),
+                    comment:$('#commentId').val(),
+                    imagesPath:$('.filelist').data("path"),
+
+                },
+                success: function (data) {
+                    if(data.code == 1200){
+                        yaya.layer.msg("修改成功");
+                        setTimeout(function () {
+                            window.location.href = ctx+'/consult-order/alllist';
+                        },1000);
+
+                    }
+
+                }
+			});
+
         });
+
+	});
 
 
 

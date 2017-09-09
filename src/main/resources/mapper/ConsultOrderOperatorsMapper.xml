@@ -5,12 +5,15 @@
         <id property="id" column="id"/>
         <result property="consultOrderId" column="consult_order_id"/>
         <result property="userId" column="user_id"/>
+        <result property="userName" column="userName"/>
+        <result property="userPhone" column="userPhone"/>
         <result property="createAt" column="create_at"/>
         <result property="consultOrderJson" column="consult_order_json"/>
     </resultMap>
 
     <select id="findByOrderId" resultMap="orderResultMap">
-        SELECT * from t_consult_order_operators where consult_order_id = #{orderId} order by create_at DESC ;
+        SELECT coo.*,u.name userName,u.phone userPhone from t_consult_order_operators coo,t_user u
+        where coo.user_id = u.id and consult_order_id = #{orderId} order by create_at DESC ;
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">

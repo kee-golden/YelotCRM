@@ -9,9 +9,27 @@ public class ConsultOrderOperators {
 
     private Long id;
     private Long userId;
+    private String userName;
+    private String userPhone;
     private Date createAt;
     private Long consultOrderId;
     private String consultOrderJson;
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Long getId() {
         return id;
