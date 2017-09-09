@@ -107,9 +107,9 @@ public class RepairOrder {
      * 客服上传的图片，创建时上传的图片
      */
     private String imagesJson;
-    /**
-     * 图片外观描述
-     */
+    
+    private List<String> imagesList;
+
     private String imageDesc;
 
     /**
@@ -318,7 +318,15 @@ public class RepairOrder {
         this.imagesJson = imagesJson;
     }
 
-    public String getImageDesc() {
+    public List<String> getImagesList() {
+		return imagesList;
+	}
+
+	public void setImagesList(List<String> imagesList) {
+		this.imagesList = imagesList;
+	}
+
+	public String getImageDesc() {
         return imageDesc;
     }
 
