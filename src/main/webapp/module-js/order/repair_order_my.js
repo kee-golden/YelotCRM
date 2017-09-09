@@ -85,12 +85,42 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
                     },
                     yes: function (index) {
+                    	$("#remarkHr").css("display","block");
+                    	$("#remarkDiv").css("display","block");
+                    	
+                    	$("#clauseHr").css("display","block");
+                    	$("#clauseDiv").css("display","block");
+                    	
+                    	$("#writeHr").css("display","block");
+                    	$("#writeDiv").css("display","block");
+                    	
                     	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
                     	var footstr = "</body></html>";  
                     	var newstr = document.all.item("repairOrderDetail").innerHTML;
                         printWindow = window.open();
                         printWindow.document.write(headstr + newstr + footstr);
-                        return false;
+                        
+                    	$("#remarkHr").css("display","none");
+                    	$("#remarkDiv").css("display","none");
+                    	
+                    	$("#clauseHr").css("display","none");
+                    	$("#clauseDiv").css("display","none");
+                    	
+                    	$("#writeHr").css("display","none");
+                    	$("#writeDiv").css("display","none");
+                    },
+                    btn2: function (index) {
+                    	$("#customerHr").css("display","none");
+                		$("#customerDiv").css("display","none");
+                		
+                    	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
+                    	var footstr = "</body></html>";  
+                    	var newstr = document.all.item("repairOrderDetail").innerHTML;
+                        printWindow = window.open();
+                        printWindow.document.write(headstr + newstr + footstr);
+
+                    	$("#customerHr").css("display","block");
+                		$("#customerDiv").css("display","block");
                     }
                 });
             },
