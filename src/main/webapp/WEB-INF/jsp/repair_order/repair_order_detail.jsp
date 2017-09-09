@@ -25,7 +25,7 @@
 				</h4>
 			</div>
 		</div>
-		<hr color="black" width="100%" style="height: 1px; margin: 0px">
+		<hr id="customerHr" color="black" width="100%" style="height: 1px; margin: 0px">
 		<div id="customerDiv" class="col-xs-4" style="width: 100%">
 			<h3 style="float: left; margin-bottom: 5px;">客户信息</h3>
 			<br>
@@ -44,7 +44,7 @@
 				</tr>
 			</table>
 		</div>
-		<hr color="black" width="100%" style="height: 1px; margin: 0px">
+		<hr id="productHr" color="black" width="100%" style="height: 1px; margin: 0px">
 		<div id="productDiv" class="col-xs-4" style="width: 100%">
 			<h3 style="float: left; margin-bottom: 5px;">产品信息</h3>
 			<br>
@@ -112,8 +112,8 @@
 				</tr>
 			</table>
 		</div>
-		<hr color="black" width="100%" style="height: 1px; margin: 0px">
-		<div id="remarkDiv" class="col-xs-4" style="width: 100%">
+		<hr id="remarkHr" color="black" width="100%" style="height: 1px; margin: 0px; display: none">
+		<div id="remarkDiv" class="col-xs-4" style="width: 100%; display: none">
 			<h3 style="float: left; margin-bottom: 5px;">备注信息</h3>
 			<br>
 			<table id="customerTable" style="width: 100%">
@@ -131,8 +131,8 @@
 				</tr>
 			</table>
 		</div>
-		<hr color="black" width="100%" style="height: 1px; margin: 0px">
-		<div id="clauseDiv" class="col-xs-4" style="width: 100%">
+		<hr id="clauseHr" color="black" width="100%" style="height: 1px; margin: 0px; display: none">
+		<div id="clauseDiv" class="col-xs-4" style="width: 100%; display: none">
 			<h3 style="float: left; margin-bottom: 5px;">一般条款与条件</h3>
 			<br>
 			<table id="customerTable" style="width: 100%">
@@ -155,7 +155,9 @@
 					<td><h4 style="margin-bottom: 5px;">（6）如果收到领取维修商品通知后，顾客须按通知规定时间领取维修商品。顾客若逾期未领取维修商品，则御金匠有权收取相应的费用。若顾客逾期（三个月）未领取商品，顾客则自行承担商品的毁损灭失风险。</h4></td>
 				</tr>
 				<tr>
-					<td><h4 style="margin-bottom: 5px;">（7）如果因为以下情形造成任何损失，御金匠无需承担责任：<br>&nbsp;&nbsp;&nbsp;&nbsp;A）御金匠拒绝维修，而顾客强行要求维修，御金匠对此作出是否维修的决定。<br>&nbsp;&nbsp;&nbsp;&nbsp;B）顾客采取非御金匠建议之维修方法，自行维修。<br>&nbsp;&nbsp;&nbsp;&nbsp;C）因不可抗力。</h4></td>
+					<td><h4 style="margin-bottom: 5px;">
+							（7）如果因为以下情形造成任何损失，御金匠无需承担责任：<br>&nbsp;&nbsp;&nbsp;&nbsp;A）御金匠拒绝维修，而顾客强行要求维修，御金匠对此作出是否维修的决定。<br>&nbsp;&nbsp;&nbsp;&nbsp;B）顾客采取非御金匠建议之维修方法，自行维修。<br>&nbsp;&nbsp;&nbsp;&nbsp;C）因不可抗力。
+						</h4></td>
 				</tr>
 				<tr>
 					<td><h4 style="margin-bottom: 5px;">（8）御金匠应就其自身造成的损害与损失按照法律规定承担相应责任。</h4></td>
@@ -174,8 +176,8 @@
 				</tr>
 			</table>
 		</div>
-		<hr color="black" width="100%" style="height: 1px; margin: 0px">
-		<div id="clauseDiv" class="col-xs-4" style="width: 100%">
+		<hr id="writeHr" color="black" width="100%" style="height: 1px; margin: 0px; display: none">
+		<div id="writeDiv" class="col-xs-4" style="width: 100%; display: none">
 			<table id="customerTable" style="width: 100%">
 				<tr>
 					<td colspan="4"><h4 style="margin-bottom: 5px;">我接受上述一般条款与条件和御金匠售后服务政策说明，并同意依据该条款和条件将产品存放予您处进行维修。</h4></td>
