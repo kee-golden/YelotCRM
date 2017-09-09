@@ -64,6 +64,7 @@ public class ConsultOrder {
      * 上门预约门店
      */
     private Long bookShopId;
+    private String bookShopName;
 
     /**
      * 物品送达方式
@@ -344,5 +345,13 @@ public class ConsultOrder {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getBookShopName() {
+        return bookShopName;
+    }
+
+    public void setBookShopName(String bookShopName) {
+        this.bookShopName = bookShopName;
     }
 }

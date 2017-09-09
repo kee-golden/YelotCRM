@@ -23,6 +23,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'customerName'},
     			{'data' : 'customerPhone'},
                 {'data' : 'wechatNo'},
+                {'data' : 'firstCategoryName'},
+                {'data' : 'bookShopName'},
                 {'data' : 'repairCommands'},
                 {'data' : 'status',
                     'render':function (data) {
@@ -38,7 +40,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'createUserName'},
     			{'data' : 'createAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
-    				return '<a href='+ctx+'/consult-order/detail?id='+data+' "data-id="' + data + '" class="J_detail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
+    				return '<a href='+ctx+'/consult-order/detail?id='+data+' "data-id="' + data + '" class="J_detail"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a>&nbsp;&nbsp;'
     				+ '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-edit" aria-hidden="true"></i>受理处理</a>';
     			}
     			}],

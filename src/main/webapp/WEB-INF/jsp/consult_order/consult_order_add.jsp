@@ -46,7 +46,7 @@
 							</div>
 
 							<div class="col-md-2">
-								<label><span style="color: red">*</span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone">
+								<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone">
 							</div>
 
 							<div class="col-md-2">
@@ -94,12 +94,12 @@
 							<label>分类</label><br/>
 							<select class="prov" name="firstCategory" id="firstCategory"></select>
 							<select class="city" disabled="disabled" name="secondCategory" id="secondCategory">
-
 							</select>
 						</div>
 						<div class="col-md-2">
 							<label>品牌</label><br/>
 							<select id="brand" name="brand">
+								<option value="">无</option>
 
 								<c:forEach items="${brandList}" var="item">
 									<option value="${item.id}">${item.name}</option>
@@ -109,6 +109,7 @@
 						<div class="col-md-2">
 							<label>预约门店</label><br/>
 							<select id="bookShopId">
+								<option value="0">无</option>
 								<c:forEach items="${shopList}" var="item">
 									<option value="${item.id}">${item.name}</option>
 								</c:forEach>
@@ -164,9 +165,9 @@
 							<label>快递单号</label>
 							<input type="text" id="expressNo" name="expressNo" placeholder="快递单号" class="form-control" >
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-6">
 							<label>备注</label>
-							<input type="text" id="comment" name="comment" placeholder="备注" class="form-control" >
+							<input type="text" id="commentId" name="comment" placeholder="备注" class="form-control" >
 						</div>
 
 					</div>
@@ -265,17 +266,17 @@
             var imagesPath = $('.filelist').data('path');
             var expressNo = $('#expressNo').val();
             var deliverType = $('#deliverType').val();
-            var comment = $('#comment').val();
+            var comment = $('#commentId').val();
             var bookShopId = $('#bookShopId').val();
 
             if(customerName == ''){
                 yaya.layer.msg('用户名不能为空');
                 return;
 			}
-			if(customerPhone == ''){
-                yaya.layer.msg('用户手机号不能为空');
+			if(customerPhone == ''  && wechatNo == ''){
+                yaya.layer.msg('用户手机号和微信号至少要填写一项');
                 return;
-			}else if(!checkIsMobile(customerPhone)){
+			}else if(customerPhone != '' && !checkIsMobile(customerPhone)){
 			    yaya.layer.msg("手机号输入不正确");
 			    return;
 			}

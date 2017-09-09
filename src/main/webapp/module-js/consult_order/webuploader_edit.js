@@ -72,9 +72,27 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
             accept:{
                 title: 'Images',
                 extensions: 'gif,jpg,jpeg,png',
-                mimeTypes: 'image/*'
+                mimeTypes: 'image/jpg,image/jpeg,image/png'
             }
         });
+
+        // add by kee
+        uploader.on('ready',function () {
+
+            console.log("ready invoked,,,");
+            $('.statusBar').css("display","block");
+            $('#dndArea').addClass("element-invisible");
+            var fileList = $('.filelist');
+            console.log("imageJson:"+imagesJson+",len:"+imagesJson.length);
+
+            for(var i = 0;i<imagesJson.length;i++){
+                $('.filelist').append('<li id=\"WU_FILE_'+i+'\" class=\"state-complete\"><p class=\"imgWrap\"><img src=\"'+imagesJson[i]+'\"></p>');
+                $('.filelist').append('<span class=\"success\"></span></li>');
+            }
+
+        });
+
+
 
 
         uploader.on('uploadSuccess', function (file, responseData) {
@@ -286,7 +304,7 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
 
             switch ( state ) {
                 case 'pedding':
-                    $placeHolder.removeClass( 'element-invisible' );
+                    // $placeHolder.removeClass( 'element-invisible' );
                     $queue.hide();
                     $statusBar.addClass( 'element-invisible' );
                     uploader.refresh();
