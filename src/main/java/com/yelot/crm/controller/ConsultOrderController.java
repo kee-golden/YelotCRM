@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.yelot.crm.Util.Constants;
 import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResultData;
-import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.*;
 import com.yelot.crm.mapper.*;
@@ -13,13 +12,13 @@ import com.yelot.crm.service.ConsultOrderService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
 import com.yelot.crm.vo.Table;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -90,10 +89,11 @@ public class ConsultOrderController {
         }
         String imagesPath = consultOrder.getImagesPath();
         if(!StringUtils.isEmpty(imagesPath)){
-            model.addAttribute("imagesPath",consultOrder.getImagesPath());
             String images[] = consultOrder.getImagesPath().split(",");
             String imagesJson = JSON.toJSONString(images);
             model.addAttribute("imagesJson",imagesJson);
+        }else {
+            model.addAttribute("imagesJson","[]");
         }
         List<Brand> brandList = brandMapper.findAll();
         List<Shop> shopList = shopMapper.findAll();

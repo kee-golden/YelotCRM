@@ -15,7 +15,8 @@
 
 	<script>
 		var ctx = '${ctx}';
-		var imagesJson = eval('${imagesJson}');
+        var imagesJson = eval('${imagesJson}');
+
 	</script>
 	
 </head>
@@ -188,11 +189,11 @@
 								<p>或将照片拖到这里，单次最多可选20张</p>
 							</div>
 						</div>
-						<div class="statusBar" style="display: none;">
+						<div class="statusBar" style="display: block;">
 							<div class="progress">
 								<span class="text">0%</span> <span class="percentage"></span>
 							</div>
-							<div class="info"></div>
+							<div class="info" style="display: none;"></div>
 							<div class="btns">
 								<div id="filePicker2"></div>
 								<div class="uploadBtn">开始上传</div>

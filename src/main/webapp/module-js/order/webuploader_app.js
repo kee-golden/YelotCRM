@@ -72,7 +72,7 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
             accept:{
                 title: 'Images',
                 extensions: 'gif,jpg,jpeg,png',
-                mimeTypes: 'image/*'
+                mimeTypes: 'image/jpg,image/jpeg,image/png'
             }
         });
 

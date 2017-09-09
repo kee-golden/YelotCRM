@@ -54,6 +54,7 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
             // WebUploader实例
             uploader;
 
+
         // 实例化
         uploader = WebUploader.create({
             pick: {
@@ -79,10 +80,13 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
         // add by kee
         uploader.on('ready',function () {
 
-            console.log("ready invoked,,,");
-            $('.statusBar').css("display","block");
+            console.log("ready invoked,,,:"+imagesJson);
+            $('.statusBar').css("display","");
             $('#dndArea').addClass("element-invisible");
             var fileList = $('.filelist');
+            if(imagesJson == ''){//空对象
+                return;
+            }
             console.log("imageJson:"+imagesJson+",len:"+imagesJson.length);
 
             for(var i = 0;i<imagesJson.length;i++){
@@ -91,9 +95,6 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
             }
 
         });
-
-
-
 
         uploader.on('uploadSuccess', function (file, responseData) {
             var origPath = $('.filelist').data('path');
@@ -204,9 +205,12 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
                 var index = $(this).index(),
                     deg;
 
+                console.log($(this));
+
                 switch ( index ) {
                     case 0:
-                        uploader.removeFile( file );
+                        // uploader.removeFile( file );
+                        $(this).parent().parent().remove();
                         return;
 
                     case 1:
