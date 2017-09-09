@@ -159,22 +159,26 @@ public class RepairOrderService {
 
 	private void setRepairServiceItem(List<RepairOrder> repairOrderList){
 		for (RepairOrder repairOrder : repairOrderList) {
-			String serviceItemIds = repairOrder.getServiceItemIds();
-			List<String> serviceItemIdsList = JSON.parseArray(serviceItemIds, String.class);
-			String serviceItemNames = "";
-			if (serviceItemIdsList != null && serviceItemIdsList.size() > 0) {
-				for (int i = 0; i < serviceItemIdsList.size(); i++) {
-					String serviceItemName = repairOrderMapper
-							.findServiceItemName(serviceItemIdsList.get(i));
-					if (i == serviceItemIdsList.size() - 1) {
-						serviceItemNames += serviceItemName;
-					} else {
-						serviceItemNames += serviceItemName + ",";
-					}
+			setOneRepairServiceItem(repairOrder);
+		}
+	}
+	
+	private void setOneRepairServiceItem(RepairOrder repairOrder) {
+		String serviceItemIds = repairOrder.getServiceItemIds();
+		List<String> serviceItemIdsList = JSON.parseArray(serviceItemIds, String.class);
+		String serviceItemNames = "";
+		if (serviceItemIdsList != null && serviceItemIdsList.size() > 0) {
+			for (int i = 0; i < serviceItemIdsList.size(); i++) {
+				String serviceItemName = repairOrderMapper
+						.findServiceItemName(serviceItemIdsList.get(i));
+				if (i == serviceItemIdsList.size() - 1) {
+					serviceItemNames += serviceItemName;
+				} else {
+					serviceItemNames += serviceItemName + "，";
 				}
 			}
-			repairOrder.setServiceItemNames(serviceItemNames);
 		}
+		repairOrder.setServiceItemNames(serviceItemNames);
 	}
 
 	private void setRepairProductInfo(RepairOrder repairOrder){
@@ -196,6 +200,7 @@ public class RepairOrderService {
 		RepairOrder repairOrder = repairOrderMapper.findRepairOrderByOrderId(orderId);
 		setRepairProductInfo(repairOrder);
 		repairOrder.setImagesList(Arrays.asList(repairOrder.getImagesJson().split(",")));
+		setOneRepairServiceItem(repairOrder);
 		return repairOrder;
 	}
 }

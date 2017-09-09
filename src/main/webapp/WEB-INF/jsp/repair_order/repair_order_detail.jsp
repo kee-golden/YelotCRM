@@ -103,6 +103,10 @@
 					<td width="84%" colspan="7"><h4 style="float: left; margin-bottom: 5px;">${repairOrder.repairDesc}</h4></td>
 				</tr>
 				<tr>
+					<td width="12%"><h4 style="float: right; margin-bottom: 5px;">服务项：</h4></td>
+					<td width="84%" colspan="7"><h4 style="float: left; margin-bottom: 5px;">${repairOrder.serviceItemNames}</h4></td>
+				</tr>
+				<tr>
 					<td width="12%"><h4 style="float: right; margin-bottom: 5px;">维修费用：</h4></td>
 					<td width="36%" colspan="3"><h4 style="float: left; margin-bottom: 5px;">${repairOrder.totalPayment}</h4></td>
 					<td width="12%"><h4 style="float: right; margin-bottom: 5px;">维修工期：</h4></td>

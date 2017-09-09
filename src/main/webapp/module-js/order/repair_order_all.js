@@ -40,7 +40,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'createUserName'},
     			{'data' : 'createAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
-    				return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
+    				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
     				+ '<a href="javascript:;;" data-id="' + data + '" class="J_workflow"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
     			}
     			}],
@@ -61,6 +61,74 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     
     $("#J_orderSerch").click(function(){
         table.draw();
+    });
+
+    // 查看详情
+    $JOrderList.on('click', '.J_orderDetail', function () {
+        $.ajax({
+            url: ctx + '/repair-order/detail',
+            data: {
+                orderId: $(this).data('id')
+            },
+            method: 'get',
+            dataType: 'html',
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '订单详情',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: ['800px','600px'],
+                    scrollbar:true,
+                    shadeClose: true,
+                    btn: ['客户单打印','内部单打印'],
+                    success: function (layero, index) {
+
+
+                    },
+                    yes: function (index) {
+                    	$("#remarkHr").css("display","block");
+                    	$("#remarkDiv").css("display","block");
+                    	
+                    	$("#clauseHr").css("display","block");
+                    	$("#clauseDiv").css("display","block");
+                    	
+                    	$("#writeHr").css("display","block");
+                    	$("#writeDiv").css("display","block");
+                    	
+                    	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
+                    	var footstr = "</body></html>";  
+                    	var newstr = document.all.item("repairOrderDetail").innerHTML;
+                        printWindow = window.open();
+                        printWindow.document.write(headstr + newstr + footstr);
+                        
+                    	$("#remarkHr").css("display","none");
+                    	$("#remarkDiv").css("display","none");
+                    	
+                    	$("#clauseHr").css("display","none");
+                    	$("#clauseDiv").css("display","none");
+                    	
+                    	$("#writeHr").css("display","none");
+                    	$("#writeDiv").css("display","none");
+                    },
+                    btn2: function (index) {
+                    	$("#customerHr").css("display","none");
+                		$("#customerDiv").css("display","none");
+                		
+                    	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
+                    	var footstr = "</body></html>";  
+                    	var newstr = document.all.item("repairOrderDetail").innerHTML;
+                        printWindow = window.open();
+                        printWindow.document.write(headstr + newstr + footstr);
+
+                    	$("#customerHr").css("display","block");
+                		$("#customerDiv").css("display","block");
+                    }
+                });
+            },
+            error: function () {
+
+            }
+        });
     });
 
     $JOrderList.on('click', '.J_workflow', function () {
