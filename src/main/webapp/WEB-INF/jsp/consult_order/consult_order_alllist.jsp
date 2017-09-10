@@ -6,6 +6,8 @@
 <title>CRM管理后台</title>
 
 <%@include file="/WEB-INF/common/static.jsp"%>
+	<link href="${ctx}/module-css/consult-order.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
 
 <c:set var="PARENT_MENU_CODE" value="ConsultOrder_Manage" />
 <c:set var="CHILD_MENU_CODE" value="ConsultOrder_List" />
@@ -172,6 +174,10 @@
 #J_orderList tr th {
 	white-space: nowrap
 }
+<!-- datepicker  -->
+.xdsoft_datetimepicker{
+	z-index: 9999999999;
+}
 </style>
 
 </head>
@@ -195,7 +201,7 @@
 							<form id="searchFrom" style="margin-top: -20px">
 								<div id="search_Big">
 									<ul class="pull-left" id="otherTab">
-										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号">
+										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入手机号或微信号">
 											<div class="clearfix"></div></li>
 									</ul>
 									<div class="pull-right search_right">

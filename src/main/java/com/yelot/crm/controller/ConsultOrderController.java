@@ -129,6 +129,30 @@ public class ConsultOrderController {
         return "consult_order/consult_order_logs";
     }
 
+    @RequestMapping("to-check")
+    public String toCheck(Long orderId,Model model){
+        ConsultOrder consultOrder = consultOrderMapper.find(orderId);
+        model.addAttribute("bean",consultOrder);
+        return "consult_order/consult_order_check";
+    }
+
+    @RequestMapping("update-status")
+    @ResponseBody
+    public ResultData updateStatus(Long id,Long status){
+        consultOrderMapper.updateStatus(id,status);
+        return ResultData.ok();
+    }
+
+    @RequestMapping("check-phone")
+    @ResponseBody
+    public ResultData checkPhone(Long id){
+        ConsultOrder consultOrder = consultOrderMapper.find(id);
+        if(StringUtils.isEmpty(consultOrder.getCustomerPhone())){
+            return ResultData.notFound();
+        }
+        return ResultData.ok();
+    }
+
     @RequestMapping("alllist")
     public String alllist(){
         return "consult_order/consult_order_alllist";
@@ -145,7 +169,7 @@ public class ConsultOrderController {
     public Table queryOrder(Model model,
                             @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
                             @RequestParam(value = "start", defaultValue = "0") int start,
-                            @RequestParam(value = "length", defaultValue = "10") int length) {
+                            @RequestParam(value = "length", defaultValue = "15") int length) {
 
         PageHelper pageHelper = new PageHelper();
         pageHelper.setOffset(start);

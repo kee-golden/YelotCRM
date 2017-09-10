@@ -43,7 +43,9 @@
     <select id="countTotalPageAll" resultType="java.lang.Integer">
         SELECT count(*) FROM t_consult_order
         where 1 = 1
-        <if test="extra_search != null and extra_search != ''">and order_no like CONCAT('%', #{extra_search}, '%')</if>
+        <if test="extra_search != null and extra_search != ''">
+            and (customer_phone like CONCAT('%', #{extra_search}, '%') or wechat_no like CONCAT('%', #{extra_search}, '%'))
+        </if>
         
     </select>
     
@@ -51,7 +53,10 @@
 
         SELECT co.*,u.name userName,s.name bookShopName from t_consult_order co LEFT JOIN t_user u
         on co.create_user_id = u.id LEFT JOIN t_shop s on co.book_shop_id = s.id
-        <if test="extra_search != null and extra_search != ''"> and customer_phone like CONCAT('%', #{extra_search}, '%')</if>
+        where 1 = 1
+        <if test="extra_search != null and extra_search != ''">
+            and (customer_phone like CONCAT('%', #{extra_search}, '%') or wechat_no like CONCAT('%', #{extra_search}, '%'))
+        </if>
         order by id DESC
         limit #{pageHelper.offset},#{pageHelper.size}
 
@@ -77,6 +82,10 @@
                special_commands=#{specialCommands},images_path=#{imagesPath},vistor_at=#{vistorAt},express_no=#{expressNo},
                deliver_type=#{deliverType},comment=#{comment}
          where id = #{id};
+    </update>
+
+    <update id="updateStatus">
+        update t_consult_order set status = #{status} where id = #{id}
     </update>
 
 </mapper>

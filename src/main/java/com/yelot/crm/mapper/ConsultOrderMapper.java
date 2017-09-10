@@ -23,4 +23,6 @@ public interface ConsultOrderMapper {
     void save(ConsultOrder consultOrder);
 
     void update(ConsultOrder consultOrder);
+
+    void updateStatus(@Param("id") Long id, @Param("status") Long status);
 }

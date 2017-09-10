@@ -5,9 +5,9 @@ package com.yelot.crm.enums;
  */
 public enum  ConsultOrderStatus {
 
-    COMPLETED(1,"正在进行，未处理"),
-    ACCEPT(2,"已接单，已处理"),
-    REJECT(2,"未接单，已处理");
+    OnGoing(1,"正在进行，未处理"),
+    REJECT(2,"未接单，已处理"),
+    ACCEPT(3,"已接单，已处理");
 
     private int code;
     private String message;

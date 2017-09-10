@@ -5,6 +5,7 @@ import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.ConsultOrder;
 import com.yelot.crm.entity.RepairOrder;
 import com.yelot.crm.entity.User;
+import com.yelot.crm.enums.ConsultOrderStatus;
 import com.yelot.crm.mapper.ConsultOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class ConsultOrderService {
         consultOrder.setCreateUserId(currentUser.getId());
         consultOrder.setCreateAt(new Date());
         consultOrder.setShopId(currentUser.getShop_id());
+        consultOrder.setStatus(ConsultOrderStatus.OnGoing.getCode());
         consultOrderMapper.save(consultOrder);
     }
 
