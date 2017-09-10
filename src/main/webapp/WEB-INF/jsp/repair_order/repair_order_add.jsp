@@ -164,17 +164,21 @@
 							<label class="col-md-2">维修内容:</label> <input type="text" class="col-md-8" id="repairDesc">
 						</div>
 						<div class="row bottom10">
-							<label>维修单类别:</label>
+							<div class="col-md-2">
+							<label>维修单类别:</label><br/>
 							<select name="typeName" id="typeName" >
 								<option value="维修单">维修单</option>
 								<option value="内部单">内部单</option>
 								<option value="返修单">返修单</option>
 								<option value="评估单">评估单</option>
 							</select>
-							<label>预付款:</label> <input type="text" class="col-md-1" id="advancePayment">
-							<label>工费:</label> <input type="text" class="col-md-1" id="labourPayment">
-							<label>材料费:</label> <input type="text" class="col-md-1" id="materialPayment">
-							<label>交货时间:</label> <input type="text" class="col-md-1" id="pickupDate">
+							</div>
+							<div class="col-md-2">
+							<label>预付款:</label> <input type="text"  class="form-control" id="advancePayment">
+							</div>
+							<div class="col-md-2"><label>工费:</label> <input type="text" class="form-control" id="labourPayment"></div>
+						<div class="col-md-2"><label>材料费:</label> <input type="text" class="form-control" id="materialPayment"></div>
+						<div class="col-md-2"><label>交货时间:</label> <input type="text" class="form-control" id="pickupDate"></div>
 						</div>
 
 
@@ -199,7 +203,7 @@
 <script src="${ctx}/module-js/order/webuploader_app.js"></script>
 
 <script>
-    require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($, yaya,selector2,cityselect) {
+    require(['jquery','yaya','cityselect','dateTimePicker'], function ($, yaya,cityselect) {
 
         var jsonObj = eval(${categoryJson});//转化为json 对象
         $("#category").citySelect({
@@ -207,6 +211,12 @@
             prov:'${firstCategory}',
             city:'${secondCategory}',
             nodata:"none"
+        });
+
+        $('#pickupDate').datetimepicker({
+            lang: 'ch',
+            format: 'Y-m-d',
+            timepicker:false
         });
     });
 

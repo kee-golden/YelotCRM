@@ -27,6 +27,7 @@ requirejs.config({
         'raty':['jquery'],
         'editor':['jquery'],
         'layuiTotal': ['jquery'],
+        'dateTimePicker':['jquery'],
         'cityselect':['jquery','city.min'],
     } ,
 
@@ -49,7 +50,6 @@ requirejs.config({
         'jqueryJson':'jquery/jquery.json',
         'selector2':'select2/js/select2',
         'dateTimePicker':'dateTimePicker/js/jquery.datetimepicker',
-        'bootstrapDateTimePicker':'bootstrap-datetimepicker/js/bootstrap-datetimepicker.min',
         'webuploader':'webuploader/webuploader',
         'layui':'js/layui',
         'element':'js/element',

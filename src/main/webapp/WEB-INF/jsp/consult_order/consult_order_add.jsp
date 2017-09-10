@@ -218,7 +218,7 @@
 <script src="${ctx}/module-js/order/webuploader_app.js"></script>
 
 <script>
-    require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($, yaya,selector2,cityselect) {
+    require(['jquery','yaya','cityselect','dateTimePicker'], function ($, yaya,cityselect) {
 
         var jsonObj = eval(${categoryJson});//转化为json 对象
         $("#category").citySelect({

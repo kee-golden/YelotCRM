@@ -17,11 +17,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         tags: true,
     });
 
-    $('#pickupDate').datetimepicker({
-        lang: 'ch',
-        format: 'Y-m-d',
-        timepicker:false
-    });
+
 
     $("#saveBtn").click(function () {
 
