@@ -64,7 +64,7 @@ public class Customer {
     /**
      * 客户来源
      */
-    private String channelSource;
+    private  int channelSource;
     /**
      * 是否删除，有效
      */
@@ -244,11 +244,11 @@ public class Customer {
         this.updateAt = updateAt;
     }
 
-    public String getChannelSource() {
+    public int getChannelSource() {
         return channelSource;
     }
 
-    public void setChannelSource(String channelSource) {
+    public void setChannelSource(int channelSource) {
         this.channelSource = channelSource;
     }
 

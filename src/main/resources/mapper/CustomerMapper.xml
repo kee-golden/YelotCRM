@@ -16,6 +16,7 @@
         <result property="deviceName" column="device_name"/>
         <result property="comment" column="comment"/>
         <result property="channelSource" column="channel_source"/>
+        <result property="type" column="type"/>
         <result property="firstConsultAt" column="first_consult_at"/>
         <result property="is_alive" column="is_alive"/>
         <result property="createAt" column="create_at"/>
@@ -23,10 +24,10 @@
         <result property="createUserId" column="create_user_id"/>
     </resultMap>
 
-    <sql id="customerBasicMap">
-        id, name, phone,province,city,address,sex,email,qq,wechat_id,wechat_nickname,device_name,comment,channel_source,
-         first_consult_at,is_alive,create_at, update_at,create_user_id
-    </sql>
+    <!--<sql id="customerBasicMap">-->
+        <!--id, name, phone,province,city,address,sex,email,qq,wechat_id,wechat_nickname,device_name,comment,channel_source,-->
+         <!--first_consult_at,is_alive,create_at, update_at,create_user_id-->
+    <!--</sql>-->
 
     <select id="find" resultMap="customerResultMap">
         select * from t_customer where id = #{id}
@@ -37,7 +38,8 @@
         <if test="extra_search != null and extra_search != ''">
             and (name like CONCAT('%', #{extra_search}, '%') OR phone like CONCAT('%', #{extra_search}, '%'))
         </if>
-        limit #{pageHelper.offset},#{pageHelper.size}
+        ORDER BY id DESC
+        limit #{pageHelper.offset},#{pageHelper.size} ;
     </select>
 
     <select id="findByPhone" resultMap="customerResultMap">
@@ -47,10 +49,10 @@
 
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into t_customer(name, phone,province,city,address,sex,email,qq,wechat_id,wechat_nickname,device_name,comment,channel_source,
-         first_consult_at,is_alive,create_at, update_at,create_user_id)
+        insert into t_customer(name, phone,province,city,address,sex,email,qq,wechat_id,wechat_nickname,device_name,comment,
+        channel_source,type,first_consult_at,is_alive,create_at, update_at,create_user_id)
             values(#{name},#{phone},#{province},#{city},#{address},#{sex},#{email},#{qq},#{wechatId},#{wechatNickname},
-            #{deviceName},#{comment},#{channelSource},#{firstConsultAt},#{is_alive},#{createAt},#{updateAt},#{createUserId})
+            #{deviceName},#{comment},#{channelSource},#{type},#{firstConsultAt},#{is_alive},#{createAt},#{updateAt},#{createUserId})
     </insert>
 
     <update id="updateCustomer" parameterType="com.yelot.crm.entity.Customer">
@@ -94,6 +96,9 @@
             </if>
             <if test="channelSource!=null">
                 channel_source=#{channelSource},
+            </if>
+            <if test="type!=null">
+                type=#{type},
             </if>
             <if test="firstConsultAt!=null">
                 first_consult_at=#{firstConsultAt}

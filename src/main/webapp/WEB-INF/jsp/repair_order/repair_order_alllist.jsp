@@ -195,7 +195,7 @@
 							<form id="searchFrom" style="margin-top: -20px">
 								<div id="search_Big">
 									<ul class="pull-left" id="otherTab">
-										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号">
+										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号或手机号">
 											<div class="clearfix"></div></li>
 									</ul>
 									<div class="pull-right search_right">
@@ -218,6 +218,8 @@
 									<th>客户姓名</th>
 									<th>客户电话</th>
 									<th>产品分类</th>
+									<th>类型</th>
+									<th>门店</th>
 									<th>服务项</th>
 									<th>当前状态</th>
 									<th>创建者</th>

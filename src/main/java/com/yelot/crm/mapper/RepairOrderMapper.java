@@ -82,4 +82,6 @@ public interface RepairOrderMapper {
      * @return
      */
     public RepairOrder findRepairOrderByOrderId(Long orderId);
+
+    int countByShopId(Long shopId);
 }

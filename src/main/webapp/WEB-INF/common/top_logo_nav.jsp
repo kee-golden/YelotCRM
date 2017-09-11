@@ -24,7 +24,7 @@
             <div class="col-xs-6">
                 <ul class="nav navbar-nav pull-right hidden-xs">
 
-                    <li><a href="${ctx}/help"  target="view_window" class="nav_new_font"><i class="glyphicon glyphicon-home"></i>帮助中心</a></li>
+                    <%--<li><a href="${ctx}/help"  target="view_window" class="nav_new_font"><i class="glyphicon glyphicon-home"></i>帮助中心</a></li>--%>
                     <%--<li><a href="http://www.itss-china.com/read.php?id=246&classid=34" target='_blank'class="nav_new_font"><i class="glyphicon glyphicon-phone-alt"></i>联系我们</a></li>--%>
                     <li><a href="" class="nav_new_font" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-bookmark"></i>关于版本</a></li>
                     <li class="dropdown">

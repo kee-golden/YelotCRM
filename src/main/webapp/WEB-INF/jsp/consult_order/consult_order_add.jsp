@@ -318,7 +318,7 @@
                         yaya.layer.msg("提交成功");
                         setTimeout(function () {
                             window.location.href = ctx+'/consult-order/alllist';
-                        },2000);
+                        },1000);
 
                     }
 

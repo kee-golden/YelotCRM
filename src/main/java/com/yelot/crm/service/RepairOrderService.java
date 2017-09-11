@@ -203,4 +203,8 @@ public class RepairOrderService {
 		setOneRepairServiceItem(repairOrder);
 		return repairOrder;
 	}
+
+    public int countByShopId(Long shopId) {
+		return repairOrderMapper.countByShopId(shopId);
+    }
 }

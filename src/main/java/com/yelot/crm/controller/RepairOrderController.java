@@ -152,8 +152,10 @@ public class RepairOrderController {
         repairOrder.setCreateAt(now);
         repairOrder.setUpdateAt(now);
 
-        String orderNo = user.getShop_id()+DateUtil.toString(now,"yyyyMMddHHMMSS");
-        repairOrder.setOrderNo(orderNo);
+        //订单号生成规则：门店编号+年月日+流水序号（门店当天第几单）
+        String orderNo = user.getShop_id()+DateUtil.toString(now,"yyyyMMdd");
+        int orderIndex = repairOrderService.countByShopId(user.getShop_id());
+        repairOrder.setOrderNo(orderNo+orderIndex);
 
         repairOrder.setStatus(2);//submit
 

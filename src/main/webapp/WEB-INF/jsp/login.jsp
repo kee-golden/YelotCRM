@@ -174,7 +174,7 @@
 <body style=" background: #e5e5e5;border-top:7px solid #3c72a8">
 
 <div class="logo">
-    <img src="${ctx}/img/logo-001.png"/>
+    <%--<img src="${ctx}/img/logo-001.png"/>--%>
 </div>
 <div id="cont">
     <div class=" banner"><img src="${ctx}/img/banner.png" style="max-width: 100%;"></div>

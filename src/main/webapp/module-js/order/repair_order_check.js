@@ -25,6 +25,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'customerName'},
     			{'data' : 'customerPhone'},
     			{'data' : 'categoryName'},
+    			{'data' : 'typeName'},
+    			{'data' : 'shopName'},
     			{'data' : 'serviceItemNames'},
     			{'data' : 'createUserName'},
     			{'data' : 'createAt'},
