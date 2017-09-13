@@ -37,7 +37,7 @@
 				</h6>
 				<div class="row top_row col-md-12 b-r">
 					<div>
-						<h5>查询该客户是否已存在，不存在需要到客户管理中，创建一个客户</h5>
+						<h5>查询该客户是否已存在</h5>
 					</div>
 
 					<form class="form-inline bottom10" role="form">
@@ -81,7 +81,8 @@
 					<div id="customerTip">
 						<div>
 							<h5>
-								该客户不存在，创建一个客户，请点击<a href="${ctx}/customer/index">创建客户</a>
+								<%--该客户不存在，创建一个客户，请点击<a href="${ctx}/customer/index">创建客户</a>--%>
+								该客户不存在，创建一个客户，请点击<a href="javascript:;;" id="addCustomer">创建客户</a>
 							</h5>
 						</div>
 					</div>

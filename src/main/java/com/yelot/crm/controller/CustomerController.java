@@ -110,7 +110,11 @@ public class CustomerController {
             date = DateUtil.toDate(firstConsultTime, Constants.DefaultDateFormate);
         }
         customer.setFirstConsultAt(date);
-        return customerService.save(customer);
+         customerService.save(customer);
+         ResultData resultData = ResultData.ok();
+         resultData.putDataValue("bean",customer);
+         return resultData;
+
     }
 
     @RequestMapping("update")

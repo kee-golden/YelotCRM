@@ -17,6 +17,101 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         tags: true,
     });
 
+    $('#addCustomer').click(function () {
+        console.log("addCustomer invoke");
+        $.ajax({
+            url: ctx + '/customer/add',
+            method: 'get',
+            dataType: 'html',
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '新建客户',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: '550px',
+                    shadeClose: true,
+                    btn: ['保存'],
+                    success: function (layer, index) {
+                        //初始化值
+                        $("#J_name").val("");
+                        checkCustomerFrom();
+                    },
+                    yes: function (index) {
+                        var isValid = $("#J_customerForm").valid();
+
+                        if (isValid) {
+
+                            $.ajax({
+                                url: ctx + '/customer/save',
+                                data: $('#J_customerForm').serialize(),
+                                method: 'post',
+                                dataType: 'json',
+                                success: function (data) {
+                                    console.log(data.code);
+                                    if (data.code) {
+                                        table.draw();
+                                        yaya.layer.close(index);
+
+                                    }
+                                    else {
+                                        yaya.layer.msg(data.data);
+
+                                    }
+                                },
+                                error: function (data) {
+                                    console.log(data);
+
+                                }
+                            });
+                        }
+
+                    }
+
+                });
+            },
+            error: function () {
+
+            }
+        });
+
+    });
+
+    function checkCustomerFrom() {
+        yaya.validate({
+            el: '#J_customerForm',
+            rules: {
+                phone:{
+                    required:true,
+                    isMobile:true,
+                    remote:{
+                        url:ctx+"/customer/check-phone",
+                        type:"post",
+                        data:{
+                            phone:function () {
+                                return $("#J_phone").val();
+                            }
+                        }
+                    }
+
+                },
+                name:{
+                    required: true
+                }
+            },
+            messages: {
+                phone: {
+                    required:"手机号不能为空",
+                    remote:"手机号已存在"
+                },
+                name:{
+                    required:"姓名不能为空"
+                }
+            }
+        });
+
+    }
+
+
 
 
     $("#saveBtn").click(function () {

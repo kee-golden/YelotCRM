@@ -285,4 +285,13 @@ public class RepairOrderController {
         return "repair_order/repair_order_detail";
     }
 
+    /**
+     * 创建客户
+     * @return
+     */
+    @RequestMapping("add-customer")
+    public String addCustomer(){
+        return "customer/customer_edit";
+    }
+
 }

@@ -18,7 +18,7 @@ public enum RepairOrderStatus {
     CENTER_REJECT(14,"维修中心，货物没有收到，拒绝该订单"),
     CHECK_APPROVE(16,"预检完成，通过可以维修"),
     CHECK_REJECT(18,"预检拒绝，无法维修"),
-    QC_APPROVE(20,"预检完成，通过可以维修"),
+    QC_APPROVE(20,"QC预检完成，通过可以维修"),
     QC_REJECT(22,"预检拒绝，无法维修"),
     CHECKIN_APPROVE(24,"入库完成"),
     CHECKIN_REJECT(26,"入库拒绝"),
@@ -26,8 +26,12 @@ public enum RepairOrderStatus {
     CHECKOUT_REJECT(30,"出库拒绝"),
     SHOP_RECEIVE_APPROVE(32,"门店收货确认"),
     SHOP_RECEIVE_REJECT(34,"门店收货拒绝，没有收到货"),
-    CUSTOMER_RECEIVE_APPROVE(36,"客户已收货确认"),
-    CUSTOMER_RECEIVE_REJECT(38,"客户已收货确认");
+    CUSTOMER_RECEIVE_APPROVE(36,"门店出库，客户已收货确认"),
+    CUSTOMER_RECEIVE_REJECT(38,"客户收货拒绝"),
+    SHOP_EVALUE_ORDER_APPROVE(40,"评估单，审核通过"),
+    SHOP_EVALUE_ORDER_REJECT(42,"评估单，审核拒绝"),
+    CHECK_EVALUE_ORDER_APPROVE(44,"预检人员，审核评估单再次通过"),
+    CHECK_EVALUE_ORDER_REJECT(46,"预检人员，审核评估单再次拒绝");
 
 
     private int code;
