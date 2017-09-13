@@ -290,8 +290,10 @@ public class RepairOrderController {
      * @return
      */
     @RequestMapping("add-customer")
-    public String addCustomer(){
-        return "customer/customer_edit";
+    public String addCustomer(Model model){
+        Customer customer = new Customer();
+        model.addAttribute("bean",customer);
+        return "repair_order/customer_add";
     }
 
 }

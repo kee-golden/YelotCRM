@@ -112,7 +112,7 @@ public class CustomerController {
         customer.setFirstConsultAt(date);
          customerService.save(customer);
          ResultData resultData = ResultData.ok();
-         resultData.putDataValue("bean",customer);
+         resultData.putDataValue("customer",customer);
          return resultData;
 
     }

@@ -4,7 +4,12 @@
 
 require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($, yaya,selector2,cityselect) {
 
-
+// 手机号码验证,自定义函数
+    jQuery.validator.addMethod("isMobile", function(value, element) {
+        var length = value.length;
+        var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+        return this.optional(element) || (length == 11 && mobile.test(value));
+    }, "请正确填写手机号码");
 
     //获取当前默认的属性json对象,attributeJson,categoryServiceJson,两个对象定义在jsp中
     generateAttributes(attributesJson);
@@ -20,7 +25,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
     $('#addCustomer').click(function () {
         console.log("addCustomer invoke");
         $.ajax({
-            url: ctx + '/customer/add',
+            url: ctx + '/repair-order/add-customer',
             method: 'get',
             dataType: 'html',
             success: function (str) {
@@ -47,14 +52,25 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                                 method: 'post',
                                 dataType: 'json',
                                 success: function (data) {
-                                    console.log(data.code);
-                                    if (data.code) {
-                                        table.draw();
-                                        yaya.layer.close(index);
 
+                                    if(data.code == 1200){
+                                        $("#customerId").data("id",data.data.customer.id);//复制customer id
+                                        $("#customerContainer").css("display","block");
+                                        $("#customerTip").css("display","none");
+                                        $("#J_name").val(data.data.customer.name);
+                                        $("#J_phone").val(data.data.customer.phone);
+                                        $("#phone").val(data.data.customer.phone);//同步查询的手机号
+                                        $("#J_address").val(data.data.customer.address);
+                                        $("#province").html(data.data.customer.province);
+                                        $("#city").html(data.data.customer.city);
+
+                                    }else {
+                                        $("#customerTip").css("display","block");
+                                        $("#customerContainer").css("display","none");
                                     }
-                                    else {
-                                        yaya.layer.msg(data.data);
+
+                                    if (data.code == 1200) {
+                                        yaya.layer.close(index);
 
                                     }
                                 },
@@ -88,7 +104,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                         type:"post",
                         data:{
                             phone:function () {
-                                return $("#J_phone").val();
+                                return $("#J_customerPhone").val();
                             }
                         }
                     }
@@ -167,7 +183,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                     yaya.layer.msg("提交成功");
                     setTimeout(function () {
                         window.location.href = ctx+'/repair-order/mylist';
-                    },2000);
+                    },1000);
 
                 }
 
@@ -221,14 +237,8 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                         $("#J_name").val(data.data.customer.name);
                         $("#J_phone").val(data.data.customer.phone);
                         $("#J_address").val(data.data.customer.address);
-                        $("#prov_city").citySelect({
-                            url:"/static/cityselect/js/city.min.js",
-                            prov:data.data.customer.province,
-                            city:data.data.customer.city,
-                            nodata:"none",
-                            required:false
-                        });
-
+                        $("#province").html(data.data.customer.province);
+                        $("#city").html(data.data.customer.city);
 
                     }else {
                         $("#customerTip").css("display","block");

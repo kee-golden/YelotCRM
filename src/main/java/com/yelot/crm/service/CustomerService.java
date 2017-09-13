@@ -35,7 +35,8 @@ public class CustomerService {
         return customerMapper.find(id);
     }
 
-    public ResultData save(Customer customer) {
+    public Customer save(Customer customer) {
+        Customer resultTemp = customer;
         Long id = customer.getId();
         if(id == null){
             Date now = new Date();
@@ -47,7 +48,7 @@ public class CustomerService {
         }else{
             customerMapper.updateCustomer(customer);
         }
-        return ResultData.ok();
+        return resultTemp;
     }
 
 

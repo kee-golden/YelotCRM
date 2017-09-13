@@ -64,8 +64,10 @@
 
 							<div class="col-md-2">
 								<label>省市</label>
-								<div id="prov_city">
-									<select class="prov" name="province" readonly></select> <select class="city" disabled="disabled" name="city" readonly></select>
+								<div id="provCity">
+									<label id="province"></label>/<label id="city"></label>
+									<%--<select class="prov" name="province" readonly></select> --%>
+									<%--<select class="city" disabled="disabled" name="city" readonly></select>--%>
 								</div>
 
 							</div>
