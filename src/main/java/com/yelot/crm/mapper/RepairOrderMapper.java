@@ -84,4 +84,6 @@ public interface RepairOrderMapper {
     public RepairOrder findRepairOrderByOrderId(Long orderId);
 
     int countByShopId(Long shopId);
+
+	void update(RepairOrder repairOrder);
 }

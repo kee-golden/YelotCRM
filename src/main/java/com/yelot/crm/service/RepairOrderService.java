@@ -207,4 +207,8 @@ public class RepairOrderService {
     public int countByShopId(Long shopId) {
 		return repairOrderMapper.countByShopId(shopId);
     }
+
+    public void update(RepairOrder repairOrder) {
+		repairOrderMapper.update(repairOrder);
+    }
 }

@@ -1,0 +1,117 @@
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.top_row {
+    padding: 15px;
+}
+
+.top_con {
+    box-shadow: 0 1px 5px 0 #e5e5e5;
+    background: #FFFFFF;
+}
+
+.tab-content {
+    background: #FFFFFF
+}
+
+#myTab {
+    position: relative;
+}
+
+#myTab li {
+    margin-right: 20px
+}
+
+#myTab span {
+    display: inline-block;
+    font-size: 11px;
+    color: #FFFFFF;
+    background: #c46f82;
+    text-align: center;
+    border-radius: 50%;
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    position: absolute;
+    right: -12px;
+    top: -12px;
+}
+
+.top_con h6 {
+    height: 28px;
+    background: #f1efef;
+    font-size: 14px;
+    line-height: 28px;
+    font-weight: 600;
+    padding-left: 10px;
+    margin-bottom: 20px
+}
+
+.work {
+    margin-right: 10px;
+}
+
+#box01, #box02 {
+    height: 350px;
+    padding-top: 10px
+}
+
+#box02 {
+    padding-left: 50px;
+}
+
+.iconfont {
+    margin-right: 10px;
+    font-size: 24px;
+    cursor: pointer
+}
+
+.container h6 {
+    overflow: hidden
+}
+
+#page-wrapper, .wrapper, .wrapper-content {
+    padding: 0 !important;
+}
+
+#customer_table{
+    border-collapse:separate;
+    border-spacing:5px;
+}
+
+.customer_table_td_lable4{
+    width: 20%;
+    text-align:right;
+}
+
+.customer_table_td_input4{
+    width: 20%;
+    text-align:left;
+}
+
+.customer_table_td_lable8{
+    width: 8%;
+    text-align:right;
+}
+
+.customer_table_td_input8{
+    width: 8%;
+    text-align:left;
+}
+
+.customer_table_td_input5{
+    width: 20%;
+    text-align:center;
+}
+
+.bottom10{margin-bottom: 10px;}
+
+#customerContainer{
+    display: block;
+}
+#customerTip{
+    display: none;
+}

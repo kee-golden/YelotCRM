@@ -10,7 +10,16 @@ public class Attribute {
      */
     private String attributeName;
 
+    /**
+     * 如果是select，是多个值，以逗号分隔
+     */
     private String selectionValues;
+
+    /**
+     * 用户真正存放的值
+     */
+    private String realValue = "";
+
     /**
      * 属性类别：1：下拉选择，2，文本输入框
      */
@@ -46,5 +55,13 @@ public class Attribute {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getRealValue() {
+        return realValue;
+    }
+
+    public void setRealValue(String realValue) {
+        this.realValue = realValue;
     }
 }

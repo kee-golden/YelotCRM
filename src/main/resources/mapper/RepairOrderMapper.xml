@@ -168,4 +168,39 @@
         select count(*) from t_repair_order where to_days(create_at) = to_days(now()) and shop_id = #{shopId};
     </select>
 
+    <!-- 编辑
+
+    customerId: customerId,
+                firstCategory: firstCategory,
+                secondCategory: secondCategory,
+                brandId: brandId,
+                valuesAttributeJson: JSON.stringify(valuesAttributeJson),
+                serviceItemJson: JSON.stringify(serviceItemJson),
+                imagePaths: imagePaths,
+                imageDesc: imageDesc,
+                repairDesc: repairDesc,
+                typeName: typeName,
+                advancePayment: advancePayment,
+                labourPayment: labourPayment,
+                materialPayment: materialPayment,
+                pickupDate: pickupDate
+    -->
+    <update id="update">
+        update t_repair_order set update_at = now()
+        <if test="customerId != null">,customer_id = #{customerId}</if>
+        <if test="firstCategoryId != null">,first_category_id = #{firstCategoryId}</if>
+        <if test="secondCategoryId != null">,second_category_id = #{secondCategoryId}</if>
+        <if test="productInfoJson != null">,product_info_json = #{productInfoJson}</if>
+        <if test="serviceItemIds != null">,service_item_ids = #{serviceItemIds}</if>
+        <if test="imagesJson != null">,images_json = #{imagesJson}</if>
+        <if test="imageDesc != null">,image_desc = #{imageDesc}</if>
+        <if test="repairDesc != null">,repair_desc = #{repairDesc}</if>
+        <if test="typeName != null">,type_name = #{typeName}</if>
+        <if test="advancePayment != null">,advance_payment = #{advancePayment}</if>
+        <if test="labourPayment != null">,labour_payment = #{labourPayment}</if>
+        <if test="materialPayment != null">,material_payment = #{materialPayment}</if>
+        <if test="pickupAt != null">,pickup_at = #{pickupAt}</if>
+
+    </update>
+
 </mapper>

@@ -9,6 +9,10 @@ public class CategoryServiceItem {
     private Long serviceItemId;
     private int price;
     /**
+     * 是否选择状态
+     */
+    private boolean selectedStatus;
+    /**
      * vo 对象，服务名称
      */
     private String serviceName;
@@ -51,5 +55,13 @@ public class CategoryServiceItem {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public boolean isSelectedStatus() {
+        return selectedStatus;
+    }
+
+    public void setSelectedStatus(boolean selectedStatus) {
+        this.selectedStatus = selectedStatus;
     }
 }
