@@ -7,6 +7,9 @@
 
 <%@include file="/WEB-INF/common/static.jsp"%>
 
+	<link href="${ctx}/module-css/repair-order-edit.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
+
 <c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
 <c:set var="CHILD_MENU_CODE" value="RepairOrder_MyList" />
 

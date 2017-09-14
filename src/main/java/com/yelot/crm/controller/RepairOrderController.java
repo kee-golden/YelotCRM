@@ -12,6 +12,7 @@ import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
 import com.yelot.crm.vo.Table;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,9 @@ public class RepairOrderController {
 
     @Autowired
     private RepairOrderService repairOrderService;
+
+    @Autowired
+    private RepairOrderMapper repairOrderMapper;
 
     @Autowired
     private BrandMapper brandMapper;
@@ -165,14 +169,63 @@ public class RepairOrderController {
 
     }
 
+    @RequestMapping("update")
+    @ResponseBody
+    public ResultData update(Long id,Long customerId,String firstCategory,String secondCategory,Long brandId,String valuesAttributeJson,
+                             String serviceItemJson,String imagePaths,String imageDesc,String repairDesc,
+                             String typeName,
+                             @RequestParam(value = "advancePayment",defaultValue = "0") Integer advancePayment,
+                             @RequestParam(value = "labourPayment",defaultValue = "0")Integer labourPayment,
+                             @RequestParam(value = "materialPayment",defaultValue = "0")Integer materialPayment
+            ,String pickupDate){
+
+        RepairOrder repairOrder = new RepairOrder();
+        repairOrder.setId(id);
+
+        Category category = categoryMapper.findByName(firstCategory,secondCategory);
+
+        repairOrder.setFirstCategoryId(category.getParentId());
+        repairOrder.setSecondCategoryId(category.getId());
+        repairOrder.setBrandId(brandId);
+        Customer customer = customerMapper.find(customerId);
+        repairOrder.setCustomerId(customerId);
+        repairOrder.setCustomerName(customer.getName());
+        repairOrder.setCustomerAddress(customer.getAddress());
+        repairOrder.setCustomerPhone(customer.getPhone());
+        repairOrder.setProductInfoJson(valuesAttributeJson);
+        repairOrder.setServiceItemIds(serviceItemJson);
+        repairOrder.setImagesJson(imagePaths);
+        repairOrder.setImageDesc(imageDesc);
+        repairOrder.setRepairDesc(repairDesc);
+        repairOrder.setTypeName(typeName);
+        repairOrder.setLabourPayment(labourPayment);
+        repairOrder.setAdvancePayment(advancePayment);
+        repairOrder.setMaterialPayment(materialPayment);
+        repairOrder.setPickupAt(DateUtil.toDate(pickupDate,"yyyy-MM-dd"));
+
+        repairOrderService.update(repairOrder);
+        return ResultData.ok();
+    }
+
     @ResponseBody
     @RequestMapping("get-attributes")
-    public ResultData getAttributes(String firstCategory,String secondCategory){
+    public ResultData getAttributes(Long id,String firstCategory,String secondCategory){
+
+        RepairOrder repairOrder = repairOrderMapper.find(id);
+        String myFirstCategory = categoryMapper.find(repairOrder.getFirstCategoryId()).getName();
+        String mySecondCategory = categoryMapper.find(repairOrder.getSecondCategoryId()).getName();
+
         List<Attribute> attributeList = categoryAttributeService.findAttributes(firstCategory,secondCategory);
 
         Category category = categoryMapper.findByName(firstCategory,secondCategory);
 
         List<CategoryServiceItem> categoryServiceItemList = categoryServiceItemMapper.findByCategoryId(category.getId());
+
+        if(myFirstCategory.equals(firstCategory) && mySecondCategory.equals(secondCategory)){//如果是当前曾经选择的分类，需要初始化原有数据的值
+            initAttributeItem(attributeList,repairOrder);
+            initServiceItem(categoryServiceItemList,repairOrder);
+        }
+
 
         ResultData resultData = ResultData.ok();
         resultData.putDataValue("attributeList",attributeList);
@@ -294,6 +347,115 @@ public class RepairOrderController {
         Customer customer = new Customer();
         model.addAttribute("bean",customer);
         return "repair_order/customer_add";
+    }
+
+    /**
+     * 进入维修单编辑页面
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping("to-edit")
+    public String toEdit(Model model,Long id){
+
+        RepairOrder repairOrder = repairOrderMapper.find(id);
+//从add 方法中拷贝过来
+        CityListVo cityListVo = repairOrderService.convertToCityListVo();
+        String categoryJson = JSON.toJSONString(cityListVo);
+        String firstCategory = categoryMapper.find(repairOrder.getFirstCategoryId()).getName();
+        String secondCategory = categoryMapper.find(repairOrder.getSecondCategoryId()).getName();
+        model.addAttribute("categoryJson",categoryJson);
+        model.addAttribute("firstCategory",firstCategory);
+        model.addAttribute("secondCategory",secondCategory);
+
+        Category category = categoryMapper.findByName(firstCategory,secondCategory);
+
+        List<CategoryServiceItem> categoryServiceItemList = categoryServiceItemMapper.findByCategoryId(category.getId());
+        initServiceItem(categoryServiceItemList,repairOrder);//赋值
+        String categoryServiceJson = JSON.toJSONString(categoryServiceItemList);
+
+        model.addAttribute("categoryServiceJson",categoryServiceJson);
+
+
+        //获取品牌
+        List<Brand> brandList = brandMapper.findAll();
+        model.addAttribute("brandList",brandList);
+
+        List<Attribute> attributeList = categoryAttributeService.findAttributes(firstCategory,secondCategory);
+        initAttributeItem(attributeList,repairOrder);
+
+        String attibutesJson = JSON.toJSONString(attributeList);
+       // System.out.println(attibutesJson);
+        //System.out.println(repairOrder.getProductInfoJson());
+
+        String imagesPath = repairOrder.getImagesJson();
+        if(!StringUtils.isEmpty(imagesPath)){
+            String images[] = repairOrder.getImagesJson().split(",");
+            String imagesJson = JSON.toJSONString(images);
+            model.addAttribute("imagesPath",repairOrder.getImagesJson());
+            model.addAttribute("imagesJson",imagesJson);
+        }else {
+            model.addAttribute("imagesPath","");
+            model.addAttribute("imagesJson","[]");
+        }
+
+        Customer customer = customerMapper.find(repairOrder.getCustomerId());
+
+        model.addAttribute("attributesJson",attibutesJson);
+        model.addAttribute("repairOrder",repairOrder);
+        model.addAttribute("customer",customer);
+
+
+        return "repair_order/repair_order_edit";
+
+
+    }
+
+    /**
+     * 映射选择属性值
+     * @param categoryServiceItemList
+     * @param repairOrder
+     */
+    private void initServiceItem(List<CategoryServiceItem> categoryServiceItemList,RepairOrder repairOrder){
+
+        if(repairOrder == null || StringUtils.isEmpty(repairOrder.getServiceItemIds())){
+            return;
+        }
+
+        List<Long> idList = JSON.parseArray(repairOrder.getServiceItemIds(),Long.class);
+        for (CategoryServiceItem item : categoryServiceItemList) {
+            if(idList.contains(item.getId())){
+                item.setSelectedStatus(true);
+            }else {
+                item.setSelectedStatus(false);
+            }
+        }
+
+    }
+
+    /**
+     * 映射属性值
+     * @param attributeList
+     * @param repairOrder
+     */
+    private void initAttributeItem(List<Attribute> attributeList,RepairOrder repairOrder){
+        if(repairOrder == null || StringUtils.isEmpty(repairOrder.getProductInfoJson())){
+            return;
+        }
+
+        List<Attribute> resultList = JSON.parseArray(repairOrder.getProductInfoJson(),Attribute.class);
+
+        for (Attribute attibute:attributeList) {
+            for (int i = 0; i < resultList.size(); i++) {
+                if(attibute.getId() == resultList.get(i).getId()){
+                    attibute.setRealValue(resultList.get(i).getSelectionValues());
+                    break;
+                }
+
+            }
+        }
+
+
     }
 
 }

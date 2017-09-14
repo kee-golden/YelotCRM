@@ -180,12 +180,6 @@
 				</div>
 			</div>
 		</div>
-
-		<%--<div class="container top_con" style="width: 100%; min-width: 1000px">--%>
-			<%--<div class="col-md-2 bottom10">--%>
-				<%--<input type="button" class="form-control col-md-2 btn" id="saveBtn" value="保存" />--%>
-			<%--</div>--%>
-		<%--</div>--%>
 	</div>
 </div>
 

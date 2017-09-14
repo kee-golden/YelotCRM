@@ -41,7 +41,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			},
     			{'data' : 'createAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
-    				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
+    				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看</a>&nbsp;&nbsp;'
+    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_orderEdit"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a>&nbsp;&nbsp;'
     				+ '<a href="javascript:;;" data-id="' + data + '" class="J_workflow"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
     			}
     			}],
@@ -131,8 +132,48 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             }
         });
     });
-    
-    // 审批流程
+
+    //编辑
+    $JOrderList.on('click', '.J_orderEdit', function () {
+        $.ajax({
+            url: ctx + '/repair-order/to-edit',
+            data: {
+                id: $(this).data('id')
+            },
+            method: 'get',
+            dataType: 'html',
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '订单详情',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: ['1100px','800px'],  //高度默认
+                    scrollbar:true,
+                    shadeClose: true,
+                    btn: ['修改','取消'],
+                    success: function (layero, index) {
+
+
+                    },
+                    yes: function (index) {//按钮1
+
+                        updateOrder(index);
+
+
+                    },
+                    btn2: function (index) {//按钮2
+
+                    }
+                });
+            },
+            error: function () {
+
+            }
+        });
+
+    });
+
+        // 审批流程
     $JOrderList.on('click', '.J_workflow', function () {
         $.ajax({
             url: ctx + '/repair-order-operators/workflow',
@@ -169,6 +210,86 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
 
     });
+
+    function updateOrder(index) {
+        var customerId = $('#customerId').data("id");
+        console.log("customerId:"+customerId);
+        if(customerId == ""){
+            yaya.layer.msg("你还没有选中客户，请先通过电话号码，查询客户！")
+            return;
+        }
+
+        var firstCategory = $('#firstCategory').val();
+        var secondCategory = $('#secondCategory').val();
+        var brandId = $('#brandId').val();
+
+        var valuesAttributeJson =  getAttributeValues(attributesJson);
+        var serviceItemJson = $('#serviceItem').val();
+
+        var imagePaths = $('.filelist').data('path');
+        var imageDesc = $('#imageDesc').val();
+        var repairDesc = $('#repairDesc').val();
+        var typeName = $('#typeName').val();
+        var advancePayment = $('#advancePayment').val();
+        var labourPayment = $('#labourPayment').val();
+        var materialPayment = $('#materialPayment').val();
+        var pickupDate = $('#pickupDate').val();
+        console.log(labourPayment+","+labourPayment+","+materialPayment);
+        $.ajax({
+            url: ctx + '/repair-order/update',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                id:$('#orderid').val(),
+                customerId: customerId,
+                firstCategory: firstCategory,
+                secondCategory: secondCategory,
+                brandId: brandId,
+                valuesAttributeJson: JSON.stringify(valuesAttributeJson),
+                serviceItemJson: JSON.stringify(serviceItemJson),
+                imagePaths: imagePaths,
+                imageDesc: imageDesc,
+                repairDesc: repairDesc,
+                typeName: typeName,
+                advancePayment: advancePayment,
+                labourPayment: labourPayment,
+                materialPayment: materialPayment,
+                pickupDate: pickupDate
+
+            },
+            success: function (data) {
+                if (data.code == 1200) {
+                    yaya.layer.msg("提交成功");
+                    yaya.layer.close(index);
+                    setTimeout(function () {
+                        window.location.href = ctx + '/repair-order/mylist';
+                    }, 1000);
+
+                }
+
+            }
+        });
+
+
+    }
+
+    function getAttributeValues(attributesJson) {
+        //
+        var attrValuesJson = [];
+
+        for(var i = 0;i<attributesJson.length;i++){
+            var objJson = {};
+            objJson["id"] = attributesJson[i].id;
+            objJson["attributeName"] = attributesJson[i].attributeName;
+            objJson["selectionValues"] = $('#attId_'+attributesJson[i].id).val();
+            objJson["type"] = attributesJson[i].type;
+            attrValuesJson.push(objJson);
+        }
+
+        // console.log(JSON.stringify(attrValuesJson));
+
+        return attrValuesJson;
+    }
 
 
     });
