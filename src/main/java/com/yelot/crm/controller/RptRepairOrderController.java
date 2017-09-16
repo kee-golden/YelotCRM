@@ -162,7 +162,7 @@ public class RptRepairOrderController {
 			obj[14] = rptRepairOrder.getFirstCategoryName();	// 货品类型
 			obj[15] = rptRepairOrder.getSecondCategoryName();	// 货品名称
 			obj[16] = rptRepairOrder.getRepairDesc();			// 维修内容
-			obj[17] = "";										// 维修工序
+			obj[17] = rptRepairOrder.getServiceItemNames();		// 维修工序
 			obj[18] = "";										// 是否返修
 			obj[19] = rptRepairOrder.getTotalPayment();			// 小结
 			obj[20] = rptRepairOrder.getMaterialPayment();		// 料钱
