@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -193,11 +192,13 @@ public class RptRepairOrderService {
 	 * @param rptRepairOrder
 	 */
 	private void setOneRptRepairChannelSource(RptRepairOrder rptRepairOrder){
-		ChannelSource[] channelSourceList = ChannelSource.values();
-		for (ChannelSource channelSource : channelSourceList) {
-			if (rptRepairOrder.getChannelSource().equals(String.valueOf(channelSource.getCode()))) {
-				rptRepairOrder.setChannelSource(channelSource.getMessage());
-				break;
+		if (rptRepairOrder.getChannelSource() != null && rptRepairOrder.getChannelSource() != "") {
+			ChannelSource[] channelSourceList = ChannelSource.values();
+			for (ChannelSource channelSource : channelSourceList) {
+				if (rptRepairOrder.getChannelSource().equals(String.valueOf(channelSource.getCode()))) {
+					rptRepairOrder.setChannelSource(channelSource.getMessage());
+					break;
+				}
 			}
 		}
 	}
