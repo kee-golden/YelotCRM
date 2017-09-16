@@ -418,7 +418,7 @@ public class RepairOrderController {
      */
     private void initServiceItem(List<CategoryServiceItem> categoryServiceItemList,RepairOrder repairOrder){
 
-        if(repairOrder == null || StringUtils.isEmpty(repairOrder.getServiceItemIds())){
+        if(categoryServiceItemList == null || repairOrder == null || StringUtils.isEmpty(repairOrder.getServiceItemIds())){
             return;
         }
 
@@ -439,7 +439,7 @@ public class RepairOrderController {
      * @param repairOrder
      */
     private void initAttributeItem(List<Attribute> attributeList,RepairOrder repairOrder){
-        if(repairOrder == null || StringUtils.isEmpty(repairOrder.getProductInfoJson())){
+        if(attributeList == null || repairOrder == null || StringUtils.isEmpty(repairOrder.getProductInfoJson())){
             return;
         }
 

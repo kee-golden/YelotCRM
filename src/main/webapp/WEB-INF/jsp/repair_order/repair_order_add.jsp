@@ -100,11 +100,11 @@
 					<div>
 						<%--<h3 class="m-t-none m-b">基础信息</h3>--%>
 
-						<div id="category" class="row bottom10">
-							<label class="col-xs-1">分类:</label>
-							<select class="prov col-xs-1" name="firstCategory" id="firstCategory"></select>
-							<select class="city col-xs-1" disabled="disabled" name="secondCategory" id="secondCategory"></select>
-							<label class="col-xs-1">品牌：</label> <span>
+						<div id="category" class="row bottom10 left20">
+							<label class="left20">分类:</label>
+							<select class="prov" name="firstCategory" id="firstCategory"></select>
+							<select class="city" disabled="disabled" name="secondCategory" id="secondCategory"></select>
+							<label class="left20">品牌：</label> <span>
 								<select id="brandId" name="brandId">
 
 									<c:forEach items="${brandList}" var="item">
@@ -116,8 +116,7 @@
 						<div id="attributes" class="bottom10"></div>
 
 						<hr />
-						<label>服务项:</label> <select id="serviceItem" name="serviceItem" multiple class="col-md-6">
-
+						<label class="left20">服务项:</label> <select id="serviceItem" name="serviceItem" multiple class="left20 col-md-6">
 
 						</select>
 					</div>
@@ -148,8 +147,8 @@
 							</div>
 						</div>
 					</div>
-					<div id="image-desc">
-						<label class="col-md-2">外观描述:</label> <input type="text" id="imageDesc" class="col-md-6 bottom10" placeholder="" />
+					<div id="image-desc" class="row col-md-9 left20">
+						<label class="">外观描述:</label> <input type="text" id="imageDesc" class="form-control bottom10" placeholder="" />
 
 					</div>
 				</div>
@@ -162,36 +161,38 @@
 				</h6>
 				<div class="row">
 
-					<div id="repairContent">
-						<div class="row bottom10">
-							<label class="col-md-2">维修内容:</label> <input type="text" class="col-md-8" id="repairDesc">
+					<div id="repairContent" class="row">
+						<div class="row bottom10 left20 col-md-9">
+							<label class="">维修内容:</label> <input type="text" class="form-control" id="repairDesc">
 						</div>
-						<div class="row bottom10">
-							<div class="col-md-2">
-							<label>维修单类别:</label><br/>
+
+					</div>
+					<div class="row bottom10 left20">
+						<div class="col-md-1">
+							<label>类别:</label><br/>
 							<select name="typeName" id="typeName" >
 								<option value="维修单">维修单</option>
 								<option value="内部单">内部单</option>
 								<option value="返修单">返修单</option>
 								<option value="评估单">评估单</option>
 							</select>
-							</div>
-							<div class="col-md-2">
+						</div>
+						<div class="col-md-2">
 							<label>预付款:</label> <input type="text"  class="form-control" id="advancePayment">
-							</div>
-							<div class="col-md-2"><label>工费:</label> <input type="text" class="form-control" id="labourPayment"></div>
+						</div>
+						<div class="col-md-2"><label>工费:</label> <input type="text" class="form-control" id="labourPayment"></div>
 						<div class="col-md-2"><label>材料费:</label> <input type="text" class="form-control" id="materialPayment"></div>
 						<div class="col-md-2"><label>交货时间:</label> <input type="text" class="form-control" id="pickupDate"></div>
-						</div>
-
-
 					</div>
 					<%--<div class="col-lg-6  col-md-12"></div>--%>
 					<%--<div class="col-lg-6 col-md-12"></div>--%>
 				</div>
-				<div class="col-md-2 bottom10">
-					<input type="button" class="form-control col-md-2 " id="saveBtn" value="保存" />
-				</div>
+
+			</div>
+			<div class="container top_con" style="width:100%;min-width: 1000px;">
+			<div class="bottom10" style="float:right">
+				<input type="button" class="btn btn-success" style="width: 120px;margin-top: 10px;" id="saveBtn" value="保存" />
+			</div>
 			</div>
 		</div>
 	</div>
