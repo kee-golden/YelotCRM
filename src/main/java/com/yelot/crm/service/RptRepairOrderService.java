@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Category;
 import com.yelot.crm.entity.RptRepairOrder;
+import com.yelot.crm.enums.ChannelSource;
 import com.yelot.crm.enums.RepairOrderStatus;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.vo.City;
@@ -96,8 +97,9 @@ public class RptRepairOrderService {
 		}
 		
 		List<RptRepairOrder> rptRepairOrderList = rptRepairOrderMapper.findByPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, status, typeName, pageHelper);
-		setRptRepairServiceItem(rptRepairOrderList);
-		setRptRepairStatus(rptRepairOrderList);
+		setRptRepairServiceItem(rptRepairOrderList); // 服务项
+		setRptRepairStatus(rptRepairOrderList); // 订单状态
+		setRptRepairChannelSource(rptRepairOrderList); // 客户来源
 		return rptRepairOrderList;
 	}
 	
@@ -163,7 +165,7 @@ public class RptRepairOrderService {
 	}
 	
 	/**
-	 * 单个订单状态转中文
+	 * 单个订单中订单状态转中文
 	 * @param rptRepairOrder
 	 */
 	private void setOneRptRepairStatus(RptRepairOrder rptRepairOrder){
@@ -171,6 +173,30 @@ public class RptRepairOrderService {
 		for (RepairOrderStatus repairOrderStatus : repairOrderStatusList) {
 			if (rptRepairOrder.getStatus() == repairOrderStatus.getCode()) {
 				rptRepairOrder.setStatusName(repairOrderStatus.getMessage());
+				break;
+			}
+		}
+	}
+
+	/**
+	 * 订单列表中客户来源转中文
+	 * @param rptRepairOrderList
+	 */
+	private void setRptRepairChannelSource(List<RptRepairOrder> rptRepairOrderList){
+		for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
+			setOneRptRepairChannelSource(rptRepairOrder);
+		}
+	}
+	
+	/**
+	 * 单个订单中客户来源转中文
+	 * @param rptRepairOrder
+	 */
+	private void setOneRptRepairChannelSource(RptRepairOrder rptRepairOrder){
+		ChannelSource[] channelSourceList = ChannelSource.values();
+		for (ChannelSource channelSource : channelSourceList) {
+			if (rptRepairOrder.getChannelSource().equals(String.valueOf(channelSource.getCode()))) {
+				rptRepairOrder.setChannelSource(channelSource.getMessage());
 				break;
 			}
 		}

@@ -93,7 +93,7 @@
 		       t6.wechat_nickname,
 		       t6.wechat_id,
 		       t6.qq customer_qq,
-		       t6.type customer_type,
+		       case t6.type when '0' then '新客户' when '1' then '老客户' end customer_type,
 		       t6.channel_source
 		  from t_repair_order t
 		  left join t_category t1 on t.first_category_id = t1.id
