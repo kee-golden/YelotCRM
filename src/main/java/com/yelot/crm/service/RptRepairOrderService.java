@@ -1,14 +1,10 @@
 package com.yelot.crm.service;
 
 import com.alibaba.fastjson.JSON;
-import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Category;
-import com.yelot.crm.entity.RepairOrder;
-import com.yelot.crm.entity.RepairOrderOperators;
 import com.yelot.crm.entity.RptRepairOrder;
-import com.yelot.crm.entity.User;
-import com.yelot.crm.enums.OperatorStatus;
+import com.yelot.crm.enums.RepairOrderStatus;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.vo.City;
 import com.yelot.crm.vo.CityList;
@@ -18,13 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by kee on 17/6/5.
+ * @author xyzloveabc
+ * @2017年9月16日
  */
 @Service
 @Transactional
@@ -46,10 +41,17 @@ public class RptRepairOrderService {
 	 */
 	public CityListVo convertToCityListVo() {
 		List<Category> categoryList = categoryMapper.findAllFirstClass();
-
+		
+		Category category = new Category("全部", 0);
+		categoryList.add(0, category);
+		
 		for (int i = 0; categoryList != null && i < categoryList.size(); i++) {
 			List<Category> children = categoryMapper.findChildren(categoryList
 					.get(i).getId());
+
+			Category categoryChildren = new Category("全部", 0);
+			children.add(0, categoryChildren);
+			
 			categoryList.get(i).setChildren(children);
 		}
 
@@ -82,10 +84,20 @@ public class RptRepairOrderService {
 	 * @return
 	 */
 	public List<RptRepairOrder> findByPage(String startDate, String endDate,
-			String firstCategory, String secondCategory, String shopId,
+			String firstCategory, String secondCategory, String shopId, String customerType,
 			String status, String typeName, PageHelper pageHelper) {
-		List<RptRepairOrder> rptRepairOrderList = rptRepairOrderMapper.findByPage(startDate, endDate, firstCategory, secondCategory, shopId, status, typeName, pageHelper);
+		
+		if ("全部".equals(firstCategory)) {
+			firstCategory = "";
+		}
+		
+		if ("全部".equals(secondCategory)) {
+			secondCategory = "";
+		}
+		
+		List<RptRepairOrder> rptRepairOrderList = rptRepairOrderMapper.findByPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, status, typeName, pageHelper);
 		setRptRepairServiceItem(rptRepairOrderList);
+		setRptRepairStatus(rptRepairOrderList);
 		return rptRepairOrderList;
 	}
 	
@@ -94,19 +106,34 @@ public class RptRepairOrderService {
 	 * @return 总的记录条数
 	 */
 	public Integer countTotalPage(String startDate, String endDate,
-			String firstCategory, String secondCategory, String shopId,
+			String firstCategory, String secondCategory, String shopId, String customerType,
 			String status, String typeName) {
-		return rptRepairOrderMapper.countTotalPage(startDate, endDate, firstCategory, secondCategory, shopId, status, typeName);
+		
+		if ("全部".equals(firstCategory)) {
+			firstCategory = "";
+		}
+		
+		if ("全部".equals(secondCategory)) {
+			secondCategory = "";
+		}
+		
+		return rptRepairOrderMapper.countTotalPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, status, typeName);
 	}
 
-	
-
+	/**
+	 * 订单列表中服务项转中文
+	 * @param rptRepairOrderList
+	 */
 	private void setRptRepairServiceItem(List<RptRepairOrder> rptRepairOrderList){
 		for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
 			setOneRptRepairServiceItem(rptRepairOrder);
 		}
 	}
 	
+	/**
+	 * 单个订单服务项转中文
+	 * @param rptRepairOrder
+	 */
 	private void setOneRptRepairServiceItem(RptRepairOrder rptRepairOrder) {
 		String serviceItemIds = rptRepairOrder.getServiceItemIds();
 		List<String> serviceItemIdsList = JSON.parseArray(serviceItemIds, String.class);
@@ -123,6 +150,30 @@ public class RptRepairOrderService {
 			}
 		}
 		rptRepairOrder.setServiceItemNames(serviceItemNames);
+	}
+
+	/**
+	 * 订单列表中订单状态转中文
+	 * @param rptRepairOrderList
+	 */
+	private void setRptRepairStatus(List<RptRepairOrder> rptRepairOrderList){
+		for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
+			setOneRptRepairStatus(rptRepairOrder);
+		}
+	}
+	
+	/**
+	 * 单个订单状态转中文
+	 * @param rptRepairOrder
+	 */
+	private void setOneRptRepairStatus(RptRepairOrder rptRepairOrder){
+		RepairOrderStatus[] repairOrderStatusList = RepairOrderStatus.values();
+		for (RepairOrderStatus repairOrderStatus : repairOrderStatusList) {
+			if (rptRepairOrder.getStatus() == repairOrderStatus.getCode()) {
+				rptRepairOrder.setStatusName(repairOrderStatus.getMessage());
+				break;
+			}
+		}
 	}
 	
 }

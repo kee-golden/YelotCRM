@@ -7,9 +7,6 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * Created by kee on 17/5/30.
- */
-/**
  * @author xyzloveabc
  * @2017年9月1日
  */
@@ -47,8 +44,6 @@ public class RptRepairOrder {
      */
     private String createUserName;
 
-
-
     /**
      * 交货日期,预估的时间
      */
@@ -83,7 +78,47 @@ public class RptRepairOrder {
      * 客户地址
      */
     private String customerAddress;
-
+    
+    /**
+     * 客户性别
+     */
+    private String customerSex;
+    
+    /**
+     * 省
+     */
+    private String province;
+    
+    /**
+     * 市
+     */
+    private String city;
+    
+    /**
+     * 微信ID
+     */
+    private String wechatId;
+    
+    /**
+     * 微信名称
+     */
+    private String wechatNickname;
+    
+    /**
+     * QQ
+     */
+    private String customerQQ;
+    
+    /**
+     * 客户类型
+     */
+    private String customerType;
+    
+    /**
+     * 渠道来源
+     */
+    private String channelSource;
+    
     /**
      * 预付款,保留小数2位，存到数据库中扩大100倍
      */
@@ -277,7 +312,71 @@ public class RptRepairOrder {
         this.customerAddress = customerAddress;
     }
 
-    public int getAdvancePayment() {
+    public String getCustomerSex() {
+		return customerSex;
+	}
+
+	public void setCustomerSex(String customerSex) {
+		this.customerSex = customerSex;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getWechatId() {
+		return wechatId;
+	}
+
+	public void setWechatId(String wechatId) {
+		this.wechatId = wechatId;
+	}
+
+	public String getWechatNickname() {
+		return wechatNickname;
+	}
+
+	public void setWechatNickname(String wechatNickname) {
+		this.wechatNickname = wechatNickname;
+	}
+
+	public String getCustomerQQ() {
+		return customerQQ;
+	}
+
+	public void setCustomerQQ(String customerQQ) {
+		this.customerQQ = customerQQ;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
+	public String getChannelSource() {
+		return channelSource;
+	}
+
+	public void setChannelSource(String channelSource) {
+		this.channelSource = channelSource;
+	}
+
+	public int getAdvancePayment() {
         return advancePayment;
     }
 

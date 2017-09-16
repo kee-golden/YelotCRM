@@ -23,6 +23,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                 d.firstCategory = $('#firstCategory').val();
                 d.secondCategory = $('#secondCategory').val();
                 d.shopId = $('#shopId').val();
+                d.customerType = $('#customerType').val();
                 d.status = $('#status').val();
                 d.typeName = $('#typeName').val();
             }
@@ -31,21 +32,11 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'orderNo'},
     			{'data' : 'customerName'},
     			{'data' : 'customerPhone'},
-    			{'data' : 'categoryName'},
-    			{'data' : 'typeName'},
+    			{'data' : 'firstCategoryName'},
+    			{'data' : 'secondCategoryName'},
     			{'data' : 'shopName'},
     			{'data' : 'serviceItemNames'},
-    			{'data' : 'status',
-                    'render':function (data) {
-                        if(data == 2) {
-                            return '进行中';
-                        } if(data == 1) {
-                            return '已完成';
-                        } else {
-                            return '已取消'
-                        }
-                    }
-    			},
+    			{'data' : 'statusName'},
     			{'data' : 'createUserName'},
     			{'data' : 'createAt'}],
         'language': {

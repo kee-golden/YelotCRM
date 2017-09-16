@@ -20,10 +20,6 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
  */
 public class ExlRptExportUtil {
 	/**
-	 * 分页触发条件，超过多少条进行分页
-	 */
-	public static Integer REPORT_TRIGGER_SIZE = 300000;
-	/**
 	 * 分页时每一页的大小
 	 */
 	public static Integer REPORT_PAGE_SIZE = 300000;
@@ -43,11 +39,10 @@ public class ExlRptExportUtil {
 			List<ExlRptCellType> titleList, List<Object[]> rptList) {
 
 		final double total = rptList.size(); // 数据量
-		final int limit = REPORT_TRIGGER_SIZE; // 分页阈值
 		final int size = REPORT_PAGE_SIZE; // 页面大小
 		// 不分页时使用 Excel2007的最大行数-10
 		// 分页时使用 size值
-		final int pageSize = total > limit ? size : Double.valueOf(
+		final int pageSize = total > size ? size : Double.valueOf(
 				Math.pow(2, 20) - 10).intValue();
 		final int pageCount = Double.valueOf(Math.ceil(total / pageSize))
 				.intValue(); // 页面数量

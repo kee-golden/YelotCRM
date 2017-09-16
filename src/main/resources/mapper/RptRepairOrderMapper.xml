@@ -12,8 +12,16 @@
         <result property="customerId" column="customer_id"/>
         <result property="customerName" column="customer_name"/>
         <result property="customerPhone" column="customer_phone"/>
+        <result property="customerSex" column="customer_sex"/>
         <result property="customerPhoneSecond" column="customer_phone_second"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
         <result property="customerAddress" column="customer_address"/>
+        <result property="wechatNickname" column="wechat_nickname"/>
+        <result property="wechatId" column="wechat_id"/>
+        <result property="customerQQ" column="customer_qq"/>
+        <result property="customerType" column="customer_type"/>
+        <result property="channelSource" column="channel_source"/>
         <result property="advancePayment" column="advance_payment"/>
         <result property="nonPayment" column="non_payment"/>
         <result property="advancePaymentType" column="advance_payment_type"/>
@@ -42,31 +50,65 @@
     </resultMap>
     
     <select id="countTotalPage" resultType="java.lang.Integer">
-        select count(*) 
-        from t_repair_order t,t_category t1, t_category t2
-        where t.first_category_id = t1.id 
-       	and t.second_category_id = t2.id 
+        select count(*)
+		  from t_repair_order t
+		  left join t_category t1 on t.first_category_id = t1.id
+		  left join t_category t2 on t.second_category_id = t2.id
+		  left join t_shop t3 on t.shop_id = t3.id
+		  left join t_user t4 on t.create_user_id = t4.id
+		  left join t_brand t5 on t.brand_id = t5.id
+		  left join t_customer t6 on t.customer_id = t6.id
+		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>
         <if test="firstCategory != null and firstCategory != ''">and t1.name = #{firstCategory}</if>
         <if test="secondCategory != null and secondCategory != ''">and t2.name = #{secondCategory}</if>
         <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
+        <if test="customerType != null and customerType != ''">and t6.type = #{customerType}</if>
         <if test="status != null and status != ''">and t.status = #{status}</if>
         <if test="typeName != null and typeName != ''">and t.type_name = #{typeName}</if>
     </select>
     
     <select id="findByPage" resultMap="rptRrderResultMap">
-        select t.*, t4.realname create_user_name, t3.name shop_name, concat(t1.name,"->",t2.name) category_name
-        from t_repair_order t,t_category t1, t_category t2, t_shop t3, t_user t4
-        where t.first_category_id = t1.id 
-       	and t.second_category_id = t2.id 
-       	and t.shop_id = t3.id 
-       	and t.create_user_id = t4.id
+        select t3.name shop_name,
+		       t.create_at,
+		       t.order_no,
+		       t.pickup_at,
+		       t4.realname create_user_name,
+		       t.status,
+		       t5.name brand_name,
+		       t1.name first_category_name,
+		       t2.name second_category_name,
+		       t.service_item_ids,
+		       t.repair_desc,
+		       t.total_payment,
+		       t.material_payment,
+		       t.advance_payment,
+		       t.customer_name,
+		       case t6.sex when '0' then '女' when '1' then '男' end customer_sex,
+		       t.customer_phone,
+		       t6.province,
+		       t6.city,
+		       t.customer_address,
+		       t6.wechat_nickname,
+		       t6.wechat_id,
+		       t6.qq customer_qq,
+		       t6.type customer_type,
+		       t6.channel_source
+		  from t_repair_order t
+		  left join t_category t1 on t.first_category_id = t1.id
+		  left join t_category t2 on t.second_category_id = t2.id
+		  left join t_shop t3 on t.shop_id = t3.id
+		  left join t_user t4 on t.create_user_id = t4.id
+		  left join t_brand t5 on t.brand_id = t5.id
+		  left join t_customer t6 on t.customer_id = t6.id
+		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>
         <if test="firstCategory != null and firstCategory != ''">and t1.name = #{firstCategory}</if>
         <if test="secondCategory != null and secondCategory != ''">and t2.name = #{secondCategory}</if>
         <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
+        <if test="customerType != null and customerType != ''">and t6.type = #{customerType}</if>
         <if test="status != null and status != ''">and t.status = #{status}</if>
         <if test="typeName != null and typeName != ''">and t.type_name = #{typeName}</if>
         order by t.id desc 

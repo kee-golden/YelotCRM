@@ -208,19 +208,38 @@
 								<div class="col-md-4">
 									<h4 style="float: left;">门店名称：</h4>
 									<select name="shopId" id="shopId" class="from-control">
+										<option value="">全部</option>
 										<c:forEach items="${shopList}" var="shop">
 											<option value="${shop.id}">${shop.name}</option>
 										</c:forEach>
-										<option value="">不限</option>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<h4 style="float: left;">客户类型：</h4>
+									<select name="customerType" id="customerType" class="from-control">
+										<option value="">全部</option>
+										<option value="0">新客户</option>
+										<option value="1">老客户</option>
 									</select>
 								</div>
 								<div class="col-md-4">
 									<h4 style="float: left;">订单状态：</h4>
-									<input type="text" style="float: left;" id="status" disabled="disabled" placeholder="暂未开放">
+									<select name="status" id="status" class="from-control">
+										<option value="">全部</option>
+										<c:forEach items="${repairOrderStatusList}" var="repairOrderStatus">
+											<option value="${repairOrderStatus.code}">${repairOrderStatus.message}</option>
+										</c:forEach>
+									</select>
 								</div>
 								<div class="col-md-4">
 									<h4 style="float: left;">订单类型：</h4>
-									<input type="text" style="float: left;" id="typeName" disabled="disabled" placeholder="暂未开放">
+									<select name="typeName" id="typeName" class="from-control">
+										<option value="">全部</option>
+										<option value="内部单">内部单</option>
+										<option value="返修单">返修单</option>
+										<option value="评估单">评估单</option>
+										<option value="客修单">客修单</option>
+									</select>
 								</div>
 							</form>
 							<div class="clearfix"></div>
@@ -238,8 +257,8 @@
 									<th>订单号</th>
 									<th>客户姓名</th>
 									<th>客户电话</th>
-									<th>产品分类</th>
-									<th>类型</th>
+									<th>货品类型</th>
+									<th>货品名称</th>
 									<th>门店</th>
 									<th>服务项</th>
 									<th>当前状态</th>
