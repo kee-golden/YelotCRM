@@ -153,14 +153,24 @@
 								<input type="text"  class="form-control" id="advancePayment" value="${repairOrder.advancePayment}">
 							</div>
 							<div class="col-md-2"><label>工费:</label>
-								<input type="text" class="form-control" id="labourPayment" value="${repairOrder.labourPayment}">
+							<select id="labourPaymentFlag">
+								<option value="0" <c:if test="${repairOrder.labourPayment == -1}">selected="selected"</c:if>>待定</option>
+								<option value="1" <c:if test="${repairOrder.labourPayment != -1}">selected="selected"</c:if>>确定</option>
+							</select> 
+								<c:if test="${repairOrder.labourPayment == -1}"><input type="text" class="form-control" id="labourPayment" value="待定" readonly="readonly"></c:if>
+								<c:if test="${repairOrder.labourPayment != -1}"><input type="text" class="form-control" id="labourPayment" value="${repairOrder.labourPayment}"></c:if>
 							</div>
-						<div class="col-md-2"><label>材料费:</label>
-							<input type="text" class="form-control" id="materialPayment" value="${repairOrder.materialPayment}">
-						</div>
-						<div class="col-md-2"><label>交货时间:</label>
-							<input type="text" class="form-control" id="pickupDate" value="<fmt:formatDate value="${repairOrder.pickupAt}" pattern="yyyy-MM-dd"/>">
-						</div>
+							<div class="col-md-2"><label>材料费:</label>
+							<select id="materialPaymentFlag">
+								<option value="0" <c:if test="${repairOrder.materialPayment == -1}">selected="selected"</c:if>>待定</option>
+								<option value="1" <c:if test="${repairOrder.materialPayment != -1}">selected="selected"</c:if>>确定</option>
+							</select> 
+							<c:if test="${repairOrder.materialPayment == -1}"><input type="text" class="form-control" id="materialPayment" value="待定" readonly="readonly"></c:if>
+							<c:if test="${repairOrder.materialPayment != -1}"><input type="text" class="form-control" id="materialPayment" value="${repairOrder.materialPayment}"></c:if>
+							</div>
+							<div class="col-md-2"><label>交货时间:</label>
+								<input type="text" class="form-control" id="pickupDate" value="<fmt:formatDate value="${repairOrder.pickupAt}" pattern="yyyy-MM-dd"/>">
+							</div>
 						</div>
 
 

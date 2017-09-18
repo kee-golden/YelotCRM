@@ -217,7 +217,7 @@
         <if test="labourPayment != null">,labour_payment = #{labourPayment}</if>
         <if test="materialPayment != null">,material_payment = #{materialPayment}</if>
         <if test="pickupAt != null">,pickup_at = #{pickupAt}</if>
-
+		where id = #{id}
     </update>
 
 </mapper>

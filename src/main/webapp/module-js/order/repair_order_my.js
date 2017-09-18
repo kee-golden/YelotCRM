@@ -231,8 +231,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         var repairDesc = $('#repairDesc').val();
         var typeName = $('#typeName').val();
         var advancePayment = $('#advancePayment').val();
-        var labourPayment = $('#labourPayment').val();
-        var materialPayment = $('#materialPayment').val();
+        var labourPayment = $('#labourPayment').val() == "待定" ? -1 : $('#labourPayment').val();
+        var materialPayment = $('#materialPayment').val() == "待定" ? -1 : $('#materialPayment').val();
         var pickupDate = $('#pickupDate').val();
         console.log(labourPayment+","+labourPayment+","+materialPayment);
         $.ajax({
@@ -240,7 +240,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             method: 'post',
             dataType: 'json',
             data: {
-                id:$('#orderid').val(),
+                id:$("#orderId").val(),
                 customerId: customerId,
                 firstCategory: firstCategory,
                 secondCategory: secondCategory,

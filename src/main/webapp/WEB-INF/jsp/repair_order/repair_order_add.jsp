@@ -180,9 +180,23 @@
 						<div class="col-md-2">
 							<label>预付款:</label> <input type="text"  class="form-control" id="advancePayment">
 						</div>
-						<div class="col-md-2"><label>工费:</label> <input type="text" class="form-control" id="labourPayment"></div>
-						<div class="col-md-2"><label>材料费:</label> <input type="text" class="form-control" id="materialPayment"></div>
-						<div class="col-md-2"><label>交货时间:</label> <input type="text" class="form-control" id="pickupDate"></div>
+						<div class="col-md-2">
+							<label>工费：</label>
+							<select id="labourPaymentFlag">
+								<option value="0">待定</option>
+								<option value="1" selected="selected">确定</option>
+							</select> 
+							<input type="text" class="form-control" id="labourPayment">
+						</div>
+						<div class="col-md-2">
+							<label>材料费：</label>
+							<select id="materialPaymentFlag">
+								<option value="0">待定</option>
+								<option value="1" selected="selected">确定</option>
+							</select> 
+							 <input type="text" class="form-control" id="materialPayment">
+						</div>
+						<div class="col-md-2"><label>交货时间：</label> <input type="text" class="form-control" id="pickupDate"></div>
 					</div>
 					<%--<div class="col-lg-6  col-md-12"></div>--%>
 					<%--<div class="col-lg-6 col-md-12"></div>--%>
