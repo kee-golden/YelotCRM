@@ -6,6 +6,7 @@ import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.*;
+import com.yelot.crm.enums.RepairOrderStatus;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.RepairOrderService;
@@ -209,11 +210,16 @@ public class RepairOrderController {
 
     @ResponseBody
     @RequestMapping("get-attributes")
-    public ResultData getAttributes(Long id,String firstCategory,String secondCategory){
+    public ResultData getAttributes(Long id,String firstCategory,String secondCategory,
+                                    @RequestParam(value = "isEdit",defaultValue = "false")boolean isEdit){
 
         RepairOrder repairOrder = repairOrderMapper.find(id);
-        String myFirstCategory = categoryMapper.find(repairOrder.getFirstCategoryId()).getName();
-        String mySecondCategory = categoryMapper.find(repairOrder.getSecondCategoryId()).getName();
+        String myFirstCategory = firstCategory;
+        String mySecondCategory = secondCategory;
+        if(isEdit){
+             myFirstCategory = categoryMapper.find(repairOrder.getFirstCategoryId()).getName();
+             mySecondCategory = categoryMapper.find(repairOrder.getSecondCategoryId()).getName();
+        }
 
         List<Attribute> attributeList = categoryAttributeService.findAttributes(firstCategory,secondCategory);
 
@@ -221,7 +227,7 @@ public class RepairOrderController {
 
         List<CategoryServiceItem> categoryServiceItemList = categoryServiceItemMapper.findByCategoryId(category.getId());
 
-        if(myFirstCategory.equals(firstCategory) && mySecondCategory.equals(secondCategory)){//如果是当前曾经选择的分类，需要初始化原有数据的值
+        if(isEdit && myFirstCategory.equals(firstCategory) && mySecondCategory.equals(secondCategory)){//如果是当前曾经选择的分类，需要初始化原有数据的值
             initAttributeItem(attributeList,repairOrder);
             initServiceItem(categoryServiceItemList,repairOrder);
         }
@@ -290,36 +296,54 @@ public class RepairOrderController {
         List<String> statusList = new ArrayList<String>();
         for (int i = 0; roleList != null && i < roleList.size(); i++) {
             Long roleId = roleList.get(i).getId();
-            String []subStatus = roleStatusMapper.find(roleId).getStatus().split(",");
-            for (int j = 0; subStatus != null && j < subStatus.length; j++) {
-                if(statusList.contains(subStatus[j])){
-                    continue;
+            List<RoleStatus> roleStatusList = roleStatusMapper.findByRoleId(roleId);
+            for (RoleStatus roleStatus:roleStatusList) {
+                String subStatusArray[] = roleStatus.getStatus().split(",");
+                for (String tempStatus: subStatusArray) {
+                    if (statusList.contains(tempStatus)){
+                        continue;
+                    }
+                    statusList.add(tempStatus);
                 }
-                statusList.add(subStatus[j]);
+
             }
 
+//            String []subStatus = roleStatusMapper.find(roleId).getStatus().split(",");
+//            for (int j = 0; subStatus != null && j < subStatus.length; j++) {
+//                if(statusList.contains(subStatus[j])){
+//                    continue;
+//                }
+//                statusList.add(subStatus[j]);
+//            }
+
         }
 
-        String statusTemp = "";
-        for (int i = 0; i < statusList.size(); i++) {
-            statusTemp += statusList.get(i)+",";
-        }
-        //去除最后一个分隔符"，"
-        String statusString = "";
-        if(statusTemp.length() >= 2){
-            statusString = statusTemp.substring(0,statusTemp.lastIndexOf(","));
-        }
+//        String statusTemp = "";
+//        for (int i = 0; i < statusList.size(); i++) {
+//            statusTemp += statusList.get(i)+",";
+//        }
+//        //去除最后一个分隔符"，"
+//        String statusString = "";
+//        if(statusTemp.startsWith(",")){
+//            statusTemp = statusTemp.substring(1);//去除逗号
+//        }
+//        if(statusTemp.length() >= 2){
+//            statusString = statusTemp.substring(0,statusTemp.lastIndexOf(","));
+//        }
 
         //根据客服主管仅仅能查看自己门店的订单，需要特殊处理一下。
-        if(statusList.contains("2")){//状态为2，客服主管审核状态，必须审核本门店的订单
-            int pageCount = repairOrderService.countTotalPageCheckListAndShop(extra_search, statusString,user.getShop_id());
-            List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckListAndShop(extra_search,statusString,pageHelper,user.getShop_id());
+        if(statusList.contains(RepairOrderStatus.SUBMIT.getCode()) || statusList.contains(RepairOrderStatus.CHECKOUT_APPROVE.getCode())
+                || statusList.contains(RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode())
+                || statusList.contains(RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode())
+                || statusList.contains(RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode())){//状态为2，客服主管审核状态，必须审核本门店的订单
+            int pageCount = repairOrderService.countTotalPageCheckListAndShop(extra_search, statusList,user.getShop_id());
+            List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckListAndShop(extra_search,statusList,pageHelper,user.getShop_id());
             return new Table(pageCount, pageCount, repairOrderList);
         }
 
 
-        int pageCount = repairOrderService.countTotalPageCheckList(extra_search, statusString);
-        List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckList(extra_search,statusString,pageHelper);
+        int pageCount = repairOrderService.countTotalPageCheckList(extra_search, statusList);
+        List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckList(extra_search,statusList,pageHelper);
 
         return new Table(pageCount, pageCount, repairOrderList);
 

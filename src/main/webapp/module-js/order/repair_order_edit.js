@@ -147,6 +147,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 id:$('#orderId').val(),
                 firstCategory:firstCategory,
                 secondCategory:secondCategory,
+                isEdit:true,
             },
             success:function (data) {
 
@@ -168,6 +169,10 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
      * @param attributesJson
      */
     function generateAttributes(attributesJson) {
+        console.log('kee:'+attributesJson);
+        if(attributesJson == ''){
+            return;
+        }
         var prifixAttribute = 'attId_';// 属性前缀
         //var attributesDiv = $("#attributes");
         $("#attributes").empty();//清空

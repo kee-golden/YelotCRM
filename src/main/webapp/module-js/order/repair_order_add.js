@@ -291,6 +291,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
             data:{
                 firstCategory:firstCategory,
                 secondCategory:secondCategory,
+                isEdit:false,
             },
             success:function (data) {
 

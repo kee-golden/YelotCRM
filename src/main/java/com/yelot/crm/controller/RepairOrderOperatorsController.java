@@ -111,15 +111,15 @@ public class RepairOrderOperatorsController {
      */
     public int getNextApproveStatus(int orderStatus,RepairOrder repairOrder){
         if(repairOrder.getTypeName() != null && repairOrder.getTypeName().equals("评估单")){//要特殊流程
-            if(orderStatus == RepairOrderStatus.SUBMIT.getCode()){
+            if(orderStatus == RepairOrderStatus.SUBMIT.getCode()){//2->4->12->17->48->20
                 return RepairOrderStatus.SHOP_MANAGE_APPROVE.getCode();
             }else if(orderStatus == RepairOrderStatus.SHOP_MANAGE_APPROVE.getCode()){
                 return RepairOrderStatus.CENTER_APPROVE.getCode();
             }else if(orderStatus == RepairOrderStatus.CENTER_APPROVE.getCode()){
-                return RepairOrderStatus.CHECK_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.CHECK_APPROVE.getCode()){
-                return RepairOrderStatus.SHOP_EVALUE_ORDER_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.SHOP_EVALUE_ORDER_APPROVE.getCode()){
+                return RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode();
+            }else if(orderStatus == RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode()) {
+                return RepairOrderStatus.SHOP_EVALUE_MANAGE_APPROVE.getCode();
+            }else if(orderStatus == RepairOrderStatus.SHOP_EVALUE_MANAGE_APPROVE.getCode()){
                 return RepairOrderStatus.CHECK_EVALUE_ORDER_APPROVE.getCode();
             }else if(orderStatus == RepairOrderStatus.CHECK_EVALUE_ORDER_APPROVE.getCode()){
                 return RepairOrderStatus.QC_APPROVE.getCode();
@@ -130,6 +130,8 @@ public class RepairOrderOperatorsController {
             }else if(orderStatus == RepairOrderStatus.CHECKOUT_APPROVE.getCode()){
                 return RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode();
             }else if(orderStatus == RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode()){
+                return RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode();
+            }else if(orderStatus == RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode()){
                 return RepairOrderStatus.CUSTOMER_RECEIVE_APPROVE.getCode();
             }
         }
@@ -149,6 +151,8 @@ public class RepairOrderOperatorsController {
         }else if(orderStatus == RepairOrderStatus.CHECKOUT_APPROVE.getCode()){
             return RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode();
         }else if(orderStatus == RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode()){
+            return RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode();
+        }else if(orderStatus == RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode()){
             return RepairOrderStatus.CUSTOMER_RECEIVE_APPROVE.getCode();
         }
 
@@ -156,6 +160,11 @@ public class RepairOrderOperatorsController {
 
     }
 
+    /**
+     * 设置拒绝状态
+     * @param orderStatus
+     * @return
+     */
     public int getNextRejectStatus(int orderStatus){
         if(orderStatus == RepairOrderStatus.SUBMIT.getCode()){
             return RepairOrderStatus.SHOP_MANAGE_REJECT.getCode();

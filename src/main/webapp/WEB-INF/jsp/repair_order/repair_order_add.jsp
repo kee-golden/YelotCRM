@@ -37,7 +37,7 @@
 				</h6>
 				<div class="row top_row col-md-12 b-r">
 					<div>
-						<h5>查询该客户是否已存在</h5>
+						<h4>选择客户</h4>
 					</div>
 
 					<form class="form-inline bottom10" role="form">

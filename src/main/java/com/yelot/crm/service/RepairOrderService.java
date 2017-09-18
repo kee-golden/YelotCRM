@@ -147,12 +147,12 @@ public class RepairOrderService {
 		return repairOrderList;
 	}
 
-    public int countTotalPageCheckList(String extra_search, String statusString) {
-		return repairOrderMapper.countTotalPageCheckList(extra_search,statusString);
+    public int countTotalPageCheckList(String extra_search, List<String> statusList) {
+		return repairOrderMapper.countTotalPageCheckList(extra_search,statusList);
     }
 
-	public List<RepairOrder> findByPageCheckList(String extra_search, String statusString,PageHelper pageHelper) {
-		List<RepairOrder> repairOrderList =  repairOrderMapper.findByPageCheckList(extra_search,statusString,pageHelper);
+	public List<RepairOrder> findByPageCheckList(String extra_search, List<String> statusList,PageHelper pageHelper) {
+		List<RepairOrder> repairOrderList =  repairOrderMapper.findByPageCheckList(extra_search,statusList,pageHelper);
 		setRepairServiceItem(repairOrderList);
 		return repairOrderList;
 	}
@@ -186,12 +186,12 @@ public class RepairOrderService {
 		repairOrder.setProductInfoList(productInfoList);
 	}
 
-	public int countTotalPageCheckListAndShop(String extra_search, String statusString, Long shopId) {
-		return repairOrderMapper.countTotalPageCheckListAndShop(extra_search,statusString,shopId);
+	public int countTotalPageCheckListAndShop(String extra_search, List<String> statusList, Long shopId) {
+		return repairOrderMapper.countTotalPageCheckListAndShop(extra_search,statusList,shopId);
 	}
 
-	public List<RepairOrder> findByPageCheckListAndShop(String extra_search, String statusString, PageHelper pageHelper, Long shopId) {
-		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageCheckListAndShop(extra_search,statusString,pageHelper,shopId);
+	public List<RepairOrder> findByPageCheckListAndShop(String extra_search, List<String> statusList, PageHelper pageHelper, Long shopId) {
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageCheckListAndShop(extra_search,statusList,pageHelper,shopId);
 		setRepairServiceItem(repairOrderList);
 		return repairOrderList;
 	}

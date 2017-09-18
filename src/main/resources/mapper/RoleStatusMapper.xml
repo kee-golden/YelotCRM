@@ -10,5 +10,8 @@
     <select id="find" resultMap="roleStatusResultMap">
         SELECT * from t_role_status_ref where id = #{id};
     </select>
+    <select id="findByRoleId" resultMap="roleStatusResultMap">
+        SELECT * from t_role_status_ref where role_id = #{roleId};
+    </select>
 
 </mapper>

@@ -105,7 +105,11 @@
         select count(*)
         from t_repair_order
         where 1 = 1
-        <if test="statusString != null and statusString != ''"> and status in (#{statusString})</if>
+        <if test="statusList != null">
+            and status in <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+            #{item}
+           </foreach>
+        </if>
         <if test="extra_search != null and extra_search != ''">
             and (order_no like CONCAT('%', #{extra_search}, '%') or customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>
@@ -118,7 +122,11 @@
         and t.shop_id = t2.id
         and t.first_category_id = t3.id
         and t.second_category_id = t4.id
-        <if test="statusString != null and statusString != ''">and status in (#{statusString})</if>
+        <if test="statusList != null">
+            and status in <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        </if>
         <if test="extra_search != null and extra_search != ''">
             and (order_no like CONCAT('%', #{extra_search}, '%') or customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>
@@ -130,7 +138,11 @@
         select count(*)
         from t_repair_order
         where 1 = 1
-        <if test="statusString != null and statusString != ''">and status in (#{statusString})</if>
+        <if test="statusList != null">
+            and status in <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+            #{item}
+            </foreach>
+        </if>
         <if test="extra_search != null and extra_search != ''">
             and (order_no like CONCAT('%', #{extra_search}, '%') or t.customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>
@@ -144,7 +156,12 @@
         and t.shop_id = t2.id
         and t.first_category_id = t3.id
         and t.second_category_id = t4.id
-        <if test="statusString != null and statusString != ''">and status in (#{statusString})</if>
+        <if test="statusList != null">
+            and status in
+            <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
         <if test="extra_search != null and extra_search != ''">
             and (order_no like CONCAT('%', #{extra_search}, '%') or customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>

@@ -18,6 +18,8 @@ public enum RepairOrderStatus {
     CENTER_REJECT(14,"维修中心，货物没有收到，拒绝该订单"),
     CHECK_APPROVE(16,"预检完成，通过可以维修"),
     CHECK_REJECT(18,"预检拒绝，无法维修"),
+    CHECK_EVALUE_APPROVE(17,"评估单预检通过"),
+    CHECK_EVALUE_REJECT(19,"评估单预检拒绝"),
     QC_APPROVE(20,"QC预检完成，通过可以维修"),
     QC_REJECT(22,"预检拒绝，无法维修"),
     CHECKIN_APPROVE(24,"入库完成"),
@@ -26,12 +28,15 @@ public enum RepairOrderStatus {
     CHECKOUT_REJECT(30,"出库拒绝"),
     SHOP_RECEIVE_APPROVE(32,"门店收货确认"),
     SHOP_RECEIVE_REJECT(34,"门店收货拒绝，没有收到货"),
-    CUSTOMER_RECEIVE_APPROVE(36,"门店出库，客户已收货确认"),
-    CUSTOMER_RECEIVE_REJECT(38,"客户收货拒绝"),
-    SHOP_EVALUE_ORDER_APPROVE(40,"评估单，审核通过"),
-    SHOP_EVALUE_ORDER_REJECT(42,"评估单，审核拒绝"),
-    CHECK_EVALUE_ORDER_APPROVE(44,"预检人员，审核评估单再次通过"),
-    CHECK_EVALUE_ORDER_REJECT(46,"预检人员，审核评估单再次拒绝");
+    SHOP_EXPRESS_APPROVE(36,"门店已发货,用户待收货"),
+    SHOP_EXPRESS_REJECT(38,"客户收货拒绝"),
+    CUSTOMER_RECEIVE_APPROVE(40,"门店出库，客户已收货确认"),
+    CUSTOMER_RECEIVE_REJECT(42,"客户收货拒绝"),
+    //订单如果是评估单，状态流程过程是 2-->4-->12-->17-->48--->20-->24--->28--->32-->36
+    SHOP_EVALUE_MANAGE_APPROVE(44,"评估单，客服主管再次审核通过"),
+    SHOP_EVALUE_MANAGE_REJECT(46,"评估单，客服主管再次审核通过"),
+    CHECK_EVALUE_ORDER_APPROVE(48,"预检人员，审核评估单再次通过"),
+    CHECK_EVALUE_ORDER_REJECT(50,"预检人员，审核评估单再次拒绝");
 
 
     private int code;

@@ -3,9 +3,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="ibox float-e-margins">
 	<div class="ibox-content">
+		<div class="row" style="margin-left: 10px;">
+			<label>订单号:${orderNo}</label>
+			<label>订单状态:
+				<c:if test="${orderStatus == 2}">客服提交，待客服主管审核</c:if>
+				<c:if test="${orderStatus == 4}">客服主管已审核,待维修中心接收</c:if>
+				<c:if test="${orderStatus == 12}">维修中心已接收，待初检</c:if>
+				<c:if test="${orderStatus == 16}">初检已完成，待QC质检</c:if>
+				<c:if test="${orderStatus == 17}">评估单初检已完成，待门店审核</c:if>
+				<c:if test="${orderStatus == 20}">QC质检完成，待入库</c:if>
+				<c:if test="${orderStatus == 24}">已入库，待出库</c:if>
+				<c:if test="${orderStatus == 28}">已出库，待门店接收</c:if>
+				<c:if test="${orderStatus == 32}">门店已接收，待客户收货</c:if>
+				<c:if test="${orderStatus == 36}">门店已发货，客户收货确认</c:if>
+				<c:if test="${orderStatus == 44}">评估单预检完成，待客服主管审核</c:if>
+				<c:if test="${orderStatus == 48}">客服主管审核通过，待初检审核</c:if>
+			</label>
+		</div>
 		<div class="row">
-			<c:if test="${orderStatus == 2 || orderStatus == 4 || orderStatus == 12 || orderStatus == 16 || orderStatus==20 ||
-			orderStatus == 24 || orderStatus == 28 || orderStatus == 32}">
+			<c:if test="${orderStatus == 2 || orderStatus == 4 || orderStatus == 12 || orderStatus == 16 || orderStatus == 17 || orderStatus==20 ||
+			orderStatus == 24 || orderStatus == 28 || orderStatus == 32 || orderStatus== 36 || orderStatus == 44 || orderStatus==48}">
 
 			<form role="form" id="J_checkForm">
 				<input type="hidden" name="id" id="orderId" value="${orderId}">
@@ -14,7 +31,6 @@
 				</div>
 				<div><span style="margin-left: 600px;"><a class="btn" id="approveBtn">通过</a><a class="btn" id="refuseBtn">拒绝</a></span></div>
 			</form>
-
 
 			</c:if>
 			<c:if test="${orderStatus == 12 || orderStatus == 16}">
@@ -42,9 +58,7 @@
 
 			<hr/>
 
-			<div class="row" style="margin-left: 10px;">
-				<label>订单号:${orderNo}</label>
-			</div>
+
 
 
 			<table id="J_orderOperatorsList" class="table table-striped table-bordered table-hover">
@@ -53,8 +67,8 @@
 					<%--<th class="col-md-2">订单号</th>--%>
 					<th class="col-md-2">操作人姓名</th>
 					<th class="col-md-2">操作备注</th>
-					<th class="col-md-2">操作方式</th>
 					<th class="col-md-2">订单状态</th>
+					<th class="col-md-2">操作方式</th>
 					<th class="col-md-2">创建时间</th>
 				</tr>
 
@@ -74,7 +88,9 @@
 								<c:when test="${item.order_status == 20}">QC已审核</c:when>
 								<c:when test="${item.order_status == 24}">入库已审核</c:when>
 								<c:when test="${item.order_status == 28}">出库已审核</c:when>
-								<c:when test="${item.order_status == 32}">订单已完成</c:when>
+								<c:when test="${item.order_status == 32}">门店已接收</c:when>
+								<c:when test="${item.order_status == 36}">门店已发货</c:when>
+								<c:when test="${item.order_status == 40}">订单已完成</c:when>
 								<c:otherwise>订单已拒绝</c:otherwise>
 							</c:choose>
 

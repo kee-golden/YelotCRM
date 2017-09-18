@@ -175,6 +175,10 @@
 #J_orderList tr th {
 	white-space: nowrap
 }
+
+.select2-container {
+	z-index: 99999999999;
+}
 </style>
 
 </head>
