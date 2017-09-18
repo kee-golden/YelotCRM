@@ -17,6 +17,7 @@ public class ConsultOrder {
     private String customerAgesAlmost;
     private String wechatNo;
     private String wechatNickname;
+    private String channelSource;
     private String repairCommands;
     private String province;
     private String city;
@@ -323,7 +324,15 @@ public class ConsultOrder {
         this.wechatNickname = wechatNickname;
     }
 
-    public Long getBookShopId() {
+    public String getChannelSource() {
+		return channelSource;
+	}
+
+	public void setChannelSource(String channelSource) {
+		this.channelSource = channelSource;
+	}
+
+	public Long getBookShopId() {
         return bookShopId;
     }
 

@@ -102,6 +102,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                                 city: $('#city').val(),
                                 wechatNo: $('#wechatNo').val(),
                                 wechatNickname: $('#wechatNickname').val(),
+                                channelSource: $('#channelSource').val(),
                                 firstCategoryName: $('#firstCategory').val(),
                                 secondCategoryName: $('#secondCategory').val(),
                                 brandId:$('#brand').val(),

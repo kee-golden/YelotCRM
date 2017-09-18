@@ -79,6 +79,29 @@
 							<label>微信昵称</label>
 							<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control">
 						</div>
+						<div class="col-md-2">
+							<label>客户来源</label>
+							<select class="form-control" id="channelSource" name="channelSource">
+                                <option value="1">udesk</option>
+                                <option value="2">北京7860</option>
+                                <option value="3">上海5588</option>
+                                <option value="4">总机400</option>
+                                <option value="5">杭州3123</option>
+                                <option value="6">上门</option>
+                                <option value="7">微博</option>
+                                <option value="8">微信</option>
+                                <option value="9">淘宝C店</option>
+                                <option value="10">淘宝B店</option>
+                                <option value="11">大众点评</option>
+                                <option value="12">老客介绍</option>
+                                <option value="13">品牌介绍</option>
+                                <option value="14">员工介绍</option>
+                                <option value="15">老板介绍</option>
+                                <option value="16">官网留言</option>
+                                <option value="17">论坛、博客</option>
+                                <option value="18">其他</option>
+                            </select>
+						</div>
 					</div>
 				</div>
 
@@ -250,6 +273,7 @@
             var customerAddress = $('#customerAddress').val();
             var wechatNo = $('#wechatNo').val();
             var wechatNickname = $('#wechatNickname').val();
+            var channelSource = $('#channelSource').val();
             var repairCommands = $('#repairCommands').val();
             var province = $('#province').val();
             var city = $('#city').val();
@@ -293,6 +317,7 @@
                     customerAddress: customerAddress,
                     wechatNo:wechatNo,
                     wechatNickname:wechatNickname,
+                    channelSource:channelSource,
                     repairCommands:repairCommands,
                     province:province,
                     city:city,
