@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.AccountConfigMapper">
+    <resultMap id="accountResultMap" type="com.yelot.crm.entity.AccountConfig">
+        <id property="id" column="id"/>
+        <result property="yuan_per_point" column="yuan_per_point"/>
+        <result property="password" column="password"/>
+        <result property="wxOpenid" column="wx_openid"/>
+        <result property="wxNickname" column="wx_nickname"/>
+        <result property="verifyCode" column="verify_code"/>
+        <result property="sendMessageAt" column="send_message_at"/>
+        <result property="accountNo" column="account_no"/>
+        <result property="firstname" column="firstname"/>
+        <result property="lastname" column="lastname"/>
+        <result property="expressAddress" column="express_address"/>
+        <result property="hobbyJson" column="hobby_json"/>
+        <result property="createAt" column="create_at"/>
+    </resultMap>
+
+
+    <update id="update">
+        update t_account_config set yuan_per_point = #{yuan_per_point},first_level_points=#{first_level_points},
+                second_level_points=#{second_level_points},third_level_points = #{third_level_points},
+                first_level_discount=#{first_level_discount},second_level_discount=#{second_level_discount},
+                third_level_discount = #{third_level_discount}
+
+         where id = #{id};
+    </update>
+    <select id="find" resultMap="accountResultMap">
+        SELECT * from t_account_config where id = #{id} ;
+    </select>
+
+</mapper>
