@@ -45,6 +45,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/logout*", "anon");
+        filterChainDefinitionMap.put("/wx/**", "anon");//微信接口，需要放开验证
         filterChainDefinitionMap.put("/*", "anon");//表示需要认证才可以访问
         filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问
 //        filterChainDefinitionMap.put("/*.*", "authc");
