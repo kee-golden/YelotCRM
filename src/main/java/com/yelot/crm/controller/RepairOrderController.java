@@ -9,6 +9,7 @@ import com.yelot.crm.entity.*;
 import com.yelot.crm.enums.RepairOrderStatus;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.service.CategoryAttributeService;
+import com.yelot.crm.service.ConsultOrderService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
 import com.yelot.crm.vo.Table;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.jws.WebParam;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,6 +66,12 @@ public class RepairOrderController {
 
     @Autowired
     private RoleStatusMapper roleStatusMapper;
+    
+    @Autowired
+    private ConsultOrderService consultOrderService;
+    
+    @Autowired
+    private ConsultOrderMapper consultOrderMapper;
 
     /**
      * 调整到新建页面
@@ -120,7 +126,7 @@ public class RepairOrderController {
 
     @ResponseBody
     @RequestMapping("save")
-    public ResultData save(Long customerId,String firstCategory,String secondCategory,Long brandId,String valuesAttributeJson,
+    public ResultData save(Long customerId,Long consultOrderId,String firstCategory,String secondCategory,Long brandId,String valuesAttributeJson,
                            String serviceItemJson,String imagePaths,String imageDesc,String repairDesc,
                            String typeName,
                            @RequestParam(value = "advancePayment",defaultValue = "0") Integer advancePayment,
@@ -135,6 +141,7 @@ public class RepairOrderController {
 
         Category category = categoryMapper.findByName(firstCategory,secondCategory);
 
+        repairOrder.setConsultOrderId(consultOrderId);
         repairOrder.setFirstCategoryId(category.getParentId());
         repairOrder.setSecondCategoryId(category.getId());
         repairOrder.setBrandId(brandId);
@@ -165,6 +172,8 @@ public class RepairOrderController {
         repairOrder.setStatus(2);//submit
 
         repairOrderService.save(repairOrder);
+        
+        consultOrderMapper.updateStatus(consultOrderId, 2); // 咨询单已接单
 
         return ResultData.ok();
 
@@ -435,6 +444,31 @@ public class RepairOrderController {
 
     }
 
+    @RequestMapping("consultOrderList")
+    public String consultOrderList(Model model, String phone){
+    	model.addAttribute("phone", phone);
+        return "repair_order/consult_order_list";
+    }
+
+    /**
+     * 订单分页查询
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("queryConsultOrderList")
+    public Table queryOrder(Model model,
+                            @RequestParam(value = "phone", defaultValue = "")String phone,
+                            @RequestParam(value = "start", defaultValue = "0") int start,
+                            @RequestParam(value = "length", defaultValue = "15") int length) {
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(start);
+        pageHelper.setSize(length);
+
+        int pageCount = consultOrderService.countTotalPageAllByPhone(phone);
+        List<ConsultOrder> consultOrderList = consultOrderService.findByPageAllByPhone(phone, pageHelper);
+        return new Table(pageCount, pageCount, consultOrderList);
+    }
     /**
      * 映射选择属性值
      * @param categoryServiceItemList

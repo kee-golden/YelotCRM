@@ -39,6 +39,8 @@
         <result property="typeName" column="type_name"/>
         <result property="labourPayment" column="labour_payment"/>
         <result property="materialPayment" column="material_payment"/>
+        <result property="consultOrderId" column="consult_order_id"/>
+        <result property="consultOrderNo" column="consult_order_no"/>
     </resultMap>
 
     <select id="find" resultMap="orderResultMap">
@@ -50,12 +52,12 @@
             pickup_type,customer_id,customer_name,customer_phone,customer_address,advance_payment,non_payment,
             advance_payment_type,non_payment_type,total_payment,shop_id,images_json,image_desc,product_info_json,
             service_item_ids,first_category_id,second_category_id,brand_id,repair_desc,create_at,update_at,
-            type_name,labour_payment,material_payment)
+            type_name,labour_payment,material_payment,consult_order_id)
             values(#{orderNo},#{status},#{createUserId},#{pickupAt},#{pickupType},
             #{customerId},#{customerName},#{customerPhone},#{customerAddress},#{advancePayment},#{nonPayment},
             #{advancePaymentType},#{nonPaymentType},#{totalPayment},#{shopId},#{imagesJson},#{imageDesc},#{productInfoJson},
             #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt},
-            #{typeName},#{labourPayment},#{materialPayment})
+            #{typeName},#{labourPayment},#{materialPayment},#{consultOrderId})
     </insert>
 
     <update id="updateOrderStatusAndImagesPath">
@@ -82,18 +84,20 @@
     </select>
     
     <select id="findByPageMy" resultMap="orderResultMap">
-        select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name
-        from t_repair_order t, t_user t1, t_shop t2, t_category t3, t_category t4
-        where t.create_user_id = t1.id
-        and t.shop_id = t2.id
-        and t.first_category_id = t3.id
-        and t.second_category_id = t4.id
-        <if test="create_user_id != null and create_user_id != ''">and create_user_id = #{create_user_id}</if>
-        <if test="approve_role_id != null and approve_role_id != ''">and approve_role_id = #{approve_role_id}</if>
+        select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name, t5.order_no consult_order_no
+        from t_repair_order t
+        left join t_user t1 on t.create_user_id = t1.id
+        left join t_shop t2 on t.shop_id = t2.id
+        left join t_category t3 on t.first_category_id = t3.id
+        left join t_category t4 on t.second_category_id = t4.id
+        left join t_consult_order t5 on t.consult_order_id = t5.id
+        where 1 = 1
+        <if test="create_user_id != null and create_user_id != ''">and t.create_user_id = #{create_user_id}</if>
+        <if test="approve_role_id != null and approve_role_id != ''">and t.approve_role_id = #{approve_role_id}</if>
         <if test="extra_search != null and extra_search != ''">
-            and (order_no like CONCAT('%', #{extra_search}, '%') or customer_phone like CONCAT('%', #{extra_search}, '%'))
+            and (t.order_no like CONCAT('%', #{extra_search}, '%') or t.customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>
-        order by id desc 
+        order by t.id desc 
         limit #{pageHelper.offset},#{pageHelper.size} 
     </select>
 
@@ -116,21 +120,23 @@
     </select>
 
     <select id="findByPageCheckList" resultMap="orderResultMap">
-        select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name
-        from t_repair_order t, t_user t1, t_shop t2, t_category t3, t_category t4
-        where t.create_user_id = t1.id
-        and t.shop_id = t2.id
-        and t.first_category_id = t3.id
-        and t.second_category_id = t4.id
+        select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name, t5.order_no consult_order_no
+        from t_repair_order t
+        left join t_user t1 on t.create_user_id = t1.id
+        left join t_shop t2 on t.shop_id = t2.id
+        left join t_category t3 on t.first_category_id = t3.id
+        left join t_category t4 on t.second_category_id = t4.id
+        left join t_consult_order t5 on t.consult_order_id = t5.id
+        where 1 = 1
         <if test="statusList != null">
-            and status in <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+            and t.status in <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
             #{item}
         </foreach>
         </if>
         <if test="extra_search != null and extra_search != ''">
-            and (order_no like CONCAT('%', #{extra_search}, '%') or customer_phone like CONCAT('%', #{extra_search}, '%'))
+            and (t.order_no like CONCAT('%', #{extra_search}, '%') or t.customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>
-        order by id desc
+        order by t.id desc
         limit #{pageHelper.offset},#{pageHelper.size}
     </select>
 
@@ -150,23 +156,25 @@
     </select>
 
     <select id="findByPageCheckListAndShop" resultMap="orderResultMap">
-        select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name
-        from t_repair_order t, t_user t1, t_shop t2, t_category t3, t_category t4
-        where t.create_user_id = t1.id
-        and t.shop_id = t2.id
-        and t.first_category_id = t3.id
-        and t.second_category_id = t4.id
+        select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name, t5.order_no consult_order_no
+        from t_repair_order t
+        left join t_user t1 on t.create_user_id = t1.id
+        left join t_shop t2 on t.shop_id = t2.id
+        left join t_category t3 on t.first_category_id = t3.id
+        left join t_category t4 on t.second_category_id = t4.id
+        left join t_consult_order t5 on t.consult_order_id = t5.id
+        where 1 = 1
         <if test="statusList != null">
-            and status in
+            and t.status in
             <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
         <if test="extra_search != null and extra_search != ''">
-            and (order_no like CONCAT('%', #{extra_search}, '%') or customer_phone like CONCAT('%', #{extra_search}, '%'))
+            and (t.order_no like CONCAT('%', #{extra_search}, '%') or t.customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>
         <if test="shopId != null and shopId != ''">and t.shop_id =  #{shopId}</if>
-        order by id desc
+        order by t.id desc
         limit #{pageHelper.offset},#{pageHelper.size}
     </select>
 

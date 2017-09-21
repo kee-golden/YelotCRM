@@ -43,7 +43,8 @@
 					<form class="form-inline bottom10" role="form">
 						<div class="form-group">
 							<input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号" /> <input id="customerSearchBtn" type="button"
-								class="form-control btn-group" value="查询" />
+								class="form-control btn-group" value="查询" /><input id="linkToConsultOrder" type="button"
+								class="form-control btn-group" value="关联咨询单" />
 						</div>
 					</form>
 					<hr/>
@@ -52,6 +53,7 @@
 						<div class="row bottom10">
 							<h3 class="m-t-none m-b">基础信息</h3>
 							<input type="hidden" id="customerId" data-id="" />
+							<input type="hidden" id="consultOrderId" />
 							<div class="col-md-2">
 								<label><span style="color: red"></span>用户名</label> <input type="text" placeholder="请输入用户名" class="form-control" name="name" id="J_name"
 									autocomplete="off" readonly>

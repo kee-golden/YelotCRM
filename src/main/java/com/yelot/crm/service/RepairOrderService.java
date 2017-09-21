@@ -1,12 +1,10 @@
 package com.yelot.crm.service;
 
 import com.alibaba.fastjson.JSON;
-import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Category;
 import com.yelot.crm.entity.RepairOrder;
 import com.yelot.crm.entity.RepairOrderOperators;
-import com.yelot.crm.entity.User;
 import com.yelot.crm.enums.OperatorStatus;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.vo.City;
@@ -45,12 +43,8 @@ public class RepairOrderService {
 
 
 	public void save(RepairOrder repairOrder) {
-
-		User user = UserUtil.getCurrentUser();
 		repairOrderMapper.save(repairOrder);
-
 		submitOperator(repairOrder);
-
 	}
 
 	private void submitOperator(RepairOrder repairOrder) {

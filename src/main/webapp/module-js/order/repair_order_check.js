@@ -30,6 +30,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'serviceItemNames'},
     			{'data' : 'createUserName'},
     			{'data' : 'createAt'},
+    			{'data' : 'consultOrderNo'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
     				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
     				+ '<a href="javascript:;;" data-id="' + data + '" class="J_workflow"><i class="fa fa-edit" aria-hidden="true"></i>审批</a>';

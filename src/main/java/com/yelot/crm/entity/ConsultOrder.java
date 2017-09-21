@@ -10,6 +10,7 @@ import java.util.Date;
  */
 public class ConsultOrder {
     private Long id;
+    private String orderNo;
     private String customerName;
     private int customerSex;
     private String customerPhone;
@@ -114,7 +115,15 @@ public class ConsultOrder {
         this.id = id;
     }
 
-    public String getCustomerName() {
+    public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public String getCustomerName() {
         return customerName;
     }
 

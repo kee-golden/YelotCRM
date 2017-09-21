@@ -137,7 +137,7 @@ public class ConsultOrderController {
 
     @RequestMapping("update-status")
     @ResponseBody
-    public ResultData updateStatus(Long id,Long status){
+    public ResultData updateStatus(Long id, int status){
         consultOrderMapper.updateStatus(id,status);
         return ResultData.ok();
     }

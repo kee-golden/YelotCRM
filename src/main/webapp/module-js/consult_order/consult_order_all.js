@@ -20,6 +20,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             }
         },
     	'columns': [
+    			{'data' : 'orderNo'},
     			{'data' : 'customerName'},
     			{'data' : 'customerPhone'},
                 {'data' : 'wechatNo'},
@@ -30,7 +31,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     'render':function (data) {
                         if(data == 1) {
                             return '进行中';
-                        }else if(data == 3) {
+                        }else if(data == 2) {
                             return '已接单';
                         }else{
                             return '未接单';
@@ -196,7 +197,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     },
                     yes: function (index) {
                         var isFlag = false;//检查是否电话号码没有填写，返回标志
-                        if($('#orderStatus').val() == 3){// 已接收订单，电话号码为必填
+                        if($('#orderStatus').val() == 2){// 已接收订单，电话号码为必填
                             $.ajax({
                                 url:ctx+'/consult-order/check-phone',
                                 method:'post',

@@ -20,9 +20,13 @@ public interface ConsultOrderMapper {
 
     List<ConsultOrder> findByPageAll(@Param("extra_search") String extra_search, @Param("pageHelper") PageHelper pageHelper);
 
+    int countTotalPageAllByPhone(@Param("phone")String phone);
+
+    List<ConsultOrder> findByPageAllByPhone(@Param("phone") String phone, @Param("pageHelper") PageHelper pageHelper);
+
     void save(ConsultOrder consultOrder);
 
     void update(ConsultOrder consultOrder);
 
-    void updateStatus(@Param("id") Long id, @Param("status") Long status);
+    void updateStatus(@Param("id") Long id, @Param("status") int status);
 }

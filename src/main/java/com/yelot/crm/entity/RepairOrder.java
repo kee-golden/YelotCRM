@@ -164,6 +164,16 @@ public class RepairOrder {
     private int labourPayment;
 
     private int materialPayment;
+    
+    /**
+     * 咨询单id
+     */
+    private Long consultOrderId;
+    
+    /**
+     * 咨询单号
+     */
+    private Long consultOrderNo;
 
     public Long getId() {
         return id;
@@ -495,4 +505,21 @@ public class RepairOrder {
     public void setMaterialPayment(int materialPayment) {
         this.materialPayment = materialPayment;
     }
+
+	public Long getConsultOrderId() {
+		return consultOrderId;
+	}
+
+	public void setConsultOrderId(Long consultOrderId) {
+		this.consultOrderId = consultOrderId;
+	}
+
+	public Long getConsultOrderNo() {
+		return consultOrderNo;
+	}
+
+	public void setConsultOrderNo(Long consultOrderNo) {
+		this.consultOrderNo = consultOrderNo;
+	}
+    
 }

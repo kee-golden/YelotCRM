@@ -220,6 +220,7 @@
 						<table id="J_orderList" class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr>
+									<th>咨询单号</th>
 									<th>客户姓名</th>
 									<th>客户电话</th>
 									<th>微信号</th>

@@ -40,6 +40,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     }
     			},
     			{'data' : 'createAt'},
+    			{'data' : 'consultOrderNo'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
     				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看</a>&nbsp;&nbsp;'
     				+ '<a href="javascript:;;" data-id="' + data + '" class="J_orderEdit"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a>&nbsp;&nbsp;'

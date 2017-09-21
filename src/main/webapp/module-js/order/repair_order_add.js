@@ -139,8 +139,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
             return;
         }
 
-
-
+        var consultOrderId = $('#consultOrderId').val();
         var firstCategory = $('#firstCategory').val();
         var secondCategory = $('#secondCategory').val();
         var brandId = $('#brandId').val();
@@ -163,6 +162,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
             dataType: 'json',
             data: {
                 customerId: customerId,
+                consultOrderId: consultOrderId,
                 firstCategory: firstCategory,
                 secondCategory: secondCategory,
                 brandId:brandId,
@@ -249,6 +249,30 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 }
             });
 
+        });
+
+        $('#linkToConsultOrder').click(function () {
+        	var phone = $("#phone").val();
+        	if (phone == null || phone == "") {
+				alert("请输入手机号！");
+			} else {
+				yaya.layer.open({
+	                type: 2,
+	                title: '咨询单列表',
+	                content: ctx + '/repair-order/consultOrderList?phone=' + phone, //注意，如果str是object，那么需要字符拼接。
+	                area: ['1000px','600px'],
+	                shadeClose: true,
+	                btn: ['确定'],
+	                success: function (layer, index) {
+	                	
+	                },
+	                yes: function (index) {
+	                	var consultOrderId = window["layui-layer-iframe" + index].callbackdata();
+	                	$("#consultOrderId").val(consultOrderId);
+                        yaya.layer.close(index);
+	                }
+	            });
+			}
         });
 
         $('#secondCategory').change(function () {

@@ -1,17 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@include file="/WEB-INF/common/taglibs.jsp"%>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
 <title>CRM管理后台</title>
 
-<%@include file="/WEB-INF/common/static.jsp"%>
-
-	<link href="${ctx}/module-css/repair-order-edit.css" rel="stylesheet">
+	<link href="${ctx}/module-css/consult-order.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
+	<link href="${ctx}/static/select2/css/select2.css" rel="stylesheet">
+	
+	<link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
+	
+	<link href="${ctx}/static/font-awesome/font-awesome.min.css" rel="stylesheet">
+	
+	
+	<link href="${ctx}/static/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	
+	<link href="${ctx}/static/animate/animate.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="${ctx}/static/ztree/css/yayaStyle/zTreeStyle.css" type="text/css">
+	
+	<link href="${ctx}/static/dateTimePicker/css/jquery.datetimepicker.css" rel="stylesheet">
+	
+	<link href="${ctx}/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="${ctx}/static/css/iconfont.css"/>
+	
+	<link href="${ctx}/static/webuploader/webuploader.css" rel="stylesheet">
+	
+	<link href="${ctx}/static/customer/customer.css" rel="stylesheet">
 
-<c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
-<c:set var="CHILD_MENU_CODE" value="RepairOrder_MyList" />
+<c:set var="PARENT_MENU_CODE" value="ConsultOrder_Manage" />
+<c:set var="CHILD_MENU_CODE" value="ConsultOrder_List" />
 
 <script>
 	var ctx = '${ctx}';
@@ -175,63 +195,37 @@
 #J_orderList tr th {
 	white-space: nowrap
 }
-
-.select2-container {
-	z-index: 99999999999;
+<!-- datepicker  -->
+.xdsoft_datetimepicker{
+	z-index: 9999999999;
 }
 </style>
 
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
 	<%--<div id="wrapper">--%>
-	<%@include file="/WEB-INF/common/top_logo_nav.jsp"%>
-	<%@include file="/WEB-INF/common/slideBar.jsp"%>
 
 	<!--右侧部分开始-->
 	<div id="page-wrapper" class="wrapper wrapper-content " style="height: 82%; overflow-y: auto; overflow-x: hidden">
 		<div class="row animated fadeInRight" id="content-main">
 			<div class="col-xs-12">
-
 				<div class="ibox float-e-margins">
-					<ul class="nav nav-tabs" id="myTab">
-						<li class="active"><a>我的订单列表</a></li>
-					</ul>
-
 					<div id="content" class="ibox-content">
-						<div class="co_all">
-							<form id="searchFrom" style="margin-top: -20px">
-								<div id="search_Big">
-									<ul class="pull-left" id="otherTab">
-										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号或手机号">
-											<div class="clearfix"></div></li>
-									</ul>
-									<div class="pull-right search_right">
-										<a id="J_orderSerch" class="searfor"> <i class="glyphicon glyphicon-search sear_icon sear_icon"></i></a>
-									</div>
-									<div class="clearfix"></div>
-									<div class="line"></div>
-									<%--线--%>
-								</div>
-							</form>
-
-							<div class="clearfix"></div>
-						</div>
-						<div class="clearfix"></div>
-
+					<input id="phone" type="hidden" value="${phone}">
 						<table id="J_orderList" class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>订单号</th>
+									<th></th>
+									<th>咨询单号</th>
 									<th>客户姓名</th>
 									<th>客户电话</th>
-									<th>产品分类</th>
-									<th>类型</th>
-									<th>门店</th>
-									<th>服务项</th>
+									<th>微信号</th>
+									<th>分类</th>
+									<th>预约门店</th>
+									<th>维修需求</th>
 									<th>当前状态</th>
+									<th>创建者</th>
 									<th>创建时间</th>
-									<th>关联咨询单号</th>
-									<th>编辑</th>
 								</tr>
 							</thead>
 						</table>
@@ -242,14 +236,10 @@
 			<!--右侧部分结束-->
 
 		</div>
-
-		<div style="margin-top: 10px;">
-			<%@include file="/WEB-INF/common/bottom.jsp"%>
-		</div>
 	</div>
 	<script src="${ctx}/static/require/require.js"></script>
 	<script src="${ctx}/static/require/require.config.js"></script>
-	<script src="${ctx}/module-js/order/repair_order_my.js"></script>
+	<script src="${ctx}/module-js/order/consult_order_all.js"></script>
 
 </body>
 
