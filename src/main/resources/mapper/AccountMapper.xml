@@ -28,5 +28,8 @@
     <select id="find" resultMap="accountResultMap">
         SELECT * from t_account where id = #{id} ;
     </select>
+    <select id="findByOpenId" resultMap="accountResultMap">
+        SELECT * from t_account where wx_openid = #{openId}
+    </select>
 
 </mapper>

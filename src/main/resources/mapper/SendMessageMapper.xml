@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace命名空间,作用就是对sql进行分类化管理,理解sql隔离
+注意:使用mapper代理方法开发,namespace有特殊重要的作用,namespace等于mapper接口地址-->
+<mapper namespace="com.yelot.crm.mapper.SendMessageMapper">
+
+    <resultMap id="sendMessageMap" type="com.yelot.crm.entity.SendMessage">
+        <id column="id" property="id"/>
+        <result column="phone" property="phone"/>
+        <result column="verify_code" property="verifyCode"/>
+        <result column="send_times" property="sendTimes"/>
+        <result column="day_times" property="dayTimes"/>
+        <result column="send_tm" property="sendTm"/>
+    </resultMap>
+
+    <sql id="basicSql">
+        id, phone, verify_code,send_times, day_times,send_tm
+    </sql>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="SendMessage">
+        INSERT INTO t_send_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="verifyCode != null">
+                verify_code,
+            </if>
+
+            <if test="sendTimes != null">
+                send_times,
+            </if>
+            <if test="dayTimes != null">
+                day_times,
+            </if>
+            <if test="sendTm != null">
+                send_tm,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="verifyCode != null">
+                #{verifyCode},
+            </if>
+            <if test="sendTimes != null">
+                #{sendTimes},
+            </if>
+            <if test="dayTimes != null">
+                #{dayTimes},
+            </if>
+            <if test="sendTm != null">
+                #{sendTm},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="SendMessage">
+        update t_send_message
+        set send_times = send_times + 1,verify_code = #{verifyCode},send_tm = now()
+        WHERE phone = #{phone}
+    </update>
+
+    <update id="updateTimes">
+        update t_send_message
+        set send_times = send_times + 1,day_times = day_times + 1,send_tm = now()
+        WHERE phone = #{phone}
+    </update>
+
+
+    <select id="findAll" resultMap="sendMessageMap">
+        SELECT
+        <include refid="basicSql"/>
+        FROM t_send_message
+    </select>
+
+
+    <select id="find" resultMap="sendMessageMap">
+        SELECT
+        <include refid="basicSql"/>
+        FROM t_send_message
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByPhone" resultMap="sendMessageMap">
+        SELECT
+        <include refid="basicSql"/>
+        FROM t_send_message
+        WHERE phone = #{phone}
+    </select>
+    <select id="checkVerifyCode" resultType="Integer">
+        SELECT count(verify_code) FROM t_send_message WHERE verify_code = #{verifyCode} and phone = #{phone}
+    </select>
+
+
+</mapper>

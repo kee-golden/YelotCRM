@@ -1,7 +1,17 @@
 package com.yelot.crm.controller;
 
 import com.soecode.wxtools.api.IService;
+import com.soecode.wxtools.api.WxConfig;
+import com.soecode.wxtools.api.WxConsts;
 import com.soecode.wxtools.api.WxService;
+import com.soecode.wxtools.bean.WxUserList;
+import com.soecode.wxtools.bean.WxUserList.WxUser.WxUserGet;
+import com.soecode.wxtools.bean.result.WxOAuth2AccessTokenResult;
+import com.soecode.wxtools.exception.WxErrorException;
+import com.yelot.crm.Util.ResultData;
+import com.yelot.crm.entity.Account;
+import com.yelot.crm.mapper.AccountMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +31,17 @@ public class WxController {
 
     private IService iService = new WxService();
 
+    @Autowired
+    private AccountMapper accountMapper;
 
+
+    /**
+     * 微信公众号  服务器配置(未启用)
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("check")
     public void weixin(HttpServletRequest request, HttpServletResponse response) throws IOException{
         // 验证服务器的有效性
         PrintWriter out = response.getWriter();
@@ -34,38 +54,88 @@ public class WxController {
         }
     }
 
-    @RequestMapping("my-card")
-    public String myCard(HttpServletRequest request,Model model){
-        System.out.println("my-card log");
-//        String code = request.getParameter("code");
-//        String state = request.getParameter("state");
-//        model.addAttribute("code",code);
-//        return "weixin/my_card";
-        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d897ca3e583985&" +
-                "redirect_uri=http://crm.rojewel.com/wx/to-card/&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+    /**
+     * 会员 菜单的总入口，统一控制
+     * @return
+     */
+    @RequestMapping("account")
+    public String accountEntrance(String menu){
+        System.out.println("accountEntrance log");
+        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WxConfig.getInstance().getAppId()+
+                "&redirect_uri=http://crm.rojewel.com/wx/to-account/?menu=" +menu+
+                "&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
         return "redirect:"+url;
     }
 
-    @RequestMapping("to-card")
-    public String toCard(HttpServletRequest request,Model model){
-        System.out.println("my-account log");
+
+    /**
+     * 总是会重定向到该Url中,参考accountEntrance()
+     * 进入会员系统的业务逻辑如下
+     * 1）首先查询t_account 该微信用户是会员，并且已经绑定手机号，否则需要跳转到绑定手机号页面
+     * @param menu
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("to-account")
+    public String toAccount(String menu,HttpServletRequest request,Model model){
+        System.out.println("to-account log");
 
         String code = request.getParameter("code");
-                model.addAttribute("code",code);
+        model.addAttribute("code",code);
+
+        try {
+            WxOAuth2AccessTokenResult result = iService.oauth2ToGetAccessToken(code);
+            if(result != null){
+                System.out.println("kee token:"+result.getAccess_token());
+                System.out.println("kee openid:"+result.getOpenid());
+                model.addAttribute("accessToken",result.getAccess_token());
+                model.addAttribute("openid",result.getOpenid());
+                //step 1,验证用户是否已经绑定账号
+                Account account = accountMapper.findByOpenId(result.getOpenid());
+                if(account == null){
+                    return "weixin/account_login";
+                }
+            }
+
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+
+        if(menu == null){
+            return "weixin/my_card";
+        }else if(menu.equals("my-card")){
+            return "weixin/my_card";
+        }else if(menu.equals("my-account")){
+            return "weixin/my_account";
+        }else if(menu.equals("my-points")){
+            return "weixin/my_points";
+        }else if(menu.equals("update-profile")){
+            return "weixin/update_profile";
+        }else if(menu.equals("my-coupon")){
+            return "weixin/my_coupon";
+        }
+
 
         System.out.println("weixin code = "+code);
 
-
-
         return "weixin/my_card";
     }
+
+    @RequestMapping("get-verify-code")
+    public ResultData getVerifyCode(String phone){
+
+
+        return ResultData.ok();
+    }
+
+
 
     @RequestMapping("my-account")
     public String myAccount(HttpServletRequest request,Model model){
         System.out.println("my-account log");
 
-        String code = request.getParameter("code");
-        model.addAttribute("code",code);
+
 
 
         return "weixin/my_account";
@@ -87,27 +157,10 @@ public class WxController {
      */
     @RequestMapping("my-coupon")
     public String myCoupon(){
-        return "weixin/my_points";
+
+        return "weixin/my_coupon";
     }
 
 
-    @RequestMapping("getInfor")
-    public String getInfor(HttpServletRequest req) {
-        String CODE =  req.getParameter("code");
-        String state =  req.getParameter("state");
-//        String accessTokenURL = "https://api.weixin.qq.com/sns/oauth2/access_token?"
-//                + "appid="+appID+"&secret="+开放平台APPSECRET+"&code=CODE&"
-//                + "grant_type=authorization_code";
-//        JSONObject jsonObject=HttpRequestUtil.httpRequest(accessTokenURL.
-//                replaceAll("CODE", code), "GET", null);
-//        boolean containsValue = jsonObject.containsKey("errcode");
-//        if(containsValue){
-//            String errcode = jsonObject.getString("errcode");
-//            System.err.println("有错误");
-//        }else{
-//            String unionid = jsonObject.getString("unionid");
-//        }
 
-        return "pc/user-manage/";
-    }
 }
