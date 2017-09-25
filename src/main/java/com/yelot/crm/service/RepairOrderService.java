@@ -193,7 +193,9 @@ public class RepairOrderService {
 	public RepairOrder findRepairOrderByOrderId(Long orderId) {
 		RepairOrder repairOrder = repairOrderMapper.findRepairOrderByOrderId(orderId);
 		setRepairProductInfo(repairOrder);
-		repairOrder.setImagesList(Arrays.asList(repairOrder.getImagesJson().split(",")));
+		repairOrder.setImagesList(repairOrder.getImagesJson() == null ? null : Arrays.asList(repairOrder.getImagesJson().split(",")));
+		repairOrder.setPrecheckImagesList(repairOrder.getPrecheckImages() == null ? null : Arrays.asList(repairOrder.getPrecheckImages().split(",")));
+		repairOrder.setQccheckImagesList(repairOrder.getQccheckImages() == null ? null : Arrays.asList(repairOrder.getQccheckImages().split(",")));
 		setOneRepairServiceItem(repairOrder);
 		return repairOrder;
 	}

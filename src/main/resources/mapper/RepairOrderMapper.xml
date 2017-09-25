@@ -41,6 +41,8 @@
         <result property="materialPayment" column="material_payment"/>
         <result property="consultOrderId" column="consult_order_id"/>
         <result property="consultOrderNo" column="consult_order_no"/>
+        <result property="shopAddress" column="shop_address"/>
+        <result property="shopPhone" column="shop_phone"/>
     </resultMap>
 
     <select id="find" resultMap="orderResultMap">
@@ -179,12 +181,13 @@
     </select>
 
     <select id="findRepairOrderByOrderId" resultMap="orderResultMap">
-        select t.*, t1.realname create_user_name, t2.name first_category_name, t3.name second_category_name, t4.name brand_name
+        select t.*, t1.realname create_user_name, t2.name first_category_name, t3.name second_category_name, t4.name brand_name, t5.address shop_address, t5.phone shop_phone
         from t_repair_order t
         left join t_user t1 on t.create_user_id = t1.id
         left join t_category t2 on t.first_category_id = t2.id
         left join t_category t3 on t.second_category_id = t3.id
         left join t_brand t4 on t.brand_id = t4.id
+        left join t_shop t5 on t.shop_id = t5.id
         where t.id = #{orderId}
     </select>
 

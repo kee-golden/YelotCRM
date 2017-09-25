@@ -97,6 +97,9 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     	
                     	$("#writeHr").css("display","block");
                     	$("#writeDiv").css("display","block");
+
+                    	$("#precheckImagesList").css("display","none");
+                    	$("#qccheckImagesList").css("display","none");
                     	
                     	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
                     	var footstr = "</body></html>";  
@@ -112,10 +115,16 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     	
                     	$("#writeHr").css("display","none");
                     	$("#writeDiv").css("display","none");
+
+                    	$("#precheckImagesList").removeAttr("style");
+                    	$("#qccheckImagesList").removeAttr("style");
                     },
                     btn2: function (index) {
                     	$("#customerHr").css("display","none");
                 		$("#customerDiv").css("display","none");
+
+                    	$("#precheckImagesList").css("display","none");
+                    	$("#qccheckImagesList").css("display","none");
                 		
                     	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
                     	var footstr = "</body></html>";  
@@ -125,6 +134,9 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
                     	$("#customerHr").css("display","block");
                 		$("#customerDiv").css("display","block");
+
+                    	$("#precheckImagesList").removeAttr("style");
+                    	$("#qccheckImagesList").removeAttr("style");
                     }
                 });
             },

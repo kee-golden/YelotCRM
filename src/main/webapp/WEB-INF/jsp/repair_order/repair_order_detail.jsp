@@ -13,7 +13,7 @@
 				<div class="pull-left">
 					<img src="${ctx}/img/printLogo.png" style="height: 78px">
 					<h5 style="float: right; line-height: 25px; margin: 3px; font-family: 宋体; font-weight: normal;">
-						御金匠皮具维修单登记表<br> 地址：上海市静安区铜仁路258号九安广场金座8D<br> 电话：4009611966&nbsp;&nbsp;&nbsp;021-62895588
+						御金匠${repairOrder.firstCategoryName}维修单登记表<br> 地址：${repairOrder.shopAddress}<br> 电话：4009611966&nbsp;&nbsp;&nbsp;${repairOrder.shopPhone}
 					</h5>
 				</div>
 			</div>
@@ -118,6 +118,138 @@
 								</tr>
 							</c:if>
 							<c:if test="${repairOrder.imagesList.size()>8 && repairOrder.imagesList.size()<=12}">
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+							</c:if>
+						</table>
+					</td>
+				</tr>
+				<tr id="precheckImagesList">
+					<td width="12%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">预检附图：</h5></td>
+					<td width="84%" colspan="7">
+						<table style="width: 100%; height: 530px; border: solid 1px black;">
+							<c:forEach items="${repairOrder.precheckImagesList}" var="item" varStatus="status">
+								<c:if test="${status.index%4==0}">
+									<tr height="132px">
+								</c:if>
+								<td width="22%"><img src="${item}" width="100%" height="132px" style="padding: 2px"></td>
+								<c:if test="${status.index%4==3}">
+									</tr>
+								</c:if>
+							</c:forEach>
+							<c:if test="${repairOrder.precheckImagesList.size()%4==1}">
+								<td width="66%" colspan="3"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.precheckImagesList.size()%4==2}">
+								<td width="44%" colspan="2"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.precheckImagesList.size()%4==3}">
+								<td width="22%"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.precheckImagesList==null}">
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.precheckImagesList.size()<=4}">
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.precheckImagesList.size()>4 && repairOrder.precheckImagesList.size()<=8}">
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.precheckImagesList.size()>8 && repairOrder.precheckImagesList.size()<=12}">
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+							</c:if>
+						</table>
+					</td>
+				</tr>
+				<tr id="qccheckImagesList">
+					<td width="12%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">修完附图：</h5></td>
+					<td width="84%" colspan="7">
+						<table style="width: 100%; height: 530px; border: solid 1px black;">
+							<c:forEach items="${repairOrder.qccheckImagesList}" var="item" varStatus="status">
+								<c:if test="${status.index%4==0}">
+									<tr height="132px">
+								</c:if>
+								<td width="22%"><img src="${item}" width="100%" height="132px" style="padding: 2px"></td>
+								<c:if test="${status.index%4==3}">
+									</tr>
+								</c:if>
+							</c:forEach>
+							<c:if test="${repairOrder.qccheckImagesList.size()%4==1}">
+								<td width="66%" colspan="3"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.qccheckImagesList.size()%4==2}">
+								<td width="44%" colspan="2"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.qccheckImagesList.size()%4==3}">
+								<td width="22%"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.qccheckImagesList==null}">
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.qccheckImagesList.size()<=4}">
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.qccheckImagesList.size()>4 && repairOrder.qccheckImagesList.size()<=8}">
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+								<tr height="132px">
+									<td width="88%" colspan="4"></td>
+								</tr>
+							</c:if>
+							<c:if test="${repairOrder.qccheckImagesList.size()>8 && repairOrder.qccheckImagesList.size()<=12}">
 								<tr height="132px">
 									<td width="88%" colspan="4"></td>
 								</tr>

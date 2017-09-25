@@ -150,11 +150,15 @@ public class RepairOrder {
      * 预检的，上次的图片，以逗号分隔
      */
     private String precheckImages;
+    
+    private List<String> precheckImagesList;
 
     /**
      * QC 维修完成后，上次的图片，以逗号分隔
      */
     private String qccheckImages;
+    
+    private List<String> qccheckImagesList;
 
     /**
      * 新增类别：（内部单，返修单，评估单，客修单）
@@ -174,6 +178,16 @@ public class RepairOrder {
      * 咨询单号
      */
     private Long consultOrderNo;
+    
+    /**
+     * 门店地址
+     */
+    private String shopAddress;
+    
+    /**
+     * 门店电话
+     */
+    private String shopPhone;
 
     public Long getId() {
         return id;
@@ -474,7 +488,15 @@ public class RepairOrder {
         this.precheckImages = precheckImages;
     }
 
-    public String getQccheckImages() {
+    public List<String> getPrecheckImagesList() {
+		return precheckImagesList;
+	}
+
+	public void setPrecheckImagesList(List<String> precheckImagesList) {
+		this.precheckImagesList = precheckImagesList;
+	}
+
+	public String getQccheckImages() {
         return qccheckImages;
     }
 
@@ -482,7 +504,15 @@ public class RepairOrder {
         this.qccheckImages = qccheckImages;
     }
 
-    public String getTypeName() {
+    public List<String> getQccheckImagesList() {
+		return qccheckImagesList;
+	}
+
+	public void setQccheckImagesList(List<String> qccheckImagesList) {
+		this.qccheckImagesList = qccheckImagesList;
+	}
+
+	public String getTypeName() {
         return typeName;
     }
 
@@ -520,6 +550,22 @@ public class RepairOrder {
 
 	public void setConsultOrderNo(Long consultOrderNo) {
 		this.consultOrderNo = consultOrderNo;
+	}
+
+	public String getShopAddress() {
+		return shopAddress;
+	}
+
+	public void setShopAddress(String shopAddress) {
+		this.shopAddress = shopAddress;
+	}
+
+	public String getShopPhone() {
+		return shopPhone;
+	}
+
+	public void setShopPhone(String shopPhone) {
+		this.shopPhone = shopPhone;
 	}
     
 }
