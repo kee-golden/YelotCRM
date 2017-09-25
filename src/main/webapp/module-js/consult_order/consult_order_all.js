@@ -13,9 +13,12 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         'serverSide': true,
         'lengthMenu': [10, 20, 50, 100],
         'ajax':{
-            'url':ctx + '/consult-order/query?type=all',
+            'url':ctx + '/consult-order/query',
 			'method': 'get',
             'data': function (d) {
+                d.startDate = $('#startDate').val();
+                d.endDate = $('#endDate').val();
+                d.createUserName = $('#createUserName').val();
                 d.extra_search = $('#keywords').val();
             }
         },

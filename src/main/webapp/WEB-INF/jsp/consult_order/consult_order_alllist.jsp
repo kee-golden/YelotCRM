@@ -201,8 +201,12 @@
 							<form id="searchFrom" style="margin-top: -20px">
 								<div id="search_Big">
 									<ul class="pull-left" id="otherTab">
-										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入手机号或微信号">
-											<div class="clearfix"></div></li>
+										<li><span>搜索：</span>
+										<input type="text" id="startDate" class="pickupDate" placeholder="开始时间">
+										<input type="text" id="endDate" class="pickupDate" placeholder="结束时间">
+										<input type="text" id="createUserName" class="inpt_width" placeholder="创建者">
+										<input type="text" id="keywords" class="inpt_width" placeholder="手机号或微信号">
+										<div class="clearfix"></div></li>
 									</ul>
 									<div class="pull-right search_right">
 										<a id="J_orderSerch" class="searfor"> <i class="glyphicon glyphicon-search sear_icon sear_icon"></i></a>
@@ -250,6 +254,15 @@
 	<script src="${ctx}/static/require/require.config.js"></script>
 	<script src="${ctx}/module-js/consult_order/consult_order_all.js"></script>
 
+	<script>
+	    require(['jquery','dateTimePicker'], function ($) {
+	        $('.pickupDate').datetimepicker({
+	            lang: 'ch',
+	            format: 'Y-m-d',
+	            timepicker:false
+	        });
+	    });
+	</script>
 </body>
 
 </html>

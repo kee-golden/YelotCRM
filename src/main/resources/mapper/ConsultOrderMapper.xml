@@ -43,23 +43,32 @@
     </select>
     
     <select id="countTotalPageAll" resultType="java.lang.Integer">
-        SELECT count(*) FROM t_consult_order
+        SELECT count(*) 
+        from t_consult_order co 
+        LEFT JOIN t_user u on co.create_user_id = u.id 
         where 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at &gt;= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        <if test="createUserName != null and createUserName != ''">and u.realname like CONCAT('%', #{createUserName}, '%')</if>
         <if test="extra_search != null and extra_search != ''">
-            and (customer_phone like CONCAT('%', #{extra_search}, '%') or wechat_no like CONCAT('%', #{extra_search}, '%'))
+            and (co.customer_phone like CONCAT('%', #{extra_search}, '%') or co.wechat_no like CONCAT('%', #{extra_search}, '%'))
         </if>
         
     </select>
     
     <select id="findByPageAll" resultMap="orderResultMap">
-
-        SELECT co.*,u.name userName,s.name bookShopName from t_consult_order co LEFT JOIN t_user u
-        on co.create_user_id = u.id LEFT JOIN t_shop s on co.book_shop_id = s.id
+        SELECT co.*,u.realname userName,s.name bookShopName 
+        from t_consult_order co 
+        LEFT JOIN t_user u on co.create_user_id = u.id 
+        LEFT JOIN t_shop s on co.book_shop_id = s.id
         where 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at &gt;= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        <if test="createUserName != null and createUserName != ''">and u.realname like CONCAT('%', #{createUserName}, '%')</if>
         <if test="extra_search != null and extra_search != ''">
-            and (customer_phone like CONCAT('%', #{extra_search}, '%') or wechat_no like CONCAT('%', #{extra_search}, '%'))
+            and (co.customer_phone like CONCAT('%', #{extra_search}, '%') or co.wechat_no like CONCAT('%', #{extra_search}, '%'))
         </if>
-        order by id DESC
+        order by co.id DESC
         limit #{pageHelper.offset},#{pageHelper.size}
 
     </select>
@@ -69,7 +78,7 @@
         where customer_phone = #{phone}
     </select>
     <select id="findByPageAllByPhone" resultMap="orderResultMap">
-        SELECT co.*,u.name userName,s.name bookShopName from t_consult_order co LEFT JOIN t_user u
+        SELECT co.*,u.realname userName,s.name bookShopName from t_consult_order co LEFT JOIN t_user u
         on co.create_user_id = u.id LEFT JOIN t_shop s on co.book_shop_id = s.id
         where customer_phone = #{phone}
         order by id DESC

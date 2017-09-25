@@ -165,17 +165,21 @@ public class ConsultOrderController {
      */
     @ResponseBody
     @RequestMapping("query")
-    public Table queryOrder(Model model,
-                            @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
-                            @RequestParam(value = "start", defaultValue = "0") int start,
-                            @RequestParam(value = "length", defaultValue = "15") int length) {
+	public Table queryOrder(
+			Model model,
+			@RequestParam(value = "startDate", defaultValue = "") String startDate,
+			@RequestParam(value = "endDate", defaultValue = "") String endDate,
+			@RequestParam(value = "createUserName", defaultValue = "") String createUserName,
+			@RequestParam(value = "extra_search", defaultValue = "") String extra_search,
+			@RequestParam(value = "start", defaultValue = "0") int start,
+			@RequestParam(value = "length", defaultValue = "15") int length) {
 
-        PageHelper pageHelper = new PageHelper();
-        pageHelper.setOffset(start);
-        pageHelper.setSize(length);
+		PageHelper pageHelper = new PageHelper();
+		pageHelper.setOffset(start);
+		pageHelper.setSize(length);
 
-        int pageCount = consultOrderService.countTotalPageAll(extra_search);
-        List<ConsultOrder> consultOrderList = consultOrderService.findByPageAll(extra_search, pageHelper);
-        return new Table(pageCount, pageCount, consultOrderList);
-    }
+		int pageCount = consultOrderService.countTotalPageAll(startDate, endDate, createUserName, extra_search);
+		List<ConsultOrder> consultOrderList = consultOrderService.findByPageAll(startDate, endDate, createUserName, extra_search, pageHelper);
+		return new Table(pageCount, pageCount, consultOrderList);
+	}
 }

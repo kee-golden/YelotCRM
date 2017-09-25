@@ -2,6 +2,7 @@ package com.yelot.crm.mapper;
 
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.ConsultOrder;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -16,9 +17,16 @@ import java.util.List;
 public interface ConsultOrderMapper {
     ConsultOrder find(Long id);
 
-    int countTotalPageAll(@Param("extra_search")String extra_search);
+	int countTotalPageAll(@Param("startDate") String startDate,
+			@Param("endDate") String endDate,
+			@Param("createUserName") String createUserName,
+			@Param("extra_search") String extra_search);
 
-    List<ConsultOrder> findByPageAll(@Param("extra_search") String extra_search, @Param("pageHelper") PageHelper pageHelper);
+	List<ConsultOrder> findByPageAll(@Param("startDate") String startDate,
+			@Param("endDate") String endDate,
+			@Param("createUserName") String createUserName,
+			@Param("extra_search") String extra_search,
+			@Param("pageHelper") PageHelper pageHelper);
 
     int countTotalPageAllByPhone(@Param("phone")String phone);
 
