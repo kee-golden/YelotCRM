@@ -41,6 +41,9 @@
         update t_user set name = #{name},realname = #{realname},phone = #{phone},shop_id = #{shop_id} where id = #{id}
     </update>
 
+    <select id="findRepairUserList" resultMap="userResultMap">
+        select * from t_user where shop_id = '6';
+    </select>
 
 
 

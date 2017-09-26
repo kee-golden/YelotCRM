@@ -26,6 +26,18 @@
 
 			<form role="form" id="J_checkForm">
 				<input type="hidden" name="id" id="orderId" value="${orderId}">
+				<c:if test="${orderStatus == 12}">
+				<div class="row">
+					<label style="margin-left: 30px">维修人员：
+					</label><select id="repairUserId" name="repairUserId">
+						<c:forEach items="${repairUserList}" var="item">
+							<option value="${item.id}">${item.realname}</option>
+						</c:forEach>
+					</select>
+					<label style="margin-left: 30px" >最迟完成时间：</label>
+					<input type="text" id="repairLastAt">
+				</div>
+				</c:if>
 				<div class="row">
 					<textarea id="comment" rows="3" cols="20" class="col-md-11" style="margin-left: 30px" placeholder="输入审批备注"></textarea>
 				</div>
@@ -119,8 +131,19 @@
 <c:if test="${orderStatus == 12 || orderStatus == 16}">
 	<script src="${ctx}/module-js/order/webuploader_app.js"></script>
 </c:if>
+
 <script>
-    require([ 'jquery', 'yaya','webuploader', 'datatables.net' ], function($, yaya,WebUploader) {
+    require([ 'jquery', 'yaya','webuploader', 'datatables.net','dateTimePicker' ], function($, yaya,WebUploader) {
+    	
+        $('#repairLastAt').datetimepicker({
+            lang: 'ch',
+            format: 'Y-m-d',
+            timepicker:false
+        });
+    	
+        // 设置显示位置
+    	$(".xdsoft_datetimepicker").css("z-index", 20000000);
+        
         $('#approveBtn').click(function () {
 
             var comment = $('#comment').val();
@@ -139,7 +162,9 @@
 				data:{
 				    orderId:$('#orderId').val(),
 					comment:$('#comment').val(),
-					imagesPath:path
+					imagesPath:path,
+					repairUserId:$('#repairUserId').val(),
+					repairLastAt:$('#repairLastAt').val()
 				},
 				success:function (data) {
 					if(data.code == 1200){

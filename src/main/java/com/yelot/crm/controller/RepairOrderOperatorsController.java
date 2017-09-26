@@ -57,8 +57,10 @@ public class RepairOrderOperatorsController {
         model.addAttribute("repairOrderOperatorsList",repairOrderOperatorsList);
         model.addAttribute("orderId",orderId);
         model.addAttribute("orderNo",repairOrder.getOrderNo());
-
         model.addAttribute("orderStatus",repairOrder.getStatus());
+        
+        List<User> repairUserList = repairOrderOperatorsService.findRepairUserList();
+        model.addAttribute("repairUserList", repairUserList);
 
         return "repair_order/repair_order_approve";
 
@@ -66,7 +68,7 @@ public class RepairOrderOperatorsController {
 
     @RequestMapping("approve")
     @ResponseBody
-    public ResultData approve(Model model,Long orderId,String comment,String imagesPath){
+    public ResultData approve(Model model,Long orderId,String comment,String imagesPath,Long repairUserId,String repairLastAt){
         RepairOrder repairOrder = repairOrderMapper.find(orderId);
         RepairOrderOperators repairOrderOperators = new RepairOrderOperators();
         repairOrderOperators.setOrderNo(repairOrder.getOrderNo());
@@ -75,7 +77,7 @@ public class RepairOrderOperatorsController {
         repairOrderOperators.setApprove_user_id(UserUtil.getCurrentUser().getId());
         int orderStatus = repairOrder.getStatus();
         int approveStatus = getNextApproveStatus(orderStatus,repairOrder);
-        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,approveStatus,imagesPath);
+        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,approveStatus,imagesPath,repairUserId,repairLastAt);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(approveStatus);
         repairOrderOperators.setOperator_comment(comment);
@@ -95,7 +97,7 @@ public class RepairOrderOperatorsController {
         repairOrderOperators.setApprove_user_id(UserUtil.getCurrentUser().getId());
         int orderStatus = repairOrder.getStatus();
         int rejectStatus = getNextRejectStatus(orderStatus);
-        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,rejectStatus,imagesPath);
+        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,rejectStatus,imagesPath,null,null);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(rejectStatus);
         repairOrderOperators.setOperator_comment(comment);

@@ -2,9 +2,11 @@ package com.yelot.crm.service;
 
 import com.yelot.crm.entity.RepairOrder;
 import com.yelot.crm.entity.RepairOrderOperators;
+import com.yelot.crm.entity.User;
 import com.yelot.crm.mapper.RepairOrderMapper;
 import com.yelot.crm.mapper.RepairOrderOperatorsMapper;
 import com.yelot.crm.mapper.UserMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,4 +47,12 @@ public class RepairOrderOperatorsService {
     public void save(RepairOrderOperators repairOrderOperators){
         repairOrderOperatorsMapper.save(repairOrderOperators);
     }
+    
+	/**
+	 * 查找维修中心人员信息
+	 * @return
+	 */
+	public List<User> findRepairUserList() {
+		return userMapper.findRepairUserList();
+	}
 }

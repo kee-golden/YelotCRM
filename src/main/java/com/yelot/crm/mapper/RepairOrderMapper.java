@@ -71,8 +71,11 @@ public interface RepairOrderMapper {
 	List<RepairOrder> findByPageCheckListAndShop(@Param("extra_search") String extra_search, @Param("statusList") List<String> statusList,
 												 @Param("pageHelper") PageHelper pageHelper,@Param("shopId") Long shopId);
 
-    void updateOrderStatusAndImagesPath(@Param("orderId") Long orderId, @Param("approveStatus") int approveStatus,
-										@Param("imagesPath")String imagesPath);
+	void updateOrderStatusAndImagesPath(@Param("orderId") Long orderId,
+			@Param("approveStatus") int approveStatus,
+			@Param("imagesPath") String imagesPath,
+			@Param("repairUserId") Long repairUserId,
+			@Param("repairLastAt") String repairLastAt);
 
     /**
      * 根据订单id查看订单详情

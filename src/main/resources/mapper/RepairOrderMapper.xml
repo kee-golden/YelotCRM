@@ -70,6 +70,12 @@
         <if test="approveStatus == 20 or approveStatus == 22">
             , qccheck_images = #{imagesPath}
         </if>
+        <if test="repairUserId != null and repairUserId != ''">
+            , repair_user_id = #{repairUserId}
+        </if>
+        <if test="repairLastAt != null and repairLastAt != ''">
+            , repair_last_at = #{repairLastAt}
+        </if>
          where id = #{orderId}
 
     </update>

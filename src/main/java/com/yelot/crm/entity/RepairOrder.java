@@ -190,6 +190,16 @@ public class RepairOrder {
      * 门店电话
      */
     private String shopPhone;
+    
+    /**
+     * 维修人员
+     */
+    private Long repairUserId;
+    
+    /**
+     * 最迟完成时间
+     */
+    private Date repairLastAt;
 
     public Long getId() {
         return id;
@@ -576,6 +586,23 @@ public class RepairOrder {
 
 	public void setShopPhone(String shopPhone) {
 		this.shopPhone = shopPhone;
+	}
+
+	public Long getRepairUserId() {
+		return repairUserId;
+	}
+
+	public void setRepairUserId(Long repairUserId) {
+		this.repairUserId = repairUserId;
+	}
+
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+	public Date getRepairLastAt() {
+		return repairLastAt;
+	}
+
+	public void setRepairLastAt(Date repairLastAt) {
+		this.repairLastAt = repairLastAt;
 	}
     
 }

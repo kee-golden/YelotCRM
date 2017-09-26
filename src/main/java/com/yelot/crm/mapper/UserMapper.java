@@ -94,4 +94,7 @@ public interface UserMapper {
     int checkPassword(@Param("id") Long id, @Param("psdMd5") String psdMd5);
 
     void editPassword(@Param("id") Long id, @Param("newPsdMd5") String newPsdMd5);
+
+    List<User> findRepairUserList();
+    
 }
