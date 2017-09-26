@@ -30,7 +30,7 @@ public interface RepairOrderMapper {
 	 * @param extra_search
 	 * @return
 	 */
-	Integer countTotalPageMy(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("approve_role_id") Long approve_role_id);
+	Integer countTotalPage(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id);
 	
 	/**
 	 * 分页查询
@@ -38,7 +38,7 @@ public interface RepairOrderMapper {
 	 * @param pageHelper
 	 * @return
 	 */
-	List<RepairOrder> findByPageMy(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("approve_role_id") Long approve_role_id, @Param("pageHelper") PageHelper pageHelper);
+	List<RepairOrder> findByPage(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("pageHelper") PageHelper pageHelper);
 	
 	/**
 	 * 查询服务名

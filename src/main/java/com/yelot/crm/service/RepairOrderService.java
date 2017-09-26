@@ -6,6 +6,7 @@ import com.yelot.crm.entity.Category;
 import com.yelot.crm.entity.RepairOrder;
 import com.yelot.crm.entity.RepairOrderOperators;
 import com.yelot.crm.enums.OperatorStatus;
+import com.yelot.crm.enums.RepairOrderStatus;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.vo.City;
 import com.yelot.crm.vo.CityList;
@@ -104,18 +105,13 @@ public class RepairOrderService {
 	 * 
 	 * @return 总的记录条数
 	 */
-	public Integer countTotalPageMy(String extra_search, String type, Long userId) {
+	public Integer countTotalPage(String extra_search, String type, Long userId) {
 		Long create_user_id = null;
-		Long approve_user_id = null;
 		
 		if ("my".equals(type)) {
 			create_user_id = userId;
 		}
-		if("check".equals(type)){
-			approve_user_id = userId;
-		}
-		
-		return repairOrderMapper.countTotalPageMy(extra_search, create_user_id, approve_user_id);
+		return repairOrderMapper.countTotalPage(extra_search, create_user_id);
 	}
 
 	/**
@@ -124,20 +120,17 @@ public class RepairOrderService {
 	 * @param pageHelper
 	 * @return
 	 */
-	public List<RepairOrder> findByPageMy(String extra_search, String type, Long userId, PageHelper pageHelper) {
+	public List<RepairOrder> findByPage(String extra_search, String type, Long userId, PageHelper pageHelper) {
 
 		Long create_user_id = null;
-		Long approve_user_id = null;
 		
 		if ("my".equals(type)) {
 			create_user_id = userId;
 		}
-		if("check".equals(type)){
-			approve_user_id = userId;
-		}
 		
-		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageMy(extra_search, create_user_id, approve_user_id, pageHelper);
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(extra_search, create_user_id, pageHelper);
 		setRepairServiceItem(repairOrderList);
+		setRepairStatus(repairOrderList);
 		return repairOrderList;
 	}
 
@@ -148,6 +141,7 @@ public class RepairOrderService {
 	public List<RepairOrder> findByPageCheckList(String extra_search, List<String> statusList,PageHelper pageHelper) {
 		List<RepairOrder> repairOrderList =  repairOrderMapper.findByPageCheckList(extra_search,statusList,pageHelper);
 		setRepairServiceItem(repairOrderList);
+		setRepairStatus(repairOrderList);
 		return repairOrderList;
 	}
 
@@ -175,6 +169,30 @@ public class RepairOrderService {
 		repairOrder.setServiceItemNames(serviceItemNames);
 	}
 
+	/**
+	 * 订单列表中订单状态转中文
+	 * @param repairOrderList
+	 */
+	private void setRepairStatus(List<RepairOrder> repairOrderList){
+		for (RepairOrder repairOrder : repairOrderList) {
+			setOneRepairStatus(repairOrder);
+		}
+	}
+	
+	/**
+	 * 单个订单中订单状态转中文
+	 * @param repairOrder
+	 */
+	private void setOneRepairStatus(RepairOrder repairOrder){
+		RepairOrderStatus[] repairOrderStatusList = RepairOrderStatus.values();
+		for (RepairOrderStatus repairOrderStatus : repairOrderStatusList) {
+			if (repairOrder.getStatus() == repairOrderStatus.getCode()) {
+				repairOrder.setStatusName(repairOrderStatus.getMessage());
+				break;
+			}
+		}
+	}
+
 	private void setRepairProductInfo(RepairOrder repairOrder){
 		List<Map> productInfoList = JSON.parseArray(repairOrder.getProductInfoJson(), Map.class);
 		repairOrder.setProductInfoList(productInfoList);
@@ -187,6 +205,7 @@ public class RepairOrderService {
 	public List<RepairOrder> findByPageCheckListAndShop(String extra_search, List<String> statusList, PageHelper pageHelper, Long shopId) {
 		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageCheckListAndShop(extra_search,statusList,pageHelper,shopId);
 		setRepairServiceItem(repairOrderList);
+		setRepairStatus(repairOrderList);
 		return repairOrderList;
 	}
 	

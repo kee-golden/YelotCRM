@@ -28,17 +28,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'typeName'},
     			{'data' : 'shopName'},
     			{'data' : 'serviceItemNames'},
-    			{'data' : 'status',
-                    'render':function (data) {
-                        if(data == 2) {
-                            return '进行中';
-                        } if(data == 1) {
-                            return '已完成';
-                        } else {
-                            return '已取消'
-                        }
-                    }
-    			},
+    			{'data' : 'statusName'},
     			{'data' : 'createAt'},
     			{'data' : 'consultOrderNo'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {

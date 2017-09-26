@@ -31,9 +31,11 @@ public class RepairOrder {
     private String shopName;
 
     /**
-     * 订单状态,提交（2）,最终（1），取消（0）
+     * 订单状态
      */
     private int status;
+    
+    private String statusName;
     /**
      * 订单创建者
      */
@@ -214,7 +216,15 @@ public class RepairOrder {
         this.status = status;
     }
 
-    public Long getCreateUserId() {
+    public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public Long getCreateUserId() {
         return createUserId;
     }
 

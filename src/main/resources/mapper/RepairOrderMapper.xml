@@ -74,18 +74,17 @@
 
     </update>
 
-    <select id="countTotalPageMy" resultType="java.lang.Integer">
+    <select id="countTotalPage" resultType="java.lang.Integer">
         select count(*) 
         from t_repair_order 
         where 1 = 1 
         <if test="create_user_id != null and create_user_id != ''">and create_user_id = #{create_user_id}</if>
-        <if test="approve_role_id != null and approve_role_id != ''">and approve_role_id = #{approve_role_id}</if>
         <if test="extra_search != null and extra_search != ''">
             and (order_no like CONCAT('%', #{extra_search}, '%') or customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>
     </select>
     
-    <select id="findByPageMy" resultMap="orderResultMap">
+    <select id="findByPage" resultMap="orderResultMap">
         select t.*, t1.realname create_user_name, t2.name shop_name, concat(t3.name,"->",t4.name) category_name, t5.order_no consult_order_no
         from t_repair_order t
         left join t_user t1 on t.create_user_id = t1.id
@@ -95,7 +94,6 @@
         left join t_consult_order t5 on t.consult_order_id = t5.id
         where 1 = 1
         <if test="create_user_id != null and create_user_id != ''">and t.create_user_id = #{create_user_id}</if>
-        <if test="approve_role_id != null and approve_role_id != ''">and t.approve_role_id = #{approve_role_id}</if>
         <if test="extra_search != null and extra_search != ''">
             and (t.order_no like CONCAT('%', #{extra_search}, '%') or t.customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>

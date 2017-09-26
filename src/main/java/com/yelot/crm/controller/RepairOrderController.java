@@ -280,8 +280,8 @@ public class RepairOrderController {
         pageHelper.setSize(length);
         
         Long userId = UserUtil.getCurrentUser().getId();
-        int pageCount = repairOrderService.countTotalPageMy(extra_search, type, userId);
-        List<RepairOrder> repairOrderList = repairOrderService.findByPageMy(extra_search, type, userId, pageHelper);
+        int pageCount = repairOrderService.countTotalPage(extra_search, type, userId);
+        List<RepairOrder> repairOrderList = repairOrderService.findByPage(extra_search, type, userId, pageHelper);
         return new Table(pageCount, pageCount, repairOrderList);
     }
 
@@ -476,9 +476,11 @@ public class RepairOrderController {
      */
     private void initServiceItem(List<CategoryServiceItem> categoryServiceItemList,RepairOrder repairOrder){
 
-        if(categoryServiceItemList == null || repairOrder == null || StringUtils.isEmpty(repairOrder.getServiceItemIds())){
-            return;
-        }
+		if (categoryServiceItemList == null || repairOrder == null
+				|| StringUtils.isEmpty(repairOrder.getServiceItemIds())
+				|| "null".equals(repairOrder.getServiceItemIds())) {
+			return;
+		}
 
         List<Long> idList = JSON.parseArray(repairOrder.getServiceItemIds(),Long.class);
         for (CategoryServiceItem item : categoryServiceItemList) {
