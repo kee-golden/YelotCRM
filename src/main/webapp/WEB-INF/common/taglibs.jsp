@@ -11,7 +11,7 @@
 <c:if test="${ctx == '/'}">
     <c:set var="ctx" value=""/>
 </c:if>
-<c:set var="qiniuHost" value="http://o8qpatbkm.bkt.clouddn.com/"/>
+<%--<c:set var="qiniuHost" value="http://o8qpatbkm.bkt.clouddn.com/"/>--%>
 
 <%
     response.setHeader("Pragma", "No-cache");        //HTTP     1.1

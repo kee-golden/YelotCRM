@@ -20,8 +20,9 @@ public class Account {
      */
     private String accountNo;
 
-    private String firstname;
-    private String lastname;
+    private String fullName;
+    private String email;
+    private String city;
     private String expressAddress;
     private String hobbyJson;
 
@@ -98,20 +99,28 @@ public class Account {
         this.accountNo = accountNo;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getExpressAddress() {

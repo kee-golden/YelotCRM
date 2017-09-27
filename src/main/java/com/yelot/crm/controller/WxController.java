@@ -1,5 +1,6 @@
 package com.yelot.crm.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.soecode.wxtools.api.IService;
 import com.soecode.wxtools.api.WxConfig;
 import com.soecode.wxtools.api.WxConsts;
@@ -7,19 +8,31 @@ import com.soecode.wxtools.api.WxService;
 import com.soecode.wxtools.bean.WxUserList;
 import com.soecode.wxtools.bean.WxUserList.WxUser.WxUserGet;
 import com.soecode.wxtools.bean.result.WxOAuth2AccessTokenResult;
+import com.soecode.wxtools.bean.result.card.Card;
 import com.soecode.wxtools.exception.WxErrorException;
+import com.yelot.crm.Util.Constants;
 import com.yelot.crm.Util.ResultData;
+import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.entity.Account;
+import com.yelot.crm.entity.SendMessage;
+import com.yelot.crm.enums.VerifyCodeType;
 import com.yelot.crm.mapper.AccountMapper;
+import com.yelot.crm.service.SendMessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.management.MalformedObjectNameException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * 微信入口
@@ -31,8 +44,13 @@ public class WxController {
 
     private IService iService = new WxService();
 
+//    private Logger log = LoggerFactory.getLogger(WxController.class);
+
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private SendMessageService sendMessageService;
 
 
     /**
@@ -80,9 +98,11 @@ public class WxController {
     @RequestMapping("to-account")
     public String toAccount(String menu,HttpServletRequest request,Model model){
         System.out.println("to-account log");
+        System.out.println("to-account menu:"+menu);
 
         String code = request.getParameter("code");
         model.addAttribute("code",code);
+        model.addAttribute("menu",menu);
 
         try {
             WxOAuth2AccessTokenResult result = iService.oauth2ToGetAccessToken(code);
@@ -94,7 +114,10 @@ public class WxController {
                 //step 1,验证用户是否已经绑定账号
                 Account account = accountMapper.findByOpenId(result.getOpenid());
                 if(account == null){
-                    return "weixin/account_login";
+                    System.out.println("kee account == null");
+                    return "weixin/member/account_register";
+                }else{
+                    UserUtil.setSession(Constants.SessionAccount,account);
                 }
             }
 
@@ -103,64 +126,160 @@ public class WxController {
         }
 
         if(menu == null){
-            return "weixin/my_card";
-        }else if(menu.equals("my-card")){
-            return "weixin/my_card";
-        }else if(menu.equals("my-account")){
-            return "weixin/my_account";
-        }else if(menu.equals("my-points")){
-            return "weixin/my_points";
-        }else if(menu.equals("update-profile")){
-            return "weixin/update_profile";
-        }else if(menu.equals("my-coupon")){
-            return "weixin/my_coupon";
+            return "redirect:/wx/my-card";
+        }else if(menu.equals("my-card")){//虚拟卡
+            return "redirect:/wx/my-card";
+        }else if(menu.equals("my-coupon")){//会员专享
+            return "redirect:/wx/my-coupon";
+        }else if(menu.equals("my-profile")){//更新资料
+            return "redirect:/wx/my-profile";
+        }else if(menu.equals("my-points")){//我的积分
+            return "redirect:/wx/my-points";
+        }else if(menu.equals("my-account")){//个人中心
+            return "redirect:/wx/my-account";
         }
 
-
-        System.out.println("weixin code = "+code);
-
-        return "weixin/my_card";
-    }
-
-    @RequestMapping("get-verify-code")
-    public ResultData getVerifyCode(String phone){
-
-
-        return ResultData.ok();
-    }
-
-
-
-    @RequestMapping("my-account")
-    public String myAccount(HttpServletRequest request,Model model){
-        System.out.println("my-account log");
-
-
-
-
-        return "weixin/my_account";
-    }
-
-    @RequestMapping("my-points")
-    public String myPoints(){
-        return "weixin/my_points";
-    }
-
-    @RequestMapping("update-profile")
-    public String updateProfile(){
-        return "weixin/update_profile";
+        return "redirect:/wx/my-card";
     }
 
     /**
-     * 优惠券
+     * menu 保存用户的请求参数，通过该参数调转到对于的action
+     * @param menu
+     * @param openid
+     * @param phone
+     * @param verifyCode
+     * @return
+     */
+    @RequestMapping("to-register")
+    @ResponseBody
+    public ResultData accountRegister(String menu,String openid,String phone,String verifyCode){
+        System.out.println("menu:"+menu+",phone:"+phone+",verifyCode:"+verifyCode);
+
+
+        int maxId = accountMapper.findMaxId();//bug 当没有
+    int nextId = Constants.FirstAccountNo + maxId;//第一个1001，以后每次增加1，id为自增
+
+        Account account = new Account();
+        account.setWxOpenid(openid);
+        account.setPhone(phone);
+        account.setAccountNo(nextId+"");
+        accountMapper.save(account);
+        UserUtil.setSession(Constants.SessionAccount,account);
+        return ResultData.ok().putDataValue("action",menu);
+    }
+
+    @ResponseBody
+    @RequestMapping("send-verify-code")
+    public ResultData sendVerifyCode(String phone) {
+        //请求发送验证码接口
+        boolean isSuc = sendMessageService.sendVerifyCode(phone);
+        if(isSuc){
+            return ResultData.ok();
+        }
+        return ResultData.errorRequest();
+    }
+
+    @ResponseBody
+    @RequestMapping("check-verify-code")
+    public ResultData getVerifyCode(String phone,String verifyCode){
+
+        Integer status = sendMessageService.checkVerifyCode(phone,verifyCode);
+        if(status == VerifyCodeType.Verify_Success.getCode()){
+            return ResultData.ok();
+        }
+
+
+        return ResultData.errorRequest();
+    }
+
+
+    @ResponseBody
+    @RequestMapping("update-fullname")
+    public ResultData updateFullName(String phone,String fullName){
+        accountMapper.updateFullName(phone,fullName);
+        return ResultData.ok();
+    }
+
+    @ResponseBody
+    @RequestMapping("update-email")
+    public ResultData updateEmail(String phone,String email){
+        accountMapper.updateEmail(phone,email);
+        return ResultData.ok();
+    }
+
+    @ResponseBody
+    @RequestMapping("update-city")
+    public ResultData updateCity(String phone,String city){
+        accountMapper.updateCity(phone,city);
+        return ResultData.ok();
+    }
+
+    /**
+     * 我的虚拟卡
+     * @return
+     */
+    @RequestMapping("my-card")
+    public String myCard(){
+
+        return "weixin/member/my_card";
+    }
+
+
+    /**
+     * 会员专享：优惠券
      * @return
      */
     @RequestMapping("my-coupon")
-    public String myCoupon(){
+    public String myCoupon(Model model){
+        List<Card> cardList = iService.getCardList();
+        System.out.println("kee cardList"+JSON.toJSONString(cardList));
+        model.addAttribute("cardList",cardList);
 
-        return "weixin/my_coupon";
+        return "weixin/member/coupon";
     }
 
+    /**
+     * 更新资料
+     * @return
+     */
+    @RequestMapping("my-profile")
+    public String updateProfile(){
+        return "weixin/member/information";
+    }
+
+
+    /**
+     * 我的积分
+     */
+    @RequestMapping("my-points")
+    public String myPoints(){
+        return "weixin/member/score";
+    }
+
+    /**
+     * 个人中心
+     * @return
+     */
+    @RequestMapping("my-account")
+    public String myAccount(){
+        return "weixin/member/personal_center";
+    }
+
+    @RequestMapping("my-order")
+    public String myOrder(){
+        return "weixin/member/order";
+    }
+
+    @RequestMapping("my-address")
+    public String myAddress(){
+        return "weixin/member/address";
+
+    }
+
+    @RequestMapping("my-information")
+    public String centerInformation(){
+        return "weixin/member/personal_center_information";
+    }
 
 
 }

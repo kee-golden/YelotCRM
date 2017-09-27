@@ -31,8 +31,8 @@ public class SendMessageService {
     public boolean sendVerifyCode(String phone){
 //
 //        AppConfig appConfig = new AppConfig();
-//        appConfig.setSmsAccount("jkwl210");
-//        appConfig.setSmsPassword("362189");
+//        appConfig.setSmsAccount("hpw107");
+//        appConfig.setSmsPassword("a45665");
 //        appConfig.setSendMessageUrl("http://sh2.ipyy.com/sms.aspx");
         //jkwl210    362189
 
@@ -43,7 +43,7 @@ public class SendMessageService {
         nameValuePairs.add(new BasicNameValuePair("password",appConfig.getSmsPassword()));
         nameValuePairs.add(new BasicNameValuePair("mobile",phone));
         //【云慧ITSS】 验证码是：@，2分钟内有效，如非本人操作，请忽略本消息。
-        String content = "【云惠软件ITSM】 验证码是："+randomVerifyCode + "，3分钟内有效，如非本人操作，请忽略本消息。";
+        String content = "【御金匠】 验证码是："+randomVerifyCode + "，3分钟内有效，如非本人操作，请忽略本消息。";
         nameValuePairs.add(new BasicNameValuePair("content",content));
         nameValuePairs.add(new BasicNameValuePair("action","send"));
         nameValuePairs.add(new BasicNameValuePair("sendTime",""));//立即发送
@@ -57,8 +57,6 @@ public class SendMessageService {
             sm.setVerifyCode(randomVerifyCode);
 
             if(sendMessage == null){
-//                sm.setId(IdWorker.nextId());
-
                 sm.setSendTm(new Date());
                 sm.setSendTimes(1);
                 sm.setDayTimes(1);

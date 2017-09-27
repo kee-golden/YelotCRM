@@ -4,6 +4,7 @@ import com.soecode.wxtools.bean.*;
 import com.soecode.wxtools.bean.WxUserList.WxUser;
 import com.soecode.wxtools.bean.WxUserList.WxUser.WxUserGet;
 import com.soecode.wxtools.bean.result.*;
+import com.soecode.wxtools.bean.result.card.Card;
 import com.soecode.wxtools.exception.WxErrorException;
 import com.soecode.wxtools.util.http.RequestExecutor;
 
@@ -729,6 +730,12 @@ public interface IService {
 	 * @throws WxErrorException
 	 */
 	TemplateSenderResult templateSend(TemplateSender sender)throws WxErrorException;
+
+	/**
+	 * 获取卡券列表，
+	 * @return
+	 */
+	public List<Card> getCardList();
 
 	/**
 	 * <pre>

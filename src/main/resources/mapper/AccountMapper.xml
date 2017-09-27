@@ -8,28 +8,48 @@
         <result property="wxOpenid" column="wx_openid"/>
         <result property="wxNickname" column="wx_nickname"/>
         <result property="verifyCode" column="verify_code"/>
-        <result property="sendMessageAt" column="send_message_at"/>
         <result property="accountNo" column="account_no"/>
-        <result property="firstname" column="firstname"/>
-        <result property="lastname" column="lastname"/>
+        <result property="fullName" column="full_name"/>
+        <result property="email" column="email"/>
+        <result property="city" column="city"/>
         <result property="expressAddress" column="express_address"/>
         <result property="hobbyJson" column="hobby_json"/>
         <result property="createAt" column="create_at"/>
     </resultMap>
 
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_account(phone,password,wx_openid,wx_nickname,verify_code,account_no,full_name,
+        express_address,hobby_json,create_at) VALUES (#{phone},#{password},#{wxOpenid},#{wxNickname},#{verifyCode},#{accountNo},#{fullName},
+        #{expressAddress},#{hobbyJson},now());
+
+    </insert>
+
 
     <update id="update">
-        update t_account set account_no = #{accountNo},firstname=#{firstname},lastname=#{lastname},
+        update t_account set account_no = #{accountNo},full_name=#{fullName},
                 express_address = #{expressAddress},express_address=#{expressAddress},hobby_json=#{hobbyJson},
                 create_at = #{createAt}
 
          where id = #{id};
+    </update>
+    <update id="updateFullName">
+        update t_account set full_name = #{fullName} where phone = #{phone}
+    </update>
+    <update id="updateEmail">
+        update t_account set email = #{email} where phone = #{phone}
+    </update>
+    <update id="updateCity">
+        update t_account set city = #{city} where phone = #{phone}
     </update>
     <select id="find" resultMap="accountResultMap">
         SELECT * from t_account where id = #{id} ;
     </select>
     <select id="findByOpenId" resultMap="accountResultMap">
         SELECT * from t_account where wx_openid = #{openId}
+    </select>
+    
+    <select id="findMaxId" resultType="Integer">
+        SELECT max(id) from t_account
     </select>
 
 </mapper>

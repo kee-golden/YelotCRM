@@ -297,7 +297,16 @@ public class WxConsts {
 	public static final String URL_TEMPLATE_GET_LIST = "https://api.weixin.qq.com/cgi-bin/template/get_all_private_template?access_token=ACCESS_TOKEN";
 	public static final String URL_TEMPLATE_DELETE = "https://api.weixin.qq.com/cgi-bin/template/del_private_template?access_token=ACCESS_TOKEN";
 	public static final String URL_TEMPLATE_SEND = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN";
-	
+
+	/////////
+	//// 卡券列表
+	public static final String URL_CARD_IDS_GET_LIST = "https://api.weixin.qq.com/card/batchget?access_token=ACCESS_TOKEN";
+	//卡券详情
+	public static final String URL_CARD_GET__LIST = "https://api.weixin.qq.com/card/get?access_token=ACCESS_TOKEN";
+
+	//获取卡券的ticket
+	public static final String URL_GET_JS_CARD_API_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=wx_card";
+
 	
 	
 }

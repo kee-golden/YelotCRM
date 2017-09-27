@@ -1,0 +1,714 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+html{
+	width: 100%;
+	height: 100%;
+}
+body{
+	/*max-width: 7.5rem;*/
+	margin: 0 auto;
+	border:0;
+    font: 16px/1.5 PingFangSC-Regular,"Helvetica Neue",tahoma,arial;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+}
+img{
+	display: block;
+}
+.rigister-wrap{
+	width: 100%;
+	height: 100%;
+	 background: url(../images/register_bg.jpg) no-repeat;
+	 background-size: cover;
+
+}
+.wechate_pic{
+	position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 50px;
+    top: 20px;
+}
+.rigister-content{
+	position: absolute;
+    width: 300px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    margin: -250px -150px;
+}
+.mobile{
+	    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 235px;
+    top: 130px;
+    background: url(../images/bar1.png) no-repeat;
+    border: 0px;
+    height: 55px;
+    background-size: 100%;
+    padding: 0px 0 0 65px;
+    line-height: 55px;
+    font-size: 16px;
+    color: #424242;
+}
+.rigister-submit-pic{
+	position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0 auto;
+    bottom: 80px;
+}
+.login-pic{
+	display: inline-block;
+    zoom: 1;
+    width: 82px;
+    height: 82px;
+    margin-bottom: 10px;
+    background: url(../images/sprite_login.png) 0 -140px no-repeat;
+}
+.login-wrap{
+	text-align: center;
+	margin-top: 90px;
+}
+.login-btn>a{
+	display: block;
+    width: 190px;
+    height: 40px;
+    margin: 0 auto 15px;
+    background-image: url(../images/sprite_login.png);
+    background-repeat: no-repeat;
+}
+.rigister-code{
+	width: 108px;
+    height: 55px;
+    background-size: cover;
+    position: relative;
+    left: 0;
+    top: 210px;
+
+}
+.btn-code{
+
+    position: absolute;
+    right: 0;
+    width: 105px;
+    height: 55px;
+    top: 210px;
+    background: rgb(54,54,54);
+    color: #fff;
+    line-height: 55px;
+    border-radius: 5px;
+    font-size: 13px;
+    text-align: center;
+    border: 0;
+    padding: 0;
+}
+.login-wechat{
+    background-position: 0 -230px;
+}
+.login-qq{
+   background-position: 0 -280px;
+}
+.login-tip{
+	    color: #888;
+    margin: 8px 0 50px;
+    font-size: 12px;
+}
+.rigister-submit-btn{
+	width: 300px;
+    height: 55px;
+    background: rgba(255,255,255,0.7);
+    color: #000;
+    border-radius: 4px;
+    border: none;
+    margin-top: 340px;
+    font-size: 18px;
+    color: #424242;
+}
+
+.kinds-item{
+	width: 100%;
+	height: 125px;
+	text-align: center;
+	color: #fff;
+	display: table;
+	overflow: hidden;
+	position: relative;
+}
+.kinds-item-content{
+	display: table-cell;
+	vertical-align: middle;
+	position: relative;	
+}
+.kinds-item-pic{
+	position: absolute;
+	overflow: hidden;
+	    -webkit-filter: brightness(0.50);
+    filter: brightness(0.50);
+}
+.kinds-item-content p:nth-child(2){
+	margin-top: 8px;
+}
+.my-card-banner-pic{
+	width: 100%;
+}
+.my-card-content{
+	width: 290px;
+	margin: 20px auto;
+}
+.my-card-number{
+	font-size: 20px;
+	text-align: center;
+	margin: 10px 0;
+}
+.my-card-code{
+	width: 220px;
+	height: 220px;
+	margin: 0 auto;
+}
+.my-card-code>img{
+	width: 100%;
+}
+.member-wrap{
+	height: 100%;
+	position: relative;
+}
+.member-banner-wrap{
+	height: 88%;
+	overflow: hidden;
+	position: relative;
+}
+.focusBtn{
+    text-align: center;
+    font-size: 14px;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
+.focusBtn>span{
+    display: inline-block;
+    height: 23px;
+    line-height: 23px;
+    margin: 10px 2px 0 2px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    overflow: hidden;
+ 
+    color: #828181;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+	
+}
+.focusBtn>span.on{
+	background: #888;
+}
+.member-select-wrap{
+	height: 12%;	
+}
+.menber-select-card{
+	width: 50%;
+	height: 100%;
+	background: #434343;
+	float: left;
+	text-align: center;
+	color: #fff;
+}
+.member-download{
+	background: #363636;
+}
+.member-select-wrap>div>img{
+	width: 15%;
+	margin: 4% auto 2%;
+}
+.use-arcticle{
+	position: fixed;
+	width: 100%;
+	height: 60%;
+	top: 100vh;
+	-webkit-transition:top .1s;
+	transition: top .1s;
+	background: #fff;
+	padding: 10px 15px;
+}
+.use-arcticle-title{
+	font-weight: bold;
+}
+.download-input-wrap{
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background: rgba(0,0,0,.5);
+	display: none;
+
+}
+.download-input{
+	width: 90%;
+    margin: 50% auto;
+   
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    -webkit-box-sizing:border-box;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 30px;
+    position: relative;
+}
+.download-input-password{
+	    width: 45%;
+    margin: 0 10px;
+    height: 26px;
+    border-radius: 4px;
+    border: 1px solid #dedede;
+}
+.download-input-submit{
+	    width: 20%;
+    height: 28px;
+    background: none;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+}
+.download-close{
+	position: absolute;
+	top: -8px;
+	right: -8px;
+	border-radius: 50%;
+	border:1px solid #dedede;
+	width: 20px;
+	height: 20px;
+	background: url(../images/sprite_login.png) -64px -5px  #fff;
+}
+
+.information-banner{
+	height: 220px;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+	color: #fff;
+}
+.information-user{
+	position: absolute;
+    top: 80px;
+    width: 100%;
+}
+.information-name{
+	font-size: 24px;
+}
+.information-time{
+	font-size: 14px;
+}
+.information-content-wrap{
+	padding-top: 10px;
+}
+.information-content-wrap>div{
+	padding: 15px 0 15px 10px;
+	position: relative;
+}
+.information-content-wrap>div:nth-child(odd){
+	background: #f3f1f2;
+}
+.information-content-hidden{
+	    width:82%;
+    border: none;
+    /*font-size: 35px;*/
+    position: relative;
+    top: 5px;
+    height: 25px;
+}
+.information-password-again{
+	position: absolute;
+    right: 0;
+    width: 71px;
+    height: 25px;
+    line-height: 25px;
+    background: #d7d7d7;
+    padding-left: 10px;
+    top: 18px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.information-email-input{
+	    height: 26px;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+}
+.information-password-label{
+	width: 70%;
+	display: table;
+}
+.information-password-label>div{
+	display: table-cell;
+	width: 75px;
+}
+.information-password-label>input,.information-interest-select{
+	display: table-cell;
+}
+
+.information-interest-tip{
+	font-size: 12px;
+	color: #888;
+	display: block;
+}
+.information-interest-select>label{
+	    display: block;
+    width: 50%;
+    float: left;
+}
+.information-password-thing{
+    position: relative;
+    top: -48px;
+}
+.information-city-select{
+    background: #f3f1f2;
+    border: none;
+    width: 54%;
+}
+.new-password>label{
+    width: 43%;
+    float: left;
+    display: block;
+    height: 20px;
+}
+.new-password>input{
+height: 28px;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+}
+.new-password{
+    margin-top: 10px;
+}
+.password-btn input{
+    width: 33%;
+    float: left;
+    height: 25px;
+    border: 1px solid #888;
+    background: #eee;
+    border-radius: 4px; 
+    text-align: center;
+}
+.password-btn button{
+    width: 17%;
+    margin-left: 4%;
+    height: 27px;
+    border: 1px solid #888;
+    background: #eee;
+    border-radius: 4px; 
+    position: relative;
+    top: -2px
+}
+
+.score-wrap{
+    color: #fff;
+    height: 100%;
+}
+.score-top{
+    height:160px;
+    background: url(../images/information.jpg);
+    background-size: cover;
+  
+    position: relative;
+}
+.score-top-pic{
+    /*position: absolute;*/
+    width: 110px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 20%;
+}
+.score-top-head img{
+    width: 100%;
+    height: 100%;
+}
+
+.score-top-head{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border:4px solid;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+.score-bottom{
+    background: #a7a5a5;
+    min-height: 77.5%;
+}
+.score-history{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.score-intro{
+    position: relative;
+    height: 600px;
+}
+.score-intro-center{
+    position: absolute;
+    width: 5px;
+     height: 600px;
+     background: #fff;
+     left: 50%;
+     margin-left: -2.5px;
+}
+.score-intro-center>div{
+    position: absolute;
+    right: 0;
+    height: 5px;
+    width: 170px;
+    background: #fff;
+   
+}
+.score-intro-white{
+    top: 15%;
+}
+.score-intro-center>div:before,.score-intro-center>div:after{
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    top: -6px;
+}
+.score-intro-center>div:before{
+    right: -5px;
+}
+.score-intro-center>div:after{
+    left: -5px;
+}
+.score-intro-center>div span{
+    position: relative;
+    top: -29px;
+    left: 16px;
+}
+.score-intro-center .score-intro-orange{
+    top: 33%;
+    background: #fe883f;
+}
+.score-intro-center .score-intro-orange:after,.score-intro-center .score-intro-orange:before{
+    background: #fe883f;
+}
+.score-intro-center .score-intro-black{
+    top: 62%;
+    background: #000;
+}
+.score-intro-center .score-intro-black:after,.score-intro-center .score-intro-black:before{
+    background: #000;
+}
+.score-record-item{
+    padding: 2px 8px;
+}
+.score-record-item span:first-child{
+    display: block;
+    float: left;
+    width: 170px;
+}
+.score-record-add{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border:1px solid ;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 50%;
+}
+.score-record-item-color{
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    top:3px;
+    left: 4px;
+}
+.score-record-tip{
+    color: yellow;
+    padding-left: 8px;
+}
+.score-record-content{
+    display: table;
+    width: 100%;
+    padding: 5px 0;
+}
+.score-record-content>div{
+    display: table-cell;
+}
+.score-record-content>div:first-child{
+    width: 25%;
+    padding-left: 8px;
+}
+.score-record-content>div:nth-child(2),.score-record-content>div:nth-child(3){
+    width: 20%;
+}
+
+.score-record-content>div:nth-child(4){
+    width: 35%
+}
+.score-record-thead{
+    background: #909090;
+    font-weight: bold;
+}
+.score-intro-center>div .socre-zhi{
+    float: right;
+    position: relative;
+    top: -9px;
+    left: 58px;
+}
+.hide{
+    display: none;
+}
+.score-record{
+    padding-top: 65px;
+}
+.score-record-table{
+    margin-top: 25px;
+}
+.personal-center-top{
+    height: 45px;
+    line-height: 45px;
+}
+.personal-center-logo{
+    float: left;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 8px 80px 0 13px;
+    width: 100px;
+}
+.personal-center-top:after,.personal-center-content-item:after,.personal-center-menu:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.personal-center-content-item{
+           padding: 15px;
+    border-bottom: 1px solid #808080;
+    line-height: 25px;
+    position: relative;
+    display: block;
+    color: #000;
+    font-size: 16px;
+}
+.personal-center-content-item figure img{
+    float: left;
+}
+.personal_center-wrap{
+    font-size: 18px;
+}
+.personal-center-banner{
+    color: #fff;
+    position: relative;
+}
+.personal-center-msg{
+    position: absolute;
+    width: 100%;
+    top: 88px;
+    text-align: center;
+}   
+.personal-center-content-item>div{
+    float: left;
+}
+.personal-center-item-logo{
+    width: 25px;
+}
+.personal-center-content-item>div:nth-child(2){
+    margin-left: 15px;
+}
+.personal-center-right{
+       width: 25px;
+    position: absolute;
+    top: 15px;
+    right: 10px
+}
+.personal-center-menu>div{
+    float: left;
+    width: 26%;
+    margin-left: 5%;
+    text-align: center;
+    padding:8px 0;
+}
+.personal-center-menu>div.active{
+    border-bottom:2px solid #f3c647;
+}
+
+.personal-center-contont{
+    padding:20px;
+}
+.personal-centr-information-item{
+    width: 100%;
+    padding:12px 0;
+    border-bottom: 1px solid #dedede;
+    display: table;
+}
+.personal-centr-information-item>div{
+    display: table-cell;
+}
+.personal-centr-information-item>div:first-child{
+    width: 25%;
+    padding-left: 10px;
+}
+.address-name-title{
+    padding: 10px 5px;
+    background: #fbfbfb;
+}
+.contact-personal-wrap{
+    padding: 10px 5px;
+    border-top: 1px solid #dedede;
+    display: table;
+    width: 100%;
+}
+.contact-personal-wrap>label,.contact-personal-wrap>input,.contact-personal-wrap>div{
+    display: table-cell;
+    
+}
+.contact-personal-wrap>label{
+    width: 15%;
+}
+.contact-personal-name-input{
+    width: 42%;
+
+}
+.address-wrap input{
+    height: 30px;
+    border:none;
+    line-height: 30px;
+    outline: none;
+}
+.address-wrap input:focus,.address-wrap input:hover{
+    border:none;
+}
+.contact-personal-sex{
+        border-top: 1px solid #dedede;
+}
+input[type='radio']{
+    width: 18px;
+    position: relative;
+    top: 10px;
+    margin-right: 5px;
+}
+.contact-personal-input-big{
+    width: 98%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

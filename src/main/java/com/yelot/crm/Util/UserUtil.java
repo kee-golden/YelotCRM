@@ -14,4 +14,20 @@ public class UserUtil {
         User user = (User)subject.getSession().getAttribute(Constants.SessionUsername);
         return user;
     }
+
+    /**
+     * 保存到session中
+     * @param key
+     * @param object
+     */
+    public static void setSession(String key,Object object){
+        Subject subject= SecurityUtils.getSubject();
+        subject.getSession().setAttribute(key,object);
+    }
+
+    public static Object getSession(String key){
+        Subject subject= SecurityUtils.getSubject();
+        return subject.getSession().getAttribute(key);
+
+    }
 }

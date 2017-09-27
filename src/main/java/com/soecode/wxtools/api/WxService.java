@@ -1,9 +1,12 @@
 package com.soecode.wxtools.api;
 
+import com.alibaba.fastjson.JSON;
 import com.soecode.wxtools.bean.*;
 import com.soecode.wxtools.bean.WxUserList.WxUser;
 import com.soecode.wxtools.bean.WxUserList.WxUser.WxUserGet;
 import com.soecode.wxtools.bean.result.*;
+import com.soecode.wxtools.bean.result.card.Card;
+import com.soecode.wxtools.bean.result.card.WxCardResult;
 import com.soecode.wxtools.exception.WxErrorException;
 import com.soecode.wxtools.util.DateUtil;
 import com.soecode.wxtools.util.PayUtil;
@@ -20,10 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 统一业务处理类
@@ -87,6 +87,7 @@ public class WxService implements IService{
 				}
 			}
 		}
+		System.out.println("access token:"+WxConfig.getInstance().getAccessToken());
 		return WxConfig.getInstance().getAccessToken();
 	}
 
@@ -820,6 +821,61 @@ public class WxService implements IService{
 		}
 		return result;
 	}
+
+	/**
+	 * 优惠券相关接口,add by kee
+	 * 参数：
+	 * CARD_STATUS_NOT_VERIFY”,待审核；
+	 “CARD_STATUS_VERIFY_FAIL”,审核失败；“CARD_STATUS_VERIFY_OK”，通过审核；
+	 “CARD_STATUS_DELETE”，卡券被商户删除；
+	 “CARD_STATUS_DISPATCH”，在公众平台投放过的卡券；
+	 *
+	 {
+	 "offset": 0,
+	 "count": 100,
+	 "status_list": ["CARD_STATUS_VERIFY_OK", "CARD_STATUS_DISPATCH"]
+	 }
+	 * @return
+	 */
+
+	public List<Card> getCardList(){
+		String postResult = null;
+		WxCardList wxCardList = null;
+		List<Card> cardList = new ArrayList<Card>();
+		try {
+			String url = WxConsts.URL_CARD_IDS_GET_LIST.replace("ACCESS_TOKEN", getAccessToken());
+			String params = "{\"offset\":0,\"count\":20,\"status_list\": [\"CARD_STATUS_VERIFY_OK\", \"CARD_STATUS_DISPATCH\"]}";
+			postResult = post(url,params);
+			System.out.println("kee card:"+postResult);
+			wxCardList = JSON.parseObject(postResult,WxCardList.class);
+			if(wxCardList != null && wxCardList.getCard_id_list() != null){
+				String cardUrl = WxConsts.URL_CARD_GET__LIST.replace("ACCESS_TOKEN", getAccessToken());
+
+				List<String> cardIds = wxCardList.getCard_id_list();
+				String result = null;
+				for (int i = 0; i < cardIds.size(); i++) {
+					String cardId = cardIds.get(i);
+					String cardParams = "{" +
+							"\"card_id\":\""+cardId+"\"" +
+							"}";
+					result = post(cardUrl,cardParams);
+					System.out.println("kee result:"+result);
+					WxCardResult cardResult = JSON.parseObject(result,WxCardResult.class);
+					cardList.add(cardResult.getCard());
+				}
+			}
+
+		} catch (WxErrorException e) {
+			e.printStackTrace();
+		}
+		return cardList;
+
+	}
+
+
+
+
+
 
 	protected CloseableHttpClient getHttpclient() {
 		return this.httpClient;
