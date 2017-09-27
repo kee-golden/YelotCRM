@@ -36,7 +36,7 @@ public interface CustomerMapper {
     @Update("update t_customer set is_alive = #{alive} where id = #{id}")
     void updateAlive(@Param("alive") Integer alive, @Param("id") Long id);
 
-    @Select("select count(*) from t_customer where is_alive = 1")
+//    @Select("select count(*) from t_customer where is_alive = 1")
     int countBySearch(String extra_search);
 
 //    @Select("select * from t_customer where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")

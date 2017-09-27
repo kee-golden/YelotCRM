@@ -33,6 +33,13 @@
         select * from t_customer where id = #{id}
     </select>
 
+    <select id="countBySearch" resultType="Integer">
+        select count(*) from t_customer where is_alive = 1
+        <if test="extra_search != null and extra_seach != ''">
+            and (name like CONCAT('%', #{extra_search}, '%') OR phone like CONCAT('%', #{extra_search}, '%'))
+        </if>
+    </select>
+
     <select id="findBySearch" resultMap="customerResultMap">
         select * from t_customer where is_alive = 1
         <if test="extra_search != null and extra_search != ''">
