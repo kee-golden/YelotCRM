@@ -85,6 +85,7 @@
         from t_repair_order 
         where 1 = 1 
         <if test="create_user_id != null and create_user_id != ''">and create_user_id = #{create_user_id}</if>
+        <if test="three_days_after != null and three_days_after != ''">and pickup_at &lt;= #{three_days_after} and status != '0' and status != '40'</if>
         <if test="extra_search != null and extra_search != ''">
             and (order_no like CONCAT('%', #{extra_search}, '%') or customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>
@@ -100,6 +101,7 @@
         left join t_consult_order t5 on t.consult_order_id = t5.id
         where 1 = 1
         <if test="create_user_id != null and create_user_id != ''">and t.create_user_id = #{create_user_id}</if>
+        <if test="three_days_after != null and three_days_after != ''">and t.pickup_at &lt;= #{three_days_after} and t.status != '0' and t.status != '40'</if>
         <if test="extra_search != null and extra_search != ''">
             and (t.order_no like CONCAT('%', #{extra_search}, '%') or t.customer_phone like CONCAT('%', #{extra_search}, '%'))
         </if>

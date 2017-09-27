@@ -250,6 +250,7 @@ public class RepairOrder {
 		this.createUserName = createUserName;
 	}
 
+    @JsonFormat(pattern = "YYYY-MM-dd", timezone = "GMT+8")
     public Date getPickupAt() {
         return pickupAt;
     }

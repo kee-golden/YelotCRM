@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -107,11 +109,15 @@ public class RepairOrderService {
 	 */
 	public Integer countTotalPage(String extra_search, String type, Long userId) {
 		Long create_user_id = null;
+		String three_days_after = null;
 		
 		if ("my".equals(type)) {
 			create_user_id = userId;
 		}
-		return repairOrderMapper.countTotalPage(extra_search, create_user_id);
+		if("warn".equals(type)){
+			three_days_after = getThreeDaysAfter();
+		}
+		return repairOrderMapper.countTotalPage(extra_search, create_user_id, three_days_after);
 	}
 
 	/**
@@ -121,14 +127,17 @@ public class RepairOrderService {
 	 * @return
 	 */
 	public List<RepairOrder> findByPage(String extra_search, String type, Long userId, PageHelper pageHelper) {
-
 		Long create_user_id = null;
+		String three_days_after = null;
 		
 		if ("my".equals(type)) {
 			create_user_id = userId;
 		}
+		if("warn".equals(type)){
+			three_days_after = getThreeDaysAfter();
+		}
 		
-		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(extra_search, create_user_id, pageHelper);
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(extra_search, create_user_id, three_days_after, pageHelper);
 		setRepairServiceItem(repairOrderList);
 		setRepairStatus(repairOrderList);
 		return repairOrderList;
@@ -226,4 +235,17 @@ public class RepairOrderService {
     public void update(RepairOrder repairOrder) {
 		repairOrderMapper.update(repairOrder);
     }
+    
+    /**
+     * 获取三天后的日期
+     * @return
+     */
+    private String getThreeDaysAfter(){
+		  Calendar calendar = Calendar.getInstance();
+		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		  calendar.add(Calendar.DATE, 3);
+		  String three_days_after = sdf.format(calendar.getTime());
+		  return three_days_after;
+    }
+    
 }
