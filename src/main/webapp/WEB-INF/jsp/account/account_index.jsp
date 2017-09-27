@@ -82,14 +82,14 @@
             require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
                 $.ajax({
-                    url: ctx + '/customer/list',
+                    url: ctx + '/account/list',
                     success: function (data) {
                         $('#content').html(data);
                     }
                 });
 
                 $('#myTab a:first').tab('show');//初始化显示哪个tab
-
+                
                 $('#myTab a').click(function (e) {
 
                     e.preventDefault();//阻止a链接的跳转行为
@@ -102,7 +102,7 @@
                     }
 
                     $.ajax({
-                        url: ctx + '/customer/' + name,
+                        url: ctx + '/account/' + name,
                         success: function (data) {
                             $('#content').html(data);
                         }

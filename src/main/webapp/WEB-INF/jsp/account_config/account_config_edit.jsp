@@ -38,41 +38,37 @@
 				</h6>
 				<div id="customerContainer" class="col-md-12 b-r">
 					<div class="row bottom10">
-							<input type="hidden" id="customerId" data-id="" />
+							<input type="hidden" id="accountConfigId" value="${bean.id}" />
 							<div class="col-md-2">
-								<label><span style="color: red"></span>积分规则</label> <input type="number" placeholder="多少元一个积分" class="form-control" name="customerName" id="customerName"
+								<label><span style="color: red"></span>积分规则</label>
+								<input type="number" placeholder="多少元一个积分" class="form-control" name="yuanPerPoints" id="yuanPerPoints" value="${bean.yuan_per_point}"
 																						  autocomplete="off" >
 							</div>
 
 							<div class="col-md-2">
-								<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone">
+								<label><span style="color: red"></span>白银会员积分数</label>
+								<input type="number" placeholder="积分数" class="form-control" name="firstLevelPoints" id="firstLevelPoints" value="${bean.first_level_points}">
 							</div>
 						<div class="col-md-2">
-							<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone">
+							<label><span style="color: red"></span>黄金会员积分数</label>
+							<input type="number" placeholder="积分数" class="form-control" name="secondLevelPoints" id="secondLevelPoints" value="${bean.second_level_points}">
 						</div>
 						<div class="col-md-2">
-							<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone">
+							<label><span style="color: red"></span>黑金会员积分数</label>
+							<input type="number" placeholder="积分数" class="form-control" name="thirdLevelPoints" id="thirdLevelPoints" value="${bean.third_level_points}">
 						</div>
-
-
-
-
-							<div class="col-md-4">
-								<label>详细地址</label> <input type="text" placeholder="请输入详细地址" class="form-control" name="customerAddress" id="customerAddress" value=""
-														   >
-							</div>
 						</div>
-					<div class="row bottom10">
-						<div class="col-md-2">
-							<label>微信号</label>
-							<input type="text" name="wechatNo" id="wechatNo" placeholder="微信ID号" class="form-control">
-						</div>
-						<div class="col-md-2">
-							<label>微信昵称</label>
-							<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control">
-						</div>
+					<%--<div class="row bottom10">--%>
+						<%--<div class="col-md-2">--%>
+							<%--<label>微信号</label>--%>
+							<%--<input type="text" name="wechatNo" id="wechatNo" placeholder="微信ID号" class="form-control">--%>
+						<%--</div>--%>
+						<%--<div class="col-md-2">--%>
+							<%--<label>微信昵称</label>--%>
+							<%--<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control">--%>
+						<%--</div>--%>
 
-					</div>
+					<%--</div>--%>
 				</div>
 
 			</div>
@@ -97,8 +93,23 @@
 
 
         $("#saveBtn").click(function () {
-
-
+            $.ajax({
+				url:ctx+'/account-config/save',
+				method:'post',
+				type:'json',
+				data:{
+				    id:$('#accountConfigId').val(),
+					yuan_per_point:$('#yuanPerPoints').val(),
+					first_level_points:$('#firstLevelPoints').val(),
+					second_level_points:$('#secondLevelPoints').val(),
+					third_level_points:$('#thirdLevelPoints').val(),
+				},
+				success:function(data){
+				    if(data.code == 1200){
+				        yaya.layer.msg('更新成功');
+					}
+				}
+			});
         });
 
 	});

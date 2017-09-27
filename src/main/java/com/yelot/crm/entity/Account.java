@@ -8,11 +8,8 @@ import java.util.Date;
 public class Account {
     private Long id;
     private String phone;
-    private String password;
     private String wxOpenid;
     private String wxNickname;
-    private String verifyCode;
-    private Date sendMessageAt;
     private Date createAt;
     /**
      * 系统生成的会员ID,要根据这号来生成二维码
@@ -43,14 +40,6 @@ public class Account {
         this.phone = phone;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getWxOpenid() {
         return wxOpenid;
     }
@@ -65,22 +54,6 @@ public class Account {
 
     public void setWxNickname(String wxNickname) {
         this.wxNickname = wxNickname;
-    }
-
-    public String getVerifyCode() {
-        return verifyCode;
-    }
-
-    public void setVerifyCode(String verifyCode) {
-        this.verifyCode = verifyCode;
-    }
-
-    public Date getSendMessageAt() {
-        return sendMessageAt;
-    }
-
-    public void setSendMessageAt(Date sendMessageAt) {
-        this.sendMessageAt = sendMessageAt;
     }
 
     public Date getCreateAt() {
