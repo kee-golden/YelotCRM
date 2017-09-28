@@ -72,8 +72,8 @@
 
             var option = {
                 title : {
-                    text: '某地区蒸发量和降水量',
-                    subtext: '纯属虚构'
+                    text: '个人咨询统计',
+                    subtext: '咨询统计'
                 },
                 tooltip : {
                     trigger: 'axis'
