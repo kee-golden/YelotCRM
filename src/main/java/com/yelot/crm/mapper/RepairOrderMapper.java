@@ -3,6 +3,7 @@ package com.yelot.crm.mapper;
 import java.util.List;
 
 import com.yelot.crm.base.PageHelper;
+import com.yelot.crm.entity.MonthData;
 import com.yelot.crm.entity.RepairOrder;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -87,4 +88,8 @@ public interface RepairOrderMapper {
     int countByShopId(Long shopId);
 
 	void update(RepairOrder repairOrder);
+
+    List<MonthData> findByMonth(@Param("userId") Long userId,
+								@Param("firstCategoryId") Long firstCategoryId,
+								@Param("shopId")Long shopId);
 }

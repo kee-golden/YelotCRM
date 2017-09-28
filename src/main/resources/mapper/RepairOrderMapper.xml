@@ -44,7 +44,12 @@
         <result property="shopAddress" column="shop_address"/>
         <result property="shopPhone" column="shop_phone"/>
     </resultMap>
-
+    
+    <resultMap id="monthData" type="com.yelot.crm.entity.MonthData">
+        <result property="month" column="month"/>
+        <result property="number" column="number"/>
+    </resultMap>
+    
     <select id="find" resultMap="orderResultMap">
         SELECT * from t_repair_order where id = #{id};
     </select>
@@ -254,5 +259,19 @@
         <if test="pickupAt != null">,pickup_at = #{pickupAt}</if>
 		where id = #{id}
     </update>
+    
+    <select id="findByMonth" resultMap="monthData">
+        select month(create_at) month,sum(total_payment) number from t_repair_order where YEAR(create_at) = YEAR(now())
+         <if test="userId != null and userId != ''">
+             and create_user_id = #{userId}
+         </if>
+        <if test="firstCategoryId != null and firstCategoryId != ''">
+           AND first_category_id = #{firstCategoryId}
+        </if>
+        <if test="shopId != null and shopId != ''">
+            AND shop_id = #{shopId}
+        </if>
+         group by MONTH(create_at)
+    </select>
 
 </mapper>
