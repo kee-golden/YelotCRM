@@ -18,6 +18,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 			'method': 'get',
             'data': function (d) {
                 d.extra_search = $('#keywords').val();
+                d.type = "check";
             }
         },
     	'columns': [
@@ -60,7 +61,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         $.ajax({
             url: ctx + '/repair-order/detail',
             data: {
-                orderId: $(this).data('id')
+                orderId: $(this).data('id'),
+                customerVisable: true
             },
             method: 'get',
             dataType: 'html',

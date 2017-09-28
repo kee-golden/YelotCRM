@@ -25,25 +25,27 @@
 				</h5>
 			</div>
 		</div>
-		<hr id="customerHr" color="black" width="100%" style="height: 1px; border: 1px solid black; margin: 0px">
-		<div id="customerDiv" class="col-xs-4" style="width: 100%">
-			<h4 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">客户信息</h4>
-			<br>
-			<table id="customerTable" style="width: 100%">
-				<tr>
-					<td width="25%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">客户姓名：</h5></td>
-					<td width="25%"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.customerName}</h5></td>
-					<td width="25%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">联系方式：</h5></td>
-					<td width="25%"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.customerPhone}</h5></td>
-				</tr>
-				<tr>
-					<td width="25%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">其他联系方式：</h5></td>
-					<td width="25%"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.customerPhoneSecond}</h5></td>
-					<td width="25%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">回寄地址：</h5></td>
-					<td width="25%"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.customerAddress}</h5></td>
-				</tr>
-			</table>
-		</div>
+		<c:if test="${customerVisable}">
+			<hr id="customerHr" color="black" width="100%" style="height: 1px; border: 1px solid black; margin: 0px">
+			<div id="customerDiv" class="col-xs-4" style="width: 100%">
+				<h4 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">客户信息</h4>
+				<br>
+				<table id="customerTable" style="width: 100%">
+					<tr>
+						<td width="25%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">客户姓名：</h5></td>
+						<td width="25%"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.customerName}</h5></td>
+						<td width="25%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">联系方式：</h5></td>
+						<td width="25%"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.customerPhone}</h5></td>
+					</tr>
+					<tr>
+						<td width="25%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">其他联系方式：</h5></td>
+						<td width="25%"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.customerPhoneSecond}</h5></td>
+						<td width="25%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">回寄地址：</h5></td>
+						<td width="25%"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.customerAddress}</h5></td>
+					</tr>
+				</table>
+			</div>
+		</c:if>
 		<hr id="productHr" color="black" width="100%" style="height: 1px; margin: 0px">
 		<div id="productDiv" class="col-xs-4" style="width: 100%; height: 780px">
 			<h4 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">产品信息</h4>

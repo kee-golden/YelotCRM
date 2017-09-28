@@ -14,10 +14,11 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         'serverSide': true,
         'lengthMenu': [10, 20, 50, 100],
         'ajax':{
-            'url':ctx + '/repair-order/query?type=warn',
+            'url':ctx + '/repair-order/query',
 			'method': 'get',
             'data': function (d) {
                 d.extra_search = $('#keywords').val();
+                d.type = "warn";
             }
         },
     	'columns': [
@@ -61,7 +62,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         $.ajax({
             url: ctx + '/repair-order/detail',
             data: {
-                orderId: $(this).data('id')
+                orderId: $(this).data('id'),
+                customerVisable: true
             },
             method: 'get',
             dataType: 'html',

@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
 
 <c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
-<c:set var="CHILD_MENU_CODE" value="RepairOrder_WarnList" />
+<c:set var="CHILD_MENU_CODE" value="RepairOrder_CenterWarnList" />
 
 <script>
 	var ctx = '${ctx}';
@@ -197,7 +197,7 @@
 							<form id="searchFrom" style="margin-top: -20px">
 								<div id="search_Big">
 									<ul class="pull-left" id="otherTab">
-										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号或手机号">
+										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号">
 											<div class="clearfix"></div></li>
 									</ul>
 									<div class="pull-right search_right">
@@ -217,8 +217,6 @@
 							<thead>
 								<tr>
 									<th>订单号</th>
-									<th>客户姓名</th>
-									<th>客户电话</th>
 									<th>产品分类</th>
 									<th>类型</th>
 									<th>门店</th>
@@ -245,7 +243,7 @@
 	</div>
 	<script src="${ctx}/static/require/require.js"></script>
 	<script src="${ctx}/static/require/require.config.js"></script>
-	<script src="${ctx}/module-js/order/repair_order_warn.js"></script>
+	<script src="${ctx}/module-js/order/repair_order_centerWarn.js"></script>
 
 </body>
 

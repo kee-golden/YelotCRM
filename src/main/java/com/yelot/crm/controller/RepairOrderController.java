@@ -253,19 +253,34 @@ public class RepairOrderController {
         return "repair_order/repair_order_mylist";
     }
 
-    @RequestMapping("checklist")
-    public String checklist(){
-        return "repair_order/repair_order_checklist";
-    }
-
     @RequestMapping("alllist")
     public String alllist(){
         return "repair_order/repair_order_alllist";
     }
 
+    @RequestMapping("checklist")
+    public String checklist(){
+        return "repair_order/repair_order_checklist";
+    }
+
     @RequestMapping("warnlist")
     public String warnlist(){
         return "repair_order/repair_order_warnlist";
+    }
+
+    @RequestMapping("centerAlllist")
+    public String centerAlllist(){
+        return "repair_order/repair_order_centerAlllist";
+    }
+
+    @RequestMapping("centerChecklist")
+    public String centerChecklist(){
+        return "repair_order/repair_order_centerChecklist";
+    }
+
+    @RequestMapping("centerWarnlist")
+    public String centerWarnlist(){
+        return "repair_order/repair_order_centerWarnlist";
     }
 
     /**
@@ -275,8 +290,8 @@ public class RepairOrderController {
     @ResponseBody
     @RequestMapping("query")
     public Table queryOrder(Model model,
-        @RequestParam(value = "type", defaultValue = "")String type,
         @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
+        @RequestParam(value = "type", defaultValue = "")String type,
         @RequestParam(value = "start", defaultValue = "0") int start,
         @RequestParam(value = "length", defaultValue = "10") int length) {
     	
@@ -299,6 +314,7 @@ public class RepairOrderController {
     @RequestMapping("check-query")
     public Table queryCheckOrder(Model model,
                                  @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
+                                 @RequestParam(value = "type", defaultValue = "")String type,
                                  @RequestParam(value = "start", defaultValue = "0") int start,
                                  @RequestParam(value = "length", defaultValue = "10") int length){
         PageHelper pageHelper = new PageHelper();
@@ -350,14 +366,14 @@ public class RepairOrderController {
                 || statusList.contains(RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode())
                 || statusList.contains(RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode())
                 || statusList.contains(RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode())){//状态为2，客服主管审核状态，必须审核本门店的订单
-            int pageCount = repairOrderService.countTotalPageCheckListAndShop(extra_search, statusList,user.getShop_id());
-            List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckListAndShop(extra_search,statusList,pageHelper,user.getShop_id());
+            int pageCount = repairOrderService.countTotalPageCheckListAndShop(extra_search, statusList, user.getShop_id(), type);
+            List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckListAndShop(extra_search,statusList,pageHelper,user.getShop_id(),type);
             return new Table(pageCount, pageCount, repairOrderList);
         }
 
 
-        int pageCount = repairOrderService.countTotalPageCheckList(extra_search, statusList);
-        List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckList(extra_search,statusList,pageHelper);
+        int pageCount = repairOrderService.countTotalPageCheckList(extra_search, statusList, type);
+        List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckList(extra_search,statusList,pageHelper,type);
 
         return new Table(pageCount, pageCount, repairOrderList);
 
@@ -370,9 +386,10 @@ public class RepairOrderController {
      * @return
      */
     @RequestMapping("detail")
-    public String findRepairOrderByOrderId(Model model, Long orderId){
+    public String findRepairOrderByOrderId(Model model, Long orderId, Boolean customerVisable){
         RepairOrder repairOrder = repairOrderService.findRepairOrderByOrderId(orderId);
         model.addAttribute("repairOrder", repairOrder);
+        model.addAttribute("customerVisable", customerVisable);
         return "repair_order/repair_order_detail";
     }
 

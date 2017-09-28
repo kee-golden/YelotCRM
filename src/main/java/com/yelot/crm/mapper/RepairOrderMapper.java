@@ -30,7 +30,7 @@ public interface RepairOrderMapper {
 	 * @param extra_search
 	 * @return
 	 */
-	Integer countTotalPage(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("three_days_after") String three_days_after);
+	Integer countTotalPage(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("three_days_after") String three_days_after, @Param("type") String type);
 	
 	/**
 	 * 分页查询
@@ -38,7 +38,7 @@ public interface RepairOrderMapper {
 	 * @param pageHelper
 	 * @return
 	 */
-	List<RepairOrder> findByPage(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("three_days_after") String three_days_after, @Param("pageHelper") PageHelper pageHelper);
+	List<RepairOrder> findByPage(@Param("extra_search") String extra_search, @Param("create_user_id") Long create_user_id, @Param("three_days_after") String three_days_after, @Param("type") String type, @Param("pageHelper") PageHelper pageHelper);
 	
 	/**
 	 * 查询服务名
@@ -47,10 +47,10 @@ public interface RepairOrderMapper {
 	 */
 	String findServiceItemName(String id);
 
-    int countTotalPageCheckList(@Param("extra_search") String extra_search, @Param("statusList") List<String> statusList);
+    int countTotalPageCheckList(@Param("extra_search") String extra_search, @Param("statusList") List<String> statusList, @Param("type") String type);
 
 	List<RepairOrder> findByPageCheckList(@Param("extra_search") String extra_search, @Param("statusList") List<String> statusList,
-										  @Param("pageHelper") PageHelper pageHelper);
+										  @Param("pageHelper") PageHelper pageHelper, @Param("type") String type);
 
 	/**
 	 * 客服主管，仅仅查看自己门店的审核订单
@@ -59,7 +59,7 @@ public interface RepairOrderMapper {
 	 * @return
 	 */
 	int countTotalPageCheckListAndShop(@Param("extra_search") String extra_search, @Param("statusList") List<String> statusList,
-									   @Param("shopId") Long shopId);
+									   @Param("shopId") Long shopId, @Param("type") String type);
 
 	/**
 	 * 	 * 客服主管，仅仅查看自己门店的审核订单
@@ -69,7 +69,7 @@ public interface RepairOrderMapper {
 	 * @return
 	 */
 	List<RepairOrder> findByPageCheckListAndShop(@Param("extra_search") String extra_search, @Param("statusList") List<String> statusList,
-												 @Param("pageHelper") PageHelper pageHelper,@Param("shopId") Long shopId);
+												 @Param("pageHelper") PageHelper pageHelper,@Param("shopId") Long shopId, @Param("type") String type);
 
 	void updateOrderStatusAndImagesPath(@Param("orderId") Long orderId,
 			@Param("approveStatus") int approveStatus,

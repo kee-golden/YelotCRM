@@ -18,13 +18,11 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 			'method': 'get',
             'data': function (d) {
                 d.extra_search = $('#keywords').val();
-                d.type = "all";
+                d.type = "centerWarn";
             }
         },
     	'columns': [
     			{'data' : 'orderNo'},
-    			{'data' : 'customerName'},
-    			{'data' : 'customerPhone'},
     			{'data' : 'categoryName'},
     			{'data' : 'typeName'},
     			{'data' : 'shopName'},
@@ -32,7 +30,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'statusName'},
     			{'data' : 'createUserName'},
     			{'data' : 'createAt'},
-    			{'data' : 'consultOrderNo'},
+    			{'data' : 'pickupAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
     				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
     				+ '<a href="javascript:;;" data-id="' + data + '" class="J_workflow"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
@@ -63,7 +61,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             url: ctx + '/repair-order/detail',
             data: {
                 orderId: $(this).data('id'),
-                customerVisable: true
+                type: "centerWarn"
             },
             method: 'get',
             dataType: 'html',
@@ -75,46 +73,12 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     area: ['800px','600px'],
                     scrollbar:true,
                     shadeClose: true,
-                    btn: ['客户单打印','内部单打印'],
+                    btn: '内部单打印',
                     success: function (layero, index) {
 
 
                     },
                     yes: function (index) {
-                    	$("#remarkHr").css("display","block");
-                    	$("#remarkDiv").css("display","block");
-                    	
-                    	$("#clauseHr").css("display","block");
-                    	$("#clauseDiv").css("display","block");
-                    	
-                    	$("#writeHr").css("display","block");
-                    	$("#writeDiv").css("display","block");
-
-                    	$("#precheckImagesList").css("display","none");
-                    	$("#qccheckImagesList").css("display","none");
-                    	
-                    	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
-                    	var footstr = "</body></html>";  
-                    	var newstr = document.all.item("repairOrderDetail").innerHTML;
-                        printWindow = window.open();
-                        printWindow.document.write(headstr + newstr + footstr);
-                        
-                    	$("#remarkHr").css("display","none");
-                    	$("#remarkDiv").css("display","none");
-                    	
-                    	$("#clauseHr").css("display","none");
-                    	$("#clauseDiv").css("display","none");
-                    	
-                    	$("#writeHr").css("display","none");
-                    	$("#writeDiv").css("display","none");
-
-                    	$("#precheckImagesList").removeAttr("style");
-                    	$("#qccheckImagesList").removeAttr("style");
-                    },
-                    btn2: function (index) {
-                    	$("#customerHr").css("display","none");
-                		$("#customerDiv").css("display","none");
-
                     	$("#precheckImagesList").css("display","none");
                     	$("#qccheckImagesList").css("display","none");
                 		
@@ -123,9 +87,6 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     	var newstr = document.all.item("repairOrderDetail").innerHTML;
                         printWindow = window.open();
                         printWindow.document.write(headstr + newstr + footstr);
-
-                    	$("#customerHr").css("display","block");
-                		$("#customerDiv").css("display","block");
 
                     	$("#precheckImagesList").removeAttr("style");
                     	$("#qccheckImagesList").removeAttr("style");
@@ -142,7 +103,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         $.ajax({
             url: ctx + '/repair-order-operators/workflow',
             data: {
-                orderId: $(this).data('id')
+                orderId: $(this).data('id'),
+                customerVisable: false
             },
             method: 'get',
             dataType: 'html',

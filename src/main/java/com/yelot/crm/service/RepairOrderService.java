@@ -117,7 +117,7 @@ public class RepairOrderService {
 		if("warn".equals(type)){
 			three_days_after = getThreeDaysAfter();
 		}
-		return repairOrderMapper.countTotalPage(extra_search, create_user_id, three_days_after);
+		return repairOrderMapper.countTotalPage(extra_search, create_user_id, three_days_after, type);
 	}
 
 	/**
@@ -137,18 +137,18 @@ public class RepairOrderService {
 			three_days_after = getThreeDaysAfter();
 		}
 		
-		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(extra_search, create_user_id, three_days_after, pageHelper);
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(extra_search, create_user_id, three_days_after, type, pageHelper);
 		setRepairServiceItem(repairOrderList);
 		setRepairStatus(repairOrderList);
 		return repairOrderList;
 	}
 
-    public int countTotalPageCheckList(String extra_search, List<String> statusList) {
-		return repairOrderMapper.countTotalPageCheckList(extra_search,statusList);
+    public int countTotalPageCheckList(String extra_search, List<String> statusList, String type) {
+		return repairOrderMapper.countTotalPageCheckList(extra_search,statusList,type);
     }
 
-	public List<RepairOrder> findByPageCheckList(String extra_search, List<String> statusList,PageHelper pageHelper) {
-		List<RepairOrder> repairOrderList =  repairOrderMapper.findByPageCheckList(extra_search,statusList,pageHelper);
+	public List<RepairOrder> findByPageCheckList(String extra_search, List<String> statusList,PageHelper pageHelper, String type) {
+		List<RepairOrder> repairOrderList =  repairOrderMapper.findByPageCheckList(extra_search,statusList,pageHelper,type);
 		setRepairServiceItem(repairOrderList);
 		setRepairStatus(repairOrderList);
 		return repairOrderList;
@@ -207,12 +207,12 @@ public class RepairOrderService {
 		repairOrder.setProductInfoList(productInfoList);
 	}
 
-	public int countTotalPageCheckListAndShop(String extra_search, List<String> statusList, Long shopId) {
-		return repairOrderMapper.countTotalPageCheckListAndShop(extra_search,statusList,shopId);
+	public int countTotalPageCheckListAndShop(String extra_search, List<String> statusList, Long shopId, String type) {
+		return repairOrderMapper.countTotalPageCheckListAndShop(extra_search,statusList,shopId,type);
 	}
 
-	public List<RepairOrder> findByPageCheckListAndShop(String extra_search, List<String> statusList, PageHelper pageHelper, Long shopId) {
-		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageCheckListAndShop(extra_search,statusList,pageHelper,shopId);
+	public List<RepairOrder> findByPageCheckListAndShop(String extra_search, List<String> statusList, PageHelper pageHelper, Long shopId, String type) {
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPageCheckListAndShop(extra_search,statusList,pageHelper,shopId,type);
 		setRepairServiceItem(repairOrderList);
 		setRepairStatus(repairOrderList);
 		return repairOrderList;
