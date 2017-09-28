@@ -9,7 +9,7 @@
     <%@include file="/WEB-INF/common/static.jsp" %>
 
     <c:set var="PARENT_MENU_CODE" value="ConsultStatistics" />
-    <c:set var="CHILD_MENU_CODE" value="MyConsultStatistics"/>
+    <c:set var="CHILD_MENU_CODE" value="TotalConsultStatistics"/>
     <script>
         var ctx = '${ctx}';
     </script>
@@ -129,7 +129,7 @@
                 ]
             };
             $.ajax({
-                url:ctx+"/consult-statistics/my-month-data",
+                url:ctx+"/consult-statistics/total-month-data",
                 success:function (data) {
                     option.series[0].data = data.data.sum;
                     myChart.hideLoading();
@@ -152,7 +152,7 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    data:['蒸发量']
+                    data:['咨询量']
                 },
                 toolbox: {
                     show : true,
@@ -202,7 +202,7 @@
 
 
             $.ajax({
-                url:ctx+"/consult-statistics/my-month-category-data",
+                url:ctx+"/consult-statistics/total-month-category-data",
                 success:function (data) {
                     option2.series= data.data.series;
                     myChart2.hideLoading();

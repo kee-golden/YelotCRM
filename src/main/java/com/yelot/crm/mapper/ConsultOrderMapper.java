@@ -3,6 +3,7 @@ package com.yelot.crm.mapper;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.ConsultOrder;
 
+import com.yelot.crm.entity.MonthData;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -37,4 +38,8 @@ public interface ConsultOrderMapper {
     void update(ConsultOrder consultOrder);
 
     void updateStatus(@Param("id") Long id, @Param("status") int status);
+
+    List<MonthData> findByMonth(@Param("userId") Long userId,
+								@Param("firstCategoryName") String firstCategoryName,
+								@Param("shopId")Long shopId);
 }

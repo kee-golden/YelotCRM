@@ -8,8 +8,8 @@
 
     <%@include file="/WEB-INF/common/static.jsp" %>
 
-    <c:set var="PARENT_MENU_CODE" value="ConsultStatistics" />
-    <c:set var="CHILD_MENU_CODE" value="MyConsultStatistics"/>
+    <c:set var="PARENT_MENU_CODE" value="CloseRatioStatistics" />
+    <c:set var="CHILD_MENU_CODE" value="MyCloseRatioStatistics"/>
     <script>
         var ctx = '${ctx}';
     </script>
@@ -78,14 +78,14 @@
 
             var option = {
                 title : {
-                    text: '个人咨询统计',
-                    subtext: '咨询统计'
+                    text: '个人成交率统计',
+                    subtext: '成交率统计'
                 },
                 tooltip : {
                     trigger: 'axis'
                 },
                 legend: {
-                    data:['蒸发量']
+                    data:['成交量']
                 },
                 toolbox: {
                     show : true,
@@ -111,7 +111,7 @@
                 ],
                 series : [
                     {
-                        name:'咨询量',
+                        name:'成交率',
                         type:'bar',
                         data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
                         markPoint : {
