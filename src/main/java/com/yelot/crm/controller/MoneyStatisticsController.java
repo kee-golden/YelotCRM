@@ -2,15 +2,19 @@ package com.yelot.crm.controller;
 
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
-import com.yelot.crm.entity.BarMonthData;
-import com.yelot.crm.entity.Category;
-import com.yelot.crm.entity.MonthData;
+import com.yelot.crm.base.PageHelper;
+import com.yelot.crm.entity.*;
 import com.yelot.crm.mapper.CategoryMapper;
 import com.yelot.crm.mapper.RepairOrderMapper;
 
+import com.yelot.crm.mapper.ShopMapper;
+import com.yelot.crm.mapper.StatisticOrderMapper;
+import com.yelot.crm.vo.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -29,6 +33,12 @@ public class MoneyStatisticsController {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private ShopMapper shopMapper;
+
+    @Autowired
+    private StatisticOrderMapper statisticOrderMapper;
+
     @RequestMapping("my")
     public String myMoney(){
         return "money_statistics/my_money_statistics";
@@ -39,6 +49,86 @@ public class MoneyStatisticsController {
 
         return "money_statistics/shop_money_statistics";
     }
+
+    @RequestMapping("super")
+    public String superStatistic(Model model){
+        return "money_statistics/super_kpi_statistics";
+    }
+
+    @RequestMapping("person-statistic")
+    public String personStatistic(Model model){
+
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("shopList",shopList);
+        List<Category> categoryList = categoryMapper.findAllFirstClass();
+        model.addAttribute("categoryList",categoryList);
+
+        return "money_statistics/person_statistics";
+
+    }
+
+    /**
+     * 个人统计
+     * @param model
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("person-query")
+    public Table personQuery(Model model,String startDate,String endDate,Long shopId,Long categoryId,
+                             @RequestParam(value = "start", defaultValue = "0") int start,
+                             @RequestParam(value = "length", defaultValue = "10") int length){
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(start);
+        pageHelper.setSize(length);
+
+        int pageCount = statisticOrderMapper.countTotalPageByPerson(startDate,endDate,shopId);
+
+        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findPersonStatisticOrder(startDate,endDate,shopId,categoryId,pageHelper);
+
+        return new Table(pageCount, pageCount, statisticOrderList);
+    }
+
+    /**
+     * 门店统计
+     * @param model
+     * @return
+     */
+    @RequestMapping("shop-statistic")
+    public String shopStatistic(Model model){
+
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("shopList",shopList);
+        List<Category> categoryList = categoryMapper.findAllFirstClass();
+        model.addAttribute("categoryList",categoryList);
+        return "money_statistics/shop_statistics";
+    }
+
+    @ResponseBody
+    @RequestMapping("shop-query")
+    public Table shopQuery(Model model,
+                           @RequestParam(value = "startDate", defaultValue = "")String startDate,
+                           @RequestParam(value = "endDate", defaultValue = "")String endDate,
+                           Long shopId,Long categoryId,String type,
+                             @RequestParam(value = "start", defaultValue = "0") int start,
+                             @RequestParam(value = "length", defaultValue = "10") int length){
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(start);
+        pageHelper.setSize(length);
+
+        int pageCount = statisticOrderMapper.countTotalPageByShop(startDate,endDate,shopId,categoryId,type);
+
+        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findShopStatisticOrder(startDate,endDate,shopId,categoryId,type,pageHelper);
+
+        return new Table(pageCount, pageCount, statisticOrderList);
+    }
+
+
+
+
 
     @RequestMapping("total")
     public String totalMoney(){

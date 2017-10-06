@@ -338,28 +338,10 @@ public class RepairOrderController {
 
             }
 
-//            String []subStatus = roleStatusMapper.find(roleId).getStatus().split(",");
-//            for (int j = 0; subStatus != null && j < subStatus.length; j++) {
-//                if(statusList.contains(subStatus[j])){
-//                    continue;
-//                }
-//                statusList.add(subStatus[j]);
-//            }
 
         }
 
-//        String statusTemp = "";
-//        for (int i = 0; i < statusList.size(); i++) {
-//            statusTemp += statusList.get(i)+",";
-//        }
-//        //去除最后一个分隔符"，"
-//        String statusString = "";
-//        if(statusTemp.startsWith(",")){
-//            statusTemp = statusTemp.substring(1);//去除逗号
-//        }
-//        if(statusTemp.length() >= 2){
-//            statusString = statusTemp.substring(0,statusTemp.lastIndexOf(","));
-//        }
+
 
         //根据客服主管仅仅能查看自己门店的订单，需要特殊处理一下。
         if(statusList.contains(RepairOrderStatus.SUBMIT.getCode()) || statusList.contains(RepairOrderStatus.CHECKOUT_APPROVE.getCode())

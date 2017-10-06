@@ -152,8 +152,9 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         var repairDesc = $('#repairDesc').val();
         var typeName = $('#typeName').val();
         var advancePayment = $('#advancePayment').val();
-        var labourPayment = $('#labourPayment').val() == "待定" ? -1 : $('#labourPayment').val();
-        var materialPayment = $('#materialPayment').val() == "待定" ? -1 : $('#materialPayment').val();
+        var labourPayment = $('#labourPaymentFlag').val() == "0" ? -1 : $('#labourPayment').val();
+        var materialPayment = $('#materialPaymentFlag').val() == "0" ? -1 : $('#materialPayment').val();
+        var discountAmountPayment = $('#discountAmountPaymentFlag').val() == "0" ? -1 : $('#discountAmountPayment').val();
         var pickupDate = $('#pickupDate').val();
         console.log(labourPayment+","+labourPayment+","+materialPayment);
         $.ajax({
@@ -175,6 +176,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 advancePayment:advancePayment,
                 labourPayment:labourPayment,
                 materialPayment:materialPayment,
+                discountAmountPayment:discountAmountPayment,
                 pickupDate:pickupDate
 
             },
@@ -296,9 +298,6 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
         console.log(firstCategory+","+secondCategory);
         ajaxAttributeAndService(firstCategory,secondCategory);
-
-
-
     }
 
     /**
@@ -386,23 +385,38 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
     $("#labourPaymentFlag").change(function() {
     	if($("#labourPaymentFlag").val() == "0"){
-    		$("#labourPayment").val("待定");
+    		// $("#labourPayment").val("待定");
     		$("#labourPayment").attr("readonly", true);
     	} else {
-    		$("#labourPayment").val("");
+    		// $("#labourPayment").val("");
     		$("#labourPayment").attr("readonly", false);
     	}
 	});
 
     $("#materialPaymentFlag").change(function() {
     	if($("#materialPaymentFlag").val() == "0"){
-    		$("#materialPayment").val("待定");
+    		// $("#materialPayment").val("待定");
     		$("#materialPayment").attr("readonly", true);
     	} else {
-    		$("#materialPayment").val("");
+    		// $("#materialPayment").val("");
     		$("#materialPayment").attr("readonly", false);
     	}
 	});
+
+    $("#discountAmountPaymentFlag").change(function() {
+        console.log("discountAmount");
+        if($("#discountAmountPaymentFlag").val() == "0"){
+            console.log("discountAmount 0");
+
+            // $("#discountAmountPayment").val("待定");
+            $("#discountAmountPayment").attr("readonly", true);
+        } else {
+            console.log("discountAmount 1");
+
+            // $("#discountAmountPayment").val("");
+            $("#discountAmountPayment").attr("readonly", false);
+        }
+    });
 
 });
 

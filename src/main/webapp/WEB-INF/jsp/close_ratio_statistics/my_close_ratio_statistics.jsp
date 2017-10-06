@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <title>咨询单统计</title>
+    <title>成交率统计</title>
 
     <%@include file="/WEB-INF/common/static.jsp" %>
 

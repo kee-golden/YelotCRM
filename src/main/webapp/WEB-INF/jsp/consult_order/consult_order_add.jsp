@@ -41,7 +41,7 @@
 					<div class="row bottom10">
 							<input type="hidden" id="customerId" data-id="" />
 							<div class="col-md-2">
-								<label><span style="color: red">*</span>用户名</label> <input type="text" placeholder="请输入用户名" class="form-control" name="customerName" id="customerName"
+								<label><span style="color: red">*</span>客户名称</label> <input type="text" placeholder="请输入客户名称" class="form-control" name="customerName" id="customerName"
 																						  autocomplete="off" >
 							</div>
 

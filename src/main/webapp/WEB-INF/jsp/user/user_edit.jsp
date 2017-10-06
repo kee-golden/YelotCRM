@@ -39,8 +39,18 @@
                                             </c:if>
                                     >${shop.name}</option>
                                 </c:forEach>
-                                <option value="">不限</option>
+                                <%--<option value="">不限</option>--%>
                             </select>
+                        </div>
+                        <div class="check-box">
+                            <label>
+                            <input type="checkbox" name="is_repair_man" value="1">维修人员
+                            </label>
+                        </div>
+                        <div class="check-box">
+                            <label>
+                            <input type="checkbox"  name="is_readonly"  value="1">只读权限
+                            </label>
                         </div>
                     </div>
                 </c:if>
@@ -63,7 +73,7 @@
                                    >
                         </div>
                         <div class="form-group">
-                            <label>部门</label>
+                            <label>门店</label>
                             <select name="shopId" class="from-control">
                                 <c:forEach items="${shopList}" var="shop">
                                     <option value="${shop.id}"
@@ -72,8 +82,21 @@
                                             </c:if>
                                     >${shop.name}</option>
                                 </c:forEach>
-                                <option value="">不限</option>
+                                <%--<option value="">不限</option>--%>
                             </select>
+                        </div>
+                        <div class="check-box">
+                                <%--<label>是否为维修人员</label>--%>
+                            <label>
+                                <input type="checkbox" name="is_repair_man"  value="1" <c:if test="${bean.is_repair_man eq 1}">checked="checked"</c:if>
+                                >维修人员
+                            </label>
+                        </div>
+                        <div class="check-box">
+                            <label>
+                                <input type="checkbox"  name="is_readonly"  value="1" <c:if test="${bean.is_readonly eq 1}">checked="checked"</c:if>
+                                >只读权限
+                            </label>
                         </div>
                     </div>
                 </c:if>

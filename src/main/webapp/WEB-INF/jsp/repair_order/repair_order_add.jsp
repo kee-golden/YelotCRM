@@ -100,7 +100,6 @@
 				</h6>
 				<div class="row">
 					<div>
-						<%--<h3 class="m-t-none m-b">基础信息</h3>--%>
 
 						<div id="category" class="row bottom10 left20">
 							<label class="left20">分类:</label>
@@ -180,7 +179,7 @@
 							</select>
 						</div>
 						<div class="col-md-2">
-							<label>预付款:</label> <input type="text"  class="form-control" id="advancePayment">
+							<label>预付款:</label> <input type="number"  class="form-control" id="advancePayment">
 						</div>
 						<div class="col-md-2">
 							<label>工费：</label>
@@ -188,7 +187,7 @@
 								<option value="0">待定</option>
 								<option value="1" selected="selected">确定</option>
 							</select> 
-							<input type="text" class="form-control" id="labourPayment">
+							<input type="number" class="form-control" id="labourPayment">
 						</div>
 						<div class="col-md-2">
 							<label>材料费：</label>
@@ -196,12 +195,18 @@
 								<option value="0">待定</option>
 								<option value="1" selected="selected">确定</option>
 							</select> 
-							 <input type="text" class="form-control" id="materialPayment">
+							 <input type="number" class="form-control" id="materialPayment">
+						</div>
+						<div class="col-md-2">
+							<label>优惠金额：</label>
+							<select id="discountAmountPaymentFlag">
+								<option value="0">待定</option>
+								<option value="1" selected="selected">确定</option>
+							</select>
+							<input type="number" class="form-control" id="discountAmountPayment">
 						</div>
 						<div class="col-md-2"><label>交货时间：</label> <input type="text" class="form-control" id="pickupDate"></div>
 					</div>
-					<%--<div class="col-lg-6  col-md-12"></div>--%>
-					<%--<div class="col-lg-6 col-md-12"></div>--%>
 				</div>
 
 			</div>

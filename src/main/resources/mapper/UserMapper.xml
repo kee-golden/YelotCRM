@@ -13,6 +13,8 @@
         <result property="is_alive" column="is_alive"/>
         <result property="create_at" column="create_at"/>
         <result property="update_at" column="update_at"/>
+        <result property="is_repair_man" column="is_repair_man"/>
+        <result property="is_readonly" column="is_readonly"/>
     </resultMap>
 
     <sql id="userBasicMap">
@@ -20,12 +22,19 @@
     </sql>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into t_user(name,password,realname,phone,emp_no,is_alive,create_at,update_at,shop_id)
-            values(#{name},#{password},#{realname},#{phone},#{emp_no},#{is_alive},#{create_at},#{update_at},#{shop_id})
+        insert into t_user(name,password,realname,phone,emp_no,is_alive,create_at,update_at,shop_id,is_repair_man,is_readonly)
+            values(#{name},#{password},#{realname},#{phone},#{emp_no},#{is_alive},#{create_at},#{update_at},#{shop_id},#{is_repair_man},#{is_readonly})
     </insert>
 
+    <select id="find" resultMap="userResultMap">
+        SELECT * from t_user where id = #{id}
+
+    </select>
+
     <select id="findBySearch" resultMap="userResultMap">
-        select u.*,s.name shopName from t_user u,t_shop s where u.shop_id = s.id and u.is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}
+        select u.*,s.name shopName from t_user u,t_shop s where u.shop_id = s.id and u.is_alive = 1
+        ORDER by id desc
+        limit #{pageHelper.offset},#{pageHelper.size}
 
     </select>
 

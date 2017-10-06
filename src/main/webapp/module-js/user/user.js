@@ -33,6 +33,15 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
             {'data': 'realname'},
             {'data': 'phone'},
             {'data': 'shopName'},
+            {'data': 'is_repair_man',
+                'render':function(data){
+                    if(data == 1){
+                        return "是";
+                    }else{
+                        return "否";
+                    }
+                }
+            },
             {'data': 'create_at'},
             {'data': 'id',
                 'render': function (data, type, full, meta) {

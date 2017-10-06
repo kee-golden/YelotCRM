@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.StatisticOrderMapper">
+    <resultMap id="orderResultMap" type="com.yelot.crm.entity.StatisticOrder">
+        <id property="userName" column="userName"/>
+        <result property="realname" column="realname"/>
+        <result property="phone" column="phone"/>
+        <result property="shopName" column="shopName"/>
+        <result property="time" column="time"/>
+        <result property="totalPayment" column="totalPayment"/>
+        <result property="totalCount" column="totalCount"/>
+
+    </resultMap>
+    
+
+    <!-- 个人统计-->
+    <select id="countTotalPageByPerson" resultType="java.lang.Integer">
+        select count(*) 
+        from t_user
+        where 1 = 1 and is_alive = 1
+        <if test="shopId != null and shopId != ''">and shop_id = #{shopId}</if>
+
+    </select>
+
+    <select id="findPersonStatisticOrder" resultMap="orderResultMap">
+        SELECT us.name userName,us.realname,us.phone,
+        IFNULL(temp.totalPayment,0) as totalPayment,IFNULL(temp.totalCount,0) as totalCount,
+        (SELECT name FROM t_shop where id = us.shop_id) shopName
+        from t_user us LEFT JOIN (
+        SELECT ro.create_user_id userId, sum(ro.total_payment) totalPayment,count(*) totalCount from t_repair_order ro
+        LEFT JOIN t_shop s ON ro.shop_id = s.id
+        WHERE 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="shopId != null and shopId != ''">and ro.shop_id = #{shopId}</if>
+        <if test="categoryId != null and categoryId != ''">and ro.first_category_id = #{categoryId}</if>
+        group by ro.create_user_id
+        ) temp ON us.id = temp.userId
+        WHERE us.is_alive = 1
+        <if test="shopId != null and shopId != ''">and us.shop_id = #{shopId}</if>
+        limit #{pageHelper.offset},#{pageHelper.size}
+    </select>
+
+    <!-- 门店统计,没有选中时间段，统计最近一个月之内 -->
+
+    <select id="countTotalPageByShop" resultType="java.lang.Integer">
+        select count(*) from (SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') time,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') time,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') time,</if>
+        count(*) countno from t_repair_order ro
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="startDate == '' and endDate == ''">
+            and YEAR(create_at) = YEAR(curdate())</if>
+        <if test="shopId != null and shopId != ''"> and shop_id = #{shopId}</if>
+        <if test="categoryId != null and categoryId != ''">and ro.first_category_id = #{categoryId}</if>
+        group by time) temp
+    </select>
+
+    <select id="findShopStatisticOrder" resultMap="orderResultMap">
+        SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') time,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') time,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') time,</if>
+        sum(total_payment) totalPayment,count(*) totalCount from t_repair_order ro
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="startDate == '' and endDate == ''">
+            and YEAR(create_at) = YEAR(curdate())</if>
+        <if test="shopId != null and shopId != ''"> and shop_id = #{shopId}</if>
+        <if test="categoryId != null and categoryId != ''">and ro.first_category_id = #{categoryId}</if>
+
+        group by time
+        limit #{pageHelper.offset},#{pageHelper.size}
+
+    </select>
+
+    <!-- 咨询，个人统计  AND status = 3 -->
+    <select id="findConsultPersonStatisticOrder" resultMap="orderResultMap">
+        SELECT us.name userName,us.realname,us.phone,
+        IFNULL(temp.totalCount,0) as totalCount,
+        (SELECT name FROM t_shop where id = us.shop_id) shopName
+        from t_user us LEFT JOIN (
+        SELECT co.create_user_id userId,count(*) totalCount from t_consult_order co
+        WHERE 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        group by co.create_user_id
+        ) temp ON us.id = temp.userId
+        WHERE us.is_alive = 1
+        <if test="shopId != null and shopId != ''">and us.shop_id = #{shopId}</if>
+        <if test="categoryName != null and categoryName != ''">and co.first_category_name = #{categoryName}</if>
+
+        limit #{pageHelper.offset},#{pageHelper.size}
+    </select>
+
+    <!-- 咨询门店统计 -->
+    <select id="countTotalPageByConsultShop" resultType="java.lang.Integer">
+        select count(*) from (SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') time,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') time,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') time,</if>
+        count(*) countno from t_consult_order co
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        <if test="startDate == '' and endDate == ''">
+            and YEAR(create_at) = YEAR(curdate())</if>
+        <if test="shopId != null and shopId != ''"> and shop_id = #{shopId}</if>
+        <if test="categoryName != null and categoryName != ''">and ro.first_category_name = #{categoryName}</if>
+        group by time) temp
+    </select>
+
+    <select id="findConsultShopStatisticOrder" resultMap="orderResultMap">
+        SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') time,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') time,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') time,</if>
+        count(*) totalCount from t_consult_order co
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        <if test="startDate == '' and endDate == ''">
+            and YEAR(create_at) = YEAR(curdate())</if>
+        <if test="shopId != null and shopId != ''"> and shop_id = #{shopId}</if>
+        <if test="categoryName != null and categoryName != ''">and co.first_category_name = #{categoryName}</if>
+
+        group by time
+        limit #{pageHelper.offset},#{pageHelper.size}
+    </select>
+
+</mapper>

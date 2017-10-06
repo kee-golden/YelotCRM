@@ -9,10 +9,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * Created by kee on 17/5/30.
  */
-/**
- * @author xyzloveabc
- * @2017年9月1日
- */
 public class RepairOrder {
     private Long id;
     /**
@@ -45,8 +41,6 @@ public class RepairOrder {
      * 订单创建者姓名
      */
     private String createUserName;
-
-
 
     /**
      * 交货日期,预估的时间
@@ -89,7 +83,21 @@ public class RepairOrder {
     private int advancePayment;
 
     /**
-     * 未付款，代付款，这个值一般需要后期维修鉴定后才能填写完成
+     * 人工费，保留小数2位，存到数据库中扩大100倍
+     */
+    private int labourPayment;
+
+    /**
+     * 材料费，保留小数2位，存到数据库中扩大100倍
+     */
+    private int materialPayment;
+    /**
+     * 优惠金额，保留小数2位，存到数据库中扩大100倍
+     */
+    private int discountAmountPayment;
+
+    /**
+     * 未付款，代付款，这个值一般需要后期维修鉴定后才能填写完成，保留小数2位，存到数据库中扩大100倍
      */
     private int nonPayment;
 
@@ -167,9 +175,7 @@ public class RepairOrder {
      */
     private String typeName;
 
-    private int labourPayment;
 
-    private int materialPayment;
     
     /**
      * 咨询单id
@@ -605,5 +611,12 @@ public class RepairOrder {
 	public void setRepairLastAt(Date repairLastAt) {
 		this.repairLastAt = repairLastAt;
 	}
-    
+
+    public int getDiscountAmountPayment() {
+        return discountAmountPayment;
+    }
+
+    public void setDiscountAmountPayment(int discountAmountPayment) {
+        this.discountAmountPayment = discountAmountPayment;
+    }
 }

@@ -2,14 +2,18 @@ package com.yelot.crm.controller;
 
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
-import com.yelot.crm.entity.BarMonthData;
-import com.yelot.crm.entity.Category;
-import com.yelot.crm.entity.MonthData;
+import com.yelot.crm.base.PageHelper;
+import com.yelot.crm.entity.*;
 import com.yelot.crm.mapper.CategoryMapper;
 import com.yelot.crm.mapper.ConsultOrderMapper;
+import com.yelot.crm.mapper.ShopMapper;
+import com.yelot.crm.mapper.StatisticOrderMapper;
+import com.yelot.crm.vo.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -27,17 +31,92 @@ public class ConsultStatisticsController {
     private ConsultOrderMapper consultOrderMapper;
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private ShopMapper shopMapper;
+    @Autowired
+    private StatisticOrderMapper statisticOrderMapper;
+
 
     @RequestMapping("my")
-    public String myConsult(){
+    public String my(){
 
         return "consult_statistics/my_consult_statistics";
     }
 
     @RequestMapping("shop")
-    public String shopConsult(){
+    public String shop(Model model){
 
         return "consult_statistics/shop_consult_statistics";
+    }
+
+    /**
+     * 咨询统计
+     * @return
+     */
+    @RequestMapping("super")
+    public String superConsult(){
+
+        return "consult_statistics/super_consult_statistics";
+    }
+
+    @RequestMapping("person-consult")
+    public String personConsult(Model model){
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("shopList",shopList);
+        List<Category> categoryList = categoryMapper.findAllFirstClass();
+        model.addAttribute("categoryList",categoryList);
+        return "consult_statistics/person_consult";
+    }
+
+
+    /**
+     * 个人统计
+     * @param model
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("person-query")
+    public Table personQuery(Model model, String startDate, String endDate, Long shopId,String categoryName,
+                             @RequestParam(value = "start", defaultValue = "0") int start,
+                             @RequestParam(value = "length", defaultValue = "10") int length){
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(start);
+        pageHelper.setSize(length);
+        //个人统计，共用一个业务逻辑
+        int pageCount = statisticOrderMapper.countTotalPageByPerson(startDate,endDate,shopId);
+
+        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findConsultPersonStatisticOrder(startDate,endDate,shopId,categoryName,pageHelper);
+
+        return new Table(pageCount, pageCount, statisticOrderList);
+    }
+
+    @RequestMapping("shop-consult")
+    public String shopConsult(Model model){
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("shopList",shopList);
+        List<Category> categoryList = categoryMapper.findAllFirstClass();
+        model.addAttribute("categoryList",categoryList);
+        return "consult_statistics/shop_consult";
+    }
+
+    @ResponseBody
+    @RequestMapping("shop-query")
+    public Table shopQuery(Model model, String startDate, String endDate, Long shopId,String categoryName,String type,
+                             @RequestParam(value = "start", defaultValue = "0") int start,
+                             @RequestParam(value = "length", defaultValue = "10") int length){
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(start);
+        pageHelper.setSize(length);
+        //个人统计，共用一个业务逻辑
+        int pageCount = statisticOrderMapper.countTotalPageByConsultShop(startDate,endDate,shopId,categoryName,type);
+
+        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findConsultShopStatisticOrder(startDate,endDate,shopId,categoryName,type,pageHelper);
+
+        return new Table(pageCount, pageCount, statisticOrderList);
     }
 
     @RequestMapping("total")

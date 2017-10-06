@@ -6,6 +6,7 @@ import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.MonthData;
 import com.yelot.crm.entity.RepairOrder;
 
+import com.yelot.crm.entity.StatisticOrder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -92,4 +93,6 @@ public interface RepairOrderMapper {
     List<MonthData> findByMonth(@Param("userId") Long userId,
 								@Param("firstCategoryId") Long firstCategoryId,
 								@Param("shopId")Long shopId);
+
+
 }

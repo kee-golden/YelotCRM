@@ -53,6 +53,16 @@ public class User {
      */
     private Date update_at;
 
+    /**
+     * 是否是维修人员
+     */
+    private int is_repair_man;
+
+    /**
+     * 是否只读权限
+     */
+    private int is_readonly;
+
     public User(){
 
     }
@@ -159,5 +169,21 @@ public class User {
 
     public void setShopName(String shopName) {
         this.shopName = shopName;
+    }
+
+    public int getIs_repair_man() {
+        return is_repair_man;
+    }
+
+    public void setIs_repair_man(int is_repair_man) {
+        this.is_repair_man = is_repair_man;
+    }
+
+    public int getIs_readonly() {
+        return is_readonly;
+    }
+
+    public void setIs_readonly(int is_readonly) {
+        this.is_readonly = is_readonly;
     }
 }

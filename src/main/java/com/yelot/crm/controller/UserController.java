@@ -160,7 +160,7 @@ public class UserController {
     @ResponseBody
     public ResultData delete(Long id){
         try {
-            userMapper.updateAlive(0,id);
+            userMapper.updateAliveAndName(0,id);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultData.errorRequest();
