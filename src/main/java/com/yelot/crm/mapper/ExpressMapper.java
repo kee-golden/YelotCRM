@@ -21,4 +21,8 @@ public interface ExpressMapper {
     Express find(Long id);
 
     void save(Express express);
+
+    void update(Express express);
+
+    void delete(Long id);
 }

@@ -38,13 +38,21 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
             {'data': 'sendType',
                 'render':function(data){
                     if(data == 1){
-                        return "接收件";
+                        return "寄件";
                     }else if(data == 2){
-                        return "发送件";
+                        return "收件";
                     }
                 }
             },
-            {'data': 'payType'},
+            {'data': 'payType',
+                'render':function(data){
+                    if(data == 1){
+                        return "寄付";
+                    }else if(data == 2){
+                        return "到付";
+                    }
+                }
+            },
             {'data': 'payAmount'},
             {'data': 'insuranceNo'},
             {'data': 'insuranceAmount'},
@@ -57,7 +65,6 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                         return "";
                     }
                     return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a>&nbsp;&nbsp;' +
-                        '<a href="javascript:;;" data-id="' + data + '" class="J_changePassword"><i class="fa fa-lock" aria-hidden="true"></i>重置密码</a>&nbsp;&nbsp;' +
                         '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-trash" aria-hidden="true"></i>删除</a>';
                 }
             }
@@ -87,13 +94,13 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
     $('#J_userAdd').click(function () {
         $.ajax({
-            url: ctx + '/user/add',
+            url: ctx + '/express/add',
             method: 'get',
             dataType: 'html',
             success: function (str) {
                 yaya.layer.open({
                     type: 1,
-                    title: '新建用户',
+                    title: '新建物流单',
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: '550px',
                     shadeClose: true,
@@ -101,17 +108,17 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     success: function (layer, index) {
                         //初始化值
                         //if(${username})
-                        $("#J_name").val("");
-                        checkUserFrom();
+                        // $("#J_name").val("");
                     },
                     yes: function (index) {
-                        var isValid = $("#J_userForm").valid();
+                        // var isValid = $("#J_userForm").valid();
+                        var isValid = true;
 
                         if (isValid) {
 
                             $.ajax({
-                                url: ctx + '/user/save',
-                                data: $('#J_userForm').serialize(),
+                                url: ctx + '/express/save',
+                                data: $('#J_expressForm').serialize(),
                                 method: 'post',
                                 dataType: 'json',
                                 success: function (data) {
@@ -188,7 +195,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
     $JUserList.on('click', '.J_edit', function () {
         $.ajax({
-            url: ctx + '/user/edit',
+            url: ctx + '/express/edit',
             data: {
                 id: $(this).data('id')
             },
@@ -197,24 +204,24 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
             success: function (str) {
               yaya.layer.open({
                     type: 1,
-                    title: '用户编辑',
+                    title: '物流编辑',
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: '550px',
                     shadeClose: true,
                     btn: ['保存'],
                     success: function (layero, index) {
 
-                        checkUserFrom();
+                        // checkUserFrom();
 
                     },
                     yes: function (index) {
-                        var isValid = $("#J_userForm").valid();
-                        if(!isValid){
-                            return;
-                        }
+                        // var isValid = $("#J_expressForm").valid();
+                        // if(!isValid){
+                        //     return;
+                        // }
                         $.ajax({
-                            url: ctx + '/user/save',
-                            data: $('#J_userForm').serialize(),
+                            url: ctx + '/express/save',
+                            data: $('#J_expressForm').serialize(),
                             method: 'post',
                             dataType: 'json',
                             success: function (data) {
@@ -241,7 +248,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
     });
 
     /**
-     * 删除用户
+     * 删除
      */
     $JUserList.on('click', '.J_delete', function () {
         var id = $(this).data('id');
@@ -251,7 +258,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
             },
             function (index) {
                 $.ajax({
-                    url: ctx + '/user/user-delete',
+                    url: ctx + '/express/delete',
                     data: {
                         id: id
                     },
@@ -271,7 +278,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     },
                     error: function () {
 
-                        yaya.layer.msg("error,,,");
+                        yaya.layer.msg("删除失败");
 
                     }
 
@@ -280,35 +287,4 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
     });
 
-
-    $JUserList.on('click', '.J_changePassword', function () {
-        if(confirm("请确认是否重置该用户的为初始密码：123456")){
-            $.ajax({
-                url: ctx + '/user/reset-password',
-                data: {
-                    id: $(this).data('id')
-                },
-                method: 'get',
-                dataType: 'json',
-                success: function (result) {
-                    yaya.layer.msg('重置成功');
-                },
-                error: function () {
-
-                }
-            });
-
-        }
-
-    });
-
-    /*$JUserList.on('mouseover', 'tr', function () {
-
-             var cont=$(this).find(".span1").attr("data-cont");
-            $(this).find(".span1").html(cont).stop(true,true).animate({opacity: "show", top: "0"}, "slow");
-    });
-
-    $JUserList.on('mouseleave', 'tr', function () {
-        $(this).find(".span1").stop(true,true).animate({opacity: "hide", top: "-30"}, "fast")
-    });*/
 });

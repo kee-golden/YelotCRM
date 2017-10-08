@@ -58,7 +58,7 @@
 
                 <div class="ibox float-e-margins">
                     <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a sta="1">用户列表</a></li>
+                        <li class="active"><a sta="1">物流列表</a></li>
                     </ul>
                     <div id="content" class="ibox-content">
 

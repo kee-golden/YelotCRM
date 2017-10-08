@@ -21,7 +21,7 @@
             <div id="search_Big">
                 <ul class="pull-left" id="otherTab">
                     <li><span >搜索：</span>
-                        <input type="text" id="keywords" class="inpt_width" placeholder="输入用户名">
+                        <input type="text" id="keywords" class="inpt_width" placeholder="输入物流单号">
                         <div class="clearfix"></div>
                     </li>
                 </ul>

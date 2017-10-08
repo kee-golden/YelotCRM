@@ -3,6 +3,7 @@ package com.yelot.crm.controller;
 import com.yelot.crm.Util.Constants;
 import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResultData;
+import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Customer;
 import com.yelot.crm.entity.Express;
@@ -82,15 +83,29 @@ public class ExpressController {
 
     @ResponseBody
     @RequestMapping("save")
-    public ResultData save(Express express, String firstConsultTime){
-        Date date = new Date();
-        if(firstConsultTime != null && firstConsultTime.trim() != ""){
-            date = DateUtil.toDate(firstConsultTime, Constants.DefaultDateFormate);
+    public ResultData save(Express express){
+        if(express.getId() == null){
+            Date date = new Date();
+            express.setCreateAt(date);
+            express.setCreateUserId(UserUtil.getCurrentUser().getId());
+            express.setShopId(UserUtil.getCurrentUser().getShop_id());
+            expressMapper.save(express);
+        }else{
+            expressMapper.update(express);
         }
-        expressMapper.save(express);
+
         ResultData resultData = ResultData.ok();
-        resultData.putDataValue("express",express);
+        resultData.putDataValue("bean",express);
         return resultData;
+
+    }
+
+    @ResponseBody
+    @RequestMapping("delete")
+    public ResultData delete(Long id){
+
+        expressMapper.delete(id);
+        return ResultData.ok();
 
     }
 }
