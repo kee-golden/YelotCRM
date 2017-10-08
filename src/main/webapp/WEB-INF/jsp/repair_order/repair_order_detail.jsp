@@ -9,7 +9,7 @@
 <body>
 	<div id="repairOrderDetail">
 		<div id="titleDiv">
-			<div class="col-xs-8">
+			<div class="col-xs-7">
 				<div class="pull-left">
 					<img src="${ctx}/img/printLogo.png" style="height: 78px">
 					<h5 style="float: right; line-height: 25px; margin: 3px; font-family: 宋体; font-weight: normal;">
@@ -17,8 +17,8 @@
 					</h5>
 				</div>
 			</div>
-			<div class="col-xs-4" style="line-height: 60px;">
-				<h5 style="float: right; line-height: 25px; margin: 3px; font-family: 宋体; font-weight: normal;">
+			<div class="col-xs-5" style="line-height: 60px;">
+				<h5 style="float: right; line-height: 25px; margin: 3px; font-family: 宋体; font-weight: normal; margin-right: 80px">
 					维修单号：${repairOrder.orderNo}<br> 开单日期：
 					<fmt:formatDate value="${repairOrder.createAt}" pattern="yyyy-MM-dd" />
 					<br> 经手人：${repairOrder.createUserName}
@@ -283,61 +283,61 @@
 			<br>
 			<table id="customerTable" style="width: 100%">
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（1）请妥善保管本单原件作为日后取件凭证</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（1）请妥善保管本单原件作为日后取件凭证</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（2）请您在签字前阅读本单据正后面之全部内容和条款</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（2）请您在签字前阅读本单据正后面之全部内容和条款</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（3）如有预计工期延迟会提前通知客户</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（3）如有预计工期延迟会提前通知客户</h4></td>
 				</tr>
 				<tr>
-					<td><h5 align="center" style="margin: 3px; font-family: 宋体; font-weight: normal;">您的签字表示您已经仔细阅读，充分理解并且接受该等条款</h5></td>
+					<td><h4 align="center" style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">您的签字表示您已经仔细阅读，充分理解并且接受该等条款</h4></td>
 				</tr>
 			</table>
 		</div>
 		<hr id="clauseHr" color="black" width="100%" style="height: 1px; margin: 0px; display: none">
 		<div id="clauseDiv" class="col-xs-4" style="width: 100%; display: none">
-			<h4 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">一般条款与条件</h4>
+			<h4 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">一般条款与条件</h4>
 			<br>
 			<table id="customerTable" style="width: 100%">
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（1）接收维修货品前必须由顾客签字确认，并附上一次性条码，御金匠对于顾客的维修货品不作任何鉴定。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（1）接收维修货品前必须由顾客签字确认，并附上一次性条码，御金匠对于顾客的维修货品不作任何鉴定。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（2）您特此授权御金匠在商品维修过程中采取任何必要且御金匠认为合适的方式执行维修。御金匠将相应安排维修，但商品是否可恢复其原厂出厂状态还取决于您使用的年限及商品的损伤程度。其中补色工艺后皮质的手感和颜色会略有差异，属于正常现象。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（2）您特此授权御金匠在商品维修过程中采取任何必要且御金匠认为合适的方式执行维修。御金匠将相应安排维修，但商品是否可恢复其原厂出厂状态还取决于您使用的年限及商品的损伤程度。其中补色工艺后皮质的手感和颜色会略有差异，属于正常现象。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（3）如果经御金匠确认该商品无法维修，或者您未能在御金匠告知维修费用报价之日起（7日）内确认维修报价，御金匠会将未予维修的商品按起始状态退还与您。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（3）如果经御金匠确认该商品无法维修，或者您未能在御金匠告知维修费用报价之日起（7日）内确认维修报价，御金匠会将未予维修的商品按起始状态退还与您。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（4）维修商品经维修完成且已支付全额维修费用（若有）后，御金匠会将商品归还给持有该维修单之人，该维修单的持有人被视为商品的合格所有者。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（4）维修商品经维修完成且已支付全额维修费用（若有）后，御金匠会将商品归还给持有该维修单之人，该维修单的持有人被视为商品的合格所有者。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（5）本维修单原件为日后领取维修商品的唯一凭证，遗失不补，复印无效，请妥善保管。如果领取维修商品时，不能提供该维修单，为保障您的消费权益，御金匠保留要求核实身份证及暂存其复印件的权利。以证实顾客身份。代领维修件时，为保障您的消费权益，要求代领者必须持有本维修单原件并要求出示代领者本人身份证或其他有效证件（护照、机动车驾驶证等），御金匠有权暂存其复印件、登记身份信息和留下有效通讯（移动电话或座机）。并提供顾客本人预留的相关身份信息（如身份证号、护照号、机动车驾驶证号）以保障您的消费权益。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（5）本维修单原件为日后领取维修商品的唯一凭证，遗失不补，复印无效，请妥善保管。如果领取维修商品时，不能提供该维修单，为保障您的消费权益，御金匠保留要求核实身份证及暂存其复印件的权利。以证实顾客身份。代领维修件时，为保障您的消费权益，要求代领者必须持有本维修单原件并要求出示代领者本人身份证或其他有效证件（护照、机动车驾驶证等），御金匠有权暂存其复印件、登记身份信息和留下有效通讯（移动电话或座机）。并提供顾客本人预留的相关身份信息（如身份证号、护照号、机动车驾驶证号）以保障您的消费权益。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（6）如果收到领取维修商品通知后，顾客须按通知规定时间领取维修商品。顾客若逾期未领取维修商品，则御金匠有权收取相应的费用。若顾客逾期（三个月）未领取商品，顾客则自行承担商品的毁损灭失风险。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（6）如果收到领取维修商品通知后，顾客须按通知规定时间领取维修商品。顾客若逾期未领取维修商品，则御金匠有权收取相应的费用。若顾客逾期（三个月）未领取商品，顾客则自行承担商品的毁损灭失风险。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">
 							（7）如果因为以下情形造成任何损失，御金匠无需承担责任：<br>&nbsp;&nbsp;&nbsp;&nbsp;A）御金匠拒绝维修，而顾客强行要求维修，御金匠对此作出是否维修的决定。<br>&nbsp;&nbsp;&nbsp;&nbsp;B）顾客采取非御金匠建议之维修方法，自行维修。<br>&nbsp;&nbsp;&nbsp;&nbsp;C）因不可抗力。
-						</h5></td>
+						</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（8）御金匠应就其自身造成的损害与损失按照法律规定承担相应责任。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（8）御金匠应就其自身造成的损害与损失按照法律规定承担相应责任。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（9）请您在领取商品并离开御金匠前仔细检查商品之维修状态，您对商品之领取将视为您已经确认商品已妥善维修。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（9）请您在领取商品并离开御金匠前仔细检查商品之维修状态，您对商品之领取将视为您已经确认商品已妥善维修。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（10）维修商品经维修完成并通知到客户之后，商品可保存3个月，超过3月后需收取保管费用(皮具类、腕表类10元/天，珠宝类、玉器类5元/天)</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（10）维修商品经维修完成并通知到客户之后，商品可保存3个月，超过3月后需收取保管费用(皮具类、腕表类10元/天，珠宝类、玉器类5元/天)</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（11）为处理您的维修要求，御金匠将取得您的个人信息，您同意将您的个人信息用于维修服务和相关顾客管理系统,维修商品的照片所有权由御金匠保留。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（11）为处理您的维修要求，御金匠将取得您的个人信息，您同意将您的个人信息用于维修服务和相关顾客管理系统,维修商品的照片所有权由御金匠保留。</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">（12）您确认您已经完全理解并同意这些条款和条件。</h5></td>
+					<td><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">（12）您确认您已经完全理解并同意这些条款和条件。</h4></td>
 				</tr>
 			</table>
 		</div>
@@ -345,32 +345,32 @@
 		<div id="writeDiv" class="col-xs-4" style="width: 100%; display: none">
 			<table id="customerTable" style="width: 100%">
 				<tr>
-					<td colspan="4"><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">我接受上述一般条款与条件和御金匠售后服务政策说明，并同意依据该条款和条件将产品存放予您处进行维修。</h5></td>
+					<td colspan="4"><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">我接受上述一般条款与条件和御金匠售后服务政策说明，并同意依据该条款和条件将产品存放予您处进行维修。</h4></td>
 				</tr>
 				<tr>
-					<td colspan="2"><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">商品存放</h5></td>
-					<td colspan="2"><h5 style="margin: 3px; font-family: 宋体; font-weight: normal;">商品退还</h5></td>
+					<td colspan="2"><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">商品存放</h4></td>
+					<td colspan="2"><h4 style="margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">商品退还</h4></td>
 				</tr>
 				<tr>
-					<td><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">经手人：</h5></td>
+					<td><h4 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">经手人：</h4></td>
 					<td>_________________________</td>
-					<td><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">日期：</h5></td>
-					<td>_________________________</td>
-				</tr>
-				<tr>
-					<td><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">联系电话（必填）：</h5></td>
-					<td>_________________________</td>
-					<td><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">经办人：</h5></td>
+					<td><h4 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">日期：</h4></td>
 					<td>_________________________</td>
 				</tr>
 				<tr>
-					<td><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">顾客签字：</h5></td>
+					<td><h4 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">联系电话（必填）：</h4></td>
 					<td>_________________________</td>
-					<td><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">确认无误，顾客签字：</h5></td>
+					<td><h4 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">经办人：</h4></td>
 					<td>_________________________</td>
 				</tr>
 				<tr>
-					<td><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">证件及证件号（必填）：</h5></td>
+					<td><h4 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">顾客签字：</h4></td>
+					<td>_________________________</td>
+					<td><h4 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">确认无误，顾客签字：</h4></td>
+					<td>_________________________</td>
+				</tr>
+				<tr>
+					<td><h4 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal; line-height: 20px;">证件及证件号（必填）：</h4></td>
 					<td>_________________________</td>
 				</tr>
 			</table>
