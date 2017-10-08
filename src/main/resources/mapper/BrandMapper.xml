@@ -1,17 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yelot.crm.mapper.BrandMapper">
-    <resultMap id="brandResultMap" type="com.yelot.crm.entity.Brand">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="firstLetter" column="first_letter"/>
-        <result property="chinese" column="chinese"/>
-    </resultMap>
+	<resultMap id="brandResultMap" type="com.yelot.crm.entity.Brand">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="firstLetter" column="first_letter" />
+		<result property="chinese" column="chinese" />
+	</resultMap>
 
-
-    <select id="findAll" resultMap="brandResultMap">
-        SELECT * from t_brand order by first_letter ASC ;
+    <select id="countTotalPage" resultType="java.lang.Integer">
+        select count(*) 
+        from t_brand 
+        where is_alive = '1'
+        <if test="extra_search != null and extra_search != ''">and (name like CONCAT('%', #{extra_search}, '%') or chinese like CONCAT('%', #{extra_search}, '%'))</if>
     </select>
+    
+    <select id="findByPage" resultMap="brandResultMap">
+        select * 
+        from t_brand
+        where is_alive = '1'
+        <if test="extra_search != null and extra_search != ''">and (name like CONCAT('%', #{extra_search}, '%') or chinese like CONCAT('%', #{extra_search}, '%'))</if>
+        order by first_letter ASC
+        limit #{pageHelper.offset},#{pageHelper.size} 
+    </select>
+    
+    <select id="findByName" resultMap="brandResultMap">
+        select * from t_brand where is_alive = '1' and name = #{name}
+    </select>
+    
+    <insert id="save" parameterType="com.yelot.crm.entity.Brand">
+        insert into t_brand(name, first_letter, chinese, is_alive) 
+        values(#{name}, #{firstLetter}, #{chinese}, '1')
+    </insert>
+    
+    <select id="findById" resultMap="brandResultMap">
+        select * from t_brand where is_alive = '1' and id = #{id}
+    </select>
+    
+    <select id="findByNameAndId" resultMap="brandResultMap">
+        select * from t_brand where is_alive = '1' and name = #{name} and id != #{id}
+    </select>
+
+	<update id="update" parameterType="com.yelot.crm.entity.Brand">
+		update t_brand set
+		<trim suffix="" suffixOverrides=",">
+			<if test="name != null">name = #{name},</if>
+			<if test="firstLetter != null">first_letter = #{firstLetter},</if>
+			<if test="chinese != null">chinese = #{chinese},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<update id="updateAlive">
+		update t_brand set is_alive = #{is_alive} where id = #{id}
+	</update>
+
+	<select id="findAll" resultMap="brandResultMap">
+		select * from t_brand where is_alive = '1' order by first_letter ASC
+	</select>
+
     <select id="find" resultMap="brandResultMap">
         SELECT * from t_brand where id = #{id} ;
     </select>
