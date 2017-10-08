@@ -33,9 +33,9 @@ public enum RepairOrderStatus {
     CUSTOMER_RECEIVE_APPROVE(40,"客户收货已确认"),
     CUSTOMER_RECEIVE_REJECT(42,"客户收货拒绝"),
     //订单如果是评估单，状态流程过程是 2-->4-->12-->17-->44->48--->20-->24--->28--->32-->36
-    SHOP_EVALUE_MANAGE_APPROVE(44,"评估单，客服主管再次审核通过"),
+    SHOP_EVALUE_MANAGE_APPROVE(44,"待预检再次审核"),
     SHOP_EVALUE_MANAGE_REJECT(46,"评估单，客服主管再次审核通过"),
-    CHECK_EVALUE_ORDER_APPROVE(48,"预检人员，审核评估单再次通过"),
+    CHECK_EVALUE_ORDER_APPROVE(48,"待QC审核"),
     CHECK_EVALUE_ORDER_REJECT(50,"预检人员，审核评估单再次拒绝");
 
 
