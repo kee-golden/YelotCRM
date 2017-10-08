@@ -4,8 +4,8 @@
 <div class="ibox float-e-margins">
 	<div class="ibox-content">
 		<div class="row" style="margin-left: 10px;">
-			<label>订单号:${orderNo}</label>
-			<label>订单状态:
+			<label>订单号：${orderNo}</label>
+			<label>订单状态：
 				<c:if test="${orderStatus == 2}">客服提交，待客服主管审核</c:if>
 				<c:if test="${orderStatus == 4}">客服主管已审核,待维修中心接收</c:if>
 				<c:if test="${orderStatus == 12}">维修中心已接收，待初检</c:if>
@@ -38,6 +38,19 @@
 					<input type="text" id="repairLastAt">
 				</div>
 				</c:if>
+				
+				<c:if test="${orderStatus == 32 && bean.typeName eq '维修单'}">
+				<div class="row">
+					<label style="margin-left: 40px">预付款：</label><input type="number" id="advancePayment" disabled="disabled" value="${bean.advancePayment}">
+					<label style="margin-left: 40px">工费金额：</label><input type="number" id="labourPayment" value="${bean.labourPayment == -1 ? null : bean.labourPayment}">
+					<br>
+					<label style="margin-left: 40px">材料费：</label><input type="number" id="materialPayment" value="${bean.materialPayment == -1 ? null : bean.materialPayment}">
+					<label style="margin-left: 40px">优惠金额：</label><input type="number" id="discountAmountPayment" value="${bean.discountAmountPayment == -1 ? null : bean.discountAmountPayment}">
+					<br>
+					<label style="margin-left: 40px">合计金额：</label><input type="number" disabled="disabled" id="totalPayment" value="${bean.totalPayment}">
+				</div>
+				</c:if>
+				
 				<div class="row">
 					<textarea id="comment" rows="3" cols="20" class="col-md-11" style="margin-left: 30px" placeholder="输入审批备注"></textarea>
 				</div>
@@ -144,11 +157,56 @@
         // 设置显示位置
     	$(".xdsoft_datetimepicker").css("z-index", 20000000);
         
+        $("#labourPayment").change(function(){
+            var advancePayment = Number($("#advancePayment").val());
+            var labourPayment = Number($("#labourPayment").val());
+            var materialPayment = Number($("#materialPayment").val());
+            var discountAmountPayment = Number($("#discountAmountPayment").val());
+        	var totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment
+        	$("#totalPayment").val(totalPayment);
+        });
+        
+        $("#materialPayment").change(function(){
+            var advancePayment = Number($("#advancePayment").val());
+            var labourPayment = Number($("#labourPayment").val());
+            var materialPayment = Number($("#materialPayment").val());
+            var discountAmountPayment = Number($("#discountAmountPayment").val());
+        	var totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment
+        	$("#totalPayment").val(totalPayment);
+        });
+        
+        $("#discountAmountPayment").change(function(){
+            var advancePayment = Number($("#advancePayment").val());
+            var labourPayment = Number($("#labourPayment").val());
+            var materialPayment = Number($("#materialPayment").val());
+            var discountAmountPayment = Number($("#discountAmountPayment").val());
+        	var totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment
+        	$("#totalPayment").val(totalPayment);
+        });
+        
         $('#approveBtn').click(function () {
 
             var comment = $('#comment').val();
             if(comment == ''){
                 yaya.layer.msg("备注不能为空！");
+                return;
+			}
+            
+            var labourPayment = $("#labourPayment").val();
+            if(labourPayment == ''){
+                yaya.layer.msg("工费不能为空！");
+                return;
+			}
+            
+            var materialPayment = $("#materialPayment").val();
+            if(materialPayment == ''){
+                yaya.layer.msg("材料费不能为空！");
+                return;
+			}
+            
+            var discountAmountPayment = $("#discountAmountPayment").val();
+            if(discountAmountPayment == ''){
+                yaya.layer.msg("优惠金额不能为空！");
                 return;
 			}
 
@@ -164,7 +222,11 @@
 					comment:$('#comment').val(),
 					imagesPath:path,
 					repairUserId:$('#repairUserId').val(),
-					repairLastAt:$('#repairLastAt').val()
+					repairLastAt:$('#repairLastAt').val(),
+					advancePayment:$("#advancePayment").val(),
+					labourPayment:$("#labourPayment").val(),
+					materialPayment:$("#materialPayment").val(),
+					discountAmountPayment:$("#discountAmountPayment").val()
 				},
 				success:function (data) {
 					if(data.code == 1200){
@@ -197,7 +259,10 @@
                 data:{
                     orderId:$('#orderId').val(),
                     comment:$('#comment').val(),
-
+					advancePayment:$("#advancePayment").val(),
+					labourPayment:$("#labourPayment").val(),
+					materialPayment:$("#materialPayment").val(),
+					discountAmountPayment:$("#discountAmountPayment").val()
                 },
                 success:function (data) {
                     if(data.code == 1200){

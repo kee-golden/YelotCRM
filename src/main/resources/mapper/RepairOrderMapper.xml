@@ -82,6 +82,12 @@
         <if test="repairLastAt != null and repairLastAt != ''">
             , repair_last_at = #{repairLastAt}
         </if>
+        <if test="approveStatus == 36">
+        , labour_payment = #{labourPayment}, 
+        material_payment = #{materialPayment}, 
+        discount_amount_payment = #{discountAmountPayment}, 
+        total_payment= #{totalPayment}
+        </if>
          where id = #{orderId}
 
     </update>

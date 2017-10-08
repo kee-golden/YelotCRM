@@ -13,6 +13,7 @@ import com.yelot.crm.mapper.RepairOrderOperatorsMapper;
 import com.yelot.crm.mapper.UserMapper;
 import com.yelot.crm.service.RepairOrderOperatorsService;
 import com.yelot.crm.vo.Table;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,7 +70,10 @@ public class RepairOrderOperatorsController {
 
     @RequestMapping("approve")
     @ResponseBody
-    public ResultData approve(Model model,Long orderId,String comment,String imagesPath,Long repairUserId,String repairLastAt){
+	public ResultData approve(Model model, Long orderId, String comment,
+			String imagesPath, Long repairUserId, String repairLastAt,
+			Integer advancePayment, Integer labourPayment, 
+			Integer materialPayment, Integer discountAmountPayment) {
         RepairOrder repairOrder = repairOrderMapper.find(orderId);
         RepairOrderOperators repairOrderOperators = new RepairOrderOperators();
         repairOrderOperators.setOrderNo(repairOrder.getOrderNo());
@@ -79,8 +83,8 @@ public class RepairOrderOperatorsController {
         int orderStatus = repairOrder.getStatus();
 
         int approveStatus = getNextApproveStatus(orderStatus,repairOrder);
-
-        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,approveStatus,imagesPath,repairUserId,repairLastAt);
+        Integer totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment;
+        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,approveStatus,imagesPath,repairUserId,repairLastAt,labourPayment,materialPayment,discountAmountPayment,totalPayment);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(approveStatus);
         repairOrderOperators.setOperator_comment(comment);
@@ -91,7 +95,8 @@ public class RepairOrderOperatorsController {
 
     @RequestMapping("reject")
     @ResponseBody
-    public ResultData reject(Model model,Long orderId,String comment,String imagesPath){
+    public ResultData reject(Model model,Long orderId,String comment,String imagesPath,Integer advancePayment, 
+    		Integer labourPayment, Integer materialPayment, Integer discountAmountPayment){
         RepairOrder repairOrder = repairOrderMapper.find(orderId);
         RepairOrderOperators repairOrderOperators = new RepairOrderOperators();
         repairOrderOperators.setOrderNo(repairOrder.getOrderNo());
@@ -100,7 +105,8 @@ public class RepairOrderOperatorsController {
         repairOrderOperators.setApprove_user_id(UserUtil.getCurrentUser().getId());
         int orderStatus = repairOrder.getStatus();
         int rejectStatus = getNextRejectStatus(orderStatus);
-        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,rejectStatus,imagesPath,null,null);
+        Integer totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment;
+        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,rejectStatus,imagesPath,null,null,labourPayment,materialPayment,discountAmountPayment,totalPayment);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(rejectStatus);
         repairOrderOperators.setOperator_comment(comment);

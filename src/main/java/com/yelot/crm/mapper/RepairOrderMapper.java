@@ -77,7 +77,11 @@ public interface RepairOrderMapper {
 			@Param("approveStatus") int approveStatus,
 			@Param("imagesPath") String imagesPath,
 			@Param("repairUserId") Long repairUserId,
-			@Param("repairLastAt") String repairLastAt);
+			@Param("repairLastAt") String repairLastAt,
+			@Param("labourPayment") Integer labourPayment,
+			@Param("materialPayment") Integer materialPayment,
+			@Param("discountAmountPayment") Integer discountAmountPayment,
+			@Param("totalPayment") Integer totalPayment);
 
     /**
      * 根据订单id查看订单详情
