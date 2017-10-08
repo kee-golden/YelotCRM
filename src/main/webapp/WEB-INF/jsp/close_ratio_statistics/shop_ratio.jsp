@@ -41,14 +41,13 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <h4 style="float: left;">统计方式：</h4>
+                <h4 style="float: left;">方式：</h4>
                 <select name="type" id="type" class="from-control">
-                    <option value="Day">天</option>
+                    <%--<option value="Day">天</option>--%>
                     <option value="Week">周</option>
                     <option value="Month">月</option>
                 </select>
             </div>
-
         </form>
         <div class="clearfix"></div>
         <br>
@@ -62,8 +61,8 @@
         <thead>
         <tr>
             <th>时间</th>
-            <th>总金额</th>
-            <th>总订单量</th>
+            <th>总咨询量</th>
+            <th>总维修单量</th>
         </tr>
         </thead>
     </table>
@@ -90,7 +89,7 @@
             'serverSide': true,
             'lengthMenu': [10, 20, 50, 100],
             'ajax':{
-                'url':ctx + '/money-statistics/shop-query',
+                'url':ctx + '/close-ratio-statistics/shop-query',
                 'method': 'get',
                 'data': function (d) {
                     d.startDate = $('#startDate').val();
@@ -102,8 +101,9 @@
             },
             'columns': [
                 {'data' : 'time'},
-                {'data' : 'totalPayment'},
-                {'data' : 'totalCount'}],
+                {'data' : 'totalCount'},
+                {'data' : 'totalCount2'}
+                ],
             'language': {
                 'lengthMenu': '每页显示 _MENU_ 条记录',
                 'zeroRecords': '没有检索到数据',
@@ -131,8 +131,7 @@
             params += "&categoryId=" + $('#category').val();
             params += "&type=" + $('#type').val();
 
-            window.location = ctx + '/money-statistics/exportExcel-shop?' + params;
-
+            window.location = ctx + '/close-ratio-statistics/exportExcel-shop?' + params;
         });
 
 

@@ -71,4 +71,34 @@ public interface StatisticOrderMapper {
     List<StatisticOrder> findConsultShopStatisticOrder(
             @Param("startDate") String startDate, @Param("endDate") String endDate,
             @Param("shopId") Long shopId, @Param("categoryName")String categoryName,@Param("type")String type, @Param("pageHelper") PageHelper pageHelper);
+
+    /**
+     * 成交率个人统计
+     * @param startDate
+     * @param endDate
+     * @param shopId
+     * @param categoryName
+     * @param pageHelper
+     * @return
+     */
+    List<StatisticOrder> findRatioPersonStatisticOrder(@Param("startDate") String startDate, @Param("endDate") String endDate,
+                                                       @Param("shopId") Long shopId, @Param("categoryName")String categoryName,@Param("type")String type, @Param("pageHelper") PageHelper pageHelper);
+
+
+    /**
+     * 成交率门店统计
+     * @param startDate
+     * @param endDate
+     * @param shopId
+     * @param categoryName
+     * @param type
+     * @return
+     */
+    int countTotalPageByShopRatio(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("shopId") Long shopId,
+                                  @Param("type") String type, @Param("categoryId") Long categoryId, @Param("categoryName") String categoryName);
+
+
+    List<StatisticOrder> findShopRatioStatisticOrder(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("shopId") Long shopId,
+                                                     @Param("type") String type, @Param("categoryId") Long categoryId, @Param("categoryName")String categoryName,
+                                                     @Param("pageHelper") PageHelper pageHelper);
 }

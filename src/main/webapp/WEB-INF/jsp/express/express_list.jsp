@@ -40,11 +40,17 @@
     <table id="J_userList" class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
-            <th>用户名</th>
-            <th>姓名</th>
-            <th>手机号</th>
-            <th>门店</th>
+            <th>快递名称</th>
+            <th>快递单号</th>
+            <th>接收人</th>
+            <%--<th>接收人电话</th>--%>
+            <th>发送人</th>
+            <%--<th>发送人电话</th>--%>
             <th>类别</th>
+            <th>付款方式</th>
+            <th>付款金额</th>
+            <th>保单号</th>
+            <th>保单金额</th>
             <th>创建时间</th>
             <th>操作</th>
         </tr>
@@ -56,4 +62,4 @@
 
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
-<script src="${ctx}/module-js/user/user.js"></script>
+<script src="${ctx}/module-js/express/express.js"></script>

@@ -85,14 +85,14 @@
         (SELECT name FROM t_shop where id = us.shop_id) shopName
         from t_user us LEFT JOIN (
         SELECT co.create_user_id userId,count(*) totalCount from t_consult_order co
-        WHERE 1 = 1
+        WHERE 1 = 1 and status = 3
         <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        <if test="categoryName != null and categoryName != ''">and co.first_category_name = #{categoryName}</if>
         group by co.create_user_id
         ) temp ON us.id = temp.userId
         WHERE us.is_alive = 1
         <if test="shopId != null and shopId != ''">and us.shop_id = #{shopId}</if>
-        <if test="categoryName != null and categoryName != ''">and co.first_category_name = #{categoryName}</if>
 
         limit #{pageHelper.offset},#{pageHelper.size}
     </select>
@@ -110,7 +110,7 @@
         <if test="startDate == '' and endDate == ''">
             and YEAR(create_at) = YEAR(curdate())</if>
         <if test="shopId != null and shopId != ''"> and shop_id = #{shopId}</if>
-        <if test="categoryName != null and categoryName != ''">and ro.first_category_name = #{categoryName}</if>
+        <if test="categoryName != null and categoryName != ''">and co.first_category_name = #{categoryName}</if>
         group by time) temp
     </select>
 
@@ -130,6 +130,51 @@
 
         group by time
         limit #{pageHelper.offset},#{pageHelper.size}
+    </select>
+
+    <!-- 成交率门店统计 -->
+    <select id="countTotalPageByShopRatio" resultType="java.lang.Integer">
+        select count(*) from (SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') time,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') time,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') time,</if>
+        count(*) countno from t_consult_order co
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        <if test="startDate == '' and endDate == ''">
+            and YEAR(create_at) = YEAR(curdate())</if>
+        <if test="categoryName != null and categoryName != ''">and co.first_category_name = #{categoryName}</if>
+        group by time) temp
+    </select>
+
+    <select id="findShopRatioStatisticOrder" resultMap="orderResultMap">
+        SELECT time,IFNULL(totalCount,0) as totalCount,IFNULL(totalCount2,0) as totalCount2 from
+        (SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') time,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') time,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') time,</if>
+        count(*) totalCount from t_consult_order co
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        <if test="startDate == '' and endDate == ''">
+            and YEAR(create_at) = YEAR(curdate())</if>
+        <if test="categoryName != null and categoryName != ''">and co.first_category_name = #{categoryName}</if>
+        group by time) tempConsult
+        LEFT  JOIN  ( SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') time2,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') time2,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') time2,</if>
+        count(*) totalCount2 from t_repair_order ro
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="startDate == '' and endDate == ''">
+            and YEAR(create_at) = YEAR(curdate())</if>
+        <if test="categoryId != null and categoryId != ''">and ro.first_category_id = #{categoryId}</if>
+        group by time2
+        ) tempRepair on time = time2
     </select>
 
 </mapper>

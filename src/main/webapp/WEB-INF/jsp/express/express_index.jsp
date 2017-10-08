@@ -8,9 +8,9 @@
 
     <%@include file="/WEB-INF/common/static.jsp" %>
 
-    <c:set var="PARENT_MENU_CODE" value="WeiXin_Manage"/>
+    <c:set var="PARENT_MENU_CODE" value="ExpressManger"/>
 
-    <c:set var="CHILD_MENU_CODE" value="Account_Index"/>
+    <c:set var="CHILD_MENU_CODE" value="Express_List"/>
 
     <script>
         var ctx = '${ctx}';
@@ -58,7 +58,7 @@
 
                 <div class="ibox float-e-margins">
                     <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a sta="1">客户列表</a></li>
+                        <li class="active"><a sta="1">用户列表</a></li>
                     </ul>
                     <div id="content" class="ibox-content">
 
@@ -82,14 +82,15 @@
             require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
 
                 $.ajax({
-                    url: ctx + '/account/list',
+                    url: ctx + '/express/list',
                     success: function (data) {
                         $('#content').html(data);
                     }
                 });
 
                 $('#myTab a:first').tab('show');//初始化显示哪个tab
-                
+
+
                 $('#myTab a').click(function (e) {
 
                     e.preventDefault();//阻止a链接的跳转行为
@@ -102,7 +103,7 @@
                     }
 
                     $.ajax({
-                        url: ctx + '/account/' + name,
+                        url: ctx + '/express/' + name,
                         success: function (data) {
                             $('#content').html(data);
                         }

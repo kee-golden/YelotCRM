@@ -23,32 +23,32 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
         'serverSide': true,
         'lengthMenu': [10, 20, 50, 100],
         'ajax':{
-            'url':ctx + '/user/list-data',
+            'url':ctx + '/express/list-data',
             'data': function (d) {
                 d.extra_search = $('#keywords').val();
             }
         },
         'columns': [
-            {'data': 'name'},
-            {'data': 'realname'},
-            {'data': 'phone'},
-            {'data': 'shopName'},
-            {'data': 'user_type',
+            {'data': 'expressName'},
+            {'data': 'expressNo'},
+            {'data': 'acceptPersonName'},
+            // {'data': 'acceptPersonPhone'},
+            {'data': 'sendPersonName'},
+            // {'data': 'sendPersonPhone'},
+            {'data': 'sendType',
                 'render':function(data){
                     if(data == 1){
-                        return "门店客服";
+                        return "接收件";
                     }else if(data == 2){
-                        return "在线客服";
-                    }else if(data == 3){
-                        return "维修人员";
-                    }else if(data == 4){
-                        return "管理人员";
-                    }else if(data == 5){
-                        return "其他";
+                        return "发送件";
                     }
                 }
             },
-            {'data': 'create_at'},
+            {'data': 'payType'},
+            {'data': 'payAmount'},
+            {'data': 'insuranceNo'},
+            {'data': 'insuranceAmount'},
+            {'data': 'createAt'},
             {'data': 'id',
                 'render': function (data, type, full, meta) {
 

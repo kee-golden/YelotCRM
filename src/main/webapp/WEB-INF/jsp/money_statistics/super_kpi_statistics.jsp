@@ -189,7 +189,7 @@
 					<ul class="nav nav-tabs" id="myTab">
 						<li class="active"><a sta="1">个人统计</a></li>
 						<li><a sta="2">门店统计</a></li>
-						<li><a sta="3">总业绩统计</a></li>
+						<%--<li><a sta="3">总业绩统计</a></li>--%>
 					</ul>
 
 					<div id="content" class="ibox-content">

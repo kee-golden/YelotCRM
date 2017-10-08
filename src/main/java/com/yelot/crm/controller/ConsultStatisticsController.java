@@ -1,5 +1,7 @@
 package com.yelot.crm.controller;
 
+import com.yelot.crm.Util.ExportExcel;
+import com.yelot.crm.Util.GlobalUtil;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -215,11 +220,6 @@ public class ConsultStatisticsController {
         return ResultData.ok().putDataValue("series",barMonthDataList);
 
     }
-
-
-
-
-
     @ResponseBody
     @RequestMapping("my-data")
     public ResultData myConsultData(){
@@ -229,4 +229,66 @@ public class ConsultStatisticsController {
         }
         return ResultData.ok().putDataValue("sum",sumList);
     }
+
+    @RequestMapping("exportExcel-person")
+    public void exportExcelByPerson(
+            HttpServletResponse response,
+            @RequestParam(value = "startDate", defaultValue = "") String startDate,
+            @RequestParam(value = "endDate", defaultValue = "") String endDate,
+            @RequestParam(value = "shopId", defaultValue = "") Long shopId,
+            @RequestParam(value = "categoryName", defaultValue = "") String categoryName
+    ) throws IOException {
+
+        int pageCount = statisticOrderMapper.countTotalPageByPerson(startDate,endDate,shopId);
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(0);
+        pageHelper.setSize(pageCount);
+
+
+        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findConsultPersonStatisticOrder(startDate,endDate,shopId,categoryName,pageHelper);
+
+
+        ExportExcel ex = new ExportExcel();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        List<String> strList = GlobalUtil.getPersonConsultList(statisticOrderList);
+        int rows = strList.size() / 5;
+        String []headers = {"用户名","姓名","手机号","门店","总订单量"};
+        String fileName = "咨询个人订单统计报表"+startDate+"_"+endDate;
+        ex.exportExcel("title",headers,strList,os,rows);
+        ex.writeExcel(response, os,fileName);
+
+    }
+
+    @RequestMapping("exportExcel-shop")
+    public void exportExcelByShop(
+            HttpServletResponse response,
+            @RequestParam(value = "startDate", defaultValue = "") String startDate,
+            @RequestParam(value = "endDate", defaultValue = "") String endDate,
+            @RequestParam(value = "shopId", defaultValue = "") Long shopId,
+            @RequestParam(value = "categoryName", defaultValue = "") String  categoryName,
+            String type
+    ) throws IOException {
+
+        int pageCount = statisticOrderMapper.countTotalPageByConsultShop(startDate,endDate,shopId,categoryName,type);
+
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(0);
+        pageHelper.setSize(pageCount);
+        //个人统计，共用一个业务逻辑
+
+        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findConsultShopStatisticOrder(startDate,endDate,shopId,categoryName,type,pageHelper);
+
+        ExportExcel ex = new ExportExcel();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        List<String> strList = GlobalUtil.getTimeConsultList(statisticOrderList);
+        int rows = strList.size() / 2;
+        String []headers = {"时间","总订单量"};
+        String fileName = "咨询门店订单统计报表"+startDate+"_"+endDate;
+        ex.exportExcel("title",headers,strList,os,rows);
+        ex.writeExcel(response, os,fileName);
+
+    }
+
 }

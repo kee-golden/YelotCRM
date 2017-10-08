@@ -9,6 +9,9 @@ import java.util.List;
 public class BarMonthData {
     private String name;
     private String type = "bar";
+    //显示在一根柱子上的参数设置
+    private String stack = "分类";
+    private  int barWidth = 10;
     private List<Integer> data;
 
 
@@ -26,6 +29,22 @@ public class BarMonthData {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getStack() {
+        return stack;
+    }
+
+    public void setStack(String stack) {
+        this.stack = stack;
+    }
+
+    public int getBarWidth() {
+        return barWidth;
+    }
+
+    public void setBarWidth(int barWidth) {
+        this.barWidth = barWidth;
     }
 
     public List<Integer> getData() {

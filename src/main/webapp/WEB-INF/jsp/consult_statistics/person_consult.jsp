@@ -40,14 +40,14 @@
 
                 </select>
             </div>
-            <div class="col-md-2">
-                <h4 style="float: left;">方式：</h4>
-                <select name="type" id="type" class="from-control">
-                    <option value="Day">天</option>
-                    <option value="Week">周</option>
-                    <option value="Month">月</option>
-                </select>
-            </div>
+            <%--<div class="col-md-2">--%>
+                <%--<h4 style="float: left;">方式：</h4>--%>
+                <%--<select name="type" id="type" class="from-control">--%>
+                    <%--<option value="Day">天</option>--%>
+                    <%--<option value="Week">周</option>--%>
+                    <%--<option value="Month">月</option>--%>
+                <%--</select>--%>
+            <%--</div>--%>
 
         </form>
         <div class="clearfix"></div>
@@ -131,13 +131,10 @@
             var params = "";
             params += "&startDate=" + $('#startDate').val();
             params += "&endDate=" + $('#endDate').val();
-            params += "&firstCategory=" + $('#firstCategory').val();
-            params += "&secondCategory=" + $('#secondCategory').val();
             params += "&shopId=" + $('#shopId').val();
-            params += "&status=" + $('#status').val();
-            params += "&typeName=" + $('#typeName').val();
+            params += "&categoryName=" + $('#category').val();
 
-//            window.location = ctx + '/rpt-repair-order/exportExcel?' + params;
+            window.location = ctx + '/consult-statistics/exportExcel-person?' + params;
         });
 
 

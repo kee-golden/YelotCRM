@@ -9,7 +9,7 @@
     <%@include file="/WEB-INF/common/static.jsp" %>
 
     <c:set var="PARENT_MENU_CODE" value="CloseRatioStatistics" />
-    <c:set var="CHILD_MENU_CODE" value="MyCloseRatioStatistics"/>
+    <c:set var="CHILD_MENU_CODE" value="ShopCloseRatioStatistics"/>
     <script>
         var ctx = '${ctx}';
     </script>
@@ -78,7 +78,7 @@
 
             var option = {
                 title : {
-                    text: '个人成交率统计',
+                    text: '门店成交率统计',
                     subtext: '成交率统计'
                 },
                 tooltip : {
@@ -127,7 +127,7 @@
                 ]
             };
             $.ajax({
-                url:ctx+"/close-ratio-statistics/my-month-data",
+                url:ctx+"/close-ratio-statistics/shop-month-data",
                 success:function (data) {
                     console.log(data.data.list);
                     option.series[0].data = data.data.sum;
@@ -208,7 +208,7 @@
 
 
             $.ajax({
-                url:ctx+"/close-ratio-statistics/my-month-category-data",
+                url:ctx+"/close-ratio-statistics/shop-month-category-data",
                 success:function (data) {
                     option2.series= data.data.series;
                     option2.legend.data= data.data.legend;

@@ -42,10 +42,15 @@
                                 <%--<option value="">不限</option>--%>
                             </select>
                         </div>
-                        <div class="check-box">
-                            <label>
-                            <input type="checkbox" name="is_repair_man" value="1">维修人员
-                            </label>
+                        <div class="form-group">
+                            <label>用户类别</label>
+                            <select name="user_type" id="user_type" class="from-control">
+                                    <option value="1">门店客服</option>
+                                    <option value="2">在线客服</option>
+                                    <option value="3">维修人员</option>
+                                    <option value="4">管理人员</option>
+                                    <option value="5">其他</option>
+                            </select>
                         </div>
                         <div class="check-box">
                             <label>
@@ -85,13 +90,23 @@
                                 <%--<option value="">不限</option>--%>
                             </select>
                         </div>
-                        <div class="check-box">
-                                <%--<label>是否为维修人员</label>--%>
-                            <label>
-                                <input type="checkbox" name="is_repair_man"  value="1" <c:if test="${bean.is_repair_man eq 1}">checked="checked"</c:if>
-                                >维修人员
-                            </label>
+                        <div class="form-group">
+                            <label>用户类别</label>
+                            <select name="user_type" id="user_type" class="from-control">
+                                <option value="1" <c:if test="${bean.user_type == 1}">selected="selected"</c:if>>门店客服</option>
+                                <option value="2" <c:if test="${bean.user_type == 2}">selected="selected"</c:if>>在线客服</option>
+                                <option value="3" <c:if test="${bean.user_type == 3}">selected="selected"</c:if>>维修人员</option>
+                                <option value="4" <c:if test="${bean.user_type == 4}">selected="selected"</c:if>>管理人员</option>
+                                <option value="5" <c:if test="${bean.user_type == 5}">selected="selected"</c:if>>其他</option>
+                            </select>
                         </div>
+                        <%--<div class="check-box">--%>
+                                <%--&lt;%&ndash;<label>是否为维修人员</label>&ndash;%&gt;--%>
+                            <%--<label>--%>
+                                <%--<input type="checkbox" name="is_repair_man"  value="1" <c:if test="${bean.is_repair_man eq 1}">checked="checked"</c:if>--%>
+                                <%-->维修人员--%>
+                            <%--</label>--%>
+                        <%--</div>--%>
                         <div class="check-box">
                             <label>
                                 <input type="checkbox"  name="is_readonly"  value="1" <c:if test="${bean.is_readonly eq 1}">checked="checked"</c:if>

@@ -42,4 +42,14 @@ public interface ConsultOrderMapper {
     List<MonthData> findByMonth(@Param("userId") Long userId,
 								@Param("firstCategoryName") String firstCategoryName,
 								@Param("shopId")Long shopId);
+
+	/**
+	 * 我的成交率统计
+	 * @param userId
+	 * @param shopId
+	 * @return
+	 */
+	List<MonthData> findByMonthMyRadio(@Param("userId") Long userId,
+									 @Param("firstCategoryName") String firstCategoryName,
+									 @Param("shopId")Long shopId,@Param("status")Integer status);
 }

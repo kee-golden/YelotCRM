@@ -120,16 +120,14 @@
         });
 
         $("#exportExcel").click(function(){
+
             var params = "";
             params += "&startDate=" + $('#startDate').val();
             params += "&endDate=" + $('#endDate').val();
-            params += "&firstCategory=" + $('#firstCategory').val();
-            params += "&secondCategory=" + $('#secondCategory').val();
             params += "&shopId=" + $('#shopId').val();
-            params += "&status=" + $('#status').val();
-            params += "&typeName=" + $('#typeName').val();
+            params += "&categoryId=" + $('#category').val();
 
-//            window.location = ctx + '/rpt-repair-order/exportExcel?' + params;
+            window.location = ctx + '/money-statistics/exportExcel-person?' + params;
         });
 
 

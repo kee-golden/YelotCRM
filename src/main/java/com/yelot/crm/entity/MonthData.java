@@ -5,7 +5,14 @@ package com.yelot.crm.entity;
  */
 public class MonthData {
     private int month;
+
     private int number;
+//    /**
+//     * 有效数量
+//     */
+//    private int userfulNumber;
+
+
 
     public int getMonth() {
         return month;
@@ -22,4 +29,12 @@ public class MonthData {
     public void setNumber(int number) {
         this.number = number;
     }
+
+//    public int getUserfulNumber() {
+//        return userfulNumber;
+//    }
+//
+//    public void setUserfulNumber(int userfulNumber) {
+//        this.userfulNumber = userfulNumber;
+//    }
 }

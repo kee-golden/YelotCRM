@@ -56,7 +56,7 @@ public class User {
     /**
      * 是否是维修人员
      */
-    private int is_repair_man;
+    private int user_type;
 
     /**
      * 是否只读权限
@@ -171,12 +171,12 @@ public class User {
         this.shopName = shopName;
     }
 
-    public int getIs_repair_man() {
-        return is_repair_man;
+    public int getUser_type() {
+        return user_type;
     }
 
-    public void setIs_repair_man(int is_repair_man) {
-        this.is_repair_man = is_repair_man;
+    public void setUser_type(int user_type) {
+        this.user_type = user_type;
     }
 
     public int getIs_readonly() {

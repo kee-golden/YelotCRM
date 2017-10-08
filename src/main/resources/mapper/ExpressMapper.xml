@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.ExpressMapper">
+    <resultMap id="expressResultMap" type="com.yelot.crm.entity.Express">
+        <id property="id" column="id"/>
+        <result property="expressName" column="express_name"/>
+        <result property="expressNo" column="express_no"/>
+        <result property="sendType" column="send_type"/>
+        <result property="payType" column="pay_type"/>
+        <result property="payAmount" column="pay_amount"/>
+        <result property="insuranceAmount" column="insurance_amount"/>
+        <result property="insuranceNo" column="insurance_no"/>
+        <result property="repairOrderNoJson" column="repair_order_no_json"/>
+        <result property="acceptPersonName" column="accept_person_name"/>
+        <result property="acceptPersonPhone" column="accept_person_phone"/>
+        <result property="sendPersonName" column="send_person_name"/>
+        <result property="sendPersonPhone" column="send_person_phone"/>
+        <result property="createUserId" column="create_user_id"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="createAt" column="create_at"/>
+        <result property="comment" column="comment"/>
+    </resultMap>
+
+    <select id="find" resultMap="expressResultMap">
+        SELECT * from t_express where id = #{id};
+    </select>
+
+
+    <select id="countBySearch" resultType="Integer">
+        select count(*) from t_express where 1 = 1
+        <if test="extra_search != null and extra_search != ''">
+            and (express_no like CONCAT('%', #{extra_search}, '%') OR express_name like CONCAT('%', #{extra_search}, '%'))
+        </if>
+    </select>
+
+    <select id="findBySearch" resultMap="expressResultMap">
+        select * from t_express where 1 = 1
+        <if test="extra_search != null and extra_search != ''">
+            and (express_no like CONCAT('%', #{extra_search}, '%') OR express_name like CONCAT('%', #{extra_search}, '%'))
+        </if>
+        ORDER BY id DESC
+        limit #{pageHelper.offset},#{pageHelper.size} ;
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_express(express_name,express_no,send_type,pay_type,pay_amount,insurance_amount,insurance_no,repair_order_no_json,accept_person_name,
+        accept_person_phone,send_person_name,send_person_phone,create_user_id,shop_id,create_at,comment)
+        VALUES (#{expressName},#{expressNo},#{sendType},#{payType},#{payAmount},#{insuranceAmount},#{insuranceNo},#{repairOrderNoJson},#{acceptPersonName},#{acceptPersonPhone},
+        #{sendPersonName},#{sendPersonPhone},#{createUserId},#{shopId},#{createAt},#{comment}},
+        #{deliverType},#{comment});
+
+    </insert>
+
+    <update id="update">
+        update t_express set express_name = #{expressName},express_no=#{expressNo},send_type=#{sendType},
+        pay_type=#{payType},pay_amount=#{payAmount},insurance_amount=#{insurancemount},insurance_no=#{insuranceo},repair_order_no_json=#{repairOrderNoJson},
+        accept_person_name=#{acceptPersonName},accept_person_phone=#{acceptPersonPhone},send_person_name=#{sendPersonName},
+        send_person_phone=#{sendPersonPhone},comment=#{comment}
+
+        where id = #{id};
+    </update>
+
+</mapper>
+
+

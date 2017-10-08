@@ -35,19 +35,19 @@
                 <select name="category" id="category" class="from-control">
                     <option value="">全部</option>
                     <c:forEach items="${categoryList}" var="category">
-                        <option value="${category.id}">${category.name}</option>
+                        <option value="${category.name}">${category.name}</option>
                     </c:forEach>
 
                 </select>
             </div>
-            <div class="col-md-2">
-                <h4 style="float: left;">统计方式：</h4>
-                <select name="type" id="type" class="from-control">
-                    <option value="Day">天</option>
-                    <option value="Week">周</option>
-                    <option value="Month">月</option>
-                </select>
-            </div>
+            <%--<div class="col-md-2">--%>
+                <%--<h4 style="float: left;">方式：</h4>--%>
+                <%--<select name="type" id="type" class="from-control">--%>
+                    <%--<option value="Day">天</option>--%>
+                    <%--<option value="Week">周</option>--%>
+                    <%--<option value="Month">月</option>--%>
+                <%--</select>--%>
+            <%--</div>--%>
 
         </form>
         <div class="clearfix"></div>
@@ -61,9 +61,11 @@
     <table id="J_userList" class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
-            <th>时间</th>
-            <th>总金额</th>
-            <th>总订单量</th>
+            <th>用户名</th>
+            <th>姓名</th>
+            <th>手机号</th>
+            <th>门店</th>
+            <th>有效成交总量</th>
         </tr>
         </thead>
     </table>
@@ -90,19 +92,21 @@
             'serverSide': true,
             'lengthMenu': [10, 20, 50, 100],
             'ajax':{
-                'url':ctx + '/money-statistics/shop-query',
+                'url':ctx + '/close-ratio-statistics/person-query',
                 'method': 'get',
                 'data': function (d) {
                     d.startDate = $('#startDate').val();
                     d.endDate = $('#endDate').val();
                     d.shopId = $('#shopId').val();
-                    d.categoryId = $('#category').val();
-                    d.type = $('#type').val();
+                    d.categoryName = $('#category').val();
+
                 }
             },
             'columns': [
-                {'data' : 'time'},
-                {'data' : 'totalPayment'},
+                {'data' : 'userName'},
+                {'data' : 'realname'},
+                {'data' : 'phone'},
+                {'data' : 'shopName'},
                 {'data' : 'totalCount'}],
             'language': {
                 'lengthMenu': '每页显示 _MENU_ 条记录',
@@ -128,11 +132,9 @@
             params += "&startDate=" + $('#startDate').val();
             params += "&endDate=" + $('#endDate').val();
             params += "&shopId=" + $('#shopId').val();
-            params += "&categoryId=" + $('#category').val();
-            params += "&type=" + $('#type').val();
+            params += "&categoryName=" + $('#category').val();
 
-            window.location = ctx + '/money-statistics/exportExcel-shop?' + params;
-
+            window.location = ctx + '/close-ratio-statistics/exportExcel-person?' + params;
         });
 
 

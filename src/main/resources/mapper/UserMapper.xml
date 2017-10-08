@@ -13,7 +13,7 @@
         <result property="is_alive" column="is_alive"/>
         <result property="create_at" column="create_at"/>
         <result property="update_at" column="update_at"/>
-        <result property="is_repair_man" column="is_repair_man"/>
+        <result property="user_type" column="user_type"/>
         <result property="is_readonly" column="is_readonly"/>
     </resultMap>
 
@@ -22,8 +22,8 @@
     </sql>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into t_user(name,password,realname,phone,emp_no,is_alive,create_at,update_at,shop_id,is_repair_man,is_readonly)
-            values(#{name},#{password},#{realname},#{phone},#{emp_no},#{is_alive},#{create_at},#{update_at},#{shop_id},#{is_repair_man},#{is_readonly})
+        insert into t_user(name,password,realname,phone,emp_no,is_alive,create_at,update_at,shop_id,user_type,is_readonly)
+            values(#{name},#{password},#{realname},#{phone},#{emp_no},#{is_alive},#{create_at},#{update_at},#{shop_id},#{user_type},#{is_readonly})
     </insert>
 
     <select id="find" resultMap="userResultMap">

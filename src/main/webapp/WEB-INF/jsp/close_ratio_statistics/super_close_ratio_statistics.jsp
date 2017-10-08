@@ -7,8 +7,8 @@
 
 <%@include file="/WEB-INF/common/static.jsp"%>
 
-<c:set var="PARENT_MENU_CODE" value="ConsultStatistics" />
-<c:set var="CHILD_MENU_CODE" value="SuperConsultStatistics" />
+<c:set var="PARENT_MENU_CODE" value="CloseRatioStatistics" />
+<c:set var="CHILD_MENU_CODE" value="SuperCloseRatioStatistics" />
 
 <script>
 	var ctx = '${ctx}';
@@ -217,10 +217,9 @@
             $('#myTab a:first').tab('show');//初始化显示哪个tab
 
 
-
 	        //默认请求第一个
             $.ajax({
-                url: ctx + '/consult-statistics/person-consult',
+                url: ctx + '/close-ratio-statistics/person-ratio',
                 success: function (data) {
                     $('#content').html(data);
                 }
@@ -233,16 +232,16 @@
                 var sta = $(this).attr('sta');
                 var name = '';
                 if (sta == '1') {
-                    name = '/person-consult';
+                    name = '/person-ratio';
 
                 } else if (sta == '2') {
-                    name = '/shop-consult';
+                    name = '/shop-ratio';
 
                 } else if (sta == '3') {
                     name = 'total';
                 }
                 $.ajax({
-                    url: ctx + '/consult-statistics/' + name,
+                    url: ctx + '/close-ratio-statistics/' + name,
                     success: function (data) {
                         $('#content').html(data);
                     }

@@ -1,5 +1,7 @@
 package com.yelot.crm.controller;
 
+import com.yelot.crm.Util.ExportExcel;
+import com.yelot.crm.Util.GlobalUtil;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -239,4 +244,66 @@ public class MoneyStatisticsController {
         }
         return sumList;
     }
+
+
+    //exportExcel-person""
+    @RequestMapping("exportExcel-person")
+    public void exportExcelByPerson(
+            HttpServletResponse response,
+            @RequestParam(value = "startDate", defaultValue = "") String startDate,
+            @RequestParam(value = "endDate", defaultValue = "") String endDate,
+            @RequestParam(value = "shopId", defaultValue = "") Long shopId,
+            @RequestParam(value = "categoryId", defaultValue = "") Long categoryId
+           ) throws IOException {
+
+        int pageCount = statisticOrderMapper.countTotalPageByPerson(startDate,endDate,shopId);
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(0);
+        pageHelper.setSize(pageCount);
+
+        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findPersonStatisticOrder(startDate,endDate,shopId,categoryId,pageHelper);
+
+        ExportExcel ex = new ExportExcel();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        List<String> strList = GlobalUtil.getPersonList(statisticOrderList);
+        int rows = strList.size() / 6;
+        String []headers = {"用户名","姓名","手机号","门店","总金额","总订单量"};
+        String fileName = "业绩订单统计报表"+startDate+"_"+endDate;
+        ex.exportExcel("title",headers,strList,os,rows);
+        ex.writeExcel(response, os,fileName);
+
+    }
+
+    @RequestMapping("exportExcel-shop")
+    public void exportExcelByShop(
+            HttpServletResponse response,
+            @RequestParam(value = "startDate", defaultValue = "") String startDate,
+            @RequestParam(value = "endDate", defaultValue = "") String endDate,
+            @RequestParam(value = "shopId", defaultValue = "") Long shopId,
+            @RequestParam(value = "categoryId", defaultValue = "") Long categoryId,
+            String type
+    ) throws IOException {
+
+        int pageCount = statisticOrderMapper.countTotalPageByPerson(startDate,endDate,shopId);
+
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.setOffset(0);
+        pageHelper.setSize(pageCount);
+
+
+        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findShopStatisticOrder(startDate,endDate,shopId,categoryId,type,pageHelper);
+
+        ExportExcel ex = new ExportExcel();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        List<String> strList = GlobalUtil.getTimeList(statisticOrderList);
+        int rows = strList.size() / 3;
+        String []headers = {"时间","总金额","总订单量"};
+        String fileName = "业绩门店订单统计报表"+startDate+"_"+endDate;
+        ex.exportExcel("title",headers,strList,os,rows);
+        ex.writeExcel(response, os,fileName);
+
+    }
+
+
 }

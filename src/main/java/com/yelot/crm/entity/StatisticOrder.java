@@ -22,6 +22,10 @@ public class StatisticOrder {
      * 总数量
      */
     private Integer totalCount;
+    /**
+     * 成交率比较的时候，需要多个数量总和，如咨询单总量和维修单总量
+     */
+    private Integer totalCount2;
 
 
     public String getUserName() {
@@ -78,5 +82,13 @@ public class StatisticOrder {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public Integer getTotalCount2() {
+        return totalCount2;
+    }
+
+    public void setTotalCount2(Integer totalCount2) {
+        this.totalCount2 = totalCount2;
     }
 }
