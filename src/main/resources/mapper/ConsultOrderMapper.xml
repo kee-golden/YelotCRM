@@ -80,12 +80,12 @@
     
     <select id="countTotalPageAllByPhone" resultType="java.lang.Integer">
         SELECT count(*) FROM t_consult_order
-        where customer_phone = #{phone}
+        where customer_phone = #{phone} and status != '3'
     </select>
     <select id="findByPageAllByPhone" resultMap="orderResultMap">
         SELECT co.*,u.realname userName,s.name bookShopName from t_consult_order co LEFT JOIN t_user u
         on co.create_user_id = u.id LEFT JOIN t_shop s on co.book_shop_id = s.id
-        where customer_phone = #{phone}
+        where customer_phone = #{phone} and status != '3'
         order by id DESC
         limit #{pageHelper.offset},#{pageHelper.size}
 

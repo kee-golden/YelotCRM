@@ -173,7 +173,7 @@ public class RepairOrderController {
 
         repairOrderService.save(repairOrder);
         
-        consultOrderMapper.updateStatus(consultOrderId, 2); // 咨询单已接单
+        consultOrderMapper.updateStatus(consultOrderId, 3); // 咨询单已接单
 
         return ResultData.ok();
 
