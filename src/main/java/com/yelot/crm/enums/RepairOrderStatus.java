@@ -7,7 +7,7 @@ import java.util.LinkedList;
  */
 public enum RepairOrderStatus {
     /**
-     *  状态流转（2-->4-->8-->）
+     *  //普通维修单(2--4--12--16--20--24--28--32--36--40)
      */
 //    COMPLETED(1,"已完成"),//目前该状态，未使用，就是 28 状态
     CANCEL(0,"取消"),//门店接收人员，创建订单后，可以进行取消操作,并且该订单，财务未审核，仅仅当状态为2的时候，创建人可以取消自己的订单
@@ -32,11 +32,11 @@ public enum RepairOrderStatus {
     SHOP_EXPRESS_REJECT(38,"客户收货拒绝"),
     CUSTOMER_RECEIVE_APPROVE(40,"客户收货已确认"),
     CUSTOMER_RECEIVE_REJECT(42,"客户收货拒绝"),
-    //订单如果是评估单，状态流程过程是 2-->4-->12-->17-->44->48--->20-->24--->28--->32-->36
+    //订单如果是评估单，状态流程过程是 2-->4-->12-->17-->44--->16--20(会更新订单为"维修单")
     SHOP_EVALUE_MANAGE_APPROVE(44,"待预检再次审核"),
-    SHOP_EVALUE_MANAGE_REJECT(46,"评估单，客服主管再次审核通过"),
-    CHECK_EVALUE_ORDER_APPROVE(48,"待QC审核"),
-    CHECK_EVALUE_ORDER_REJECT(50,"预检人员，审核评估单再次拒绝");
+    SHOP_EVALUE_MANAGE_REJECT(46,"评估单，客服主管再次审核通过");
+//    CHECK_EVALUE_ORDER_APPROVE(48,"待QC审核"),
+//    CHECK_EVALUE_ORDER_REJECT(50,"预检人员，审核评估单再次拒绝");
 
 
     private int code;

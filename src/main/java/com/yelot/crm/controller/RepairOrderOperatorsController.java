@@ -58,7 +58,8 @@ public class RepairOrderOperatorsController {
         model.addAttribute("orderId",orderId);
         model.addAttribute("orderNo",repairOrder.getOrderNo());
         model.addAttribute("orderStatus",repairOrder.getStatus());
-        
+        model.addAttribute("bean",repairOrder);
+
         List<User> repairUserList = repairOrderOperatorsService.findRepairUserList();
         model.addAttribute("repairUserList", repairUserList);
 
@@ -76,7 +77,9 @@ public class RepairOrderOperatorsController {
         repairOrderOperators.setCreateAt(new Date());
         repairOrderOperators.setApprove_user_id(UserUtil.getCurrentUser().getId());
         int orderStatus = repairOrder.getStatus();
+
         int approveStatus = getNextApproveStatus(orderStatus,repairOrder);
+
         repairOrderMapper.updateOrderStatusAndImagesPath(orderId,approveStatus,imagesPath,repairUserId,repairLastAt);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(approveStatus);
@@ -113,31 +116,39 @@ public class RepairOrderOperatorsController {
      */
     public int getNextApproveStatus(int orderStatus,RepairOrder repairOrder){
         if(repairOrder.getTypeName() != null && repairOrder.getTypeName().equals("评估单")){//要特殊流程
-            if(orderStatus == RepairOrderStatus.SUBMIT.getCode()){//2->4->12->17->48->20
+            if(orderStatus == RepairOrderStatus.SUBMIT.getCode()){//2->4->12->17->44->16
                 return RepairOrderStatus.SHOP_MANAGE_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.SHOP_MANAGE_APPROVE.getCode()){
+            }else if(orderStatus == RepairOrderStatus.SHOP_MANAGE_APPROVE.getCode()){//status=4
                 return RepairOrderStatus.CENTER_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.CENTER_APPROVE.getCode()){
+            }else if(orderStatus == RepairOrderStatus.CENTER_APPROVE.getCode()){//status=12   ---->17
                 return RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode()) {
+            }else if(orderStatus == RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode()) {//status = 17 --->44
+                //主管审核后，订单就为维修单了
+                repairOrderMapper.updateTypeName(repairOrder.getId(),"维修单");
                 return RepairOrderStatus.SHOP_EVALUE_MANAGE_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.SHOP_EVALUE_MANAGE_APPROVE.getCode()){
-                return RepairOrderStatus.CHECK_EVALUE_ORDER_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.CHECK_EVALUE_ORDER_APPROVE.getCode()){
-                return RepairOrderStatus.QC_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.QC_APPROVE.getCode()){
-                return RepairOrderStatus.CHECKIN_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.CHECKIN_APPROVE.getCode()){
-                return RepairOrderStatus.CHECKOUT_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.CHECKOUT_APPROVE.getCode()){
-                return RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode()){
-                return RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode();
-            }else if(orderStatus == RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode()){
-                return RepairOrderStatus.CUSTOMER_RECEIVE_APPROVE.getCode();
             }
+
+//            else if(orderStatus == RepairOrderStatus.CHECK_EVALUE_ORDER_APPROVE.getCode()){
+//                return RepairOrderStatus.QC_APPROVE.getCode();
+//            }else if(orderStatus == RepairOrderStatus.QC_APPROVE.getCode()){
+//                return RepairOrderStatus.CHECKIN_APPROVE.getCode();
+//            }else if(orderStatus == RepairOrderStatus.CHECKIN_APPROVE.getCode()){
+//                return RepairOrderStatus.CHECKOUT_APPROVE.getCode();
+//            }else if(orderStatus == RepairOrderStatus.CHECKOUT_APPROVE.getCode()){
+//                return RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode();
+//            }else if(orderStatus == RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode()){
+//                return RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode();
+//            }else if(orderStatus == RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode()){
+//                return RepairOrderStatus.CUSTOMER_RECEIVE_APPROVE.getCode();
+//            }
         }
-        //普通维修单
+
+        //是评估单转维修单的节点
+        if(orderStatus == RepairOrderStatus.SHOP_EVALUE_MANAGE_APPROVE.getCode()){//status 44-->16
+            return RepairOrderStatus.CHECK_APPROVE.getCode();
+        }
+
+        //普通维修单(2--4--12--16--20--24--28--32--36--40)
         if(orderStatus == RepairOrderStatus.SUBMIT.getCode()){
             return RepairOrderStatus.SHOP_MANAGE_APPROVE.getCode();
         }else if(orderStatus == RepairOrderStatus.SHOP_MANAGE_APPROVE.getCode()){

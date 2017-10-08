@@ -275,4 +275,8 @@
          group by MONTH(create_at)
     </select>
 
+    <update id="updateTypeName">
+        update t_repair_order set type_name = #{typeName} where id = #{id}
+    </update>
+
 </mapper>

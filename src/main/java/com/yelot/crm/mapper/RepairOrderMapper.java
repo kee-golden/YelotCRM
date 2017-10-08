@@ -95,4 +95,5 @@ public interface RepairOrderMapper {
 								@Param("shopId")Long shopId);
 
 
+	void updateTypeName(@Param("id") Long id, @Param("typeName") String typeName);
 }

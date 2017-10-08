@@ -22,11 +22,11 @@
 		</div>
 		<div class="row">
 			<c:if test="${orderStatus == 2 || orderStatus == 4 || orderStatus == 12 || orderStatus == 16 || orderStatus == 17 || orderStatus==20 ||
-			orderStatus == 24 || orderStatus == 28 || orderStatus == 32 || orderStatus== 36 || orderStatus == 44 || orderStatus==48}">
+			orderStatus == 24 || orderStatus == 28 || orderStatus == 32 || orderStatus== 36 || orderStatus == 44}">
 
 			<form role="form" id="J_checkForm">
 				<input type="hidden" name="id" id="orderId" value="${orderId}">
-				<c:if test="${orderStatus == 12}">
+				<c:if test="${(orderStatus == 12 || orderStatus == 44) && bean.typeName eq '维修单'}">
 				<div class="row">
 					<label style="margin-left: 30px">维修人员：
 					</label><select id="repairUserId" name="repairUserId">
@@ -45,7 +45,7 @@
 			</form>
 
 			</c:if>
-			<c:if test="${orderStatus == 12 || orderStatus == 16}">
+			<c:if test="${(orderStatus == 12 || orderStatus == 16 || orderStatus == 44) && bean.typeName eq '维修单'}">
 				<hr/>
 				<div id="uploader">
 					<div class="queueList">
@@ -128,7 +128,7 @@
 		</div>
 	</div>
 </div>
-<c:if test="${orderStatus == 12 || orderStatus == 16}">
+<c:if test="${(orderStatus == 12 || orderStatus == 16 || orderStatus == 44) && bean.typeName eq '维修单' }">
 	<script src="${ctx}/module-js/order/webuploader_app.js"></script>
 </c:if>
 

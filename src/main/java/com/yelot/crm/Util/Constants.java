@@ -12,5 +12,7 @@ public class Constants {
     public static final String DateFormate = "yyyy-MM-dd";
     public static final String ProcessName = "process-name-1";
     public static final Integer FirstAccountNo = 1001;
+//    public static final String FirstAccountNo = 1001;
+//    public static final Integer FirstAccountNo = 1001;
 //    public static final String SessionUsername = "user";
 }
