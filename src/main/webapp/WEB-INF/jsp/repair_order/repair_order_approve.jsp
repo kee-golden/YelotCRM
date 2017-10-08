@@ -14,7 +14,7 @@
 				<c:if test="${orderStatus == 20}">QC质检完成，待入库</c:if>
 				<c:if test="${orderStatus == 24}">已入库，待出库</c:if>
 				<c:if test="${orderStatus == 28}">已出库，待门店接收</c:if>
-				<c:if test="${orderStatus == 32}">门店已接收，待客户收货</c:if>
+				<c:if test="${orderStatus == 32}">门店已接收，待客服发货</c:if>
 				<c:if test="${orderStatus == 36}">门店已发货，客户收货确认</c:if>
 				<c:if test="${orderStatus == 44}">评估单预检完成，待客服主管审核</c:if>
 				<c:if test="${orderStatus == 48}">客服主管审核通过，待初检审核</c:if>

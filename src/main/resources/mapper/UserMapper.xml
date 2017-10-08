@@ -51,7 +51,7 @@
     </update>
 
     <select id="findRepairUserList" resultMap="userResultMap">
-        select * from t_user where shop_id = '6';
+        select * from t_user where shop_id = '6' and user_type = 3;
     </select>
 
 
