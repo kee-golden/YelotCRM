@@ -2,7 +2,12 @@
  * @author xyzloveabc
  * @2017年9月13日
  */
-require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
+require([ 'jquery', 'yaya', 'selector2','datatables.net' ], function($, yaya, selector2) {
+
+    $("#status").select2({
+        tags: true,
+    });
+    
 	var $JOrderList = $('#J_orderList');
 	// 初始化
     var table = $JOrderList.DataTable({
@@ -24,7 +29,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                 d.secondCategory = $('#secondCategory').val();
                 d.shopId = $('#shopId').val();
                 d.customerType = $('#customerType').val();
-                d.status = $('#status').val();
+                d.status = $('#status').val() == null ? '' : $('#status').val().toString();
                 d.typeName = $('#typeName').val();
             }
         },

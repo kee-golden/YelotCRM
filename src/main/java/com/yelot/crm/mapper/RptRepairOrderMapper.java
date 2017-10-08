@@ -28,7 +28,7 @@ public interface RptRepairOrderMapper {
 			@Param("secondCategory") String secondCategory,
 			@Param("shopId") String shopId,
 			@Param("customerType") String customerType,
-			@Param("status") String status, @Param("typeName") String typeName);
+			@Param("status") List<String> status, @Param("typeName") String typeName);
 
 	/**
 	 * 分页查询
@@ -42,7 +42,7 @@ public interface RptRepairOrderMapper {
 			@Param("secondCategory") String secondCategory,
 			@Param("shopId") String shopId,
 			@Param("customerType") String customerType,
-			@Param("status") String status, @Param("typeName") String typeName,
+			@Param("status") List<String> status, @Param("typeName") String typeName,
 			@Param("pageHelper") PageHelper pageHelper);
 
 	/**

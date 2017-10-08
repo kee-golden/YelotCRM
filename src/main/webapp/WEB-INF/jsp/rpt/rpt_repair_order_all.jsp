@@ -223,15 +223,6 @@
 									</select>
 								</div>
 								<div class="col-md-4">
-									<h4 style="float: left;">订单状态：</h4>
-									<select name="status" id="status" class="from-control">
-										<option value="">全部</option>
-										<c:forEach items="${repairOrderStatusList}" var="repairOrderStatus">
-											<option value="${repairOrderStatus.code}">${repairOrderStatus.message}</option>
-										</c:forEach>
-									</select>
-								</div>
-								<div class="col-md-4">
 									<h4 style="float: left;">订单类型：</h4>
 									<select name="typeName" id="typeName" class="from-control">
 										<option value="">全部</option>
@@ -239,6 +230,14 @@
 										<option value="返修单">返修单</option>
 										<option value="评估单">评估单</option>
 										<option value="客修单">客修单</option>
+									</select>
+								</div>
+								<div class="col-md-12">
+									<h4 style="float: left;">订单状态：</h4>
+									<select name="status" id="status" multiple class="left20 col-md-10">
+										<c:forEach items="${repairOrderStatusList}" var="repairOrderStatus">
+											<option value="${repairOrderStatus.code}">${repairOrderStatus.message}</option>
+										</c:forEach>
 									</select>
 								</div>
 							</form>

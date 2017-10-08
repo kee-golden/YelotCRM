@@ -65,7 +65,11 @@
         <if test="secondCategory != null and secondCategory != ''">and t2.name = #{secondCategory}</if>
         <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
         <if test="customerType != null and customerType != ''">and t6.type = #{customerType}</if>
-        <if test="status != null and status != ''">and t.status = #{status}</if>
+        <if test="status != null and status.size > 0">and t.status in 
+        	<foreach item="item" index="index" collection="status" open="(" separator="," close=")">  
+                #{item}
+            </foreach>
+        </if>
         <if test="typeName != null and typeName != ''">and t.type_name = #{typeName}</if>
     </select>
     
@@ -109,7 +113,11 @@
         <if test="secondCategory != null and secondCategory != ''">and t2.name = #{secondCategory}</if>
         <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
         <if test="customerType != null and customerType != ''">and t6.type = #{customerType}</if>
-        <if test="status != null and status != ''">and t.status = #{status}</if>
+        <if test="status != null and status.size > 0">and t.status in 
+        	<foreach item="item" index="index" collection="status" open="(" separator="," close=")">  
+                #{item}
+            </foreach>
+        </if>
         <if test="typeName != null and typeName != ''">and t.type_name = #{typeName}</if>
         order by t.id desc 
         limit #{pageHelper.offset},#{pageHelper.size} 

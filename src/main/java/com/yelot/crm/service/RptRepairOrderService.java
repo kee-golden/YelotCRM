@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,7 +96,7 @@ public class RptRepairOrderService {
 			secondCategory = "";
 		}
 		
-		List<RptRepairOrder> rptRepairOrderList = rptRepairOrderMapper.findByPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, status, typeName, pageHelper);
+		List<RptRepairOrder> rptRepairOrderList = rptRepairOrderMapper.findByPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, getStatusList(status), typeName, pageHelper);
 		setRptRepairServiceItem(rptRepairOrderList); // 服务项
 		setRptRepairStatus(rptRepairOrderList); // 订单状态
 		setRptRepairChannelSource(rptRepairOrderList); // 客户来源
@@ -118,7 +119,7 @@ public class RptRepairOrderService {
 			secondCategory = "";
 		}
 		
-		return rptRepairOrderMapper.countTotalPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, status, typeName);
+		return rptRepairOrderMapper.countTotalPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, getStatusList(status), typeName);
 	}
 
 	/**
@@ -201,6 +202,17 @@ public class RptRepairOrderService {
 				}
 			}
 		}
+	}
+	
+	private List<String> getStatusList(String status){
+		List<String> statusList = new ArrayList<String>();
+		if (status != null && !"".equals(status)) {
+			String tmp[] = status.split(",");
+			for (String string : tmp) {
+				statusList.add(string);
+			}
+		}
+		return statusList;
 	}
 	
 }
