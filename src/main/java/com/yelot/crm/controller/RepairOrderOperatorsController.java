@@ -85,7 +85,7 @@ public class RepairOrderOperatorsController {
         int approveStatus = getNextApproveStatus(orderStatus,repairOrder);
         
         Integer totalPayment = null;
-        if(approveStatus == 36) {
+        if(approveStatus == RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode()) {//36,在32状态下进行，数值计算
         	totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment;
         }
         
