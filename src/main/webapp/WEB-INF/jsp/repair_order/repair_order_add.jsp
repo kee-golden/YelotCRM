@@ -204,7 +204,7 @@
 							</select>
 							<input type="number" class="form-control" id="discountAmountPayment">
 						</div>
-						<div class="col-md-2"><label>交货时间：</label> <input type="text" class="form-control" id="pickupDate"></div>
+						<div class="col-md-2"><label>预计完成时间：</label> <input type="text" class="form-control" id="pickupDate"></div>
 					</div>
 					
 					<div class="row">

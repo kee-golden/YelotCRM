@@ -168,7 +168,7 @@
 							<c:if test="${repairOrder.materialPayment == -1}"><input type="text" class="form-control" id="materialPayment" value="待定" readonly="readonly"></c:if>
 							<c:if test="${repairOrder.materialPayment != -1}"><input type="text" class="form-control" id="materialPayment" value="${repairOrder.materialPayment}"></c:if>
 							</div>
-							<div class="col-md-2"><label>交货时间:</label>
+							<div class="col-md-2"><label>预计完成时间:</label>
 								<input type="text" class="form-control" id="pickupDate" value="<fmt:formatDate value="${repairOrder.pickupAt}" pattern="yyyy-MM-dd"/>">
 							</div>
 						</div>
