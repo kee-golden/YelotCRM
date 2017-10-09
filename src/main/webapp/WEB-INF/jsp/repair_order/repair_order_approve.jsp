@@ -16,7 +16,7 @@
 				<c:if test="${orderStatus == 28}">已出库，待门店接收</c:if>
 				<c:if test="${orderStatus == 32}">门店已接收，待客服发货</c:if>
 				<c:if test="${orderStatus == 36}">门店已发货，客户收货确认</c:if>
-				<c:if test="${orderStatus == 44}">评估单完成，待预检审核</c:if>
+				<c:if test="${orderStatus == 44}">初检已完成，待QC质检</c:if>
 			</label>
 		</div>
 		<div class="row">
@@ -146,6 +146,8 @@
 
 <script>
     require([ 'jquery', 'yaya','webuploader', 'datatables.net','dateTimePicker' ], function($, yaya,WebUploader) {
+        //用于判断是否当前用户是维修中心用户，维修中心id = 6,固定死
+        var shopId = '${sessionScope.user.shop_id}';
     	
         $('#repairLastAt').datetimepicker({
             lang: 'ch',
@@ -231,7 +233,11 @@
 					if(data.code == 1200){
                         yaya.layer.msg("审核成功");
 					    setTimeout(function () {
-                            window.location.href = ctx+'/repair-order/checklist';
+					        if(shopId == 6){
+                                window.location.href = ctx+'/repair-order/centerChecklist';
+							}else {
+                                window.location.href = ctx+'/repair-order/checklist';
+                            }
                         },1000);
 
 					}
@@ -267,7 +273,11 @@
                     if(data.code == 1200){
                         yaya.layer.msg("审核拒绝成功");
                         setTimeout(function () {
-                            window.location.href = ctx+'/repair-order/checklist';
+                            if(shopId == 6){
+                                window.location.href = ctx+'/repair-order/centerChecklist';
+                            }else {
+                                window.location.href = ctx+'/repair-order/checklist';
+                            }
                         },1000);
 
                     }
