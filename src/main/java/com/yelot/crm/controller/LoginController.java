@@ -38,7 +38,8 @@ public class LoginController {
     @RequestMapping("index")
     public String index(){
 	    //暂时调整到角色列表
-        return "redirect:/repair-order/checklist";
+		String firstUrl = (String )SecurityUtils.getSubject().getSession().getAttribute("firstUrl");
+        return "redirect:"+firstUrl;
     }
 
 	@RequestMapping("login")

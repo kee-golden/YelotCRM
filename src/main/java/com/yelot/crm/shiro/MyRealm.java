@@ -54,6 +54,8 @@ public class MyRealm extends AuthorizingRealm {
 			if(user!=null){
 				//手动设置到session中
 				baseMenuService.setUserAndMenus(user);
+//				String firstUrl = baseMenuService.findFirstMenuUrl(user.getId(),user.getName());
+
 
 				AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(user.getName(),user.getPassword(),"xx");
 				return authcInfo;

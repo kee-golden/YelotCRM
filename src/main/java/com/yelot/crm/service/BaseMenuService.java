@@ -103,6 +103,9 @@ public class BaseMenuService {
         //添加权限
         Set<String> privileges = privilegeMapper.findCodeByAdminId(user.getId());
         shiroSession.setAttribute(Constants.SessionPrivileges, privileges);
+        //保存第一个链接到session
+        String firstUrl = findFirstMenuUrl(user.getId(),user.getName());
+        shiroSession.setAttribute("firstUrl",firstUrl);
 
     }
 
