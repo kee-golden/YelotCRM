@@ -82,6 +82,11 @@ public class Customer {
      * 创建者ID
      */
     private Long createUserId;
+    
+    /**
+     * 其他联系方式
+     */
+    private String otherPhone;
 
     public Customer(){
 
@@ -259,4 +264,13 @@ public class Customer {
     public void setCreateUserId(Long createUserId) {
         this.createUserId = createUserId;
     }
+
+	public String getOtherPhone() {
+		return otherPhone;
+	}
+
+	public void setOtherPhone(String otherPhone) {
+		this.otherPhone = otherPhone;
+	}
+    
 }
