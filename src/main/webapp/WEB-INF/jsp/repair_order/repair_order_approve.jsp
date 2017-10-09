@@ -46,6 +46,8 @@
 					<label style="margin-left: 40px">材料费：</label><input type="number" id="materialPayment" value="${bean.materialPayment == -1 ? null : bean.materialPayment}">
 					<label style="margin-left: 40px">优惠金额：</label><input type="number" id="discountAmountPayment" value="${bean.discountAmountPayment == -1 ? null : bean.discountAmountPayment}">
 					<br>
+					<label style="margin-left: 40px">优惠备注：</label><input type="text" id="discountDesc" style="width: 80%" value="${bean.discountDesc}">
+					<br>
 					<label style="margin-left: 40px">合计金额：</label><input type="number" disabled="disabled" id="totalPayment" value="${bean.totalPayment}">
 				</div>
 				</c:if>
@@ -225,7 +227,8 @@
 					advancePayment:$("#advancePayment").val(),
 					labourPayment:$("#labourPayment").val(),
 					materialPayment:$("#materialPayment").val(),
-					discountAmountPayment:$("#discountAmountPayment").val()
+					discountAmountPayment:$("#discountAmountPayment").val(),
+					discountDesc:$("#discountDesc").val()
 				},
 				success:function (data) {
 					if(data.code == 1200){

@@ -156,6 +156,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         var materialPayment = $('#materialPaymentFlag').val() == "0" ? -1 : $('#materialPayment').val();
         var discountAmountPayment = $('#discountAmountPaymentFlag').val() == "0" ? -1 : $('#discountAmountPayment').val();
         var pickupDate = $('#pickupDate').val();
+        var discountDesc = $('#discountDesc').val();
         console.log(labourPayment+","+labourPayment+","+materialPayment);
         $.ajax({
             url: ctx + '/repair-order/save',
@@ -177,8 +178,8 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 labourPayment:labourPayment,
                 materialPayment:materialPayment,
                 discountAmountPayment:discountAmountPayment,
-                pickupDate:pickupDate
-
+                pickupDate:pickupDate,
+                discountDesc:discountDesc
             },
             success: function (data) {
                 if(data.code == 1200){

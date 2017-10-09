@@ -166,7 +166,6 @@
 						<div class="row bottom10 left20 col-md-9">
 							<label class="">维修内容:</label> <input type="text" class="form-control" id="repairDesc">
 						</div>
-
 					</div>
 					<div class="row bottom10 left20">
 						<div class="col-md-1">
@@ -206,6 +205,12 @@
 							<input type="number" class="form-control" id="discountAmountPayment">
 						</div>
 						<div class="col-md-2"><label>交货时间：</label> <input type="text" class="form-control" id="pickupDate"></div>
+					</div>
+					
+					<div class="row">
+						<div class="row bottom10 left20 col-md-9">
+							<label class="">优惠备注:</label> <input type="text" class="form-control" id="discountDesc">
+						</div>
 					</div>
 				</div>
 

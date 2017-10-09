@@ -73,7 +73,8 @@ public class RepairOrderOperatorsController {
 	public ResultData approve(Model model, Long orderId, String comment,
 			String imagesPath, Long repairUserId, String repairLastAt,
 			Integer advancePayment, Integer labourPayment, 
-			Integer materialPayment, Integer discountAmountPayment) {
+			Integer materialPayment, Integer discountAmountPayment,
+			String discountDesc) {
         RepairOrder repairOrder = repairOrderMapper.find(orderId);
         RepairOrderOperators repairOrderOperators = new RepairOrderOperators();
         repairOrderOperators.setOrderNo(repairOrder.getOrderNo());
@@ -89,7 +90,7 @@ public class RepairOrderOperatorsController {
         	totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment;
         }
         
-        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,approveStatus,imagesPath,repairUserId,repairLastAt,labourPayment,materialPayment,discountAmountPayment,totalPayment);
+        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,approveStatus,imagesPath,repairUserId,repairLastAt,labourPayment,materialPayment,discountAmountPayment,totalPayment,discountDesc);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(approveStatus);
         repairOrderOperators.setOperator_comment(comment);
@@ -101,7 +102,7 @@ public class RepairOrderOperatorsController {
     @RequestMapping("reject")
     @ResponseBody
     public ResultData reject(Model model,Long orderId,String comment,String imagesPath,Integer advancePayment, 
-    		Integer labourPayment, Integer materialPayment, Integer discountAmountPayment){
+    		Integer labourPayment, Integer materialPayment, Integer discountAmountPayment,String discountDesc){
         RepairOrder repairOrder = repairOrderMapper.find(orderId);
         RepairOrderOperators repairOrderOperators = new RepairOrderOperators();
         repairOrderOperators.setOrderNo(repairOrder.getOrderNo());
@@ -110,7 +111,7 @@ public class RepairOrderOperatorsController {
         repairOrderOperators.setApprove_user_id(UserUtil.getCurrentUser().getId());
         int orderStatus = repairOrder.getStatus();
         int rejectStatus = getNextRejectStatus(orderStatus);
-        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,rejectStatus,imagesPath,null,null,null,null,null,null);
+        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,rejectStatus,imagesPath,null,null,null,null,null,null,null);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(rejectStatus);
         repairOrderOperators.setOperator_comment(comment);

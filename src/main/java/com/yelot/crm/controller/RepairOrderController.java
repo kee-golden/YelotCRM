@@ -132,7 +132,7 @@ public class RepairOrderController {
                            @RequestParam(value = "advancePayment",defaultValue = "0") Integer advancePayment,
                            @RequestParam(value = "labourPayment",defaultValue = "0")Integer labourPayment,
                            @RequestParam(value = "materialPayment",defaultValue = "0")Integer materialPayment,
-                           String pickupDate){
+                           String pickupDate, String discountDesc){
         RepairOrder repairOrder = new RepairOrder();
 
         User user = UserUtil.getCurrentUser();
@@ -163,6 +163,7 @@ public class RepairOrderController {
         Date now = new Date();
         repairOrder.setCreateAt(now);
         repairOrder.setUpdateAt(now);
+        repairOrder.setDiscountDesc(discountDesc);
 
         //订单号生成规则：门店编号+年月日+流水序号（门店当天第几单）
         String orderNo = user.getShop_id()+DateUtil.toString(now,"yyyyMMdd");

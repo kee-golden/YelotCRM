@@ -44,6 +44,7 @@
         <result property="consultOrderNo" column="consult_order_no"/>
         <result property="shopAddress" column="shop_address"/>
         <result property="shopPhone" column="shop_phone"/>
+        <result property="discountDesc" column="discount_desc"/>
     </resultMap>
     
     <resultMap id="monthData" type="com.yelot.crm.entity.MonthData">
@@ -60,12 +61,12 @@
             pickup_type,customer_id,customer_name,customer_phone,customer_address,advance_payment,non_payment,
             advance_payment_type,non_payment_type,total_payment,shop_id,images_json,image_desc,product_info_json,
             service_item_ids,first_category_id,second_category_id,brand_id,repair_desc,create_at,update_at,
-            type_name,labour_payment,material_payment,discount_amount_payment,consult_order_id)
+            type_name,labour_payment,material_payment,discount_amount_payment,consult_order_id,discount_desc)
             values(#{orderNo},#{status},#{createUserId},#{pickupAt},#{pickupType},
             #{customerId},#{customerName},#{customerPhone},#{customerAddress},#{advancePayment},#{nonPayment},
             #{advancePaymentType},#{nonPaymentType},#{totalPayment},#{shopId},#{imagesJson},#{imageDesc},#{productInfoJson},
             #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt},
-            #{typeName},#{labourPayment},#{materialPayment},#{discountAmountPayment},#{consultOrderId})
+            #{typeName},#{labourPayment},#{materialPayment},#{discountAmountPayment},#{consultOrderId},#{discountDesc})
     </insert>
 
     <update id="updateOrderStatusAndImagesPath">
@@ -86,7 +87,8 @@
         , labour_payment = #{labourPayment}, 
         material_payment = #{materialPayment}, 
         discount_amount_payment = #{discountAmountPayment}, 
-        total_payment= #{totalPayment}
+        total_payment= #{totalPayment},
+        discount_desc = #{discountDesc}
         </if>
          where id = #{orderId}
 

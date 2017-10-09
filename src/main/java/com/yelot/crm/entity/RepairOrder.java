@@ -206,6 +206,11 @@ public class RepairOrder {
      * 最迟完成时间
      */
     private Date repairLastAt;
+    
+    /**
+     * 优惠备注
+     */
+    private String discountDesc;
 
     public Long getId() {
         return id;
@@ -619,4 +624,13 @@ public class RepairOrder {
     public void setDiscountAmountPayment(int discountAmountPayment) {
         this.discountAmountPayment = discountAmountPayment;
     }
+
+	public String getDiscountDesc() {
+		return discountDesc;
+	}
+
+	public void setDiscountDesc(String discountDesc) {
+		this.discountDesc = discountDesc;
+	}
+    
 }

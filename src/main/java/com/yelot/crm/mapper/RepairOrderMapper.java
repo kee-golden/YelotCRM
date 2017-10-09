@@ -81,7 +81,8 @@ public interface RepairOrderMapper {
 			@Param("labourPayment") Integer labourPayment,
 			@Param("materialPayment") Integer materialPayment,
 			@Param("discountAmountPayment") Integer discountAmountPayment,
-			@Param("totalPayment") Integer totalPayment);
+			@Param("totalPayment") Integer totalPayment,
+			@Param("discountDesc") String discountDesc);
 
     /**
      * 根据订单id查看订单详情
