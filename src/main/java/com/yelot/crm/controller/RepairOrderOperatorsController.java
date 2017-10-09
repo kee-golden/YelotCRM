@@ -83,7 +83,12 @@ public class RepairOrderOperatorsController {
         int orderStatus = repairOrder.getStatus();
 
         int approveStatus = getNextApproveStatus(orderStatus,repairOrder);
-        Integer totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment;
+        
+        Integer totalPayment = null;
+        if(approveStatus == 36) {
+        	totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment;
+        }
+        
         repairOrderMapper.updateOrderStatusAndImagesPath(orderId,approveStatus,imagesPath,repairUserId,repairLastAt,labourPayment,materialPayment,discountAmountPayment,totalPayment);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(approveStatus);
@@ -105,8 +110,7 @@ public class RepairOrderOperatorsController {
         repairOrderOperators.setApprove_user_id(UserUtil.getCurrentUser().getId());
         int orderStatus = repairOrder.getStatus();
         int rejectStatus = getNextRejectStatus(orderStatus);
-        Integer totalPayment = advancePayment + labourPayment + materialPayment - discountAmountPayment;
-        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,rejectStatus,imagesPath,null,null,labourPayment,materialPayment,discountAmountPayment,totalPayment);
+        repairOrderMapper.updateOrderStatusAndImagesPath(orderId,rejectStatus,imagesPath,null,null,null,null,null,null);
         repairOrderOperators.setRepair_order_id(orderId);
         repairOrderOperators.setOrder_status(rejectStatus);
         repairOrderOperators.setOperator_comment(comment);
