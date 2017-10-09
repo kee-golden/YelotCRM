@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -221,9 +222,9 @@ public class RepairOrderService {
 	public RepairOrder findRepairOrderByOrderId(Long orderId) {
 		RepairOrder repairOrder = repairOrderMapper.findRepairOrderByOrderId(orderId);
 		setRepairProductInfo(repairOrder);
-		repairOrder.setImagesList(repairOrder.getImagesJson() == null ? null : Arrays.asList(repairOrder.getImagesJson().split(",")));
-		repairOrder.setPrecheckImagesList(repairOrder.getPrecheckImages() == null ? null : Arrays.asList(repairOrder.getPrecheckImages().split(",")));
-		repairOrder.setQccheckImagesList(repairOrder.getQccheckImages() == null ? null : Arrays.asList(repairOrder.getQccheckImages().split(",")));
+		repairOrder.setImagesList((repairOrder.getImagesJson() == null || "".equals(repairOrder.getImagesJson())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getImagesJson().split(",")));
+		repairOrder.setPrecheckImagesList((repairOrder.getPrecheckImages() == null || "".equals(repairOrder.getPrecheckImages())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getPrecheckImages().split(",")));
+		repairOrder.setQccheckImagesList((repairOrder.getQccheckImages() == null || "".equals(repairOrder.getQccheckImages())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getQccheckImages().split(",")));
 		setOneRepairServiceItem(repairOrder);
 		return repairOrder;
 	}
