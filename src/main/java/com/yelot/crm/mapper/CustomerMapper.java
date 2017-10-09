@@ -3,6 +3,7 @@ package com.yelot.crm.mapper;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Customer;
 import com.yelot.crm.entity.User;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -42,4 +43,7 @@ public interface CustomerMapper {
 //    @Select("select * from t_customer where is_alive = 1 limit #{pageHelper.offset},#{pageHelper.size}")
     List<Customer> findBySearch(@Param("pageHelper") PageHelper pageHelper,@Param("extra_search") String extra_search);
 
+	void updateByRepairOrder(@Param("id") Long id,
+			@Param("otherPhone") String otherPhone, @Param("province") String province,
+			@Param("city") String city, @Param("address") String address);
 }

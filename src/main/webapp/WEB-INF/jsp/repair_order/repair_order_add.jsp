@@ -52,31 +52,41 @@
 					<div id="customerContainer" class="col-md-12 b-r">
 						<div class="row bottom10">
 							<h3 class="m-t-none m-b">基础信息</h3>
-							<input type="hidden" id="customerId" data-id="" />
+							<input type="hidden" id="customerId" />
 							<input type="hidden" id="consultOrderId" />
-							<div class="col-md-2">
-								<label><span style="color: red"></span>用户名</label> <input type="text" placeholder="请输入用户名" class="form-control" name="name" id="J_name"
-									autocomplete="off" readonly>
-							</div>
-
-							<div class="col-md-3">
-								<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="phone" id="J_phone"
-									readonly>
-							</div>
-
-							<div class="col-md-2">
-								<label>省市</label>
-								<div id="provCity">
-									<label id="province"></label>/<label id="city"></label>
-									<%--<select class="prov" name="province" readonly></select> --%>
-									<%--<select class="city" disabled="disabled" name="city" readonly></select>--%>
+							<div class="row bottom10">
+								<div class="col-md-2">
+									<label><span style="color: red"></span>用户名</label> <input type="text" placeholder="请输入用户名" class="form-control" name="name" id="J_name"
+										autocomplete="off" readonly>
 								</div>
-
+	
+								<div class="col-md-2">
+									<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="phone" id="J_phone"
+										readonly>
+								</div>
+	
+								<div class="col-md-4">
+									<label>其他联系方式</label><input type="text" placeholder="请输入其他联系方式" class="form-control" name="otherPhone" id="J_otherPhone">
+								</div>
 							</div>
-							<div class="col-md-5">
-								<label>详细地址</label> <input type="text" placeholder="请输入详细地址" class="form-control" name="address" id="J_address" value="${bean.address}"
-									readonly>
-
+							
+							<div class="row">
+								<div class="col-md-2">
+									<label>省市</label>
+									<div id="provCity">
+										<!-- <label id="province"></label>/<label id="city"></label> -->
+										<select class="prov" name="province" id="J_province"></select>
+										<select class="city" disabled="disabled" name="city" id="J_city"></select>
+									</div>
+								</div>
+								
+								<div class="col-md-6">
+									<label>详细地址</label> <input type="text" placeholder="请输入详细地址" class="form-control" name="address" id="J_address" value="${bean.address}">
+								</div>
+	
+								<div class="col-md-1">
+									<input type="button" class="btn btn-success" style="width: 120px;margin-top: 10px;" id="saveCustomerBtn" value="保存" />
+								</div>
 							</div>
 						</div>
 
@@ -249,10 +259,5 @@
             timepicker:false
         });
     });
-
-
-
 </script>
-
-
 </html>

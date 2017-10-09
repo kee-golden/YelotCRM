@@ -24,6 +24,14 @@
                         </div>
 
                         <div class="row bottom10">
+                        <div class="col-md-12">
+                            <label>其他联系方式</label>
+                            <input type="text" placeholder="请输入其他联系方式" class="form-control" name="otherPhone" id="J_otherPhone"
+                                   value="${bean.otherPhone}">
+                        </div>
+                        </div>
+                        
+                        <div class="row bottom10">
                         <div class="col-md-6">
                             <label>性别</label>
                             <select class="form-control" name="sex">

@@ -211,7 +211,7 @@ public class RepairOrder {
      * 优惠备注
      */
     private String discountDesc;
-
+    
     public Long getId() {
         return id;
     }
@@ -632,5 +632,5 @@ public class RepairOrder {
 	public void setDiscountDesc(String discountDesc) {
 		this.discountDesc = discountDesc;
 	}
-    
+	
 }

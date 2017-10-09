@@ -117,6 +117,7 @@ public class CustomerController {
 
     }
 
+    @ResponseBody
     @RequestMapping("update")
     public ResponseData update(Customer customer){
         return customerService.update(customer);
@@ -168,6 +169,11 @@ public class CustomerController {
         }
         return ResultData.notFound();
 
+    }
 
+    @ResponseBody
+    @RequestMapping("updateByRepairOrder")
+    public ResponseData updateByRepairOrder(Long id, String otherPhone, String province, String city, String address){
+        return customerService.updateByRepairOrder(id, otherPhone, province, city, address);
     }
 }

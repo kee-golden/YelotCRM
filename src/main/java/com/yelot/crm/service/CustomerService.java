@@ -1,21 +1,15 @@
 package com.yelot.crm.service;
 
-import com.alibaba.fastjson.JSON;
 import com.yelot.crm.Util.ResponseData;
-import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
-import com.yelot.crm.entity.Category;
 import com.yelot.crm.entity.Customer;
 import com.yelot.crm.enums.AliveStatus;
 import com.yelot.crm.mapper.CategoryMapper;
 import com.yelot.crm.mapper.CustomerMapper;
-import com.yelot.crm.vo.City;
-import com.yelot.crm.vo.CityList;
-import com.yelot.crm.vo.CityListVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +57,11 @@ public class CustomerService {
 
     public ResponseData updateAlive(Integer alive, Long id) {
         customerMapper.updateAlive(alive,id);
+        return new ResponseData(ResponseData.SUCCESS,ResponseData.SUCCESS_MESSAGE);
+    }
+
+    public ResponseData updateByRepairOrder(Long id, String otherPhone, String province, String city, String address) {
+        customerMapper.updateByRepairOrder(id, otherPhone, province, city, address);
         return new ResponseData(ResponseData.SUCCESS,ResponseData.SUCCESS_MESSAGE);
     }
 

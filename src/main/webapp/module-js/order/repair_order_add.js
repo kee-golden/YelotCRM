@@ -54,15 +54,23 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                                 success: function (data) {
 
                                     if(data.code == 1200){
-                                        $("#customerId").data("id",data.data.customer.id);//复制customer id
+                                        $("#customerId").val(data.data.customer.id);//复制customer id
                                         $("#customerContainer").css("display","block");
                                         $("#customerTip").css("display","none");
                                         $("#J_name").val(data.data.customer.name);
                                         $("#J_phone").val(data.data.customer.phone);
+                                        $("#J_otherPhone").val(data.data.customer.otherPhone);
                                         $("#phone").val(data.data.customer.phone);//同步查询的手机号
                                         $("#J_address").val(data.data.customer.address);
-                                        $("#province").html(data.data.customer.province);
-                                        $("#city").html(data.data.customer.city);
+                                        /*$("#province").html(data.data.customer.province);
+                                        $("#city").html(data.data.customer.city);*/
+                                        $("#provCity").citySelect({
+                                            url:"/static/cityselect/js/city.min.js",
+                                            prov:data.data.customer.province,
+                                            city:data.data.customer.city,
+                                            nodata:"none",
+                                            required:false
+                                        });
 
                                     }else {
                                         $("#customerTip").css("display","block");
@@ -132,7 +140,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
     $("#saveBtn").click(function () {
 
-        var customerId = $('#customerId').data("id");
+        var customerId = $('#customerId').val();
         console.log("customerId:"+customerId);
         if(customerId == ""){
             yaya.layer.msg("你还没有选中客户，请先通过电话号码，查询客户！")
@@ -234,21 +242,47 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 success: function (data) {
 
                     if(data.code == 1200){
-                        $("#customerId").data("id",data.data.customer.id);//复制customer id
+                        $("#customerId").val(data.data.customer.id);//复制customer id
                         $("#customerContainer").css("display","block");
                         $("#customerTip").css("display","none");
                         $("#J_name").val(data.data.customer.name);
                         $("#J_phone").val(data.data.customer.phone);
+                        $("#J_otherPhone").val(data.data.customer.otherPhone);
                         $("#J_address").val(data.data.customer.address);
-                        $("#province").html(data.data.customer.province);
-                        $("#city").html(data.data.customer.city);
-
+                       /* $("#province").html(data.data.customer.province);
+                        $("#city").html(data.data.customer.city);*/
+                        $("#provCity").citySelect({
+                            url:"/static/cityselect/js/city.min.js",
+                            prov:data.data.customer.province,
+                            city:data.data.customer.city,
+                            nodata:"none",
+                            required:false
+                        });
                     }else {
                         $("#customerTip").css("display","block");
                         $("#customerContainer").css("display","none");
                     }
 
 
+                }
+            });
+
+        });
+        
+        $('#saveCustomerBtn').click(function () {
+            $.ajax({
+                url: ctx + '/customer/updateByRepairOrder',
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    id: $("#customerId").val(),
+                    otherPhone: $("#J_otherPhone").val(),
+                    province: $("#J_province").val(),
+                    city: $("#J_city").val(),
+                    address: $("#J_address").val()
+                },
+                success: function (data) {
+                    yaya.layer.msg("客户信息修改成功！");
                 }
             });
 

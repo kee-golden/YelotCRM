@@ -150,6 +150,7 @@ public class RepairOrderController {
         repairOrder.setCustomerName(customer.getName());
         repairOrder.setCustomerAddress(customer.getAddress());
         repairOrder.setCustomerPhone(customer.getPhone());
+        repairOrder.setCustomerPhoneSecond(customer.getOtherPhone());
         repairOrder.setProductInfoJson(valuesAttributeJson);
         repairOrder.setServiceItemIds(serviceItemJson);
         repairOrder.setImagesJson(imagePaths);

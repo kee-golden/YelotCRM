@@ -114,13 +114,30 @@
             <if test="otherPhone!=null">
                 other_phone=#{otherPhone},
             </if>
-
         </trim>
         WHERE id=#{id}
 
     </update>
 
 
+	<update id="updateByRepairOrder">
+        update t_customer SET
+        <trim suffix="" suffixOverrides=",">
+            <if test="otherPhone!=null">
+                other_phone=#{otherPhone},
+            </if>
+            <if test="province!=null">
+                province=#{province},
+            </if>
+            <if test="city!=null">
+                city=#{city},
+            </if>
+            <if test="address!=null">
+                address=#{address},
+            </if>
+        </trim>
+        WHERE id=#{id}
 
+    </update>
 
 </mapper>
