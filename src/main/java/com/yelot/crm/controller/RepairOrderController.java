@@ -72,6 +72,9 @@ public class RepairOrderController {
     
     @Autowired
     private ConsultOrderMapper consultOrderMapper;
+    
+    @Autowired
+    private ShopMapper shopMapper;
 
     /**
      * 调整到新建页面
@@ -472,6 +475,44 @@ public class RepairOrderController {
         List<ConsultOrder> consultOrderList = consultOrderService.findByPageAllByPhone(phone, pageHelper);
         return new Table(pageCount, pageCount, consultOrderList);
     }
+
+    /**
+     * 关联咨询单查看详情
+     * @param model
+     * @param consultOrderNo
+     * @return
+     */
+    @RequestMapping("consultOrderdetail")
+    public String findConsultOrderByConsultOrderNo(Model model, String consultOrderNo){
+    	CityListVo cityListVo = repairOrderService.convertToCityListVo();
+        String categoryJson = JSON.toJSONString(cityListVo);
+    	ConsultOrder consultOrder = consultOrderService.findConsultOrderByConsultOrderNo(consultOrderNo);
+        Brand brand = brandMapper.find(consultOrder.getBrandId());
+        if(brand != null){
+            consultOrder.setBrandName(brand.getName());
+        }
+        String imagesPath = consultOrder.getImagesPath();
+        if(!StringUtils.isEmpty(imagesPath)){
+            String images[] = consultOrder.getImagesPath().split(",");
+            String imagesJson = JSON.toJSONString(images);
+            model.addAttribute("imagesPath",consultOrder.getImagesPath());
+            model.addAttribute("imagesJson",imagesJson);
+        }else {
+            model.addAttribute("imagesPath","");
+            model.addAttribute("imagesJson","[]");
+        }
+
+        List<Brand> brandList = brandMapper.findAll();
+        List<Shop> shopList = shopMapper.findAll();
+        model.addAttribute("shopList",shopList);
+        model.addAttribute("brandList",brandList);
+
+        model.addAttribute("categoryJson",categoryJson);
+        model.addAttribute("bean",consultOrder);
+
+        return "repair_order/consult_order_detail";
+    }
+    
     /**
      * 映射选择属性值
      * @param categoryServiceItemList
@@ -517,8 +558,6 @@ public class RepairOrderController {
 
             }
         }
-
-
     }
 
 }

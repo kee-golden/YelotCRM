@@ -32,6 +32,8 @@ public interface ConsultOrderMapper {
     int countTotalPageAllByPhone(@Param("phone")String phone);
 
     List<ConsultOrder> findByPageAllByPhone(@Param("phone") String phone, @Param("pageHelper") PageHelper pageHelper);
+    
+    ConsultOrder findConsultOrderByConsultOrderNo(@Param("consultOrderNo") String consultOrderNo);
 
     void save(ConsultOrder consultOrder);
 
@@ -52,4 +54,6 @@ public interface ConsultOrderMapper {
 	List<MonthData> findByMonthMyRadio(@Param("userId") Long userId,
 									 @Param("firstCategoryName") String firstCategoryName,
 									 @Param("shopId")Long shopId,@Param("status")Integer status);
+	
+	int findTodayCount();
 }

@@ -88,7 +88,6 @@
         where customer_phone = #{phone} and status != '3'
         order by id DESC
         limit #{pageHelper.offset},#{pageHelper.size}
-
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
@@ -150,4 +149,14 @@
 
     </select>
 
+    <select id="findConsultOrderByConsultOrderNo" resultMap="orderResultMap">
+        select t.*
+        from t_consult_order t
+        where t.order_no = #{consultOrderNo}
+    </select>
+    
+    <!-- 获取今天的咨询单数 -->
+    <select id="findTodayCount" resultType="Integer">
+        select count(*) from t_consult_order where to_days(create_at) = to_days(now())
+    </select>
 </mapper>

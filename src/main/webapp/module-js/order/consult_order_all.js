@@ -1,6 +1,7 @@
 /**
  * Created by kee on 17/7/13.
  */
+var orderNo = "";
 require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 	var $JOrderList = $('#J_orderList');
 	var phone = $("#phone").val();
@@ -24,8 +25,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 	            {
 			    "sClass": "text-center",
 			    "data": "id",//行单选框
-			    "render": function (data) {
-				      return '<input name="checkchild" type="radio" class="checkchild" value="' + data + '" />';
+			    "render": function (data, row) {
+				      return '<input name="checkchild" type="radio" class="checkchild" value="' + data + '" /><input type="hidden" id="consultOrderNoTmp" value="'+row['orderNo']+'">';
 				    },"bSortable": false
                 },
     			{'data' : 'orderNo'},
@@ -67,6 +68,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     //选中行事件
     $("#J_orderList tbody").on("click","tr",function(){
         var check = $(this).find(".checkchild").prop("checked");
+        orderNo = this.children[1].innerText;
         if(check && check==true){
             $(this).find('.checkchild').prop("checked",false);
         }else{
@@ -77,5 +79,5 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 });
 
 var callbackdata = function () {
-    return $(".checkchild:checked").val();
+    return $(".checkchild:checked").val() + "|" + orderNo;
 };

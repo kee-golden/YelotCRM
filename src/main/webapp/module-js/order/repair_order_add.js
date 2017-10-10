@@ -304,8 +304,11 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 	                	
 	                },
 	                yes: function (index) {
-	                	var consultOrderId = window["layui-layer-iframe" + index].callbackdata();
+	                	var resultData = window["layui-layer-iframe" + index].callbackdata();
+	                	var consultOrderId = resultData.split("|")[0];
+	                	var consultOrderNo = resultData.split("|")[1];
 	                	$("#consultOrderId").val(consultOrderId);
+	                	$("#consultOrderNo").val(consultOrderNo);
                         yaya.layer.close(index);
 	                }
 	            });

@@ -42,14 +42,17 @@ public class ConsultOrderService {
     public List<ConsultOrder> findByPageAllByPhone(String phone, PageHelper pageHelper) {
         return consultOrderMapper.findByPageAllByPhone(phone,pageHelper);
     }
+    
+    public ConsultOrder findConsultOrderByConsultOrderNo(String consultOrderNo){
+    	return consultOrderMapper.findConsultOrderByConsultOrderNo(consultOrderNo);
+    }
 
     public void save(ConsultOrder consultOrder){
         User currentUser = UserUtil.getCurrentUser();
         
-        String strDate = DateUtil.toString(new Date(),"yyyyMMddhhmmss");
-        Random random = new Random();  
-        int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数
-        consultOrder.setOrderNo(strDate + rannum);
+        String strDate = DateUtil.toString(new Date(),"yyyyMMdd");
+        int todayCount = consultOrderMapper.findTodayCount();
+        consultOrder.setOrderNo(strDate + todayCount);
         
         consultOrder.setCreateUserId(currentUser.getId());
         consultOrder.setCreateAt(new Date());

@@ -32,8 +32,14 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'statusName'},
     			{'data' : 'createUserName'},
     			{'data' : 'createAt'},
-    			{'data' : 'consultOrderNo'},
-    			{'data' : 'id', 'render' : function(data, type,full, meta) {
+    			{'data' : 'consultOrderNo', 'render' : function(data){
+    				if(data != null){
+        				return '<a href="javascript:;;" data-id="' + data + '" class="J_consultOrderDetail">'+data+'</a>&nbsp;&nbsp;'
+    				} else {
+    					return null;
+    				}
+    			}},
+    			{'data' : 'id', 'render' : function(data, type, full, meta) {
     				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
     				+ '<a href="javascript:;;" data-id="' + data + '" class="J_workflow"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
     			}
@@ -76,7 +82,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     scrollbar:true,
                     shadeClose: true,
                     btn: ['客户单打印','内部单打印'],
-                    success: function (layero, index) {
+                    success: function (layer, index) {
 
 
                     },
@@ -130,6 +136,35 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     	$("#precheckImagesList").removeAttr("style");
                     	$("#qccheckImagesList").removeAttr("style");
                     }
+                });
+            },
+            error: function () {
+
+            }
+        });
+    });
+
+    // 咨询单详情
+    $JOrderList.on('click', '.J_consultOrderDetail', function () {
+		$.ajax({
+            url: ctx + '/repair-order/consultOrderdetail',
+            data: {
+            	consultOrderNo:this.innerText
+            },
+            method: 'get',
+            dataType: 'html',
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '咨询单详情',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: '1100px',
+                    scrollbar:true,
+                    shadeClose: true,
+                    btn: '关闭',
+                    success: function (layer, index) {
+
+                    },
                 });
             },
             error: function () {

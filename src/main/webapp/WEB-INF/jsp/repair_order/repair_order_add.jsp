@@ -45,6 +45,8 @@
 							<input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号" /> <input id="customerSearchBtn" type="button"
 								class="form-control btn-group" value="查询" /><input id="linkToConsultOrder" type="button"
 								class="form-control btn-group" value="关联咨询单" />
+							&nbsp;&nbsp;&nbsp;
+							<label>咨询单号：</label><input type="text" id="consultOrderNo" class="form-control" style="width: 250px" disabled="disabled"/>
 						</div>
 					</form>
 					<hr/>

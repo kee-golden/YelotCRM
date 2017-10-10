@@ -94,6 +94,9 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
                 $('.filelist').append('<span class=\"success\"></span></li>');
             }
 
+        	$("img").click(function(){
+        		window.open(this.src);
+        	});
         });
 
         uploader.on('uploadSuccess', function (file, responseData) {
@@ -448,4 +451,5 @@ require(['jquery', 'webuploader' ], function( $,WebUploader ) {
         $upload.addClass( 'state-' + state );
         updateTotalProgress();
     });
+    
 });
