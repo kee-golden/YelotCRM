@@ -4,20 +4,54 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>登录</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="${ctx}/css/weixin-index.css">
 </head>
 <body>
 	<div class="login-wrap">
 		<div class="login-pic"></div>
-		<p class="login-go">1秒登录腾讯视频</p>
-		<p class="login-tip">微信和QQ是两个独立账号，账号信息共通</p>
+		<input type="hidden" id="openid" value="${openid}">
+		<input type="hidden" id="menu" value="${menu}">
+		<input type="hidden" id="code" value="${code}">
+		<input type="hidden" id="accessToken" value="${accessToken}">
+		<p class="login-go">1秒登录会员系统</p>
+		<p class="login-tip">微信和手机是两个独立账号，账号信息共通</p>
 		<div class="login-btn">
-			<a href="" class="login-wechat"></a>
-			<a href="" class="login-qq"></a>
+			<a href="javascript:void(0)" class="login-wechat"></a>
+			<a href="javascript:void(0)" class="login-qq"></a>
 		</div>
 	</div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
 </html>
+<script type="text/javascript">
+
+    var hostUrl = "http://crm.rojewel.com";
+
+    $(function () {
+        $('.login-wechat').click(function () {
+            var openid = $('#openid').val();
+            var menu = $('#menu').val();
+            var code = $('#code').val();
+            var accessToken = $('#accessToken').val();
+            var param = 'openid='+openid+'&menu='+menu+'&code='+code+'&accessToken='+accessToken;
+            window.location.href = hostUrl+"${ctx}/wx/account-wechat?"+param;
+
+        });
+
+        $('.login-qq').click(function () {
+            var openid = $('#openid').val();
+            var menu = $('#menu').val();
+            var code = $('#code').val();
+            var accessToken = $('#accessToken').val();
+
+            var param = 'openid='+openid+'&menu='+menu+'&code='+code+'&accessToken='+accessToken;
+            alert(menu+","+code);
+            window.location.href = hostUrl+"${ctx}/wx/to-phone-register?"+param;
+
+        });
+
+
+	});
+</script>

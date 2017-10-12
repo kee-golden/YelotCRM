@@ -16,8 +16,8 @@
     </resultMap>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into t_account(phone,password,wx_openid,wx_nickname,verify_code,account_no,full_name,
-        express_address,hobby_json,create_at) VALUES (#{phone},#{password},#{wxOpenid},#{wxNickname},#{verifyCode},#{accountNo},#{fullName},
+        insert into t_account(phone,wx_openid,wx_nickname,account_no,full_name,
+        express_address,hobby_json,create_at) VALUES (#{phone},#{wxOpenid},#{wxNickname},#{accountNo},#{fullName},
         #{expressAddress},#{hobbyJson},now());
 
     </insert>

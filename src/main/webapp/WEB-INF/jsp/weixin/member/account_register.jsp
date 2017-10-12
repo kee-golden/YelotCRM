@@ -20,6 +20,7 @@
 				<input type="number" name="verifyCode" id="verifyCode" placeholder="输入验证码" minlength="4" maxlength="4" class="rigister-code  mobile">
 				<input type="button" name="" value="获取验证码" class="btn-code" id="verifyBtn">
 			</div>
+			<%--<div><img src="${ctx}/images/weixin.png" id="weixin_login" style="position:relative;top:300px;margin:0 auto;"></div>--%>
 			<div class="rigister-submit">
 				<button class="rigister-submit-btn" id="registerButton">NEXT</button>
 			</div>

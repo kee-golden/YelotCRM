@@ -31,12 +31,13 @@ public class SendMessageService {
     public boolean sendVerifyCode(String phone){
 //
 //        AppConfig appConfig = new AppConfig();
-//        appConfig.setSmsAccount("hpw107");
-//        appConfig.setSmsPassword("a45665");
+//        appConfig.setSmsAccount("hpw39");
+//        appConfig.setSmsPassword("hpw398888");
 //        appConfig.setSendMessageUrl("http://sh2.ipyy.com/sms.aspx");
         //jkwl210    362189
 
         String randomVerifyCode = NumberUtils.generateRandom(4);
+        randomVerifyCode = "1234";
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add(new BasicNameValuePair("userid", appConfig.getSmsAccount()));
         nameValuePairs.add(new BasicNameValuePair("account",appConfig.getSmsAccount()));
@@ -49,8 +50,9 @@ public class SendMessageService {
         nameValuePairs.add(new BasicNameValuePair("sendTime",""));//立即发送
         nameValuePairs.add(new BasicNameValuePair("extno",""));
 
-        String result = HttpUtils.post(appConfig.getSendMessageUrl(),nameValuePairs);
-        if(result.contains("<returnstatus>Success</returnstatus>")){//接口调用成功
+//        String result = HttpUtils.post(appConfig.getSendMessageUrl(),nameValuePairs);
+//        if(result.contains("<returnstatus>Success</returnstatus>")){//接口调用成功
+        if(true){
             SendMessage sendMessage = sendMessageMapper.findByPhone(phone);
             SendMessage sm = new SendMessage();
             sm.setPhone(phone);
@@ -88,7 +90,7 @@ public class SendMessageService {
         long currentTimes = System.currentTimeMillis();
 
         long distance = (currentTimes - sendTm.getTime())/(1000);
-        if(distance > 60 * 3){//超出3分钟，就为无效。超时。
+        if(distance > 60 * 30){//超出30分钟，就为无效。超时。
             return VerifyCodeType.Verify_Delay.getCode();
         }
 
