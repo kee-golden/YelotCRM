@@ -45,6 +45,7 @@
         <result property="shopAddress" column="shop_address"/>
         <result property="shopPhone" column="shop_phone"/>
         <result property="discountDesc" column="discount_desc"/>
+        <result property="refOrderIds" column="ref_order_ids"/>
     </resultMap>
     
     <resultMap id="monthData" type="com.yelot.crm.entity.MonthData">
@@ -61,12 +62,12 @@
             pickup_type,customer_id,customer_name,customer_phone,customer_phone_second,customer_address,advance_payment,non_payment,
             advance_payment_type,non_payment_type,total_payment,shop_id,images_json,image_desc,product_info_json,
             service_item_ids,first_category_id,second_category_id,brand_id,repair_desc,create_at,update_at,
-            type_name,labour_payment,material_payment,discount_amount_payment,consult_order_id,discount_desc)
+            type_name,labour_payment,material_payment,discount_amount_payment,consult_order_id,discount_desc,ref_order_ids)
             values(#{orderNo},#{status},#{createUserId},#{pickupAt},#{pickupType},
             #{customerId},#{customerName},#{customerPhone},#{customerPhoneSecond},#{customerAddress},#{advancePayment},#{nonPayment},
             #{advancePaymentType},#{nonPaymentType},#{totalPayment},#{shopId},#{imagesJson},#{imageDesc},#{productInfoJson},
             #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt},
-            #{typeName},#{labourPayment},#{materialPayment},#{discountAmountPayment},#{consultOrderId},#{discountDesc})
+            #{typeName},#{labourPayment},#{materialPayment},#{discountAmountPayment},#{consultOrderId},#{discountDesc},#{refOrderIds})
     </insert>
 
     <update id="updateOrderStatusAndImagesPath">
@@ -269,6 +270,11 @@
 		where id = #{id}
     </update>
     
+    <update id="updateRefOrderIdsByOrderNo">
+        update t_repair_order set ref_order_ids = #{refOrderIds}
+		where order_no = #{orderNo}
+    </update>
+    
     <select id="findByMonth" resultMap="monthData">
         select month(create_at) month,sum(total_payment) number from t_repair_order where YEAR(create_at) = YEAR(now())
          <if test="userId != null and userId != ''">
@@ -286,5 +292,17 @@
     <update id="updateTypeName">
         update t_repair_order set type_name = #{typeName} where id = #{id}
     </update>
+    
+    <select id="findUserOrderNoByPhone" resultMap="orderResultMap">
+        select t.*
+        from t_repair_order t
+        where t.customer_phone = #{phone} and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= t.create_at
+        order by t.create_at desc
+    </select>
 
+    <select id="findRefOrderIdsByOrderNo" resultMap="orderResultMap">
+        select *
+        from t_repair_order
+        where order_no = #{orderNo}
+    </select>
 </mapper>

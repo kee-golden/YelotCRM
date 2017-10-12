@@ -15,10 +15,13 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
     generateAttributes(attributesJson);
     generateCategroyServices(categoryServiceJson);
 
-
     var prifixAttribute = 'attId_';// 属性前缀
 
     $("#serviceItem").select2({
+        tags: true,
+    });
+
+    $("#refOrderIds").select2({
         tags: true,
     });
 
@@ -154,6 +157,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
         var valuesAttributeJson =  getAttributeValues(attributesJson);
         var serviceItemJson = $('#serviceItem').val();
+        var refOrderIdsJson = $('#refOrderIds').val();
 
         var imagePaths = $('.filelist').data('path');
         var imageDesc = $('#imageDesc').val();
@@ -178,6 +182,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 brandId:brandId,
                 valuesAttributeJson:JSON.stringify(valuesAttributeJson),
                 serviceItemJson:JSON.stringify(serviceItemJson),
+                refOrderIdsJson:JSON.stringify(refOrderIdsJson),
                 imagePaths:imagePaths,
                 imageDesc:imageDesc,
                 repairDesc:repairDesc,
@@ -258,6 +263,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                             nodata:"none",
                             required:false
                         });
+                        generateRefOrderIds(data.data.userOrderNoJson);
                     }else {
                         $("#customerTip").css("display","block");
                         $("#customerContainer").css("display","none");
@@ -421,6 +427,14 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
     }
 
+    function generateRefOrderIds(userOrderNoJson) {
+        $("#refOrderIds").empty();
+        for(var i = 0;i < userOrderNoJson.length;i++){
+            var str = '<option value=\"'+userOrderNoJson[i]+'\">'+userOrderNoJson[i]+'</option>';
+            $("#refOrderIds").append(str);
+        }
+    }
+    
     $("#labourPaymentFlag").change(function() {
     	if($("#labourPaymentFlag").val() == "0"){
     		// $("#labourPayment").val("待定");
