@@ -29,7 +29,14 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 				      return '<input name="checkchild" type="radio" class="checkchild" value="' + data + '" /><input type="hidden" id="consultOrderNoTmp" value="'+row['orderNo']+'">';
 				    },"bSortable": false
                 },
-    			{'data' : 'orderNo'},
+    			{'data' : 'orderNo', 'render' : function(data){
+    				if(data != null){
+    					alert(data);
+        				return '<a href="/repair-order/consultOrderdetail?consultOrderNo='  +data + '" target="_blank" data-id="' + data + '" class="J_consultOrderDetail">'+data+'</a>&nbsp;&nbsp;'
+    				} else {
+    					return null;
+    				}
+    			}},
     			{'data' : 'customerName'},
     			{'data' : 'customerPhone'},
                 {'data' : 'wechatNo'},

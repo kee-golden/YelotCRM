@@ -1,7 +1,16 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@include file="/WEB-INF/common/taglibs.jsp"%>
-
-
+<html lang="zh-cn">
+<head>
+	<link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+	<link href='/static/yaya/css/style.css' rel='stylesheet'>
+	<link href='/module-css/basic.css' rel='stylesheet'>
+	<link rel="stylesheet" href="/static/css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="/module-css//webuploader.css">
+	<link rel="stylesheet" type="text/css" href="/module-css/webuploader_style.css">
+</head>
+<body>
 <script>
 		var ctx = '${ctx}';
 		var imagesPath = '${imagesPath}'
@@ -195,4 +204,9 @@
 		</div>
 	</div>
 </div>
+
+</body>
+<script src="${ctx}/static/require/require.js"></script>
+<script src="${ctx}/static/require/require.config.js"></script>
 <script src="${ctx}/module-js/order/webuploader_edit.js"></script>
+</html>
