@@ -238,6 +238,18 @@ public class RepairOrderService {
 		repairOrder.setImagesList((repairOrder.getImagesJson() == null || "".equals(repairOrder.getImagesJson())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getImagesJson().split(",")));
 		repairOrder.setPrecheckImagesList((repairOrder.getPrecheckImages() == null || "".equals(repairOrder.getPrecheckImages())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getPrecheckImages().split(",")));
 		repairOrder.setQccheckImagesList((repairOrder.getQccheckImages() == null || "".equals(repairOrder.getQccheckImages())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getQccheckImages().split(",")));
+		repairOrder.setRefOrderIdsList(JSON.parseArray(repairOrder.getRefOrderIds(), String.class));
+		setOneRepairServiceItem(repairOrder);
+		return repairOrder;
+	}
+	
+	public RepairOrder findRepairOrderByOrderNo(String orderNo) {
+		RepairOrder repairOrder = repairOrderMapper.findRepairOrderByOrderNo(orderNo);
+		setRepairProductInfo(repairOrder);
+		repairOrder.setImagesList((repairOrder.getImagesJson() == null || "".equals(repairOrder.getImagesJson())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getImagesJson().split(",")));
+		repairOrder.setPrecheckImagesList((repairOrder.getPrecheckImages() == null || "".equals(repairOrder.getPrecheckImages())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getPrecheckImages().split(",")));
+		repairOrder.setQccheckImagesList((repairOrder.getQccheckImages() == null || "".equals(repairOrder.getQccheckImages())) ? new ArrayList<String>() : Arrays.asList(repairOrder.getQccheckImages().split(",")));
+		repairOrder.setRefOrderIdsList(JSON.parseArray(repairOrder.getRefOrderIds(), String.class));
 		setOneRepairServiceItem(repairOrder);
 		return repairOrder;
 	}
