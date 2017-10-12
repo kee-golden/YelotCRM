@@ -128,9 +128,12 @@
 						</div>
 						<div id="attributes" class="bottom10"></div>
 
-						<hr />
+						<hr/>
 						<label class="left20">服务项:</label> <select id="serviceItem" name="serviceItem" multiple class="left20 col-md-6">
-
+						</select>
+						<br>
+						<br>
+						<label class="left20">关联件单号:</label> <select id="refOrderIds" name="serviceItem" multiple class="left20 col-md-6">
 						</select>
 					</div>
 

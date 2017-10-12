@@ -1,6 +1,7 @@
 package com.yelot.crm.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.yelot.crm.Util.Constants;
 import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResponseData;
@@ -10,7 +11,9 @@ import com.yelot.crm.entity.Customer;
 import com.yelot.crm.enums.AliveStatus;
 import com.yelot.crm.mapper.CustomerMapper;
 import com.yelot.crm.service.CustomerService;
+import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.Table;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +39,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private RepairOrderService repairOrderService;
 
     @RequestMapping("find")
     public Customer find(Long id){
@@ -164,8 +171,10 @@ public class CustomerController {
     public ResultData search(String phone){
 
         List<Customer> customerList = customerMapper.findByPhone(phone);
+        List<String> userOrderNo = repairOrderService.findUserOrderNoByPhone(phone);
+        
         if(customerList != null && customerList.size() > 0){
-            return ResultData.ok().putDataValue("customer",customerList.get(0));
+            return ResultData.ok().putDataValue("customer",customerList.get(0)).putDataValue("userOrderNoJson", userOrderNo);
         }
         return ResultData.notFound();
 

@@ -89,10 +89,14 @@ public interface RepairOrderMapper {
      * @return
      */
     public RepairOrder findRepairOrderByOrderId(Long orderId);
+    
+    public List<RepairOrder> findUserOrderNoByPhone(String phone);
 
     int countByShopId(Long shopId);
 
 	void update(RepairOrder repairOrder);
+    public List<RepairOrder> findRefOrderIdsByOrderNo(String orderNo);
+	void updateRefOrderIdsByOrderNo(@Param("orderNo") String orderNo, @Param("refOrderIds") String refOrderIds);
 
     List<MonthData> findByMonth(@Param("userId") Long userId,
 								@Param("firstCategoryId") Long firstCategoryId,

@@ -130,8 +130,7 @@ public class RepairOrderController {
     @ResponseBody
     @RequestMapping("save")
     public ResultData save(Long customerId,Long consultOrderId,String firstCategory,String secondCategory,Long brandId,String valuesAttributeJson,
-                           String serviceItemJson,String imagePaths,String imageDesc,String repairDesc,
-                           String typeName,
+                           String serviceItemJson,String refOrderIdsJson,String imagePaths,String imageDesc,String repairDesc,String typeName,
                            @RequestParam(value = "advancePayment",defaultValue = "0") Integer advancePayment,
                            @RequestParam(value = "labourPayment",defaultValue = "0")Integer labourPayment,
                            @RequestParam(value = "materialPayment",defaultValue = "0")Integer materialPayment,
@@ -156,6 +155,7 @@ public class RepairOrderController {
         repairOrder.setCustomerPhoneSecond(customer.getOtherPhone());
         repairOrder.setProductInfoJson(valuesAttributeJson);
         repairOrder.setServiceItemIds(serviceItemJson);
+        repairOrder.setRefOrderIds(refOrderIdsJson);
         repairOrder.setImagesJson(imagePaths);
         repairOrder.setImageDesc(imageDesc);
         repairOrder.setRepairDesc(repairDesc);
@@ -177,6 +177,10 @@ public class RepairOrderController {
         repairOrder.setStatus(2);//submit
 
         repairOrderService.save(repairOrder);
+        
+        if (refOrderIdsJson != null && !"null".equals(refOrderIdsJson) && !"".equals(refOrderIdsJson)) {
+        	repairOrderService.updateRefOrderIdsByOrderNo(repairOrder.getOrderNo(), refOrderIdsJson);
+		}
         
         consultOrderMapper.updateStatus(consultOrderId, 3); // 咨询单已接单
 

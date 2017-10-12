@@ -143,7 +143,20 @@ public class RepairOrderService {
 		setRepairStatus(repairOrderList);
 		return repairOrderList;
 	}
-
+	
+	/**
+	 * 根据客户的手机号查询客户的维修单号
+	 * @param phone
+	 * @return
+	 */
+	public List<String> findUserOrderNoByPhone(String phone){
+		List<RepairOrder> userOrderList = repairOrderMapper.findUserOrderNoByPhone(phone);
+		List<String> userOrderNo = new ArrayList<String>();
+		for (RepairOrder repairOrder : userOrderList) {
+			userOrderNo.add(repairOrder.getOrderNo());
+		}
+		return userOrderNo;
+	}
     public int countTotalPageCheckList(String extra_search, List<String> statusList, String type) {
 		return repairOrderMapper.countTotalPageCheckList(extra_search,statusList,type);
     }
@@ -235,6 +248,43 @@ public class RepairOrderService {
 
     public void update(RepairOrder repairOrder) {
 		repairOrderMapper.update(repairOrder);
+    }
+
+    public void updateRefOrderIdsByOrderNo(String orderNo, String refOrderIdsJson) {
+    	List<String> refOrderIdsJsonList = JSON.parseArray(refOrderIdsJson, String.class);
+    	List<String> refOrderIdsJsonList2 =  JSON.parseArray(refOrderIdsJson, String.class);
+    	
+    	for (String orderNoTmp : refOrderIdsJsonList2) {
+    		List<RepairOrder> repairOrderList = repairOrderMapper.findRefOrderIdsByOrderNo(orderNoTmp);
+    		for (RepairOrder repairOrder : repairOrderList) {
+    			if (repairOrder.getRefOrderIds() != null && !"null".equals(repairOrder.getRefOrderIds()) && !"".equals(repairOrder.getRefOrderIds())) {
+        			List<String> refOrderIdsJsonList3 =  JSON.parseArray(repairOrder.getRefOrderIds(), String.class);
+        			for (String refOrderId : refOrderIdsJsonList3) {
+    					if (!refOrderIdsJsonList.contains(refOrderId)) {
+    						refOrderIdsJsonList.add(refOrderId);
+    					}
+    				}
+					
+				}
+			}
+		}
+    	
+    	refOrderIdsJsonList.add(orderNo);
+    	
+    	for (String orderNoTmp : refOrderIdsJsonList) {
+    		
+    		List<String> refOrderIdsJsonListTmp = new ArrayList<String>();
+			for (String refOrderId : refOrderIdsJsonList) {
+				if (orderNoTmp.equals(refOrderId)) {
+					continue;
+				} else {
+					refOrderIdsJsonListTmp.add(refOrderId);
+				}
+			}
+			
+			String refOrderIds = JSON.toJSONString(refOrderIdsJsonListTmp);
+			repairOrderMapper.updateRefOrderIdsByOrderNo(orderNoTmp, refOrderIds);
+		}
     }
     
     /**

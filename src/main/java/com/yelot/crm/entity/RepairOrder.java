@@ -174,8 +174,6 @@ public class RepairOrder {
      * 新增类别：（内部单，返修单，评估单，客修单）
      */
     private String typeName;
-
-
     
     /**
      * 咨询单id
@@ -211,6 +209,11 @@ public class RepairOrder {
      * 优惠备注
      */
     private String discountDesc;
+    
+    /**
+     * 关联单号
+     */
+    private String refOrderIds;
     
     public Long getId() {
         return id;
@@ -631,6 +634,14 @@ public class RepairOrder {
 
 	public void setDiscountDesc(String discountDesc) {
 		this.discountDesc = discountDesc;
+	}
+
+	public String getRefOrderIds() {
+		return refOrderIds;
+	}
+
+	public void setRefOrderIds(String refOrderIds) {
+		this.refOrderIds = refOrderIds;
 	}
 	
 }
