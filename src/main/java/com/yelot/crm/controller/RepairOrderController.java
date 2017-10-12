@@ -382,6 +382,20 @@ public class RepairOrderController {
     }
 
     /**
+     * 根据订单号查看订单详情
+     * @param model
+     * @param orderNo
+     * @return
+     */
+    @RequestMapping("detailByOrderNo")
+    public String findRepairOrderByOrderNo(Model model, String orderNo, Boolean customerVisable){
+        RepairOrder repairOrder = repairOrderService.findRepairOrderByOrderNo(orderNo);
+        model.addAttribute("repairOrder", repairOrder);
+        model.addAttribute("customerVisable", customerVisable);
+        return "repair_order/repair_order_detail";
+    }
+
+    /**
      * 创建客户
      * @return
      */

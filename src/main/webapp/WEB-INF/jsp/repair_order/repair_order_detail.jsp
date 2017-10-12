@@ -3,8 +3,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html lang="zh-cn">
 <head>
-<style>
-</style>
+	<link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+	<link href='/static/yaya/css/style.css' rel='stylesheet'>
+	<link href='/module-css/basic.css' rel='stylesheet'>
+	<script>
+		var ctx = '${ctx}';
+	</script>
 </head>
 <body>
 	<div id="repairOrderDetail">
@@ -290,6 +294,15 @@
 					<td width="12%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">服务项：</h5></td>
 					<td width="84%" colspan="7"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.serviceItemNames}</h5></td>
 				</tr>
+				<tr id="refOrderIds">
+					<td width="12%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">关联件单号：</h5></td>
+					<td width="84%" colspan="7">
+						<c:forEach items="${repairOrder.refOrderIdsList}" var="item" varStatus="status">
+							<a href="/repair-order/detailByOrderNo?orderNo=${item}&customerVisable=${customerVisable}" target="_blank">${item}</a>
+							<c:if test="${status.last==false}">,</c:if>
+						</c:forEach>
+					</td>
+				</tr>
 				<tr>
 					<td width="12%"><h5 style="float: right; margin: 3px; font-family: 宋体; font-weight: normal;">维修费用：</h5></td>
 					<td width="36%" colspan="3"><h5 style="float: left; margin: 3px; font-family: 宋体; font-weight: normal;">${repairOrder.totalPayment}</h5></td>
@@ -401,6 +414,8 @@
 	</div>
 </body>
 
+<script src="${ctx}/static/require/require.js"></script>
+<script src="${ctx}/static/require/require.config.js"></script>
 <script>
     require(['jquery','yaya'], function ($, yaya) {
 		$("img").click(function(){

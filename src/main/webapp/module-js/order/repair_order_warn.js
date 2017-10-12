@@ -79,7 +79,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     type: 1,
                     title: '订单详情',
                     content: str, //注意，如果str是object，那么需要字符拼接。
-                    area: ['800px','600px'],
+                    area: '1100px',
                     scrollbar:true,
                     shadeClose: true,
                     btn: ['客户单打印','内部单打印'],
@@ -99,6 +99,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
                     	$("#precheckImagesList").css("display","none");
                     	$("#qccheckImagesList").css("display","none");
+                    	$("#refOrderIds").css("display","none");
                     	
                     	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
                     	var footstr = "</body></html>";  
@@ -117,6 +118,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
                     	$("#precheckImagesList").removeAttr("style");
                     	$("#qccheckImagesList").removeAttr("style");
+                    	$("#refOrderIds").removeAttr("style");
                     },
                     btn2: function (index) {
                     	$("#customerHr").css("display","none");
@@ -124,6 +126,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
                     	$("#precheckImagesList").css("display","none");
                     	$("#qccheckImagesList").css("display","none");
+                    	$("#refOrderIds").css("display","none");
                 		
                     	var headstr = "<html><head><link href='/static/bootstrap/css/bootstrap.min.css' rel='stylesheet'><link href='/static/yaya/css/style.css' rel='stylesheet'><link href='/module-css/basic.css' rel='stylesheet'></head><body>";
                     	var footstr = "</body></html>";  
@@ -136,6 +139,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
                     	$("#precheckImagesList").removeAttr("style");
                     	$("#qccheckImagesList").removeAttr("style");
+                    	$("#refOrderIds").removeAttr("style");
+                    	return false;
                     }
                 });
             },

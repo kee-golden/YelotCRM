@@ -90,6 +90,13 @@ public interface RepairOrderMapper {
      */
     public RepairOrder findRepairOrderByOrderId(Long orderId);
     
+    /**
+     * 根据订单号查看订单详情
+     * @param orderNo
+     * @return
+     */
+    public RepairOrder findRepairOrderByOrderNo(String orderNo);
+    
     public List<RepairOrder> findUserOrderNoByPhone(String phone);
 
     int countByShopId(Long shopId);

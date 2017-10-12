@@ -214,6 +214,7 @@ public class RepairOrder {
      * 关联单号
      */
     private String refOrderIds;
+    private List<String> refOrderIdsList;
     
     public Long getId() {
         return id;
@@ -642,6 +643,14 @@ public class RepairOrder {
 
 	public void setRefOrderIds(String refOrderIds) {
 		this.refOrderIds = refOrderIds;
+	}
+
+	public List<String> getRefOrderIdsList() {
+		return refOrderIdsList;
+	}
+
+	public void setRefOrderIdsList(List<String> refOrderIdsList) {
+		this.refOrderIdsList = refOrderIdsList;
 	}
 	
 }

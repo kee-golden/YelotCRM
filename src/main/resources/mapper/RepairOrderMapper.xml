@@ -230,6 +230,17 @@
         where t.id = #{orderId}
     </select>
 
+    <select id="findRepairOrderByOrderNo" resultMap="orderResultMap">
+        select t.*, t1.realname create_user_name, t2.name first_category_name, t3.name second_category_name, t4.name brand_name, t5.address shop_address, t5.phone shop_phone
+        from t_repair_order t
+        left join t_user t1 on t.create_user_id = t1.id
+        left join t_category t2 on t.first_category_id = t2.id
+        left join t_category t3 on t.second_category_id = t3.id
+        left join t_brand t4 on t.brand_id = t4.id
+        left join t_shop t5 on t.shop_id = t5.id
+        where t.order_no = #{orderNo}
+    </select>
+
     <!-- 获取一个门店今天的总订单数 -->
     <select id="countByShopId" resultType="Integer">
         select count(*) from t_repair_order where to_days(create_at) = to_days(now()) and shop_id = #{shopId};
