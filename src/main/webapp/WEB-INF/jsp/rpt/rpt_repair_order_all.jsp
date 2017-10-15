@@ -6,7 +6,7 @@
 <title>CRM管理后台</title>
 
 <%@include file="/WEB-INF/common/static.jsp"%>
-
+<link rel="stylesheet" type="text/css" href="${ctx}/module-css/daterangepicker.css">
 <c:set var="PARENT_MENU_CODE" value="RptRepairOrder_Manage" />
 <c:set var="CHILD_MENU_CODE" value="RptRepairOrder_AllList" />
 
@@ -193,12 +193,17 @@
 						<div class="co_all">
 							<form id="searchFrom" style="margin: 5px;">
 								<div class="col-md-4">
-									<h4 style="float: left;">开始时间：</h4>
-									<input type="text" style="float: left;" id="startDate" class="pickupDate">
-								</div>
+						            <h4 style="float: left;">时间区间：</h4>
+						            <input type="text" style="float: left; width: 60%" id="dateArea">
+					          	</div>
 								<div class="col-md-4">
-									<h4 style="float: left;">结束时间：</h4>
-									<input type="text" style="float: left;" id="endDate" class="pickupDate">
+									<h4 style="float: left;">门店名称：</h4>
+									<select name="shopId" id="shopId">
+										<option value="">全部</option>
+										<c:forEach items="${shopList}" var="shop">
+											<option value="${shop.id}">${shop.name}</option>
+										</c:forEach>
+									</select>
 								</div>
 								<div id="category">
 									<h4 style="float: left;">产品分类：</h4>
@@ -206,31 +211,63 @@
 										name="secondCategory" id="secondCategory"></select>
 								</div>
 								<div class="col-md-4">
-									<h4 style="float: left;">门店名称：</h4>
-									<select name="shopId" id="shopId" class="from-control">
+									<h4 style="float: left;">在线客服：</h4>
+									<select name="onLineUser" id="onLineUser">
 										<option value="">全部</option>
-										<c:forEach items="${shopList}" var="shop">
-											<option value="${shop.id}">${shop.name}</option>
+										<c:forEach items="${onlineUserList}" var="onlineUser">
+											<option value="${onlineUser.id}">${onlineUser.realname}</option>
 										</c:forEach>
 									</select>
 								</div>
 								<div class="col-md-4">
+									<h4 style="float: left;">门店客服：</h4>
+									<select name="shopUser" id="shopUser">
+										<option value="">全部</option>
+										<c:forEach items="${shopUserList}" var="shopUser">
+											<option value="${shopUser.id}">${shopUser.realname}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<h4 style="float: left;">接单方式：</h4>
+									<select name="deliverType" id="deliverType">
+										<option value="">全部</option>
+										<option value="客户上门">客户上门</option>
+										<option value="快递">快递</option>
+										<option value="上门取件">上门取件</option>
+									</select>
+								</div>
+								<div class="col-md-4">
 									<h4 style="float: left;">客户类型：</h4>
-									<select name="customerType" id="customerType" class="from-control">
+									<select name="customerType" id="customerType">
 										<option value="">全部</option>
 										<option value="0">新客户</option>
 										<option value="1">老客户</option>
 									</select>
 								</div>
 								<div class="col-md-4">
-									<h4 style="float: left;">订单类型：</h4>
-									<select name="typeName" id="typeName" class="from-control">
-										<option value="">全部</option>
-										<option value="内部单">内部单</option>
-										<option value="返修单">返修单</option>
-										<option value="评估单">评估单</option>
-										<option value="客修单">客修单</option>
-									</select>
+									<h4 style="float: left;">客户来源：</h4>
+	                                <select id="channelSource" name="channelSource">
+									<option value="">全部</option>
+	                                <option value="1">udesk</option>
+	                                <option value="2">北京7860</option>
+	                                <option value="3">上海5588</option>
+	                                <option value="4">总机400</option>
+	                                <option value="5">杭州3123</option>
+	                                <option value="6">上门</option>
+	                                <option value="7">微博</option>
+	                                <option value="8">微信</option>
+	                                <option value="9">淘宝C店</option>
+	                                <option value="10">淘宝B店</option>
+	                                <option value="11">大众点评</option>
+	                                <option value="12">老客介绍</option>
+	                                <option value="13">品牌介绍</option>
+	                                <option value="14">员工介绍</option>
+	                                <option value="15">老板介绍</option>
+	                                <option value="16">官网留言</option>
+	                                <option value="17">论坛、博客</option>
+	                                <option value="18">其他</option>
+	                                </select>
 								</div>
 								<div class="col-md-12">
 									<h4 style="float: left;">订单状态：</h4>
@@ -284,7 +321,7 @@
 <script src="${ctx}/static/require/require.config.js"></script>
 <script src="${ctx}/module-js/rpt/rpt_repair_order_all.js"></script>
 <script>
-	    require(['jquery','yaya','cityselect','dateTimePicker'], function ($, yaya,cityselect) {
+	    require(['jquery','yaya','cityselect','daterangepicker'], function ($, yaya,cityselect,daterangepicker) {
 	
 	        var jsonObj = eval(${categoryJson});//转化为json 对象
 	        $("#category").citySelect({
@@ -294,11 +331,29 @@
 	            nodata:"none"
 	        });
 	
-	        $('.pickupDate').datetimepicker({
-	            lang: 'ch',
-	            format: 'Y-m-d',
-	            timepicker:false
-	        });
+	        var locale = {
+        		"format": 'YYYY/MM/DD',
+        		"separator": "-",
+        		"applyLabel": "确定",
+        		"cancelLabel": "取消",
+        		"fromLabel": "起始时间",
+        		"toLabel": "结束时间'",
+        		"customRangeLabel": "自定义",
+        		"weekLabel": "W",
+        		"daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+        		"monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+        		"firstDay": 1
+        		};
+	        var myData = new Date();
+	        var endDate = myData.toLocaleDateString();
+	        myData.setMonth(myData.getMonth() - 3);
+	        var startDate = myData.toLocaleDateString();
+	        $('#dateArea').daterangepicker({
+        		"autoApply": true,
+        		"startDate": startDate,
+        		"endDate": endDate,
+        		"locale": locale
+        	});
 	    });
 	</script>
 

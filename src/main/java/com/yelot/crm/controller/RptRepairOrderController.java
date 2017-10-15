@@ -9,6 +9,7 @@ import com.yelot.crm.enums.RepairOrderStatus;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.RptRepairOrderService;
+import com.yelot.crm.service.UserService;
 import com.yelot.crm.vo.CityListVo;
 import com.yelot.crm.vo.Table;
 
@@ -61,6 +62,9 @@ public class RptRepairOrderController {
 
     @Autowired
     private ShopMapper shopMapper;
+    
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("list")
     public String list(Model model){
@@ -77,6 +81,12 @@ public class RptRepairOrderController {
         List<Shop> shopList = shopMapper.findAll();
         model.addAttribute("shopList", shopList);
         
+        List<User> onlineUserList = userService.findUserByType("2", null); // 在线客服
+        model.addAttribute("onlineUserList", onlineUserList);
+        
+        List<User> shopUserList = userService.findUserByType("1", null); // 门店客服
+        model.addAttribute("shopUserList", shopUserList);
+        
         model.addAttribute("repairOrderStatusList", RepairOrderStatus.values());
         
         /*List<Attribute> attributeList = categoryAttributeService.findAttributes(firstCategory,secondCategory);
@@ -84,6 +94,12 @@ public class RptRepairOrderController {
 
         model.addAttribute("attributesJson",attibutesJson);*/
         return "rpt/rpt_repair_order_all";
+    }
+
+    @ResponseBody
+    @RequestMapping("findUserByShopId")
+    public List<User> findUserByShopId(String shopId){
+    	return userService.findUserByType("1", shopId);
     }
     
     /**
@@ -93,14 +109,16 @@ public class RptRepairOrderController {
     @ResponseBody
     @RequestMapping("query")
 	public Table queryOrder(
-			@RequestParam(value = "startDate", defaultValue = "") String startDate,
-			@RequestParam(value = "endDate", defaultValue = "") String endDate,
+			@RequestParam(value = "dateArea", defaultValue = "") String dateArea,
+			@RequestParam(value = "shopId", defaultValue = "") String shopId,
 			@RequestParam(value = "firstCategory", defaultValue = "") String firstCategory,
 			@RequestParam(value = "secondCategory", defaultValue = "") String secondCategory,
-			@RequestParam(value = "shopId", defaultValue = "") String shopId,
+			@RequestParam(value = "onLineUser", defaultValue = "") String onLineUser,
+			@RequestParam(value = "shopUser", defaultValue = "") String shopUser,
+			@RequestParam(value = "deliverType", defaultValue = "") String deliverType,
 			@RequestParam(value = "customerType", defaultValue = "") String customerType,
+			@RequestParam(value = "channelSource", defaultValue = "") String channelSource,
 			@RequestParam(value = "status", defaultValue = "") String status,
-			@RequestParam(value = "typeName", defaultValue = "") String typeName,
 			@RequestParam(value = "start", defaultValue = "0") int start,
 			@RequestParam(value = "length", defaultValue = "10") int length) {
     	
@@ -108,9 +126,9 @@ public class RptRepairOrderController {
         pageHelper.setOffset(start);
         pageHelper.setSize(length);
         
-        int pageCount = rptRepairOrderService.countTotalPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, status, typeName);
+        int pageCount = rptRepairOrderService.countTotalPage(dateArea.split("-")[0], dateArea.split("-")[1], shopId, firstCategory, secondCategory, onLineUser,shopUser, deliverType, customerType, channelSource, status);
         
-        List<RptRepairOrder> rptRepairOrderList = rptRepairOrderService.findByPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, status, typeName, pageHelper);
+        List<RptRepairOrder> rptRepairOrderList = rptRepairOrderService.findByPage(dateArea.split("-")[0], dateArea.split("-")[1], shopId, firstCategory, secondCategory, onLineUser,shopUser, deliverType, customerType, channelSource, status, pageHelper);
         return new Table(pageCount, pageCount, rptRepairOrderList);
     }
 
@@ -122,14 +140,16 @@ public class RptRepairOrderController {
     @RequestMapping("exportExcel")
 	public void exportExcel(
 			HttpServletResponse response,
-			@RequestParam(value = "startDate", defaultValue = "") String startDate,
-			@RequestParam(value = "endDate", defaultValue = "") String endDate,
+			@RequestParam(value = "dateArea", defaultValue = "") String dateArea,
+			@RequestParam(value = "shopId", defaultValue = "") String shopId,
 			@RequestParam(value = "firstCategory", defaultValue = "") String firstCategory,
 			@RequestParam(value = "secondCategory", defaultValue = "") String secondCategory,
-			@RequestParam(value = "shopId", defaultValue = "") String shopId,
+			@RequestParam(value = "onLineUser", defaultValue = "") String onLineUser,
+			@RequestParam(value = "shopUser", defaultValue = "") String shopUser,
+			@RequestParam(value = "deliverType", defaultValue = "") String deliverType,
 			@RequestParam(value = "customerType", defaultValue = "") String customerType,
+			@RequestParam(value = "channelSource", defaultValue = "") String channelSource,
 			@RequestParam(value = "status", defaultValue = "") String status,
-			@RequestParam(value = "typeName", defaultValue = "") String typeName,
 			@RequestParam(value = "start", defaultValue = "0") int start,
 			@RequestParam(value = "length", defaultValue = "10") int length) throws IOException {
     	
@@ -137,7 +157,7 @@ public class RptRepairOrderController {
         pageHelper.setOffset(0);
         pageHelper.setSize(ExlRptExportUtil.REPORT_PAGE_SIZE);
         
-        List<RptRepairOrder> rptRepairOrderList = rptRepairOrderService.findByPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, status, typeName, pageHelper);
+        List<RptRepairOrder> rptRepairOrderList = rptRepairOrderService.findByPage(dateArea.split("-")[0], dateArea.split("-")[1], shopId, firstCategory, secondCategory, onLineUser, shopUser, deliverType, customerType, channelSource, status, pageHelper);
         
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		
@@ -145,57 +165,57 @@ public class RptRepairOrderController {
 		
 		for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
 			Object[] obj = new Object[51];
-			obj[0] = rptRepairOrder.getShopName();																	// 门店
-			obj[1] = rptRepairOrder.getCreateAt() != null ? sdf.format(rptRepairOrder.getCreateAt()) : null;		// 接单日
-			obj[2] = sdf.format(new Date());																		// 今天日期
-			obj[3] = rptRepairOrder.getOrderNo();																	// 单号
-			obj[4] = rptRepairOrder.getPickupAt() != null ? sdf.format(rptRepairOrder.getPickupAt()) : null;		// 预计归还日
-			obj[5] = "";																							// 到期提醒
-			obj[6] = "";																							// 送回日
-			obj[7] = "";																							// 取货日
-			obj[8] = "";																							// 首接人
-			obj[9] = rptRepairOrder.getCreateUserName();															// 接单人
-			obj[10] = "";																							// 接单方式
-			obj[11] = "";																							// 确认维修
-			obj[12] = "";																							// 计算月份
-			obj[13] = rptRepairOrder.getBrandName();																// 品牌
-			obj[14] = rptRepairOrder.getFirstCategoryName();														// 货品类型
-			obj[15] = rptRepairOrder.getSecondCategoryName();														// 货品名称
-			obj[16] = rptRepairOrder.getRepairDesc();																// 维修内容
-			obj[17] = rptRepairOrder.getServiceItemNames();															// 维修工序
-			obj[18] = "";																							// 是否返修
-			obj[19] = rptRepairOrder.getTotalPayment();																// 小结
-			obj[20] = rptRepairOrder.getMaterialPayment() == -1 ? "待定" : rptRepairOrder.getMaterialPayment();		// 料钱
-			obj[21] = "";																							// 回收料
-			obj[22] = "";																							// 优惠
-			obj[23] = "";																							// 付款方式
-			obj[24] = "";																							// 付款金额
-			obj[25] = rptRepairOrder.getAdvancePayment();															// 定金
-			obj[26] = "";																							// 凭证号
-			obj[27] = "";																							// 发票
-			obj[28] = "";																							// 快递费
-			obj[29] = "";																							// 快递公司
-			obj[30] = "";																							// 快递单号
-			obj[31] = "";																							// 保费
-			obj[32] = "";																							// 保单号
-			obj[33] = "";																							// 合计支出
-			obj[34] = rptRepairOrder.getCustomerName();																// 姓名
-			obj[35] = rptRepairOrder.getCustomerSex();																// 性别
-			obj[36] = rptRepairOrder.getCustomerPhone();															// 电话
-			obj[37] = rptRepairOrder.getProvince();																	// 省
-			obj[38] = rptRepairOrder.getCity();																		// 市
-			obj[39] = rptRepairOrder.getCustomerAddress();															// 快递地址
-			obj[40] = rptRepairOrder.getWechatNickname();															// 微信名称
-			obj[41] = rptRepairOrder.getWechatId();																	// 微信号
-			obj[42] = rptRepairOrder.getCustomerQQ();																// 其他账号（QQ，淘宝，微博等）
-			obj[43] = "";																							// 设备号
-			obj[44] = rptRepairOrder.getCustomerType();																// 客户类型
-			obj[45] = rptRepairOrder.getChannelSource();															// 来源
-			obj[46] = "";																							// 搜索关键词
-			obj[47] = "";																							// 着陆页链接
-			obj[48] = "";																							// 备注
-			obj[49] = "";																							// 对比照片
-			obj[50] = "";																							// 起初咨询时间
+			obj[0] = rptRepairOrder.getShopName();																				// 门店
+			obj[1] = rptRepairOrder.getCreateAt() != null ? sdf.format(rptRepairOrder.getCreateAt()) : null;					// 接单日
+			obj[2] = sdf.format(new Date());																					// 今天日期
+			obj[3] = rptRepairOrder.getOrderNo();																				// 单号
+			obj[4] = rptRepairOrder.getPickupAt() != null ? sdf.format(rptRepairOrder.getPickupAt()) : null;					// 预计归还日
+			obj[5] = "";																										// 到期提醒
+			obj[6] = "";																										// 送回日
+			obj[7] = "";																										// 取货日
+			obj[8] = "";																										// 首接人
+			obj[9] = rptRepairOrder.getCreateUserName();																		// 接单人
+			obj[10] = "";																										// 接单方式
+			obj[11] = "";																										// 确认维修
+			obj[12] = "";																										// 计算月份
+			obj[13] = rptRepairOrder.getBrandName();																			// 品牌
+			obj[14] = rptRepairOrder.getFirstCategoryName();																	// 货品类型
+			obj[15] = rptRepairOrder.getSecondCategoryName();																	// 货品名称
+			obj[16] = rptRepairOrder.getRepairDesc();																			// 维修内容
+			obj[17] = rptRepairOrder.getServiceItemNames();																		// 维修工序
+			obj[18] = "";																										// 是否返修
+			obj[19] = rptRepairOrder.getTotalPayment();																			// 小结
+			obj[20] = rptRepairOrder.getMaterialPayment() == -1 ? "待定" : rptRepairOrder.getMaterialPayment();					// 料钱
+			obj[21] = "";																										// 回收料
+			obj[22] = rptRepairOrder.getDiscountAmountPayment() == -1 ? "待定" : rptRepairOrder.getDiscountAmountPayment();		// 优惠
+			obj[23] = "";																										// 付款方式
+			obj[24] = "";																										// 付款金额
+			obj[25] = rptRepairOrder.getAdvancePayment();																		// 定金
+			obj[26] = "";																										// 凭证号
+			obj[27] = "";																										// 发票
+			obj[28] = "";																										// 快递费
+			obj[29] = "";																										// 快递公司
+			obj[30] = "";																										// 快递单号
+			obj[31] = "";																										// 保费
+			obj[32] = "";																										// 保单号
+			obj[33] = "";																										// 合计支出
+			obj[34] = rptRepairOrder.getCustomerName();																			// 姓名
+			obj[35] = rptRepairOrder.getCustomerSex();																			// 性别
+			obj[36] = rptRepairOrder.getCustomerPhone();																		// 电话
+			obj[37] = rptRepairOrder.getProvince();																				// 省
+			obj[38] = rptRepairOrder.getCity();																					// 市
+			obj[39] = rptRepairOrder.getCustomerAddress();																		// 快递地址
+			obj[40] = rptRepairOrder.getWechatNickname();																		// 微信名称
+			obj[41] = rptRepairOrder.getWechatId();																				// 微信号
+			obj[42] = rptRepairOrder.getCustomerQQ();																			// 其他账号（QQ，淘宝，微博等）
+			obj[43] = "";																										// 设备号
+			obj[44] = rptRepairOrder.getCustomerType();																			// 客户类型
+			obj[45] = rptRepairOrder.getChannelSource();																		// 来源
+			obj[46] = "";																										// 搜索关键词
+			obj[47] = "";																										// 着陆页链接
+			obj[48] = "";																										// 备注
+			obj[49] = "";																										// 对比照片
+			obj[50] = rptRepairOrder.getConsultCreateAt() != null ? sdf.format(rptRepairOrder.getConsultCreateAt()) : null;		// 起初咨询时间
 			dataList.add(obj);
 		}
         

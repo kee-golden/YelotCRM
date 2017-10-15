@@ -47,6 +47,8 @@
         <result property="typeName" column="type_name"/>
         <result property="labourPayment" column="labour_payment"/>
         <result property="materialPayment" column="material_payment"/>
+        <result property="discountAmountPayment" column="discount_amount_payment"/>
+        <result property="consultCreateAt" column="consult_create_at"/>
     </resultMap>
     
     <select id="countTotalPage" resultType="java.lang.Integer">
@@ -58,19 +60,23 @@
 		  left join t_user t4 on t.create_user_id = t4.id
 		  left join t_brand t5 on t.brand_id = t5.id
 		  left join t_customer t6 on t.customer_id = t6.id
+		  left join t_consult_order t7 on t.consult_order_id = t7.id
 		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>
+        <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
         <if test="firstCategory != null and firstCategory != ''">and t1.name = #{firstCategory}</if>
         <if test="secondCategory != null and secondCategory != ''">and t2.name = #{secondCategory}</if>
-        <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
+        <if test="onLineUser != null and onLineUser != ''">and t7.create_user_id = #{onLineUser}</if>
+        <if test="shopUser != null and shopUser != ''">and t.create_user_id = #{shopUser}</if>
+        <if test="deliverType != null and deliverType != ''">and t7.deliver_type = #{deliverType}</if>
         <if test="customerType != null and customerType != ''">and t6.type = #{customerType}</if>
+        <if test="channelSource != null and channelSource != ''">and t7.channel_source = #{channelSource}</if>
         <if test="status != null and status.size > 0">and t.status in 
         	<foreach item="item" index="index" collection="status" open="(" separator="," close=")">  
                 #{item}
             </foreach>
         </if>
-        <if test="typeName != null and typeName != ''">and t.type_name = #{typeName}</if>
     </select>
     
     <select id="findByPage" resultMap="rptRrderResultMap">
@@ -87,6 +93,7 @@
 		       t.repair_desc,
 		       t.total_payment,
 		       t.material_payment,
+		       t.discount_amount_payment,
 		       t.advance_payment,
 		       t.customer_name,
 		       case t6.sex when '0' then '女' when '1' then '男' end customer_sex,
@@ -98,7 +105,8 @@
 		       t6.wechat_id,
 		       t6.qq customer_qq,
 		       case t6.type when '0' then '新客户' when '1' then '老客户' end customer_type,
-		       t6.channel_source
+		       t6.channel_source,
+		       t7.create_at consult_create_at
 		  from t_repair_order t
 		  left join t_category t1 on t.first_category_id = t1.id
 		  left join t_category t2 on t.second_category_id = t2.id
@@ -106,19 +114,23 @@
 		  left join t_user t4 on t.create_user_id = t4.id
 		  left join t_brand t5 on t.brand_id = t5.id
 		  left join t_customer t6 on t.customer_id = t6.id
+		  left join t_consult_order t7 on t.consult_order_id = t7.id
 		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>
+        <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
         <if test="firstCategory != null and firstCategory != ''">and t1.name = #{firstCategory}</if>
         <if test="secondCategory != null and secondCategory != ''">and t2.name = #{secondCategory}</if>
-        <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
+        <if test="onLineUser != null and onLineUser != ''">and t7.create_user_id = #{onLineUser}</if>
+        <if test="shopUser != null and shopUser != ''">and t.create_user_id = #{shopUser}</if>
+        <if test="deliverType != null and deliverType != ''">and t7.deliver_type = #{deliverType}</if>
         <if test="customerType != null and customerType != ''">and t6.type = #{customerType}</if>
+        <if test="channelSource != null and channelSource != ''">and t7.channel_source = #{channelSource}</if>
         <if test="status != null and status.size > 0">and t.status in 
         	<foreach item="item" index="index" collection="status" open="(" separator="," close=")">  
                 #{item}
             </foreach>
         </if>
-        <if test="typeName != null and typeName != ''">and t.type_name = #{typeName}</if>
         order by t.id desc 
         limit #{pageHelper.offset},#{pageHelper.size} 
     </select>
