@@ -84,9 +84,8 @@ public class RptRepairOrderService {
 	 * @param pageHelper
 	 * @return
 	 */
-	public List<RptRepairOrder> findByPage(String startDate, String endDate,
-			String firstCategory, String secondCategory, String shopId, String customerType,
-			String status, String typeName, PageHelper pageHelper) {
+	public List<RptRepairOrder> findByPage(String startDate, String endDate, String shopId, String firstCategory, String secondCategory, 
+			String onLineUser, String shopUser, String deliverType, String customerType, String channelSource, String status, PageHelper pageHelper) {
 		
 		if ("全部".equals(firstCategory)) {
 			firstCategory = "";
@@ -96,7 +95,7 @@ public class RptRepairOrderService {
 			secondCategory = "";
 		}
 		
-		List<RptRepairOrder> rptRepairOrderList = rptRepairOrderMapper.findByPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, getStatusList(status), typeName, pageHelper);
+		List<RptRepairOrder> rptRepairOrderList = rptRepairOrderMapper.findByPage(startDate, endDate, shopId, firstCategory, secondCategory, onLineUser, shopUser, deliverType, customerType, channelSource, getStatusList(status), pageHelper);
 		setRptRepairServiceItem(rptRepairOrderList); // 服务项
 		setRptRepairStatus(rptRepairOrderList); // 订单状态
 		setRptRepairChannelSource(rptRepairOrderList); // 客户来源
@@ -107,9 +106,8 @@ public class RptRepairOrderService {
 	 * 查询总的记录条数
 	 * @return 总的记录条数
 	 */
-	public Integer countTotalPage(String startDate, String endDate,
-			String firstCategory, String secondCategory, String shopId, String customerType,
-			String status, String typeName) {
+	public Integer countTotalPage(String startDate, String endDate, String shopId, String firstCategory, String secondCategory, 
+			String onLineUser, String shopUser, String deliverType, String customerType, String channelSource, String status) {
 		
 		if ("全部".equals(firstCategory)) {
 			firstCategory = "";
@@ -119,7 +117,7 @@ public class RptRepairOrderService {
 			secondCategory = "";
 		}
 		
-		return rptRepairOrderMapper.countTotalPage(startDate, endDate, firstCategory, secondCategory, shopId, customerType, getStatusList(status), typeName);
+		return rptRepairOrderMapper.countTotalPage(startDate, endDate, shopId, firstCategory, secondCategory, onLineUser, shopUser, deliverType, customerType, channelSource, getStatusList(status));
 	}
 
 	/**

@@ -75,4 +75,8 @@ public class UserService {
     public int checkPassword(Long id, String psdMd5) {
         return userMapper.checkPassword(id,psdMd5);
     }
+    
+    public List<User> findUserByType(String userType, String shopId){
+    	return userMapper.findUserByType(userType, shopId);
+    }
 }

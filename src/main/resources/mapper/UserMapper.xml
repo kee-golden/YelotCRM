@@ -54,6 +54,10 @@
         select * from t_user where shop_id = '6' and user_type = 3;
     </select>
 
+    <select id="findUserByType" resultMap="userResultMap">
+        select * from t_user where user_type = #{userType} 
+        <if test="shopId != null and shopId != ''">and shop_id =  #{shopId}</if>
+    </select>
 
 
 </mapper>

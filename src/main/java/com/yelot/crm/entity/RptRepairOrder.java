@@ -202,6 +202,9 @@ public class RptRepairOrder {
     private int labourPayment;
 
     private int materialPayment;
+    private int discountAmountPayment;
+    
+    private Date consultCreateAt;
     
     private String startDate;
     
@@ -609,6 +612,23 @@ public class RptRepairOrder {
     public void setMaterialPayment(int materialPayment) {
         this.materialPayment = materialPayment;
     }
+
+	public int getDiscountAmountPayment() {
+		return discountAmountPayment;
+	}
+
+	public void setDiscountAmountPayment(int discountAmountPayment) {
+		this.discountAmountPayment = discountAmountPayment;
+	}
+
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+	public Date getConsultCreateAt() {
+		return consultCreateAt;
+	}
+
+	public void setConsultCreateAt(Date consultCreateAt) {
+		this.consultCreateAt = consultCreateAt;
+	}
 
 	public String getStartDate() {
 		return startDate;

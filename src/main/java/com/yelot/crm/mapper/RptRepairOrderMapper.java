@@ -24,11 +24,15 @@ public interface RptRepairOrderMapper {
 	 */
 	Integer countTotalPage(@Param("startDate") String startDate,
 			@Param("endDate") String endDate,
+			@Param("shopId") String shopId,
 			@Param("firstCategory") String firstCategory,
 			@Param("secondCategory") String secondCategory,
-			@Param("shopId") String shopId,
+			@Param("onLineUser") String onLineUser,
+			@Param("shopUser") String shopUser,
+			@Param("deliverType") String deliverType,
 			@Param("customerType") String customerType,
-			@Param("status") List<String> status, @Param("typeName") String typeName);
+			@Param("channelSource") String channelSource,
+			@Param("status") List<String> status);
 
 	/**
 	 * 分页查询
@@ -38,11 +42,15 @@ public interface RptRepairOrderMapper {
 	 */
 	List<RptRepairOrder> findByPage(@Param("startDate") String startDate,
 			@Param("endDate") String endDate,
+			@Param("shopId") String shopId,
 			@Param("firstCategory") String firstCategory,
 			@Param("secondCategory") String secondCategory,
-			@Param("shopId") String shopId,
+			@Param("onLineUser") String onLineUser,
+			@Param("shopUser") String shopUser,
+			@Param("deliverType") String deliverType,
 			@Param("customerType") String customerType,
-			@Param("status") List<String> status, @Param("typeName") String typeName,
+			@Param("channelSource") String channelSource,
+			@Param("status") List<String> status,
 			@Param("pageHelper") PageHelper pageHelper);
 
 	/**

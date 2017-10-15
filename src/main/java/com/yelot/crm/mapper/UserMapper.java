@@ -105,5 +105,6 @@ public interface UserMapper {
     void editPassword(@Param("id") Long id, @Param("newPsdMd5") String newPsdMd5);
 
     List<User> findRepairUserList();
-    
+
+    List<User> findUserByType(@Param("userType") String userType, @Param("shopId") String shopId);
 }

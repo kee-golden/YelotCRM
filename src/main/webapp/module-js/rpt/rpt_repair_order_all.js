@@ -23,14 +23,16 @@ require([ 'jquery', 'yaya', 'selector2','datatables.net' ], function($, yaya, se
             'url':ctx + '/rpt-repair-order/query',
 			'method': 'get',
             'data': function (d) {
-                d.startDate = $('#startDate').val();
-                d.endDate = $('#endDate').val();
+                d.dateArea = $('#dateArea').val();
+                d.shopId = $('#shopId').val();
                 d.firstCategory = $('#firstCategory').val();
                 d.secondCategory = $('#secondCategory').val();
-                d.shopId = $('#shopId').val();
+                d.onLineUser = $('#onLineUser').val();
+                d.shopUser = $('#shopUser').val();
+                d.deliverType = $('#deliverType').val();
                 d.customerType = $('#customerType').val();
+                d.channelSource = $('#channelSource').val();
                 d.status = $('#status').val() == null ? '' : $('#status').val().toString();
-                d.typeName = $('#typeName').val();
             }
         },
     	'columns': [
@@ -63,15 +65,37 @@ require([ 'jquery', 'yaya', 'selector2','datatables.net' ], function($, yaya, se
         table.draw();
     });
     
+    $("#shopId").change(function(){
+    	$.ajax({
+	        url: ctx + '/rpt-repair-order/findUserByShopId',
+	        method: 'get',
+	        dataType: 'json',
+	        data: {
+	        	shopId: $("#shopId").val(),
+	        },
+	        success: function (data) {
+	            $("#shopUser").empty();
+	            $("#shopUser").append('<option value="">全部</option>');
+	            for(var i = 0;i < data.length;i++){
+	                var str = '<option value=\"'+data[i].id+'\">'+data[i].realname+'</option>';
+	                $("#shopUser").append(str);
+	            }
+	        }
+	    });
+    });
+
     $("#exportExcel").click(function(){
     	var params = "";
-		params += "&startDate=" + $('#startDate').val(); 
-		params += "&endDate=" + $('#endDate').val(); 
+		params += "&dateArea=" + $('#dateArea').val(); 
+		params += "&shopId=" + $('#shopId').val(); 
 		params += "&firstCategory=" + $('#firstCategory').val(); 
 		params += "&secondCategory=" + $('#secondCategory').val(); 
-		params += "&shopId=" + $('#shopId').val(); 
-		params += "&status=" + $('#status').val(); 
-		params += "&typeName=" + $('#typeName').val(); 
+		params += "&onLineUser=" + $('#onLineUser').val(); 
+		params += "&shopUser=" + $('#shopUser').val(); 
+		params += "&deliverType=" + $('#deliverType').val(); 
+		params += "&customerType=" + $('#customerType').val(); 
+		params += "&channelSource=" + $('#channelSource').val(); 
+		params += "&status=" + ($('#status').val() == null ? '' : $('#status').val().toString()); 
 		
 		window.location = ctx + '/rpt-repair-order/exportExcel?' + params;
     });

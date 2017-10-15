@@ -29,6 +29,8 @@ requirejs.config({
         'layuiTotal': ['jquery'],
         'dateTimePicker':['jquery'],
         'cityselect':['jquery','city.min'],
+        'daterangepicker':{deps: ['jquery', 'bootstrap', 'moment'], exports: "daterangepicker"},
+        'moment':['jquery'],
     } ,
 
 
@@ -61,5 +63,7 @@ requirejs.config({
         'layuiTotal':'layui/layui' ,
         'city.min':'cityselect/js/city.min',
         'cityselect':'cityselect/js/jquery.cityselect',
+        'daterangepicker':'daterangepicker/js/daterangepicker',
+        'moment':'daterangepicker/js/moment',
     }
 });
