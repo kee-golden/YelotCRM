@@ -173,9 +173,9 @@ public class RptRepairOrderController {
 			obj[5] = "";																										// 到期提醒
 			obj[6] = "";																										// 送回日
 			obj[7] = "";																										// 取货日
-			obj[8] = "";																										// 首接人
+			obj[8] = rptRepairOrder.getConsultCreateUserName();																	// 首接人
 			obj[9] = rptRepairOrder.getCreateUserName();																		// 接单人
-			obj[10] = "";																										// 接单方式
+			obj[10] = rptRepairOrder.getDeliverType();																			// 接单方式
 			obj[11] = "";																										// 确认维修
 			obj[12] = "";																										// 计算月份
 			obj[13] = rptRepairOrder.getBrandName();																			// 品牌
