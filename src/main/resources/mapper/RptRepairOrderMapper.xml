@@ -49,6 +49,8 @@
         <result property="materialPayment" column="material_payment"/>
         <result property="discountAmountPayment" column="discount_amount_payment"/>
         <result property="consultCreateAt" column="consult_create_at"/>
+        <result property="consultCreateUserName" column="consult_create_user_name"/>
+        <result property="deliverType" column="deliver_type"/>
     </resultMap>
     
     <select id="countTotalPage" resultType="java.lang.Integer">
@@ -61,6 +63,7 @@
 		  left join t_brand t5 on t.brand_id = t5.id
 		  left join t_customer t6 on t.customer_id = t6.id
 		  left join t_consult_order t7 on t.consult_order_id = t7.id
+		  left join t_user t8 on t7.create_user_id = t8.id
 		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>
@@ -84,7 +87,9 @@
 		       t.create_at,
 		       t.order_no,
 		       t.pickup_at,
+		       t8.realname consult_create_user_name,
 		       t4.realname create_user_name,
+		       t7.deliver_type,
 		       t.status,
 		       t5.name brand_name,
 		       t1.name first_category_name,
@@ -115,6 +120,7 @@
 		  left join t_brand t5 on t.brand_id = t5.id
 		  left join t_customer t6 on t.customer_id = t6.id
 		  left join t_consult_order t7 on t.consult_order_id = t7.id
+		  left join t_user t8 on t7.create_user_id = t8.id
 		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>

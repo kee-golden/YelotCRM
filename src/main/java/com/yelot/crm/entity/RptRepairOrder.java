@@ -206,6 +206,9 @@ public class RptRepairOrder {
     
     private Date consultCreateAt;
     
+    private String consultCreateUserName;
+    private String deliverType;
+    
     private String startDate;
     
     private String endDate;
@@ -628,6 +631,22 @@ public class RptRepairOrder {
 
 	public void setConsultCreateAt(Date consultCreateAt) {
 		this.consultCreateAt = consultCreateAt;
+	}
+
+	public String getConsultCreateUserName() {
+		return consultCreateUserName;
+	}
+
+	public void setConsultCreateUserName(String consultCreateUserName) {
+		this.consultCreateUserName = consultCreateUserName;
+	}
+
+	public String getDeliverType() {
+		return deliverType;
+	}
+
+	public void setDeliverType(String deliverType) {
+		this.deliverType = deliverType;
 	}
 
 	public String getStartDate() {
