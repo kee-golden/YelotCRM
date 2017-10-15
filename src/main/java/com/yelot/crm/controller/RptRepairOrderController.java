@@ -221,7 +221,7 @@ public class RptRepairOrderController {
         
 		response.setContentType("application/msexcel");
 		response.setHeader("Content-disposition","attachment;filename="+ 
-				new String(("订单统计报表").getBytes("gb2312"), "iso8859-1")+ ".xlsx");
+				new String(("订单统计报表"+sdf.format(new Date())).getBytes("gb2312"), "iso8859-1")+".xlsx");
 		
 		List<ExlRptCellType> titleList = new ArrayList<ExlRptCellType>();
 		titleList = ExlRptExportUtil.getTitleList(setTitleList());
