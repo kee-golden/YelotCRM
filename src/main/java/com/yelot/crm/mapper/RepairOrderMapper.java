@@ -111,4 +111,6 @@ public interface RepairOrderMapper {
 
 
 	void updateTypeName(@Param("id") Long id, @Param("typeName") String typeName);
+	
+	void updateExpressByOrderNo(@Param("orderNo") String orderNo, @Param("expressId") Long expressId, @Param("expressMoney") Integer expressMoney);
 }

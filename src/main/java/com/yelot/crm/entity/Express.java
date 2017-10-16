@@ -26,6 +26,7 @@ public class Express {
     private Long shopId;
     private String comment;
     private Date createAt;
+    private int expressType;
 
 
     public Long getId() {
@@ -164,4 +165,13 @@ public class Express {
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
+
+	public int getExpressType() {
+		return expressType;
+	}
+
+	public void setExpressType(int expressType) {
+		this.expressType = expressType;
+	}
+    
 }

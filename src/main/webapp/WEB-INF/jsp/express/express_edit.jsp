@@ -35,7 +35,7 @@
                             <div class="col-md-6">
                                 <label>付款金额</label>
                                 <input type="number" placeholder="请输入金额" class="form-control" name="payAmount"
-                                       value="">
+                                       value="0">
                             </div>
                         </div>
 
@@ -75,7 +75,7 @@
                             <div class="col-md-6">
                                 <label>保单金额</label>
                                 <input type="number" placeholder="请输入保单金额" class="form-control" name="insuranceAmount"
-                                       value="">
+                                       value="0">
                             </div>
                         </div>
                         <div class="row bottom10">
@@ -94,6 +94,16 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
+                                <label>方向</label>
+                                <select class="form-control" name="expressType">
+                                    <option value="1">从门店到维修中心</option>
+                                    <option value="2">从维修中心到门店</option>
+                                    <option value="3">从门店到客户</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row bottom10">
+                            <div class="col-md-12">
                                 <label>备注</label>
                                 <input type="text"  class="form-control" name="comment"
                                        value="${bean.comment}">
@@ -189,6 +199,16 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
+                                <label>类别</label>
+                                <select class="form-control" name="expressType">
+                                    <option value="1" <c:if test="${bean.expressType eq 1}">selected="selected"</c:if>>从门店到维修中心</option>
+                                    <option value="2" <c:if test="${bean.expressType eq 2}">selected="selected"</c:if>>从维修中心到门店</option>
+                                    <option value="3" <c:if test="${bean.expressType eq 3}">selected="selected"</c:if>>从门店到客户</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row bottom10">
+                            <div class="col-md-12">
                                 <label>备注</label>
                                 <input type="text"  class="form-control" name="comment"
                                        value="${bean.comment}">

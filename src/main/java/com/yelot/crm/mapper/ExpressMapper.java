@@ -25,4 +25,6 @@ public interface ExpressMapper {
     void update(Express express);
 
     void delete(Long id);
+    
+    Express findExpressByNameAndNo(@Param("expressName")String expressName, @Param("expressNo")String expressNo);
 }

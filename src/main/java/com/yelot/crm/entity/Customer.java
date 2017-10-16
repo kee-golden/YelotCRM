@@ -64,7 +64,7 @@ public class Customer {
     /**
      * 客户来源
      */
-    private  int channelSource;
+    private  String channelSource;
     /**
      * 是否删除，有效
      */
@@ -249,15 +249,15 @@ public class Customer {
         this.updateAt = updateAt;
     }
 
-    public int getChannelSource() {
-        return channelSource;
-    }
+    public String getChannelSource() {
+		return channelSource;
+	}
 
-    public void setChannelSource(int channelSource) {
-        this.channelSource = channelSource;
-    }
+	public void setChannelSource(String channelSource) {
+		this.channelSource = channelSource;
+	}
 
-    public Long getCreateUserId() {
+	public Long getCreateUserId() {
         return createUserId;
     }
 

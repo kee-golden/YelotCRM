@@ -64,6 +64,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                                         $("#J_phone").val(data.data.customer.phone);
                                         $("#J_otherPhone").val(data.data.customer.otherPhone);
                                         $("#phone").val(data.data.customer.phone);//同步查询的手机号
+                                        $("#channelSource").val(data.data.customer.channelSource);
                                         $("#J_address").val(data.data.customer.address);
                                         /*$("#province").html(data.data.customer.province);
                                         $("#city").html(data.data.customer.city);*/
@@ -149,7 +150,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
             yaya.layer.msg("你还没有选中客户，请先通过电话号码，查询客户！")
             return;
         }
-
+        
         var consultOrderId = $('#consultOrderId').val();
         var firstCategory = $('#firstCategory').val();
         var secondCategory = $('#secondCategory').val();
@@ -253,6 +254,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                         $("#J_name").val(data.data.customer.name);
                         $("#J_phone").val(data.data.customer.phone);
                         $("#J_otherPhone").val(data.data.customer.otherPhone);
+                        $("#channelSource").val(data.data.customer.channelSource);
                         $("#J_address").val(data.data.customer.address);
                        /* $("#province").html(data.data.customer.province);
                         $("#city").html(data.data.customer.city);*/

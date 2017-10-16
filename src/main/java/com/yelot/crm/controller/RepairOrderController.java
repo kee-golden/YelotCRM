@@ -168,6 +168,7 @@ public class RepairOrderController {
         repairOrder.setCreateAt(now);
         repairOrder.setUpdateAt(now);
         repairOrder.setDiscountDesc(discountDesc);
+        repairOrder.setChannelSource(customer.getChannelSource());
 
         //订单号生成规则：门店编号+年月日+流水序号（门店当天第几单）
         String orderNo = user.getShop_id()+DateUtil.toString(now,"yyyyMMdd");

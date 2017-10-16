@@ -7,8 +7,12 @@ import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Customer;
 import com.yelot.crm.entity.Express;
+import com.yelot.crm.entity.RepairOrder;
+import com.yelot.crm.entity.User;
 import com.yelot.crm.mapper.ExpressMapper;
+import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.Table;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by kee on 17/10/8.
@@ -27,6 +34,9 @@ import java.util.List;
 public class ExpressController {
     @Autowired
     private ExpressMapper expressMapper;
+    
+    @Autowired
+    private RepairOrderService repairOrderService;
 
     @RequestMapping("index")
     public String index(){
@@ -85,13 +95,48 @@ public class ExpressController {
     @RequestMapping("save")
     public ResultData save(Express express){
         if(express.getId() == null){
+        	
+        	Express express2 = expressMapper.findExpressByNameAndNo(express.getExpressName(), express.getExpressNo());
+        	if (express2 != null) {
+        		ResultData resultData = ResultData.errorRequest();
+        		resultData.putDataValue("data", "该快递公司的快递单号已存在！");
+        		return resultData;
+			}
+        	
             Date date = new Date();
             express.setCreateAt(date);
             express.setCreateUserId(UserUtil.getCurrentUser().getId());
             express.setShopId(UserUtil.getCurrentUser().getShop_id());
+            express.setRepairOrderNoJson(express.getRepairOrderNoJson().replaceAll("，", ","));
             expressMapper.save(express);
+            
+            if (express.getExpressType() == 3) {
+                express2 = expressMapper.findExpressByNameAndNo(express.getExpressName(), express.getExpressNo());
+                express.setId(express2.getId());
+                
+                updateRepairOrderExpress(express);
+			}
+            
         }else{
+        	
+        	Express express2 = expressMapper.findExpressByNameAndNo(express.getExpressName(), express.getExpressNo());
+        	if (!express2.getId().equals(express.getId())) {
+        		ResultData resultData = ResultData.errorRequest();
+        		resultData.putDataValue("data", "该快递公司的快递单号已存在！");
+        		return resultData;
+			}
+        	
+        	String[] repairOrderNoList = express2.getRepairOrderNoJson().split(",");
+        	for (String str : repairOrderNoList) {
+    			repairOrderService.updateExpressByOrderNo(str, null, null);
+			}
+        	
+            express.setRepairOrderNoJson(express.getRepairOrderNoJson().replaceAll("，", ","));
             expressMapper.update(express);
+            
+            if (express.getExpressType() == 3) {
+            	updateRepairOrderExpress(express);
+			}
         }
 
         ResultData resultData = ResultData.ok();
@@ -103,9 +148,31 @@ public class ExpressController {
     @ResponseBody
     @RequestMapping("delete")
     public ResultData delete(Long id){
+        Express express = expressMapper.find(id);
 
+    	String[] repairOrderNoList = express.getRepairOrderNoJson().split(",");
+    	for (String str : repairOrderNoList) {
+			repairOrderService.updateExpressByOrderNo(str, null, null);
+		}
+    	
         expressMapper.delete(id);
         return ResultData.ok();
 
     }
+    
+    private void updateRepairOrderExpress(Express express){
+    	Long expressId = express.getId();
+    	String[] repairOrderNoList = express.getRepairOrderNoJson().split(",");
+    	int payAmount = express.getPayAmount();
+    	int total = repairOrderNoList.length;
+    	int expressMoney = 0;
+
+    	for (int i = 0; i < repairOrderNoList.length; i++) {
+    		payAmount = payAmount - expressMoney;
+    		expressMoney = Math.round(payAmount / total);
+    		total--;
+			repairOrderService.updateExpressByOrderNo(repairOrderNoList[i], expressId, expressMoney);
+    	}
+    }
+
 }
