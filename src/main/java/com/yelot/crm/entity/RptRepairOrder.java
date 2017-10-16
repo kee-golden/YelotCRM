@@ -205,6 +205,8 @@ public class RptRepairOrder {
     private int discountAmountPayment;
     
     private Date consultCreateAt;
+    private Date songHuiDate;
+    private Date quHuoDate;
     
     private String consultCreateUserName;
     private String deliverType;
@@ -631,6 +633,24 @@ public class RptRepairOrder {
 
 	public void setConsultCreateAt(Date consultCreateAt) {
 		this.consultCreateAt = consultCreateAt;
+	}
+
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+	public Date getSongHuiDate() {
+		return songHuiDate;
+	}
+
+	public void setSongHuiDate(Date songHuiDate) {
+		this.songHuiDate = songHuiDate;
+	}
+
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+	public Date getQuHuoDate() {
+		return quHuoDate;
+	}
+
+	public void setQuHuoDate(Date quHuoDate) {
+		this.quHuoDate = quHuoDate;
 	}
 
 	public String getConsultCreateUserName() {
