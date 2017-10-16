@@ -130,6 +130,7 @@ public class RptRepairOrder {
     private int nonPayment;
 
     private int nonPaymentType;
+    private String nonPaymentTypeName;
 
     /**
      * 付款方式：现金，刷卡，支付宝，微信等
@@ -560,7 +561,15 @@ public class RptRepairOrder {
         this.nonPaymentType = nonPaymentType;
     }
 
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+    public String getNonPaymentTypeName() {
+		return nonPaymentTypeName;
+	}
+
+	public void setNonPaymentTypeName(String nonPaymentTypeName) {
+		this.nonPaymentTypeName = nonPaymentTypeName;
+	}
+
+	@JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getCreateAt() {
         return createAt;
     }

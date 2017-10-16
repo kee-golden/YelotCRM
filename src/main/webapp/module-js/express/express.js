@@ -56,6 +56,7 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
             {'data': 'payAmount'},
             {'data': 'insuranceNo'},
             {'data': 'insuranceAmount'},
+            {'data': 'createUserName'},
             {'data': 'createAt'},
             {'data': 'id',
                 'render': function (data, type, full, meta) {

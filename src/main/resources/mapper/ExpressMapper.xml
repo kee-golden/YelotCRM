@@ -16,6 +16,7 @@
         <result property="sendPersonName" column="send_person_name"/>
         <result property="sendPersonPhone" column="send_person_phone"/>
         <result property="createUserId" column="create_user_id"/>
+        <result property="createUserName" column="create_user_name"/>
         <result property="shopId" column="shop_id"/>
         <result property="createAt" column="create_at"/>
         <result property="comment" column="comment"/>
@@ -28,18 +29,22 @@
 
 
     <select id="countBySearch" resultType="Integer">
-        select count(*) from t_express where 1 = 1
+        select count(*) from t_express t
+        left join t_user t1 on t.create_user_id = t1.id
+        where 1 = 1
         <if test="extra_search != null and extra_search != ''">
-            and (express_no like CONCAT('%', #{extra_search}, '%') OR express_name like CONCAT('%', #{extra_search}, '%'))
+            and (t.express_no like CONCAT('%', #{extra_search}, '%') OR t.express_name like CONCAT('%', #{extra_search}, '%'))
         </if>
     </select>
 
     <select id="findBySearch" resultMap="expressResultMap">
-        select * from t_express where 1 = 1
+        select t.*, t1.realname create_user_name from t_express t
+        left join t_user t1 on t.create_user_id = t1.id
+        where 1 = 1
         <if test="extra_search != null and extra_search != ''">
-            and (express_no like CONCAT('%', #{extra_search}, '%') OR express_name like CONCAT('%', #{extra_search}, '%'))
+            and (t.express_no like CONCAT('%', #{extra_search}, '%') OR t.express_name like CONCAT('%', #{extra_search}, '%'))
         </if>
-        ORDER BY id DESC
+        ORDER BY t.id DESC
         limit #{pageHelper.offset},#{pageHelper.size} ;
     </select>
 

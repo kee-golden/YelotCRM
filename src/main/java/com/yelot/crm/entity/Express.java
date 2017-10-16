@@ -23,6 +23,7 @@ public class Express {
     private String sendPersonName;
     private String sendPersonPhone;
     private Long createUserId;
+    private String createUserName;
     private Long shopId;
     private String comment;
     private Date createAt;
@@ -141,7 +142,15 @@ public class Express {
         this.createUserId = createUserId;
     }
 
-    public Long getShopId() {
+    public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public Long getShopId() {
         return shopId;
     }
 

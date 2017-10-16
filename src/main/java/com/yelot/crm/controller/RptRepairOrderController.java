@@ -191,7 +191,7 @@ public class RptRepairOrderController {
 			obj[21] = rptRepairOrder.getMaterialPayment() == -1 ? "待定" : rptRepairOrder.getMaterialPayment();	// 料钱
 			obj[22] = "";	// 回收料
 			obj[23] = rptRepairOrder.getDiscountAmountPayment() == -1 ? "待定" : rptRepairOrder.getDiscountAmountPayment();	// 优惠
-			obj[24] = "";	// 付款方式
+			obj[24] = rptRepairOrder.getNonPaymentTypeName();	// 付款方式
 			obj[25] = "";	// 付款金额
 			obj[26] = rptRepairOrder.getAdvancePayment();	// 定金
 			obj[27] = "";	// 凭证号

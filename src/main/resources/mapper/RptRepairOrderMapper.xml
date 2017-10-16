@@ -25,6 +25,8 @@
         <result property="advancePayment" column="advance_payment"/>
         <result property="nonPayment" column="non_payment"/>
         <result property="advancePaymentType" column="advance_payment_type"/>
+        <result property="nonPaymentType" column="non_payment_type"/>
+        <result property="nonPaymentTypeName" column="non_payment_type_name"/>
         <result property="totalPayment" column="total_payment"/>
         <result property="shopId" column="shop_id"/>
         <result property="shopName" column="shop_name"/>
@@ -106,6 +108,7 @@
 		       t.total_payment,
 		       t.material_payment,
 		       t.discount_amount_payment,
+		       case t.non_payment_type when 1 then '现金' when 2 then '银联卡' when 3 then '支付宝' when 4 then '微信钱包' when 5 then '其他' end non_payment_type_name,
 		       t.advance_payment,
 		       t.customer_name,
 		       case t6.sex when '0' then '女' when '1' then '男' end customer_sex,

@@ -17,6 +17,7 @@
         <result property="advancePayment" column="advance_payment"/>
         <result property="nonPayment" column="non_payment"/>
         <result property="advancePaymentType" column="advance_payment_type"/>
+        <result property="nonPaymentType" column="non_payment_type"/>
         <result property="totalPayment" column="total_payment"/>
         <result property="shopId" column="shop_id"/>
         <result property="shopName" column="shop_name"/>
@@ -89,7 +90,8 @@
         material_payment = #{materialPayment}, 
         discount_amount_payment = #{discountAmountPayment}, 
         total_payment= #{totalPayment},
-        discount_desc = #{discountDesc}
+        discount_desc = #{discountDesc},
+        non_payment_type = #{nonPaymentType}
         </if>
          where id = #{orderId}
 
