@@ -31,7 +31,6 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                 },
     			{'data' : 'orderNo', 'render' : function(data){
     				if(data != null){
-    					alert(data);
         				return '<a href="/repair-order/consultOrderdetail?consultOrderNo='  +data + '" target="_blank" data-id="' + data + '" class="J_consultOrderDetail">'+data+'</a>&nbsp;&nbsp;'
     				} else {
     					return null;

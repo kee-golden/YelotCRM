@@ -25,6 +25,8 @@
         <result property="advancePayment" column="advance_payment"/>
         <result property="nonPayment" column="non_payment"/>
         <result property="advancePaymentType" column="advance_payment_type"/>
+        <result property="nonPaymentType" column="non_payment_type"/>
+        <result property="nonPaymentTypeName" column="non_payment_type_name"/>
         <result property="totalPayment" column="total_payment"/>
         <result property="shopId" column="shop_id"/>
         <result property="shopName" column="shop_name"/>
@@ -51,6 +53,8 @@
         <result property="consultCreateAt" column="consult_create_at"/>
         <result property="consultCreateUserName" column="consult_create_user_name"/>
         <result property="deliverType" column="deliver_type"/>
+        <result property="songHuiDate" column="songhui_date"/>
+        <result property="quHuoDate" column="quhuo_date"/>
     </resultMap>
     
     <select id="countTotalPage" resultType="java.lang.Integer">
@@ -64,6 +68,8 @@
 		  left join t_customer t6 on t.customer_id = t6.id
 		  left join t_consult_order t7 on t.consult_order_id = t7.id
 		  left join t_user t8 on t7.create_user_id = t8.id
+		  left join t_repair_order_operators t9 on t.id = t9.repair_order_id and t9.order_status = '32'
+		  left join t_repair_order_operators t10 on t.id = t10.repair_order_id and t10.order_status = '36'
 		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>
@@ -87,9 +93,12 @@
 		       t.create_at,
 		       t.order_no,
 		       t.pickup_at,
+		       t9.create_at songhui_date,
+		       t10.create_at quhuo_date,
 		       t8.realname consult_create_user_name,
 		       t4.realname create_user_name,
 		       t7.deliver_type,
+		       t.type_name,
 		       t.status,
 		       t5.name brand_name,
 		       t1.name first_category_name,
@@ -99,6 +108,7 @@
 		       t.total_payment,
 		       t.material_payment,
 		       t.discount_amount_payment,
+		       case t.non_payment_type when 1 then '现金' when 2 then '银联卡' when 3 then '支付宝' when 4 then '微信钱包' when 5 then '其他' end non_payment_type_name,
 		       t.advance_payment,
 		       t.customer_name,
 		       case t6.sex when '0' then '女' when '1' then '男' end customer_sex,
@@ -121,6 +131,8 @@
 		  left join t_customer t6 on t.customer_id = t6.id
 		  left join t_consult_order t7 on t.consult_order_id = t7.id
 		  left join t_user t8 on t7.create_user_id = t8.id
+		  left join t_repair_order_operators t9 on t.id = t9.repair_order_id and t9.order_status = '32'
+		  left join t_repair_order_operators t10 on t.id = t10.repair_order_id and t10.order_status = '36'
 		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>

@@ -81,7 +81,8 @@ public interface RepairOrderMapper {
 			@Param("materialPayment") Integer materialPayment,
 			@Param("discountAmountPayment") Integer discountAmountPayment,
 			@Param("totalPayment") Integer totalPayment,
-			@Param("discountDesc") String discountDesc);
+			@Param("discountDesc") String discountDesc,
+			@Param("nonPaymentType") Integer nonPaymentType);
 
     /**
      * 根据订单id查看订单详情
@@ -111,4 +112,6 @@ public interface RepairOrderMapper {
 
 
 	void updateTypeName(@Param("id") Long id, @Param("typeName") String typeName);
+	
+	void updateExpressByOrderNo(@Param("orderNo") String orderNo, @Param("expressId") Long expressId, @Param("expressMoney") Integer expressMoney);
 }

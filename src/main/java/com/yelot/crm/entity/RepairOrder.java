@@ -216,6 +216,21 @@ public class RepairOrder {
     private String refOrderIds;
     private List<String> refOrderIdsList;
     
+    /**
+     * 客户来源
+     */
+    private String channelSource;
+    
+    /**
+     * 物流单id
+     */
+    private Long expressId;
+    
+    /**
+     * 物流费
+     */
+    private int expressMoney;
+    
     public Long getId() {
         return id;
     }
@@ -651,6 +666,30 @@ public class RepairOrder {
 
 	public void setRefOrderIdsList(List<String> refOrderIdsList) {
 		this.refOrderIdsList = refOrderIdsList;
+	}
+
+	public String getChannelSource() {
+		return channelSource;
+	}
+
+	public void setChannelSource(String channelSource) {
+		this.channelSource = channelSource;
+	}
+
+	public Long getExpressId() {
+		return expressId;
+	}
+
+	public void setExpressId(Long expressId) {
+		this.expressId = expressId;
+	}
+
+	public int getExpressMoney() {
+		return expressMoney;
+	}
+
+	public void setExpressMoney(int expressMoney) {
+		this.expressMoney = expressMoney;
 	}
 	
 }

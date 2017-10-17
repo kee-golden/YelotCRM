@@ -268,42 +268,42 @@ public class ExlRptExportUtil {
 		Cell cellx1 = row.createCell(1);
 		cellx1.setCellValue("维修单信息");
 		cellx1.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 12));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 13));
 		
 		Cell cellx2 = row.createCell(13);
 		cellx2.setCellValue("货品信息");
 		cellx2.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 13, 15));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 14, 16));
 		
 		Cell cellx3 = row.createCell(16);
 		cellx3.setCellValue("维修信息");
 		cellx3.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 16, 18));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 17, 19));
 		
 		Cell cellx4 = row.createCell(19);
 		cellx4.setCellValue("付款信息");
 		cellx4.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 19, 26));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 20, 27));
 		
 		Cell cellx5 = row.createCell(27);
 		cellx5.setCellValue("支出信息");
 		cellx5.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 27, 33));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 28, 34));
 		
 		Cell cellx6 = row.createCell(34);
 		cellx6.setCellValue("客户信息");
 		cellx6.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 34, 44));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 35, 45));
 		
 		Cell cellx7 = row.createCell(45);
 		cellx7.setCellValue("来源信息");
 		cellx7.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 45, 47));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 46, 48));
 		
 		Cell cellx8 = row.createCell(48);
 		cellx8.setCellValue("其他");
 		cellx8.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 48, 50));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 49, 51));
 		
 		row = sheet.createRow(2);
 		

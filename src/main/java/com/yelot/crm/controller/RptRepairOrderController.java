@@ -164,58 +164,61 @@ public class RptRepairOrderController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
-			Object[] obj = new Object[51];
-			obj[0] = rptRepairOrder.getShopName();																				// 门店
-			obj[1] = rptRepairOrder.getCreateAt() != null ? sdf.format(rptRepairOrder.getCreateAt()) : null;					// 接单日
-			obj[2] = sdf.format(new Date());																					// 今天日期
-			obj[3] = rptRepairOrder.getOrderNo();																				// 单号
-			obj[4] = rptRepairOrder.getPickupAt() != null ? sdf.format(rptRepairOrder.getPickupAt()) : null;					// 预计归还日
-			obj[5] = "";																										// 到期提醒
-			obj[6] = "";																										// 送回日
-			obj[7] = "";																										// 取货日
-			obj[8] = rptRepairOrder.getConsultCreateUserName();																	// 首接人
-			obj[9] = rptRepairOrder.getCreateUserName();																		// 接单人
-			obj[10] = rptRepairOrder.getDeliverType();																			// 接单方式
-			obj[11] = "";																										// 确认维修
-			obj[12] = "";																										// 计算月份
-			obj[13] = rptRepairOrder.getBrandName();																			// 品牌
-			obj[14] = rptRepairOrder.getFirstCategoryName();																	// 货品类型
-			obj[15] = rptRepairOrder.getSecondCategoryName();																	// 货品名称
-			obj[16] = rptRepairOrder.getRepairDesc();																			// 维修内容
-			obj[17] = rptRepairOrder.getServiceItemNames();																		// 维修工序
-			obj[18] = "";																										// 是否返修
-			obj[19] = rptRepairOrder.getTotalPayment();																			// 小结
-			obj[20] = rptRepairOrder.getMaterialPayment() == -1 ? "待定" : rptRepairOrder.getMaterialPayment();					// 料钱
-			obj[21] = "";																										// 回收料
-			obj[22] = rptRepairOrder.getDiscountAmountPayment() == -1 ? "待定" : rptRepairOrder.getDiscountAmountPayment();		// 优惠
-			obj[23] = "";																										// 付款方式
-			obj[24] = "";																										// 付款金额
-			obj[25] = rptRepairOrder.getAdvancePayment();																		// 定金
-			obj[26] = "";																										// 凭证号
-			obj[27] = "";																										// 发票
-			obj[28] = "";																										// 快递费
-			obj[29] = "";																										// 快递公司
-			obj[30] = "";																										// 快递单号
-			obj[31] = "";																										// 保费
-			obj[32] = "";																										// 保单号
-			obj[33] = "";																										// 合计支出
-			obj[34] = rptRepairOrder.getCustomerName();																			// 姓名
-			obj[35] = rptRepairOrder.getCustomerSex();																			// 性别
-			obj[36] = rptRepairOrder.getCustomerPhone();																		// 电话
-			obj[37] = rptRepairOrder.getProvince();																				// 省
-			obj[38] = rptRepairOrder.getCity();																					// 市
-			obj[39] = rptRepairOrder.getCustomerAddress();																		// 快递地址
-			obj[40] = rptRepairOrder.getWechatNickname();																		// 微信名称
-			obj[41] = rptRepairOrder.getWechatId();																				// 微信号
-			obj[42] = rptRepairOrder.getCustomerQQ();																			// 其他账号（QQ，淘宝，微博等）
-			obj[43] = "";																										// 设备号
-			obj[44] = rptRepairOrder.getCustomerType();																			// 客户类型
-			obj[45] = rptRepairOrder.getChannelSource();																		// 来源
-			obj[46] = "";																										// 搜索关键词
-			obj[47] = "";																										// 着陆页链接
-			obj[48] = "";																										// 备注
-			obj[49] = "";																										// 对比照片
-			obj[50] = rptRepairOrder.getConsultCreateAt() != null ? sdf.format(rptRepairOrder.getConsultCreateAt()) : null;		// 起初咨询时间
+			setOneRepairStatus(rptRepairOrder);
+			
+			Object[] obj = new Object[52];
+			obj[0] = rptRepairOrder.getShopName();	// 门店
+			obj[1] = rptRepairOrder.getCreateAt() != null ? sdf.format(rptRepairOrder.getCreateAt()) : null;	// 接单日
+			obj[2] = sdf.format(new Date());	// 今天日期
+			obj[3] = rptRepairOrder.getOrderNo();	// 单号
+			obj[4] = rptRepairOrder.getPickupAt() != null ? sdf.format(rptRepairOrder.getPickupAt()) : null;	// 预计归还日
+			obj[5] = "";	// 到期提醒
+			obj[6] = rptRepairOrder.getSongHuiDate() != null ? sdf.format(rptRepairOrder.getSongHuiDate()) : null;	// 送回日
+			obj[7] = rptRepairOrder.getQuHuoDate() != null ? sdf.format(rptRepairOrder.getQuHuoDate()) : null;	// 取货日
+			obj[8] = rptRepairOrder.getConsultCreateUserName() == null ? rptRepairOrder.getCreateUserName() : rptRepairOrder.getConsultCreateUserName();	// 首接人
+			obj[9] = rptRepairOrder.getCreateUserName();	// 接单人
+			obj[10] = rptRepairOrder.getDeliverType() == null ? "客户上门" : rptRepairOrder.getDeliverType();	// 接单方式
+			obj[11] = rptRepairOrder.getTypeName();	// 订单类型
+			obj[12] = rptRepairOrder.getStatusName();	// 订单状态
+			obj[13] = "";	// 计算月份
+			obj[14] = rptRepairOrder.getBrandName();	// 品牌
+			obj[15] = rptRepairOrder.getFirstCategoryName();	// 货品类型
+			obj[16] = rptRepairOrder.getSecondCategoryName();	// 货品名称
+			obj[17] = rptRepairOrder.getRepairDesc();	// 维修内容
+			obj[18] = rptRepairOrder.getServiceItemNames();	// 维修工序
+			obj[19] = "";	// 是否返修
+			obj[20] = rptRepairOrder.getTotalPayment();	// 小结
+			obj[21] = rptRepairOrder.getMaterialPayment() == -1 ? "待定" : rptRepairOrder.getMaterialPayment();	// 料钱
+			obj[22] = "";	// 回收料
+			obj[23] = rptRepairOrder.getDiscountAmountPayment() == -1 ? "待定" : rptRepairOrder.getDiscountAmountPayment();	// 优惠
+			obj[24] = rptRepairOrder.getNonPaymentTypeName();	// 付款方式
+			obj[25] = "";	// 付款金额
+			obj[26] = rptRepairOrder.getAdvancePayment();	// 定金
+			obj[27] = "";	// 凭证号
+			obj[28] = "";	// 发票
+			obj[29] = "";	// 快递费
+			obj[30] = "";	// 快递公司
+			obj[31] = "";	// 快递单号
+			obj[32] = "";	// 保费
+			obj[33] = "";	// 保单号
+			obj[34] = "";	// 合计支出
+			obj[35] = rptRepairOrder.getCustomerName();	// 姓名
+			obj[36] = rptRepairOrder.getCustomerSex();	// 性别
+			obj[37] = rptRepairOrder.getCustomerPhone();	// 电话
+			obj[38] = rptRepairOrder.getProvince();	// 省
+			obj[39] = rptRepairOrder.getCity();	// 市
+			obj[40] = rptRepairOrder.getCustomerAddress();	// 快递地址
+			obj[41] = rptRepairOrder.getWechatNickname();	// 微信名称
+			obj[42] = rptRepairOrder.getWechatId();	// 微信号
+			obj[43] = rptRepairOrder.getCustomerQQ();	// 其他账号（QQ，淘宝，微博等）
+			obj[44] = "";	// 设备号
+			obj[45] = rptRepairOrder.getCustomerType();	// 客户类型
+			obj[46] = rptRepairOrder.getChannelSource();	// 来源
+			obj[47] = "";	// 搜索关键词
+			obj[48] = "";	// 着陆页链接
+			obj[49] = "";	// 备注
+			obj[50] = "";	// 对比照片
+			obj[51] = rptRepairOrder.getConsultCreateAt() != null ? sdf.format(rptRepairOrder.getConsultCreateAt()) : null;	// 起初咨询时间
 			dataList.add(obj);
 		}
         
@@ -242,7 +245,8 @@ public class RptRepairOrderController {
 		titleList.add("首接人");
 		titleList.add("接单人");
 		titleList.add("接单方式");
-		titleList.add("确认维修");
+		titleList.add("订单类型");
+		titleList.add("订单状态");
 		titleList.add("计算月份");
 		titleList.add("品牌");
 		titleList.add("货品类型");
@@ -284,4 +288,14 @@ public class RptRepairOrderController {
 		titleList.add("起初咨询时间");
 		return titleList;
     }
+
+	private void setOneRepairStatus(RptRepairOrder rptRepairOrder){
+		RepairOrderStatus[] repairOrderStatusList = RepairOrderStatus.values();
+		for (RepairOrderStatus repairOrderStatus : repairOrderStatusList) {
+			if (rptRepairOrder.getStatus() == repairOrderStatus.getCode()) {
+				rptRepairOrder.setStatusName(repairOrderStatus.getMessage());
+				break;
+			}
+		}
+	}
 }

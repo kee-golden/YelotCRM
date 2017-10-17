@@ -49,6 +49,14 @@
 					<label style="margin-left: 40px">优惠备注：</label><input type="text" id="discountDesc" style="width: 80%" value="${bean.discountDesc}">
 					<br>
 					<label style="margin-left: 40px">合计金额：</label><input type="number" disabled="disabled" id="totalPayment" value="${bean.totalPayment}">
+					<label style="margin-left: 40px">付款方式：</label>
+                    <select id="nonPaymentType" name="nonPaymentType">
+                        <option value="1" <c:if test="${bean.nonPaymentType eq 1}">selected="selected"</c:if>>现金</option>
+                        <option value="2" <c:if test="${bean.nonPaymentType eq 2}">selected="selected"</c:if>>银联卡</option>
+                        <option value="3" <c:if test="${bean.nonPaymentType eq 3}">selected="selected"</c:if>>支付宝</option>
+                        <option value="4" <c:if test="${bean.nonPaymentType eq 4}">selected="selected"</c:if>>微信钱包</option>
+                        <option value="5" <c:if test="${bean.nonPaymentType eq 5}">selected="selected"</c:if>>其他</option>
+                    </select>
 				</div>
 				</c:if>
 				
@@ -230,7 +238,8 @@
 					labourPayment:$("#labourPayment").val(),
 					materialPayment:$("#materialPayment").val(),
 					discountAmountPayment:$("#discountAmountPayment").val(),
-					discountDesc:$("#discountDesc").val()
+					discountDesc:$("#discountDesc").val(),
+					nonPaymentType:$("#nonPaymentType").val()
 				},
 				success:function (data) {
 					if(data.code == 1200){

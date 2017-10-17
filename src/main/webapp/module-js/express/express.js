@@ -56,14 +56,10 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
             {'data': 'payAmount'},
             {'data': 'insuranceNo'},
             {'data': 'insuranceAmount'},
+            {'data': 'createUserName'},
             {'data': 'createAt'},
             {'data': 'id',
                 'render': function (data, type, full, meta) {
-
-                    if(data == adminId){ //user_index.jsp 中定义了adminId变量
-                        console.log("adminId"+adminId);
-                        return "";
-                    }
                     return '<a href="javascript:;;" data-id="' + data + '" class="J_edit"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a>&nbsp;&nbsp;' +
                         '<a href="javascript:;;" data-id="' + data + '" class="J_delete"><i class="fa fa-trash" aria-hidden="true"></i>删除</a>';
                 }
@@ -106,14 +102,10 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     shadeClose: true,
                     btn: ['保存'],
                     success: function (layer, index) {
-                        //初始化值
-                        //if(${username})
-                        // $("#J_name").val("");
+                    	checkExpressForm();
                     },
                     yes: function (index) {
-                        // var isValid = $("#J_userForm").valid();
-                        var isValid = true;
-
+                        var isValid = $("#J_expressForm").valid();
                         if (isValid) {
 
                             $.ajax({
@@ -122,19 +114,20 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                                 method: 'post',
                                 dataType: 'json',
                                 success: function (data) {
+                                	debugger
                                     console.log(data.code);
-                                    if (data.code) {
+                                    if (data.code==1200) {
                                         table.draw();
                                         yaya.layer.close(index);
 
                                     }
                                     else {
-                                        yaya.layer.msg(data.data);
+                                        yaya.layer.msg(data.data.data);
 
                                     }
                                 },
                                 error: function (data) {
-                                    console.log(data.code);
+                                    yaya.layer.msg(data.data.data);
 
                                 }
                             });
@@ -151,42 +144,23 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
     })
     ;
 
-    function checkUserFrom() {
+    function checkExpressForm(expressName) {
         yaya.validate({
-            el: '#J_userForm',
+            el: '#J_expressForm',
             rules: {
-                name:{
-                    required:true,
-                    remote:{
-                        url:ctx+"/user/check-username",
-                        type:"post",
-                        data:{
-                            name:function () {
-                                return $("#J_name").val();
-                            }
-                        }
-                    }
-
-                },
-                realname:{
+                expressName:{
                     required: true
                 },
-                phone:{
-                    required: true,
-                    isMobile:true
+                expressNo:{
+                    required: true
                 }
             },
             messages: {
-                name: {
-                    required:"用户名不能为空",
-                    remote:"用户名已存在"
+            	expressName: {
+                    required:"快递名称不能为空",
                 },
-                realname:{
-                    required:"姓名不能为空"
-                },
-                phone:{
-                    required:"手机号不能为空",
-                    isMobile:"请输入正确的手机号"
+                expressNo:{
+                    required:"快递单号不能为空",
                 }
             }
         });
@@ -210,15 +184,13 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                     shadeClose: true,
                     btn: ['保存'],
                     success: function (layero, index) {
-
-                        // checkUserFrom();
-
+                    	checkExpressForm();
                     },
                     yes: function (index) {
-                        // var isValid = $("#J_expressForm").valid();
-                        // if(!isValid){
-                        //     return;
-                        // }
+                         var isValid = $("#J_expressForm").valid();
+                         if(!isValid){
+                             return;
+                         }
                         $.ajax({
                             url: ctx + '/express/save',
                             data: $('#J_expressForm').serialize(),

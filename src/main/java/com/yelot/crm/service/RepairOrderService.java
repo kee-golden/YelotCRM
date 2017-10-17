@@ -299,6 +299,10 @@ public class RepairOrderService {
 		}
     }
     
+    public void updateExpressByOrderNo(String orderNo, Long expressId, Integer expressMoney){
+    	repairOrderMapper.updateExpressByOrderNo(orderNo, expressId, expressMoney);
+    }
+    
     /**
      * 获取三天后的日期
      * @return

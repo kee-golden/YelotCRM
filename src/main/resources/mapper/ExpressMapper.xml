@@ -16,9 +16,11 @@
         <result property="sendPersonName" column="send_person_name"/>
         <result property="sendPersonPhone" column="send_person_phone"/>
         <result property="createUserId" column="create_user_id"/>
+        <result property="createUserName" column="create_user_name"/>
         <result property="shopId" column="shop_id"/>
         <result property="createAt" column="create_at"/>
         <result property="comment" column="comment"/>
+        <result property="expressType" column="express_type"/>
     </resultMap>
 
     <select id="find" resultMap="expressResultMap">
@@ -27,26 +29,30 @@
 
 
     <select id="countBySearch" resultType="Integer">
-        select count(*) from t_express where 1 = 1
+        select count(*) from t_express t
+        left join t_user t1 on t.create_user_id = t1.id
+        where 1 = 1
         <if test="extra_search != null and extra_search != ''">
-            and (express_no like CONCAT('%', #{extra_search}, '%') OR express_name like CONCAT('%', #{extra_search}, '%'))
+            and (t.express_no like CONCAT('%', #{extra_search}, '%') OR t.express_name like CONCAT('%', #{extra_search}, '%'))
         </if>
     </select>
 
     <select id="findBySearch" resultMap="expressResultMap">
-        select * from t_express where 1 = 1
+        select t.*, t1.realname create_user_name from t_express t
+        left join t_user t1 on t.create_user_id = t1.id
+        where 1 = 1
         <if test="extra_search != null and extra_search != ''">
-            and (express_no like CONCAT('%', #{extra_search}, '%') OR express_name like CONCAT('%', #{extra_search}, '%'))
+            and (t.express_no like CONCAT('%', #{extra_search}, '%') OR t.express_name like CONCAT('%', #{extra_search}, '%'))
         </if>
-        ORDER BY id DESC
+        ORDER BY t.id DESC
         limit #{pageHelper.offset},#{pageHelper.size} ;
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into t_express(express_name,express_no,send_type,pay_type,pay_amount,insurance_amount,insurance_no,repair_order_no_json,accept_person_name,
-        accept_person_phone,send_person_name,send_person_phone,create_user_id,shop_id,create_at,comment)
+        accept_person_phone,send_person_name,send_person_phone,create_user_id,shop_id,create_at,comment,express_type)
         VALUES (#{expressName},#{expressNo},#{sendType},#{payType},#{payAmount},#{insuranceAmount},#{insuranceNo},#{repairOrderNoJson},#{acceptPersonName},
-        #{acceptPersonPhone},#{sendPersonName},#{sendPersonPhone},#{createUserId},#{shopId},#{createAt},#{comment})
+        #{acceptPersonPhone},#{sendPersonName},#{sendPersonPhone},#{createUserId},#{shopId},#{createAt},#{comment},#{expressType})
 
     </insert>
 
@@ -54,7 +60,7 @@
         update t_express set express_name = #{expressName},express_no=#{expressNo},send_type=#{sendType},
         pay_type=#{payType},pay_amount=#{payAmount},insurance_amount=#{insuranceAmount},insurance_no=#{insuranceNo},repair_order_no_json=#{repairOrderNoJson},
         accept_person_name=#{acceptPersonName},accept_person_phone=#{acceptPersonPhone},send_person_name=#{sendPersonName},
-        send_person_phone=#{sendPersonPhone},comment=#{comment}
+        send_person_phone=#{sendPersonPhone},comment=#{comment},express_type={expressType}
         where id = #{id};
     </update>
 
@@ -62,6 +68,9 @@
         DELETE FROM t_express where id = #{id}
     </delete>
 
+    <select id="findExpressByNameAndNo" resultMap="expressResultMap">
+        select * from t_express where express_name = #{expressName} and express_no = #{expressNo}
+    </select>
 </mapper>
 
 

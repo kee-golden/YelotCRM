@@ -109,6 +109,10 @@
 
 .bottom10{margin-bottom: 10px;}
 
+#customerContainer{
+    display: none;
+}
+
 #customerTip{
     display: none;
 }

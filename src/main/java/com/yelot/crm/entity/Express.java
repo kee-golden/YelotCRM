@@ -23,9 +23,11 @@ public class Express {
     private String sendPersonName;
     private String sendPersonPhone;
     private Long createUserId;
+    private String createUserName;
     private Long shopId;
     private String comment;
     private Date createAt;
+    private int expressType;
 
 
     public Long getId() {
@@ -140,7 +142,15 @@ public class Express {
         this.createUserId = createUserId;
     }
 
-    public Long getShopId() {
+    public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public Long getShopId() {
         return shopId;
     }
 
@@ -164,4 +174,13 @@ public class Express {
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
+
+	public int getExpressType() {
+		return expressType;
+	}
+
+	public void setExpressType(int expressType) {
+		this.expressType = expressType;
+	}
+    
 }
