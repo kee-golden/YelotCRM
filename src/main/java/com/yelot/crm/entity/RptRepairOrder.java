@@ -212,6 +212,31 @@ public class RptRepairOrder {
     private String consultCreateUserName;
     private String deliverType;
     
+    /**
+     * 快递费 
+     */
+    private int expressMoney;
+    
+    /**
+     * 快递名字
+     */
+    private String expressName;
+    
+    /**
+     * 快递单号
+     */
+    private String expressNo;
+    
+    /**
+     * 保费
+     */
+    private int insuranceAmount;
+    
+    /**
+     * 保单号
+     */
+    private String insuranceNo;
+    
     private String startDate;
     
     private String endDate;
@@ -676,6 +701,46 @@ public class RptRepairOrder {
 
 	public void setDeliverType(String deliverType) {
 		this.deliverType = deliverType;
+	}
+
+	public int getExpressMoney() {
+		return expressMoney;
+	}
+
+	public void setExpressMoney(int expressMoney) {
+		this.expressMoney = expressMoney;
+	}
+
+	public String getExpressName() {
+		return expressName;
+	}
+
+	public void setExpressName(String expressName) {
+		this.expressName = expressName;
+	}
+
+	public String getExpressNo() {
+		return expressNo;
+	}
+
+	public void setExpressNo(String expressNo) {
+		this.expressNo = expressNo;
+	}
+
+	public int getInsuranceAmount() {
+		return insuranceAmount;
+	}
+
+	public void setInsuranceAmount(int insuranceAmount) {
+		this.insuranceAmount = insuranceAmount;
+	}
+
+	public String getInsuranceNo() {
+		return insuranceNo;
+	}
+
+	public void setInsuranceNo(String insuranceNo) {
+		this.insuranceNo = insuranceNo;
 	}
 
 	public String getStartDate() {

@@ -60,7 +60,7 @@
         update t_express set express_name = #{expressName},express_no=#{expressNo},send_type=#{sendType},
         pay_type=#{payType},pay_amount=#{payAmount},insurance_amount=#{insuranceAmount},insurance_no=#{insuranceNo},repair_order_no_json=#{repairOrderNoJson},
         accept_person_name=#{acceptPersonName},accept_person_phone=#{acceptPersonPhone},send_person_name=#{sendPersonName},
-        send_person_phone=#{sendPersonPhone},comment=#{comment},express_type={expressType}
+        send_person_phone=#{sendPersonPhone},comment=#{comment},express_type=#{expressType}
         where id = #{id};
     </update>
 

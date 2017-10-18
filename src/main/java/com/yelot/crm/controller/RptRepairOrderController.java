@@ -196,11 +196,11 @@ public class RptRepairOrderController {
 			obj[26] = rptRepairOrder.getAdvancePayment();	// 定金
 			obj[27] = "";	// 凭证号
 			obj[28] = "";	// 发票
-			obj[29] = "";	// 快递费
-			obj[30] = "";	// 快递公司
-			obj[31] = "";	// 快递单号
-			obj[32] = "";	// 保费
-			obj[33] = "";	// 保单号
+			obj[29] = rptRepairOrder.getExpressMoney();	// 快递费
+			obj[30] = rptRepairOrder.getExpressName();	// 快递公司
+			obj[31] = rptRepairOrder.getExpressNo();	// 快递单号
+			obj[32] = rptRepairOrder.getInsuranceAmount();	// 保费
+			obj[33] = rptRepairOrder.getInsuranceNo();	// 保单号
 			obj[34] = "";	// 合计支出
 			obj[35] = rptRepairOrder.getCustomerName();	// 姓名
 			obj[36] = rptRepairOrder.getCustomerSex();	// 性别

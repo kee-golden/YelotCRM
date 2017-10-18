@@ -54,7 +54,11 @@
         <result property="consultCreateUserName" column="consult_create_user_name"/>
         <result property="deliverType" column="deliver_type"/>
         <result property="songHuiDate" column="songhui_date"/>
-        <result property="quHuoDate" column="quhuo_date"/>
+        <result property="expressMoney" column="express_money"/>
+        <result property="expressName" column="express_name"/>
+        <result property="expressNo" column="express_no"/>
+        <result property="insuranceAmount" column="insurance_amount"/>
+        <result property="insuranceNo" column="insurance_no"/>
     </resultMap>
     
     <select id="countTotalPage" resultType="java.lang.Integer">
@@ -70,6 +74,7 @@
 		  left join t_user t8 on t7.create_user_id = t8.id
 		  left join t_repair_order_operators t9 on t.id = t9.repair_order_id and t9.order_status = '32'
 		  left join t_repair_order_operators t10 on t.id = t10.repair_order_id and t10.order_status = '36'
+		  left join t_express t11 on t.express_id = t11.id
 		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>
@@ -110,6 +115,11 @@
 		       t.discount_amount_payment,
 		       case t.non_payment_type when 1 then '现金' when 2 then '银联卡' when 3 then '支付宝' when 4 then '微信钱包' when 5 then '其他' end non_payment_type_name,
 		       t.advance_payment,
+		       t.express_money,
+		       t11.express_name,
+		       t11.express_no,
+		       t11.insurance_amount,
+		       t11.insurance_no,
 		       t.customer_name,
 		       case t6.sex when '0' then '女' when '1' then '男' end customer_sex,
 		       t.customer_phone,
@@ -133,6 +143,7 @@
 		  left join t_user t8 on t7.create_user_id = t8.id
 		  left join t_repair_order_operators t9 on t.id = t9.repair_order_id and t9.order_status = '32'
 		  left join t_repair_order_operators t10 on t.id = t10.repair_order_id and t10.order_status = '36'
+		  left join t_express t11 on t.express_id = t11.id
 		 where 1 = 1
         <if test="startDate != null and startDate != ''">and t.create_at &gt;= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and t.create_at &lt;= #{endDate}</if>
