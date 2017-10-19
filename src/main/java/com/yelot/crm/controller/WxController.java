@@ -5,11 +5,14 @@ import com.soecode.wxtools.api.IService;
 import com.soecode.wxtools.api.WxConfig;
 import com.soecode.wxtools.api.WxConsts;
 import com.soecode.wxtools.api.WxService;
+import com.soecode.wxtools.bean.WxCardApiSignature;
+import com.soecode.wxtools.bean.WxJsapiConfig;
 import com.soecode.wxtools.bean.WxUserList;
 import com.soecode.wxtools.bean.WxUserList.WxUser.WxUserGet;
 import com.soecode.wxtools.bean.result.WxOAuth2AccessTokenResult;
 import com.soecode.wxtools.bean.result.card.Card;
 import com.soecode.wxtools.exception.WxErrorException;
+import com.yelot.crm.AppConfig;
 import com.yelot.crm.Util.Constants;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
@@ -32,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +55,8 @@ public class WxController {
 
     @Autowired
     private SendMessageService sendMessageService;
+    @Autowired
+    private AppConfig appConfig;
 
 
     /**
@@ -288,22 +294,31 @@ public class WxController {
 
     @ResponseBody
     @RequestMapping("update-fullname")
-    public ResultData updateFullName(String phone,String fullName){
-        accountMapper.updateFullName(phone,fullName);
+    public ResultData updateFullName(String openid,String phone,String fullName){
+        accountMapper.updateFullName(openid,phone,fullName);
         return ResultData.ok();
     }
 
     @ResponseBody
     @RequestMapping("update-email")
-    public ResultData updateEmail(String phone,String email){
-        accountMapper.updateEmail(phone,email);
+    public ResultData updateEmail(String openid,String phone,String email){
+        accountMapper.updateEmail(openid,phone,email);
         return ResultData.ok();
     }
 
     @ResponseBody
+    @RequestMapping("update-interest")
+    public ResultData updateInterest(String openid,String phone,String[] interest){
+        String jsonInterest = JSON.toJSONString(interest);
+        accountMapper.updateInterest(openid,phone,jsonInterest);
+        return ResultData.ok();
+
+    }
+
+    @ResponseBody
     @RequestMapping("update-city")
-    public ResultData updateCity(String phone,String city){
-        accountMapper.updateCity(phone,city);
+    public ResultData updateCity(String openid,String phone,String city){
+        accountMapper.updateCity(openid,phone,city);
         return ResultData.ok();
     }
 
@@ -325,10 +340,47 @@ public class WxController {
     @RequestMapping("my-coupon")
     public String myCoupon(Model model){
         List<Card> cardList = iService.getCardList();
-        System.out.println("kee cardList"+JSON.toJSONString(cardList));
-        model.addAttribute("cardList",cardList);
+        for (int i = 0; cardList != null && i < cardList.size(); i++) {
+            String cardId = cardList.get(i).getCash().getBaseInfo().getId();
+            WxCardApiSignature wxCardApiSignature = iService.createCardApiConfig(null,null,null);
+            System.out.println("cardSignature:"+JSON.toJSONString(wxCardApiSignature));
+            String signature = wxCardApiSignature.getSignature();
+            Long timestamp = wxCardApiSignature.getTimestamp();
+            String noncestr = wxCardApiSignature.getNoncestr();
+            cardList.get(i).setSignature(signature);
+            cardList.get(i).setTimestamp(timestamp);
+            cardList.get(i).setNoncestr(noncestr);
 
-        return "weixin/member/coupon";
+        }
+        model.addAttribute("cardList",cardList);
+        WxJsapiConfig wxJsapiConfig = initJsConfig();
+//        model.addAttribute("wxConfigJson",JSON.toJSONString(wxJsapiConfig));
+        model.addAttribute("wxConfig",wxJsapiConfig);
+        System.out.println("jsConfig:"+JSON.toJSONString(wxJsapiConfig));
+        //
+
+//        return "weixin/member/coupon";
+//        return "weixin/member/wx_demo";
+        return "weixin/member/coupon_wx";
+    }
+
+    private WxJsapiConfig initJsConfig(){
+        List<String> jsApiList = new ArrayList<>();
+        String url = appConfig.getHostUrl()+"/wx/my-coupon";
+        jsApiList.add("chooseImage");
+        jsApiList.add("previewImage");
+        jsApiList.add("addCard");
+        jsApiList.add("chooseCard");
+        jsApiList.add("openCard");
+        WxJsapiConfig config = null;
+        try {
+            config = iService.createJsapiConfig(url, jsApiList);
+            config.setAppid(WxConfig.getInstance().getAppId());
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+
+        return config;
     }
 
     /**

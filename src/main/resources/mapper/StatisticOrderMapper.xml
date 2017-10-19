@@ -9,7 +9,6 @@
         <result property="time" column="time"/>
         <result property="totalPayment" column="totalPayment"/>
         <result property="totalCount" column="totalCount"/>
-
     </resultMap>
     
 

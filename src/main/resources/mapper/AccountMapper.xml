@@ -11,33 +11,58 @@
         <result property="email" column="email"/>
         <result property="city" column="city"/>
         <result property="expressAddress" column="express_address"/>
-        <result property="hobbyJson" column="hobby_json"/>
+        <result property="interestJson" column="interest_json"/>
         <result property="createAt" column="create_at"/>
     </resultMap>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into t_account(phone,wx_openid,wx_nickname,account_no,full_name,
         express_address,hobby_json,create_at) VALUES (#{phone},#{wxOpenid},#{wxNickname},#{accountNo},#{fullName},
-        #{expressAddress},#{hobbyJson},now());
+        #{expressAddress},#{interestJson},now());
 
     </insert>
 
 
     <update id="update">
         update t_account set account_no = #{accountNo},full_name=#{fullName},
-                express_address = #{expressAddress},express_address=#{expressAddress},hobby_json=#{hobbyJson},
+                express_address = #{expressAddress},express_address=#{expressAddress},hobby_json=#{interestJson},
                 create_at = #{createAt}
 
          where id = #{id};
     </update>
     <update id="updateFullName">
-        update t_account set full_name = #{fullName} where phone = #{phone}
+        update t_account set full_name = #{fullName} where
+        <choose>
+        <when test="phone != null and phone != ''">
+        phone = #{phone}
+        </when>
+        <otherwise>
+            wx_openid = #{openid}
+        </otherwise>
+        </choose>
+
     </update>
     <update id="updateEmail">
-        update t_account set email = #{email} where phone = #{phone}
+        update t_account set email = #{email} where
+        <choose>
+            <when test="phone != null and phone != ''">
+                phone = #{phone}
+            </when>
+            <otherwise>
+                wx_openid = #{openid}
+            </otherwise>
+        </choose>
     </update>
     <update id="updateCity">
-        update t_account set city = #{city} where phone = #{phone}
+        update t_account set city = #{city} where
+        <choose>
+            <when test="phone != null and phone != ''">
+                phone = #{phone}
+            </when>
+            <otherwise>
+                wx_openid = #{openid}
+            </otherwise>
+        </choose>
     </update>
     <select id="find" resultMap="accountResultMap">
         SELECT * from t_account where id = #{id} ;

@@ -589,6 +589,16 @@ public interface IService {
 	public WxJsapiConfig createJsapiConfig(String url, List<String> jsApiList) throws WxErrorException;
 
 	/**
+	 * 创建卡券签名config
+	 * @param code
+	 * @param card_id
+	 * @param openid
+	 * @return
+	 * @throws WxErrorException
+	 */
+	public WxCardApiSignature createCardApiConfig(String code,String card_id,String openid);
+
+	/**
 	 * <pre>
 	 * 获取微信服务器的ip段
 	 * 详情请见: {@link http://mp.weixin.qq.com/wiki/4/41ef0843d6e108cf6b5649480207561c.html}

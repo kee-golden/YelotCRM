@@ -21,7 +21,7 @@ public class Account {
     private String email;
     private String city;
     private String expressAddress;
-    private String hobbyJson;
+    private String interestJson;
 
 
     public Long getId() {
@@ -104,11 +104,11 @@ public class Account {
         this.expressAddress = expressAddress;
     }
 
-    public String getHobbyJson() {
-        return hobbyJson;
+    public String getInterestJson() {
+        return interestJson;
     }
 
-    public void setHobbyJson(String hobbyJson) {
-        this.hobbyJson = hobbyJson;
+    public void setInterestJson(String interestJson) {
+        this.interestJson = interestJson;
     }
 }

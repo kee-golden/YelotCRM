@@ -273,6 +273,7 @@ public class WxConsts {
 	//////JsapiTicket
 	/////////////////////////
 	public static final String URL_GET_JS_API_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
+	///https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=wx_card
 	
 	/////////////////////////
 	//////群发相关(不支持卡券)
@@ -304,8 +305,8 @@ public class WxConsts {
 	//卡券详情
 	public static final String URL_CARD_GET__LIST = "https://api.weixin.qq.com/card/get?access_token=ACCESS_TOKEN";
 
-	//获取卡券的ticket
-	public static final String URL_GET_JS_CARD_API_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=wx_card";
+	//获取卡券的ticket                                 https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=wx_card
+	public static final String URL_CARD_API_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=wx_card";
 
 	
 	

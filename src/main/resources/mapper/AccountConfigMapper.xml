@@ -13,7 +13,7 @@
         <result property="firstname" column="firstname"/>
         <result property="lastname" column="lastname"/>
         <result property="expressAddress" column="express_address"/>
-        <result property="hobbyJson" column="hobby_json"/>
+        <result property="interestJson" column="hobby_json"/>
         <result property="createAt" column="create_at"/>
     </resultMap>
 

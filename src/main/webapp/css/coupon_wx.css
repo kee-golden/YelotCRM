@@ -1,0 +1,84 @@
+*{
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing:border-box;
+	box-sizing: border-box;
+}
+body,html{
+	font-size: 16px;
+	height: 100%;
+}
+.card-head{
+	height: 50px;
+	line-height: 50px;
+	background: #353439;
+	color: #fff;
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+}
+.my-card-head{
+	position: absolute;
+	width: 60px;
+	float: left;
+	font-size: 16px;
+}
+.my-card-head>img{
+	    display: block;
+    width: 20px;
+    float: left;
+    top: 50%;
+    position: absolute;
+    margin-top: -10px;
+}
+.card-content-item{
+	width: 90%;
+	border-radius: 7px;
+	margin: 10px auto;
+	background: #fff;
+}
+.card-content-item-top{
+	height: 80px;
+	background: #55bc46;
+	line-height: 80px;
+	color: #fff;
+	position: relative;
+	padding-left: 90px;
+	font-size: 22px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+}
+.card-content-wrap{
+	background: #ededed; 
+	border-top:1px solid transparent;
+	min-height: 100%;
+}
+.card-content-item-bottom{
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    color: #a5a3a3;
+    font-size: 14px;
+
+}
+.card-content-item-bottom:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.card-content-item-pic{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	float: left;
+	position: absolute;
+	top: 50%;
+	margin-top: -25px;
+	left: 20px;
+}
+.card-content-item-bottom>div:first-child{
+	float: left;
+}
+.card-content-item-bottom>div:nth-child(2){
+	float: right;
+}

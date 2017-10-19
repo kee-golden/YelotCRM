@@ -12,6 +12,7 @@ import com.soecode.wxtools.util.DateUtil;
 import com.soecode.wxtools.util.PayUtil;
 import com.soecode.wxtools.util.RandomUtils;
 import com.soecode.wxtools.util.crypto.SHA1;
+import com.soecode.wxtools.util.crypto.WxCardSign;
 import com.soecode.wxtools.util.file.FileUtils;
 import com.soecode.wxtools.util.http.*;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -36,6 +37,8 @@ public class WxService implements IService{
 	protected static final Object globalAccessTokenRefreshLock = new Object();
 	//全局的是否正在刷新jsapi_ticket的锁
 	protected static final Object globalJsapiTicketRefreshLock = new Object();
+	//全局的是否正在刷新 卡券 api_ticket的锁
+	protected static final Object globalCardJsapiTicketRefreshLock = new Object();
 	//HttpClient
 	protected CloseableHttpClient httpClient;
 	
@@ -581,6 +584,12 @@ public class WxService implements IService{
 		return shortUrl;
 	}
 
+	/**
+	 * 采用http GET方式请求获得jsapi_ticket（有效期7200秒，开发者必须在自己的服务全局缓存jsapi_ticket）：
+	 * https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi
+	 * @return
+	 * @throws WxErrorException
+	 */
 	public String getJsapiTicket() throws WxErrorException {
 		return getJsapiTicket(false);
 	}
@@ -615,6 +624,49 @@ public class WxService implements IService{
 		return WxConfig.getInstance().getJsapiTicket();
 	}
 
+	/**
+	 * 获取卡券ticket
+	 * @param forceRefresh
+	 * @return
+	 * @throws WxErrorException
+	 */
+	public String getCardJsapiTicket() throws WxErrorException {
+//		if (forceRefresh) {
+//			WxConfig.getInstance().expireJsapiTicket();
+//		}
+		if (WxConfig.getInstance().isCardApiTicketExpired()) {
+			synchronized (globalCardJsapiTicketRefreshLock) {
+				if (WxConfig.getInstance().isCardApiTicketExpired()) {
+					String url = WxConsts.URL_CARD_API_TICKET.replace("ACCESS_TOKEN", getAccessToken());
+					String responseContent = execute(new SimpleGetRequestExecutor(), url, null);
+					ObjectMapper mapper = new ObjectMapper();
+					JsonNode node = null;
+					try {
+						node = mapper.readTree(responseContent);
+						if(node.get("errcode")!=null && !(node.get("errcode").asInt()==0)){
+							WxError error = WxError.fromJson(responseContent);
+							throw new WxErrorException(error);
+						}
+						String cardApiTicket = node.get("ticket").asText();
+						int expiresInSeconds = node.get("expires_in").asInt();//7200
+						WxConfig.getInstance().updateCardJsapiTicket(cardApiTicket, expiresInSeconds);
+						System.out.println("[wx-tools]update jsapiTicket success. ticket: "+cardApiTicket);
+					} catch (Exception e) {
+						throw new WxErrorException("[wx-tools]getJsapiTicket failure.");
+					}
+				}
+			}
+		}
+		return WxConfig.getInstance().getCardApiTicket();
+	}
+
+	/**
+	 * 获取前端jsapiConfig
+	 * @param url 调用api的页面url
+	 * @param jsApiList 需要调用的api，详情见附录二【http://mp.weixin.qq.com/wiki/11/74ad127cc054f6b80759c40f77ec03db.html】
+	 * @return
+	 * @throws WxErrorException
+	 */
 	public WxJsapiConfig createJsapiConfig(String url, List<String> jsApiList) throws WxErrorException {
 		long timestamp = System.currentTimeMillis() / 1000;
 		String noncestr = RandomUtils.getRandomStr(16);
@@ -632,6 +684,50 @@ public class WxService implements IService{
 		} catch (NoSuchAlgorithmException e) {
 			throw new WxErrorException("[wx-tools]createJsapiConfig failure.");
 		}
+	}
+
+	/**
+	 * 卡券 签名(其中code,openid 为不是必填项)
+	 * 将 api_ticket、timestamp、card_id、code、openid、nonce_str的value值进行字符串的字典序排序
+	 * 参考：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115
+	 * @return
+	 * @throws WxErrorException
+	 */
+	public WxCardApiSignature createCardApiConfig(String code,String card_id,String openid){
+		long timestamp = System.currentTimeMillis() / 1000;
+		String noncestr = RandomUtils.getRandomStr(16);
+		String cardApiTicket = null;
+		try {
+			cardApiTicket = getCardJsapiTicket();
+		} catch (WxErrorException e) {
+			e.printStackTrace();
+		}
+
+		WxCardSign wxCardSign = new WxCardSign();
+			wxCardSign.addData(timestamp);
+			wxCardSign.addData(noncestr);
+			wxCardSign.addData(cardApiTicket);
+			if(code != null){
+				wxCardSign.addData(code);
+			}
+			if(card_id != null){
+				wxCardSign.addData(card_id);
+			}
+			if(openid != null){
+				wxCardSign.addData(openid);
+			}
+
+			String signature = wxCardSign.GetSignature();
+			WxCardApiSignature wxCardApiSignature = new WxCardApiSignature();
+			wxCardApiSignature.setTimestamp(timestamp);
+			wxCardApiSignature.setNoncestr(noncestr);
+			wxCardApiSignature.setOpenid(openid);
+			wxCardApiSignature.setCode(code);
+			wxCardApiSignature.setCard_id(card_id);
+			wxCardApiSignature.setSignature(signature);
+			wxCardApiSignature.setCardApiTicket(cardApiTicket);
+			return wxCardApiSignature;
+
 	}
 	
 	@Override
@@ -844,9 +940,9 @@ public class WxService implements IService{
 		List<Card> cardList = new ArrayList<Card>();
 		try {
 			String url = WxConsts.URL_CARD_IDS_GET_LIST.replace("ACCESS_TOKEN", getAccessToken());
-			String params = "{\"offset\":0,\"count\":20,\"status_list\": [\"CARD_STATUS_VERIFY_OK\", \"CARD_STATUS_DISPATCH\"]}";
+			String params = "{\"offset\":0,\"count\":20,\"status_list\": [ \"CARD_STATUS_DISPATCH\"]}";
 			postResult = post(url,params);
-			System.out.println("kee card:"+postResult);
+//			System.out.println("kee card:"+postResult);
 			wxCardList = JSON.parseObject(postResult,WxCardList.class);
 			if(wxCardList != null && wxCardList.getCard_id_list() != null){
 				String cardUrl = WxConsts.URL_CARD_GET__LIST.replace("ACCESS_TOKEN", getAccessToken());
@@ -859,7 +955,7 @@ public class WxService implements IService{
 							"\"card_id\":\""+cardId+"\"" +
 							"}";
 					result = post(cardUrl,cardParams);
-					System.out.println("kee result:"+result);
+//					System.out.println("kee result:"+result);
 					WxCardResult cardResult = JSON.parseObject(result,WxCardResult.class);
 					cardList.add(cardResult.getCard());
 				}

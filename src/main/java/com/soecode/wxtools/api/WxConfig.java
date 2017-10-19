@@ -31,6 +31,9 @@ public class WxConfig {
 	private volatile long expiresTime;
 	private volatile String jsapiTicket;
 	private volatile long jsapiTicketExpiresTime;
+	//add by kee,卡券ticket
+	private volatile String cardApiTicket;
+	private volatile long cardApiTicketExpiresTime;
 	
 	public WxConfig() {
 		//写读配置文件代码
@@ -130,7 +133,40 @@ public class WxConfig {
 		this.jsapiTicketExpiresTime = 0;
 	}
 
-	
+	/**
+	 * 卡券过期处理
+	 * @return
+	 */
+	public boolean isCardApiTicketExpired(){
+		return System.currentTimeMillis() > this.cardApiTicketExpiresTime;
+	}
+
+	public synchronized void updateCardJsapiTicket(String cardApiTicket, int expiresInSeconds) {
+		this.cardApiTicket = cardApiTicket;
+		// 预留200秒的时间
+		this.cardApiTicketExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000l;
+	}
+
+	public void expireCardJsapiTicket() {
+		this.cardApiTicketExpiresTime = 0;
+	}
+
+	public String getCardApiTicket() {
+		return cardApiTicket;
+	}
+
+	public void setCardApiTicket(String cardApiTicket) {
+		this.cardApiTicket = cardApiTicket;
+	}
+
+	public long getCardApiTicketExpiresTime() {
+		return cardApiTicketExpiresTime;
+	}
+
+	public void setCardApiTicketExpiresTime(long cardApiTicketExpiresTime) {
+		this.cardApiTicketExpiresTime = cardApiTicketExpiresTime;
+	}
+
 	//getter
 
 

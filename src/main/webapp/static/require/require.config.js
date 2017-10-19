@@ -63,6 +63,7 @@ requirejs.config({
         'layuiTotal':'layui/layui' ,
         'city.min':'cityselect/js/city.min',
         'cityselect':'cityselect/js/jquery.cityselect',
+        'weixin':'wx/jweixin-1.2.0',
         'daterangepicker':'daterangepicker/js/daterangepicker',
         'moment':'daterangepicker/js/moment',
     }

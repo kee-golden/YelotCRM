@@ -22,13 +22,15 @@ public interface AccountMapper {
 
     Integer findMaxId();
 
-    void updateFullName(@Param("phone") String phone, @Param("fullName") String fullName);
+    void updateFullName(@Param("openid")String openid,@Param("phone") String phone, @Param("fullName") String fullName);
 
-    void updateEmail(@Param("phone") String phone, @Param("email") String email);
+    void updateEmail(@Param("openid")String openid,@Param("phone") String phone, @Param("email") String email);
 
-    void updateCity(@Param("phone") String phone, @Param("city") String city);
+    void updateCity(@Param("openid")String openid,@Param("phone") String phone, @Param("city") String city);
 
     int countBySearch(@Param("extra_search") String extra_search);
 
     List<Account> findBySearch(@Param("pageHelper") PageHelper pageHelper, @Param("extra_search") String extra_search);
+
+    void updateInterest(@Param("openid")String openid,@Param("phone") String phone,@Param("jsonInterest") String jsonInterest);
 }

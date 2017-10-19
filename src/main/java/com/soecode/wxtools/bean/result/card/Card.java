@@ -15,7 +15,16 @@ public class Card {
 
     @JSONField(name = "card_type")
     private String cardType;
+
+    @JSONField(name = "cash")
     private CardDetail cash;
+
+    /**
+     * 新增一个字段，不是接口数据，生成签名，附加字段
+     */
+    private String signature;
+    private Long timestamp;
+    private String noncestr;
     public void setCardType(String cardType) {
          this.cardType = cardType;
      }
@@ -30,4 +39,27 @@ public class Card {
          return cash;
      }
 
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getNoncestr() {
+        return noncestr;
+    }
+
+    public void setNoncestr(String noncestr) {
+        this.noncestr = noncestr;
+    }
 }

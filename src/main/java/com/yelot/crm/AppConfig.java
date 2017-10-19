@@ -38,6 +38,9 @@ public class AppConfig {
     @Value("${sms.url}")
     private String sendMessageUrl;
 
+    @Value("${host.url}")
+    private String hostUrl;
+
     /**
      * send
      */
@@ -49,6 +52,14 @@ public class AppConfig {
 
     public void setDataPath(String dataPath) {
         this.dataPath = dataPath;
+    }
+
+    public String getHostUrl() {
+        return hostUrl;
+    }
+
+    public void setHostUrl(String hostUrl) {
+        this.hostUrl = hostUrl;
     }
 
     public Boolean getDebug() {
