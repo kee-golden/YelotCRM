@@ -6,11 +6,8 @@
 	<meta charset="UTF-8">
 	<title>个人资料</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="stylesheet" href="/css/weixin-index.css">
+	<link rel="stylesheet" href="/css/weixin-index.css?random=Math.random()">
 
-
-
-	
 </head>
 <body>
 	<div class="information-wrap">
@@ -96,31 +93,7 @@
 			</div>
 		</div>
 	</div>
-	<%--<div class="download-input-wrap">--%>
-		<%--<form class="download-input">--%>
-			<%--<div class="new-password">--%>
-				<%--<label>旧的账户密码</label>--%>
-				<%--<input type="password" name="">--%>
-			<%--</div>--%>
-			<%--<div class="new-password">--%>
-				<%--<label>新的账户密码</label>--%>
-				<%--<input type="password" name="">--%>
-			<%--</div>--%>
-			<%--<div class="new-password">--%>
-				<%--<label>短信验证码</label>--%>
-				<%--<input type="text" name="">--%>
-			<%--</div>--%>
-			<%--<div class="password-btn-wrap new-password">--%>
-				<%--<label></label>--%>
-				<%--<div class="password-btn">--%>
-					<%--<input value="获取短信验证码" disabled="disabled" type="text">--%>
-					<%--<button class="password-btn-submit" value="">提交</button>--%>
-				<%--</div>--%>
-			<%--</div>--%>
-			<%--<div class="download-close"></div>--%>
-		<%--</form>--%>
 
-	<%--</div>--%>
 </body>
 <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -131,9 +104,18 @@
 //		$('.download-input-wrap').hide();
 //	});
 
-	var interestValues = eval('${sessionScope.account.interestJson}');
 
 	function setInterestStatus() {
+        var interestStr = '${sessionScope.account.interestJson}';
+//        var interestStr = '["珠宝","奢包","腰带"]';
+        var interestValues;
+
+        if(interestStr == ''){
+	        console.log('values is empty,,,');
+	        return;
+		}else {
+            interestValues = JSON.parse(interestStr);
+        }
         var checkBoxAll = $("input[name='interest']");
         for(var i=0;i<interestValues.length;i++){
             //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
@@ -159,7 +141,7 @@ function interestCheck() {  //jquery获取复选框值
 
 	$(function () {
 
-        //setInterestStatus();//回显用户兴趣
+        setInterestStatus();//回显用户兴趣
 
 
 		$("#fullNameBtn").click(function(){
@@ -210,8 +192,10 @@ function interestCheck() {  //jquery获取复选框值
         });
 
 		$("#hobbyBtn").click(function(){
-			var interestValue = interestCheck();
-			if(interestValue.length < 1){
+			var interestObject = interestCheck();
+			var interestValue = JSON.stringify(interestObject);
+            console.log(interestValue);
+            if(interestObject.length < 1){
                 alert("兴趣不能为空");
                 return;
 			}
@@ -221,6 +205,7 @@ function interestCheck() {  //jquery获取复选框值
                 type:'json',
                 data:{
                     phone:$("#phone").val(),
+//                    phone:'15358000878',
                     openid:$("#openid").val(),
                     interest:interestValue,
                 },

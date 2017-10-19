@@ -23,7 +23,6 @@ img{
 	height: 100%;
 	 background: url(../images/register_bg.jpg) no-repeat;
 	 background-size: cover;
-
 }
 .wechate_pic{
 	position: absolute;
@@ -56,6 +55,7 @@ img{
     line-height: 55px;
     font-size: 16px;
     color: #424242;
+    border-radius: 5px;
 }
 .rigister-submit-pic{
 	position: absolute;
@@ -75,16 +75,24 @@ img{
 }
 .login-wrap{
 	text-align: center;
-	margin-top: 90px;
+	padding-top: 80px;
 }
-/*.login-btn>a{*/
-	/*display: block;*/
-    /*width: 190px;*/
-    /*height: 40px;*/
-    /*margin: 0 auto 15px;*/
+.login-btn>a{
+	display: block;
+    width: 200px;
+    height: 40px;
+    margin: 0 auto 15px;
+    border-radius: 30px;
+    line-height: 40px;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    padding-left: 30px;
+    -webkit-box-sizing:border-box;
+    box-sizing: border-box;
     /*background-image: url(../images/sprite_login.png);*/
     /*background-repeat: no-repeat;*/
-/*}*/
+}
 .rigister-code{
 	width: 108px;
     height: 55px;
@@ -110,17 +118,11 @@ img{
     border: 0;
     padding: 0;
 }
-/*.login-wechat{*/
-    /*background-position: 0 -230px;*/
-/*}*/
-/*.login-qq{*/
-   /*background-position: 0 -280px;*/
-/*}*/
 .login-wechat{
     background-color: #07b02a;
 }
 .login-btn a> img{
-    display: block;
+     display: block;
     width: 30px;
     float: left;
     position: absolute;
@@ -132,17 +134,17 @@ img{
 }
 .login-tip{
 	    color: #888;
-    margin: 8px 0 50px;
+    margin: 8px 0 45px;
     font-size: 12px;
 }
 .rigister-submit-btn{
 	width: 300px;
     height: 55px;
-    background: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.8);
     color: #000;
     border-radius: 4px;
     border: none;
-    margin-top: 340px;
+    margin-top: 320px;
     font-size: 18px;
     color: #424242;
 }
@@ -318,7 +320,7 @@ img{
 .information-name{
 	font-size: 24px;
 }
-.information-phone{
+.information-time{
 	font-size: 14px;
 }
 .information-content-wrap{
@@ -334,10 +336,9 @@ img{
 .information-content-hidden{
 	    width:82%;
     border: none;
-    /*font-size: 35px;*/
-    /*position: relative;*/
+    font-size: 35px;
+    position: relative;
     top: 5px;
-    bottom:5px;
     height: 25px;
 }
 .information-password-again{
@@ -593,6 +594,7 @@ height: 28px;
 .personal-center-top{
     height: 45px;
     line-height: 45px;
+    text-align: center;
 }
 .personal-center-logo{
     float: left;
@@ -600,6 +602,7 @@ height: 28px;
     vertical-align: middle;
     margin: 8px 80px 0 13px;
     width: 100px;
+    position: absolute;
 }
 .personal-center-top:after,.personal-center-content-item:after,.personal-center-menu:after{
     content: '';
@@ -714,10 +717,6 @@ input[type='radio']{
 }
 .contact-personal-input-big{
     width: 98%;
-}
-
-.first-catagory{
-    vertical-align:middle;
 }
 
 

@@ -17,7 +17,7 @@
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into t_account(phone,wx_openid,wx_nickname,account_no,full_name,
-        express_address,hobby_json,create_at) VALUES (#{phone},#{wxOpenid},#{wxNickname},#{accountNo},#{fullName},
+        express_address,interest_json,create_at) VALUES (#{phone},#{wxOpenid},#{wxNickname},#{accountNo},#{fullName},
         #{expressAddress},#{interestJson},now());
 
     </insert>
@@ -25,7 +25,7 @@
 
     <update id="update">
         update t_account set account_no = #{accountNo},full_name=#{fullName},
-                express_address = #{expressAddress},express_address=#{expressAddress},hobby_json=#{interestJson},
+                express_address = #{expressAddress},express_address=#{expressAddress},interest_json=#{interestJson},
                 create_at = #{createAt}
 
          where id = #{id};
@@ -44,6 +44,17 @@
     </update>
     <update id="updateEmail">
         update t_account set email = #{email} where
+        <choose>
+            <when test="phone != null and phone != ''">
+                phone = #{phone}
+            </when>
+            <otherwise>
+                wx_openid = #{openid}
+            </otherwise>
+        </choose>
+    </update>
+    <update id="updateInterest">
+        update t_account set interest_json = #{interestJson} where
         <choose>
             <when test="phone != null and phone != ''">
                 phone = #{phone}

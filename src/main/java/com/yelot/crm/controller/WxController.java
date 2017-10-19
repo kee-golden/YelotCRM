@@ -191,11 +191,6 @@ public class WxController {
 
         return "redirect:/wx/my-card";
 
-//
-//        String url = jumpMenu(menu);
-//        if (url != null) return url;
-
-//        return "redirect:/wx/my-card";
     }
 
     /**
@@ -222,20 +217,7 @@ public class WxController {
     public String toPhoneRegister(Model model,String code,String openid,String menu,String accessToken){
         System.out.println("to-phone-register code:"+code);
         model.addAttribute("accessToken", accessToken);
-                model.addAttribute("openid", openid);
-
-//        try {
-//            WxOAuth2AccessTokenResult result = iService.oauth2ToGetAccessToken(code);
-//            if(result != null) {
-//                System.out.println("kee token:" + result.getAccess_token());
-//                System.out.println("kee openid:" + result.getOpenid());
-//                model.addAttribute("accessToken", result.getAccess_token());
-//                model.addAttribute("openid", result.getOpenid());
-//
-//            }
-//        } catch (WxErrorException e) {
-//            e.printStackTrace();
-//        }
+        model.addAttribute("openid", openid);
 
         return "weixin/member/account_register";
     }
@@ -308,9 +290,9 @@ public class WxController {
 
     @ResponseBody
     @RequestMapping("update-interest")
-    public ResultData updateInterest(String openid,String phone,String[] interest){
-        String jsonInterest = JSON.toJSONString(interest);
-        accountMapper.updateInterest(openid,phone,jsonInterest);
+    public ResultData updateInterest(String openid,String phone,String interest){//interest 就是json数组，前台已经处理
+//        String interestJson = JSON.toJSONString(interest);
+        accountMapper.updateInterest(openid,phone,interest);
         return ResultData.ok();
 
     }
@@ -383,6 +365,11 @@ public class WxController {
         return config;
     }
 
+    @RequestMapping("to-login")
+    public String toLogin(String from,Model model){
+        return "weixin/member/login";
+    }
+
     /**
      * 更新资料
      * @return
@@ -398,6 +385,12 @@ public class WxController {
      */
     @RequestMapping("my-points")
     public String myPoints(){
+        //逻辑处理，积分必须要绑定手机号
+        Account account = (Account) UserUtil.getSession(Constants.SessionAccount);
+        if(account.getPhone() == null){
+            return "redirect:to-login?from="+"my-points";
+        }
+
         return "weixin/member/score";
     }
 

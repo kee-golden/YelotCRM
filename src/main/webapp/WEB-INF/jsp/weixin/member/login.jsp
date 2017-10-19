@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<title>登录</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="stylesheet" href="${ctx}/css/weixin-index.css">
+	<link rel="stylesheet" href="${ctx}/css/index-login.css">
 </head>
 <body>
 	<div class="login-wrap">
@@ -17,9 +17,17 @@
 		<input type="hidden" id="accessToken" value="${accessToken}">
 		<p class="login-go">1秒登录会员系统</p>
 		<p class="login-tip">微信和手机是两个独立账号，账号信息共通</p>
+		<%--<div class="login-btn">--%>
+			<%--<a href="javascript:void(0)" class="login-wechat"></a>--%>
+			<%--<a href="javascript:void(0)" class="login-qq"></a>--%>
+		<%--</div>--%>
 		<div class="login-btn">
-			<a href="javascript:void(0)" class="login-wechat"></a>
-			<a href="javascript:void(0)" class="login-qq"></a>
+			<a href="javascript:void(0)" class="login-wechat">
+				<img src="/images/wechat2.png" alt="">微信登录
+			</a>
+			<a href="javascript:void(0)" class="login-qq" >
+				<img src="/images/mobile.png" alt="" style="width: 35px;">手机登录
+			</a>
 		</div>
 	</div>
 </body>
