@@ -101,4 +101,12 @@ public interface StatisticOrderMapper {
     List<StatisticOrder> findShopRatioStatisticOrder(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("shopId") Long shopId,
                                                      @Param("type") String type, @Param("categoryId") Long categoryId, @Param("categoryName")String categoryName,
                                                      @Param("pageHelper") PageHelper pageHelper);
+    
+    List<StatisticOrder> findDataAnalysisStatisticOrder(
+            @Param("startDate") String startDate, 
+            @Param("endDate") String endDate,
+            @Param("shopId") Long shopId, 
+            @Param("type")String type, 
+            @Param("categoryId")Long categoryId,
+            @Param("deliverType")String deliverType);
 }

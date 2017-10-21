@@ -176,4 +176,20 @@
         ) tempRepair on time = time2
     </select>
 
+    <select id="findDataAnalysisStatisticOrder" resultMap="orderResultMap">
+        select
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') time,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') time,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') time,</if>
+        sum(total_payment) totalPayment,count(*) totalCount 
+        from t_repair_order ro 
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="shopId != null and shopId != ''"> and shop_id = #{shopId}</if>
+        <if test="categoryId != null and categoryId != ''">and ro.first_category_id = #{categoryId}</if>
+        group by time
+        order by time
+    </select>
+
 </mapper>

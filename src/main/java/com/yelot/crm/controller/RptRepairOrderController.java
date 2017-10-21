@@ -126,9 +126,9 @@ public class RptRepairOrderController {
         pageHelper.setOffset(start);
         pageHelper.setSize(length);
         
-        int pageCount = rptRepairOrderService.countTotalPage(dateArea.split("-")[0], dateArea.split("-")[1], shopId, firstCategory, secondCategory, onLineUser,shopUser, deliverType, customerType, channelSource, status);
+        int pageCount = rptRepairOrderService.countTotalPage(dateArea.split("-")[0] + " 00:00:00", dateArea.split("-")[1] + " 23:59:59", shopId, firstCategory, secondCategory, onLineUser,shopUser, deliverType, customerType, channelSource, status);
         
-        List<RptRepairOrder> rptRepairOrderList = rptRepairOrderService.findByPage(dateArea.split("-")[0], dateArea.split("-")[1], shopId, firstCategory, secondCategory, onLineUser,shopUser, deliverType, customerType, channelSource, status, pageHelper);
+        List<RptRepairOrder> rptRepairOrderList = rptRepairOrderService.findByPage(dateArea.split("-")[0] + " 00:00:00", dateArea.split("-")[1] + " 23:59:59", shopId, firstCategory, secondCategory, onLineUser,shopUser, deliverType, customerType, channelSource, status, pageHelper);
         return new Table(pageCount, pageCount, rptRepairOrderList);
     }
 
@@ -157,7 +157,7 @@ public class RptRepairOrderController {
         pageHelper.setOffset(0);
         pageHelper.setSize(ExlRptExportUtil.REPORT_PAGE_SIZE);
         
-        List<RptRepairOrder> rptRepairOrderList = rptRepairOrderService.findByPage(dateArea.split("-")[0], dateArea.split("-")[1], shopId, firstCategory, secondCategory, onLineUser, shopUser, deliverType, customerType, channelSource, status, pageHelper);
+        List<RptRepairOrder> rptRepairOrderList = rptRepairOrderService.findByPage(dateArea.split("-")[0] + " 00:00:00", dateArea.split("-")[1] + " 23:59:59", shopId, firstCategory, secondCategory, onLineUser, shopUser, deliverType, customerType, channelSource, status, pageHelper);
         
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		
