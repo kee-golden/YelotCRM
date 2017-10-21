@@ -122,6 +122,68 @@ public class DataAnalysisStatisticsController {
     	
         return ResultData.ok().putDataValue("xAxis", xAxis).putDataValue("series",barMonthDataList);
     }
+
+    @ResponseBody
+    @RequestMapping("queryList")
+    public Table queryList(String dateArea, String dateArea2, Long shopId, String type, Long categoryId, String deliverType, String compareType) throws ParseException{
+    	
+    	List<StatisticOrder> tmpDateAreaStatisticOrderList = new ArrayList<StatisticOrder>();
+    	List<StatisticOrder> tmpDateArea2StatisticOrderList = new ArrayList<StatisticOrder>();
+    	List<StatisticOrder> dateAreaStatisticOrderList = new ArrayList<StatisticOrder>();
+    	List<StatisticOrder> dateArea2StatisticOrderList = new ArrayList<StatisticOrder>();
+    	List<DataAnalysisStatistics> dataAnalysisStatisticsList = new ArrayList<DataAnalysisStatistics>();
+
+    	List<String> dateAreaXAxis = new ArrayList<String>();
+    	List<String> dateAreaXAxis2 = new ArrayList<String>();
+    	
+    	if ("Day".equals(type)) {
+    		dateAreaXAxis = getDayBetweenStartAndEnd(dateArea.split("-")[0], dateArea.split("-")[1]);
+    		dateAreaXAxis2 = getDayBetweenStartAndEnd(dateArea2.split("-")[0], dateArea2.split("-")[1]);
+		} else if ("Week".equals(type)) {
+			dateAreaXAxis = getWeekBetweenStartAndEnd(dateArea.split("-")[0], dateArea.split("-")[1]);
+    		dateAreaXAxis2 = getWeekBetweenStartAndEnd(dateArea2.split("-")[0], dateArea2.split("-")[1]);
+		} else {
+			dateAreaXAxis = getMonthBetweenStartAndEnd(dateArea.split("-")[0], dateArea.split("-")[1]);
+    		dateAreaXAxis2 = getMonthBetweenStartAndEnd(dateArea2.split("-")[0], dateArea2.split("-")[1]);
+		}
+    	
+    	tmpDateAreaStatisticOrderList = statisticOrderMapper.findDataAnalysisStatisticOrder(dateArea.split("-")[0] + " 00:00:00",dateArea.split("-")[1] + " 23:59:59",shopId,type,categoryId,deliverType);
+    	dateAreaStatisticOrderList = setAllStatisticOrderList(dateAreaXAxis, tmpDateAreaStatisticOrderList);
+    	List<Integer> dateAreaSumList = getTotalDataList(dateAreaStatisticOrderList, compareType);
+    	
+		tmpDateArea2StatisticOrderList = statisticOrderMapper.findDataAnalysisStatisticOrder(dateArea2.split("-")[0] + " 00:00:00",dateArea2.split("-")[1] + " 23:59:59",shopId,type,categoryId,deliverType);
+		dateArea2StatisticOrderList = setAllStatisticOrderList(dateAreaXAxis2, tmpDateArea2StatisticOrderList);
+    	List<Integer> dateArea2SumList = getTotalDataList(dateArea2StatisticOrderList, compareType);
+    	
+    	for (int i = 0; i < dateAreaXAxis.size(); i++) {
+    		DataAnalysisStatistics dataAnalysisStatistics = new DataAnalysisStatistics();
+    		dataAnalysisStatistics.setTimeInterval(dateAreaXAxis.get(i) + " / " + dateAreaXAxis2.get(i));
+    		dataAnalysisStatistics.setFirstValue(dateAreaSumList.get(i));
+    		dataAnalysisStatistics.setSecondValue(dateArea2SumList.get(i));
+    		dataAnalysisStatistics.setVariation(dateAreaSumList.get(i) - dateArea2SumList.get(i));
+    		dataAnalysisStatistics.setChangeRate(getChangeRate(dateAreaSumList.get(i), dateArea2SumList.get(i)));
+    		dataAnalysisStatisticsList.add(dataAnalysisStatistics);
+		}
+    	
+    	int firstValueTotal = 0;
+    	for (Integer tmp : dateAreaSumList) {
+    		firstValueTotal += tmp.intValue();
+		}
+    	
+    	int secondValueTotal = 0;
+    	for (Integer tmp : dateArea2SumList) {
+    		secondValueTotal += tmp.intValue();
+		}
+		DataAnalysisStatistics dataAnalysisStatistics = new DataAnalysisStatistics();
+		dataAnalysisStatistics.setTimeInterval(dateAreaXAxis.get(0) + "至" + dateAreaXAxis.get(dateAreaXAxis.size()-1) + " / " + dateAreaXAxis2.get(0) + "至" + dateAreaXAxis2.get(dateAreaXAxis2.size()-1));
+    	dataAnalysisStatistics.setFirstValue(firstValueTotal);
+    	dataAnalysisStatistics.setSecondValue(secondValueTotal);
+    	dataAnalysisStatistics.setVariation(firstValueTotal - secondValueTotal);
+    	dataAnalysisStatistics.setChangeRate(getChangeRate(firstValueTotal, secondValueTotal));
+    	dataAnalysisStatisticsList.add(dataAnalysisStatistics);
+    	
+        return new Table(dateAreaXAxis.size() + 1, dateAreaXAxis.size() + 1, dataAnalysisStatisticsList);
+    }
     
     private List<StatisticOrder> setAllStatisticOrderList(List<String> xAxis, List<StatisticOrder> statisticOrderList){
     	List<StatisticOrder> tmpStatisticOrderList = new ArrayList<StatisticOrder>();
@@ -213,261 +275,22 @@ public class DataAnalysisStatisticsController {
 		}
     	return result;
     }
-    /*@RequestMapping("shop")
-    public String shopMoney(){
-
-        return "money_statistics/shop_money_statistics";
+    
+    private String getChangeRate(double a, double b){
+		if ((a - b) == 0) {
+			return "无变化";
+		} else if((a - b) > 0){
+			if(b == 0){
+				return "↑无穷大";
+			} else {
+				return "↑" + Math.round((a - b)/b*(double)10000)/(double)100 + "%";
+			}
+		} else {
+			if(a == 0){
+				return "↓无穷大";
+			} else {
+				return "↓" + Math.round((a - b)/b*(double)10000)/(double)100 + "%";
+			}
+		}
     }
-
-    @RequestMapping("super")
-    public String superStatistic(Model model){
-        return "money_statistics/super_kpi_statistics";
-    }
-
-    @RequestMapping("person-statistic")
-    public String personStatistic(Model model){
-
-        List<Shop> shopList = shopMapper.findAll();
-        model.addAttribute("shopList",shopList);
-        List<Category> categoryList = categoryMapper.findAllFirstClass();
-        model.addAttribute("categoryList",categoryList);
-
-        return "money_statistics/person_statistics";
-
-    }
-
-    *//**
-     * 个人统计
-     * @param model
-     * @param startDate
-     * @param endDate
-     * @return
-     *//*
-    @ResponseBody
-    @RequestMapping("person-query")
-    public Table personQuery(Model model,String startDate,String endDate,Long shopId,Long categoryId,
-                             @RequestParam(value = "start", defaultValue = "0") int start,
-                             @RequestParam(value = "length", defaultValue = "10") int length){
-
-        PageHelper pageHelper = new PageHelper();
-        pageHelper.setOffset(start);
-        pageHelper.setSize(length);
-
-        int pageCount = statisticOrderMapper.countTotalPageByPerson(startDate,endDate,shopId);
-
-        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findPersonStatisticOrder(startDate,endDate,shopId,categoryId,pageHelper);
-
-        return new Table(pageCount, pageCount, statisticOrderList);
-    }
-
-    *//**
-     * 门店统计
-     * @param model
-     * @return
-     *//*
-    @RequestMapping("shop-statistic")
-    public String shopStatistic(Model model){
-
-        List<Shop> shopList = shopMapper.findAll();
-        model.addAttribute("shopList",shopList);
-        List<Category> categoryList = categoryMapper.findAllFirstClass();
-        model.addAttribute("categoryList",categoryList);
-        return "money_statistics/shop_statistics";
-    }
-
-    @ResponseBody
-    @RequestMapping("shop-query")
-    public Table shopQuery(Model model,
-                           @RequestParam(value = "startDate", defaultValue = "")String startDate,
-                           @RequestParam(value = "endDate", defaultValue = "")String endDate,
-                           Long shopId,Long categoryId,String type,
-                             @RequestParam(value = "start", defaultValue = "0") int start,
-                             @RequestParam(value = "length", defaultValue = "10") int length){
-
-        PageHelper pageHelper = new PageHelper();
-        pageHelper.setOffset(start);
-        pageHelper.setSize(length);
-
-        int pageCount = statisticOrderMapper.countTotalPageByShop(startDate,endDate,shopId,categoryId,type);
-
-        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findShopStatisticOrder(startDate,endDate,shopId,categoryId,type,pageHelper);
-
-        return new Table(pageCount, pageCount, statisticOrderList);
-    }
-
-
-
-
-
-    @RequestMapping("total")
-    public String totalMoney(){
-
-        return "money_statistics/total_money_statistics";
-    }
-
-    @ResponseBody
-    @RequestMapping("my-month-data")
-    public ResultData myMoneyMonthData(){
-        List<Integer> sumList = getMonthIntegers(UserUtil.getCurrentUser().getId(),null,null);
-        return ResultData.ok().putDataValue("sum",sumList);
-    }
-
-    @ResponseBody
-    @RequestMapping("my-month-category-data")
-    public ResultData myMoneyCategoryMonthData(){
-        List<Category> categoryList = categoryMapper.findAllFirstClass();
-        
-        List<String> categoryNameList = new ArrayList<String>();
-        List<BarMonthData> barMonthDataList = new ArrayList<>();
-        
-        for (Category category: categoryList) {
-        	categoryNameList.add(category.getName());
-        	
-            BarMonthData barMonthData = new BarMonthData();
-            barMonthData.setName(category.getName());
-            List<Integer> sumList = getMonthIntegers(UserUtil.getCurrentUser().getId(),category.getId(),null);
-            barMonthData.setData(sumList);
-            barMonthDataList.add(barMonthData);
-        }
-
-        return ResultData.ok().putDataValue("legend", categoryNameList).putDataValue("series",barMonthDataList);
-
-    }
-
-    @ResponseBody
-    @RequestMapping("shop-month-data")
-    public ResultData shopMoneyMonthData(){
-        List<Integer> sumList = getMonthIntegers(null,null,UserUtil.getCurrentUser().getShop_id());
-        return ResultData.ok().putDataValue("sum",sumList);
-    }
-
-    @ResponseBody
-    @RequestMapping("shop-month-category-data")
-    public ResultData shopMoneyCategoryMonthData(){
-        List<Category> categoryList = categoryMapper.findAllFirstClass();
-        
-        List<String> categoryNameList = new ArrayList<String>();
-        List<BarMonthData> barMonthDataList = new ArrayList<>();
-        
-        for (Category category: categoryList) {
-        	categoryNameList.add(category.getName());
-        	
-            BarMonthData barMonthData = new BarMonthData();
-            barMonthData.setName(category.getName());
-            List<Integer> sumList = getMonthIntegers(null,category.getId(),UserUtil.getCurrentUser().getShop_id());
-            barMonthData.setData(sumList);
-            barMonthDataList.add(barMonthData);
-        }
-
-        return ResultData.ok().putDataValue("legend", categoryNameList).putDataValue("series",barMonthDataList);
-
-    }
-
-    @ResponseBody
-    @RequestMapping("total-month-data")
-    public ResultData totalMoneyMonthData(){
-        List<Integer> sumList = getMonthIntegers(null,null,null);
-        return ResultData.ok().putDataValue("sum",sumList);
-    }
-
-    @ResponseBody
-    @RequestMapping("total-month-category-data")
-    public ResultData totalMoneyCategoryMonthData(){
-        List<Category> categoryList = categoryMapper.findAllFirstClass();
-        
-        List<String> categoryNameList = new ArrayList<String>();
-        List<BarMonthData> barMonthDataList = new ArrayList<>();
-        
-        for (Category category: categoryList) {
-        	categoryNameList.add(category.getName());
-        	
-            BarMonthData barMonthData = new BarMonthData();
-            barMonthData.setName(category.getName());
-            List<Integer> sumList = getMonthIntegers(null,category.getId(),null);
-            barMonthData.setData(sumList);
-            barMonthDataList.add(barMonthData);
-        }
-
-        return ResultData.ok().putDataValue("legend", categoryNameList).putDataValue("series",barMonthDataList);
-
-    }
-
-    private List<Integer> getMonthIntegers(Long userId,Long categoryId,Long shopId) {
-        List<MonthData> monthDataList = repairOrderMapper.findByMonth(userId, categoryId, shopId);
-        List<Integer> sumList = new ArrayList<Integer>(12);
-
-        for (int i = 0; i < 12; i++) {
-            sumList.add(0);//初始化
-            for (MonthData monthData:monthDataList) {
-                if(i == monthData.getMonth()){
-                    sumList.set(i,monthData.getNumber());
-                    break;
-                }
-
-            }
-        }
-        return sumList;
-    }
-
-
-    //exportExcel-person""
-    @RequestMapping("exportExcel-person")
-    public void exportExcelByPerson(
-            HttpServletResponse response,
-            @RequestParam(value = "startDate", defaultValue = "") String startDate,
-            @RequestParam(value = "endDate", defaultValue = "") String endDate,
-            @RequestParam(value = "shopId", defaultValue = "") Long shopId,
-            @RequestParam(value = "categoryId", defaultValue = "") Long categoryId
-           ) throws IOException {
-
-        int pageCount = statisticOrderMapper.countTotalPageByPerson(startDate,endDate,shopId);
-
-        PageHelper pageHelper = new PageHelper();
-        pageHelper.setOffset(0);
-        pageHelper.setSize(pageCount);
-
-        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findPersonStatisticOrder(startDate,endDate,shopId,categoryId,pageHelper);
-
-        ExportExcel ex = new ExportExcel();
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        List<String> strList = GlobalUtil.getPersonList(statisticOrderList);
-        int rows = strList.size() / 6;
-        String []headers = {"用户名","姓名","手机号","门店","总金额","总订单量"};
-        String fileName = "业绩订单统计报表"+startDate+"_"+endDate;
-        ex.exportExcel("title",headers,strList,os,rows);
-        ex.writeExcel(response, os,fileName);
-
-    }
-
-    @RequestMapping("exportExcel-shop")
-    public void exportExcelByShop(
-            HttpServletResponse response,
-            @RequestParam(value = "startDate", defaultValue = "") String startDate,
-            @RequestParam(value = "endDate", defaultValue = "") String endDate,
-            @RequestParam(value = "shopId", defaultValue = "") Long shopId,
-            @RequestParam(value = "categoryId", defaultValue = "") Long categoryId,
-            String type
-    ) throws IOException {
-
-        int pageCount = statisticOrderMapper.countTotalPageByPerson(startDate,endDate,shopId);
-
-        PageHelper pageHelper = new PageHelper();
-        pageHelper.setOffset(0);
-        pageHelper.setSize(pageCount);
-
-
-        List<StatisticOrder> statisticOrderList = statisticOrderMapper.findShopStatisticOrder(startDate,endDate,shopId,categoryId,type,pageHelper);
-
-        ExportExcel ex = new ExportExcel();
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        List<String> strList = GlobalUtil.getTimeList(statisticOrderList);
-        int rows = strList.size() / 3;
-        String []headers = {"时间","总金额","总订单量"};
-        String fileName = "业绩门店订单统计报表"+startDate+"_"+endDate;
-        ex.exportExcel("title",headers,strList,os,rows);
-        ex.writeExcel(response, os,fileName);
-
-    }*/
-
-
 }

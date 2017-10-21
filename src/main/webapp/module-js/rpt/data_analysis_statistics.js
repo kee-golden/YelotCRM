@@ -1,4 +1,4 @@
-require(['jquery','yaya','echarts','bootstrap','daterangepicker'], function ($, yaya,echarts,DrawEChart,daterangepicker) {
+require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.net'], function ($, yaya,echarts,DrawEChart,daterangepicker) {
 	
     var locale = {
 		"format": 'YYYY/MM/DD',
@@ -126,7 +126,14 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker'], function ($, 
         	}
     		
     	}
-    	
+
+    	var isChecked = $("#compare").prop("checked");
+    	if(isChecked){
+    		$("#J_statisticsList").css("display", "");
+    		setStatisticsList();
+    	 } else {
+     		$("#J_statisticsList_wrapper").css("display", "none");
+    	 }
     });
 
    /*表格插件*/
@@ -135,7 +142,6 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker'], function ($, 
     //创建ECharts图表方法
     $(function(){
         getChartData();//获取随机数据
-//        getChartData2();//获取随机数据
     });
 
     function getChartData() {
@@ -213,58 +219,56 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker'], function ($, 
             }
 
         });
-    }
-
-    /*function getChartData2() {
-        //获得图表的options对象
-        var myChart2 = echarts.init(document.getElementById('box02'));
-
-        var option2 = {
-            title : {
-                text: '个人业绩分类统计',
-                subtext: '业绩统计'
-            },
-            tooltip : {
-                trigger: 'axis'
-            },
-            legend: {
-                data:[]
-            },
-            toolbox: {
-                show : true,
-                feature : {
-                    mark : {show: true},
-                    dataView : {show: true, readOnly: false},
-                    magicType : {show: true, type: ['line', 'bar']},
-                    restore : {show: true},
-                    saveAsImage : {show: true}
+    };
+    
+    function setStatisticsList(){
+        var $JStatisticsList = $('#J_statisticsList');
+        
+    	// 初始化
+        var table = $JStatisticsList.DataTable({
+            'scrollX': true,
+            'processing': true,
+            'searching': false,
+            'lengthChange': false,
+            'sort': false,
+            'serverSide': true,
+            'serverSide': true,
+            "destroy": true,
+            'lengthMenu': [10, 20, 50, 100],
+            'ajax':{
+                'url':ctx + '/data-analysis-statistics/queryList',
+    			'method': 'get',
+                'data': function (d) {
+                	d.dateArea = $("#dateArea").val();
+                	d.dateArea2 = $("#dateArea2").val();
+                	d.shopId = $("#shopId").val();
+                	d.type = $("#type").val();
+                	d.categoryId = $("#categoryId").val();
+                	d.deliverType = $("#deliverType").val();
+                	d.compareType = $("#compareType").val();
                 }
             },
-            calculable : true,
-            xAxis : [
-                {
-                    type : 'category',
-                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+        	'columns': [
+        			{'data' : 'timeInterval'},
+        			{'data' : 'firstValue'},
+        			{'data' : 'secondValue'},
+        			{'data' : 'variation'},
+        			{'data' : 'changeRate'}
+        			],
+            'language': {
+                'lengthMenu': '每页显示 _MENU_ 条记录',
+                'zeroRecords': '没有检索到数据',
+                'info': '第 _START_ 至 _END_ 条数据 共 _TOTAL_ 条记录',
+                'infoEmpty': '没有数据',
+                'processing': '正在加载数据...',
+                'paginate': {
+                    'first': '首页',
+                    'previous': '前页',
+                    'next': '后页',
+                    'last': '尾页'
                 }
-            ],
-            yAxis : [
-                {
-                    type : 'value'
-                }
-            ],
-            series : []
-        };
-
-
-        $.ajax({
-            url:ctx+"/money-statistics/my-month-category-data",
-            success:function (data) {
-            	option2.legend.data = data.data.legend;
-                option2.series= data.data.series;
-                myChart2.hideLoading();
-                myChart2.setOption(option2);
             }
-
         });
-    }*/
+    };
+
 });
