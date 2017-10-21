@@ -115,7 +115,7 @@ public class RepairOrderService {
 		if ("my".equals(type)) {
 			create_user_id = userId;
 		}
-		if("warn".equals(type)){
+		if("warn".equals(type) || "centerWarn".equals(type)){
 			three_days_after = getThreeDaysAfter();
 		}
 		return repairOrderMapper.countTotalPage(extra_search, create_user_id, three_days_after, type);
@@ -134,7 +134,7 @@ public class RepairOrderService {
 		if ("my".equals(type)) {
 			create_user_id = userId;
 		}
-		if("warn".equals(type)){
+		if("warn".equals(type) || "centerWarn".equals(type)){
 			three_days_after = getThreeDaysAfter();
 		}
 		
