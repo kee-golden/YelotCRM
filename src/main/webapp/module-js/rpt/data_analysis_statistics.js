@@ -234,6 +234,7 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
             'serverSide': true,
             'serverSide': true,
             "destroy": true,
+            "paging": false,
             'lengthMenu': [10, 20, 50, 100],
             'ajax':{
                 'url':ctx + '/data-analysis-statistics/queryList',
