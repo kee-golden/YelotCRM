@@ -143,7 +143,6 @@
 							<select class="city" disabled="disabled" name="secondCategory" id="secondCategory"></select>
 							<label class="left20">品牌：</label> <span>
 								<select id="brandId" name="brandId">
-
 									<c:forEach items="${brandList}" var="item">
 										<option value="${item.id}">${item.name}</option>
 									</c:forEach>
@@ -212,7 +211,7 @@
 							<select name="typeName" id="typeName" >
 								<option value="维修单">维修单</option>
 								<option value="内部单">内部单</option>
-								<option value="返修单">返修单</option>
+								<%--<option value="返修单">返修单</option> 不是创建的时候产生--%>
 								<option value="评估单">评估单</option>
 							</select>
 						</div>
@@ -268,7 +267,7 @@
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
 
-<script src="${ctx}/module-js/order/repair_order_add.js"></script>
+<script src="${ctx}/module-js/order/repair_order_add.js?random=Math.random()"></script>
 <script src="${ctx}/module-js/order/webuploader_app.js"></script>
 
 <script>

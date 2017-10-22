@@ -171,42 +171,53 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         var pickupDate = $('#pickupDate').val();
         var discountDesc = $('#discountDesc').val();
         console.log(labourPayment+","+labourPayment+","+materialPayment);
-        $.ajax({
-            url: ctx + '/repair-order/save',
-            method: 'post',
-            dataType: 'json',
-            data: {
-                customerId: customerId,
-                consultOrderId: consultOrderId,
-                firstCategory: firstCategory,
-                secondCategory: secondCategory,
-                brandId:brandId,
-                valuesAttributeJson:JSON.stringify(valuesAttributeJson),
-                serviceItemJson:JSON.stringify(serviceItemJson),
-                refOrderIdsJson:JSON.stringify(refOrderIdsJson),
-                imagePaths:imagePaths,
-                imageDesc:imageDesc,
-                repairDesc:repairDesc,
-                typeName:typeName,
-                advancePayment:advancePayment,
-                labourPayment:labourPayment,
-                materialPayment:materialPayment,
-                discountAmountPayment:discountAmountPayment,
-                pickupDate:pickupDate,
-                discountDesc:discountDesc
-            },
-            success: function (data) {
-                if(data.code == 1200){
-                    yaya.layer.msg("提交成功");
-                    setTimeout(function () {
-                        window.location.href = ctx+'/repair-order/mylist';
-                    },1000);
 
-                }
-
-            }
-
-        });
+        console.log(serviceItemJson+","+imagePaths);
+        //验证必填字段
+        if(serviceItemJson==undefined || serviceItemJson == "" || serviceItemJson == null){
+            yaya.layer.msg("服务项为必填项，请选择服务项！");
+            return;
+        }
+        if(imagePaths == ""){
+            yaya.layer.msg("图片为必填项，请上传图片！");
+            return;
+        }
+        // $.ajax({
+        //     url: ctx + '/repair-order/save',
+        //     method: 'post',
+        //     dataType: 'json',
+        //     data: {
+        //         customerId: customerId,
+        //         consultOrderId: consultOrderId,
+        //         firstCategory: firstCategory,
+        //         secondCategory: secondCategory,
+        //         brandId:brandId,
+        //         valuesAttributeJson:JSON.stringify(valuesAttributeJson),
+        //         serviceItemJson:JSON.stringify(serviceItemJson),
+        //         refOrderIdsJson:JSON.stringify(refOrderIdsJson),
+        //         imagePaths:imagePaths,
+        //         imageDesc:imageDesc,
+        //         repairDesc:repairDesc,
+        //         typeName:typeName,
+        //         advancePayment:advancePayment,
+        //         labourPayment:labourPayment,
+        //         materialPayment:materialPayment,
+        //         discountAmountPayment:discountAmountPayment,
+        //         pickupDate:pickupDate,
+        //         discountDesc:discountDesc
+        //     },
+        //     success: function (data) {
+        //         if(data.code == 1200){
+        //             yaya.layer.msg("提交成功");
+        //             setTimeout(function () {
+        //                 window.location.href = ctx+'/repair-order/mylist';
+        //             },1000);
+        //
+        //         }
+        //
+        //     }
+        //
+        // });
 
     });
 
