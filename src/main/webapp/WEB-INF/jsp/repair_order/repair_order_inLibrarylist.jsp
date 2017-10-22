@@ -6,11 +6,12 @@
 <title>CRM管理后台</title>
 
 <%@include file="/WEB-INF/common/static.jsp"%>
-	<link href="${ctx}/module-css/repair-order.css" rel="stylesheet">
+
+	<link href="${ctx}/module-css/repair-order-edit.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
 
 <c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
-<c:set var="CHILD_MENU_CODE" value="RepairOrder_CenterAllList" />
+<c:set var="CHILD_MENU_CODE" value="RepairOrder_InLibraryList" />
 
 <script>
 	var ctx = '${ctx}';
@@ -174,6 +175,10 @@
 #J_orderList tr th {
 	white-space: nowrap
 }
+
+.select2-container {
+	z-index: 99999999999;
+}
 </style>
 
 </head>
@@ -189,7 +194,7 @@
 
 				<div class="ibox float-e-margins">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="active"><a>全部订单列表</a></li>
+						<li class="active"><a>待客户提货订单列表</a></li>
 					</ul>
 
 					<div id="content" class="ibox-content">
@@ -197,7 +202,7 @@
 							<form id="searchFrom" style="margin-top: -20px">
 								<div id="search_Big">
 									<ul class="pull-left" id="otherTab">
-										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号">
+										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号或手机号">
 											<div class="clearfix"></div></li>
 									</ul>
 									<div class="pull-right search_right">
@@ -217,13 +222,15 @@
 							<thead>
 								<tr>
 									<th>订单号</th>
+									<th>客户姓名</th>
+									<th>客户电话</th>
 									<th>产品分类</th>
 									<th>类型</th>
 									<th>门店</th>
 									<th>服务项</th>
 									<th>当前状态</th>
-									<th>创建者</th>
 									<th>创建时间</th>
+									<th>关联咨询单号</th>
 									<th>编辑</th>
 								</tr>
 							</thead>
@@ -242,7 +249,7 @@
 	</div>
 	<script src="${ctx}/static/require/require.js"></script>
 	<script src="${ctx}/static/require/require.config.js"></script>
-	<script src="${ctx}/module-js/order/repair_order_centerAll.js"></script>
+	<script src="${ctx}/module-js/order/repair_order_inLibrary.js"></script>
 
 </body>
 

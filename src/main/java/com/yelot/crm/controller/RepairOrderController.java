@@ -293,6 +293,11 @@ public class RepairOrderController {
         return "repair_order/repair_order_centerWarnlist";
     }
 
+    @RequestMapping("inLibrarylist")
+    public String inLibrarylist(){
+        return "repair_order/repair_order_inLibrarylist";
+    }
+
     /**
      * 订单分页查询
      * @return

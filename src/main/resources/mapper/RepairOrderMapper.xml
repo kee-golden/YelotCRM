@@ -109,6 +109,8 @@
         <if test="extra_search != null and extra_search != '' and (type == 'centerAll' or type == 'centerWarn')">
             and order_no like CONCAT('%', #{extra_search}, '%')
         </if>
+        <if test="status != null and status != ''">and status = #{status}</if>
+        <if test="shopId != null and shopId != ''">and shop_id = #{shopId}</if>
     </select>
     
     <select id="findByPage" resultMap="orderResultMap">
@@ -128,6 +130,8 @@
         <if test="extra_search != null and extra_search != '' and (type == 'centerAll' or type == 'centerWarn')">
             and t.order_no like CONCAT('%', #{extra_search}, '%')
         </if>
+        <if test="status != null and status != ''">and t.status = #{status}</if>
+        <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
         order by t.id desc 
         limit #{pageHelper.offset},#{pageHelper.size} 
     </select>
@@ -320,7 +324,9 @@
     </select>
 
     <update id="updateExpressByOrderNo">
-        update t_repair_order set express_id = #{expressId}, express_money = #{expressMoney} where order_no = #{orderNo}
+        update t_repair_order set express_id = #{expressId}, express_money = #{expressMoney} 
+        <if test="expressId != null and expressId != ''">, status = 36</if>
+        where order_no = #{orderNo}
     </update>
 
     <select id="findByPhoneAndStatus" resultMap="orderResultMap">
@@ -341,5 +347,9 @@
         </if>
         order by id DESC
 
+    </select>
+
+    <select id="findRoleByUserId" resultType="java.lang.Integer">
+        select role_id from t_user_role_ref where user_id = #{userId} order by role_id LIMIT 0, 1
     </select>
 </mapper>

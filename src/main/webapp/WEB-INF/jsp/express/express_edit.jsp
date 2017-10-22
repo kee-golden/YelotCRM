@@ -5,6 +5,7 @@
         <div class="row">
             <form role="form" id="J_expressForm" class="form-horizontal">
                 <input type="hidden" name="id" value="${bean.id}">
+                <input type="hidden" name="type" value="${type}">
 
                 <c:if test="${empty bean.id}">
                     <div class="col-md-12 b-r">
@@ -96,9 +97,14 @@
                             <div class="col-md-6">
                                 <label>方向</label>
                                 <select class="form-control" name="expressType">
-                                    <option value="1">从门店到维修中心</option>
-                                    <option value="2">从维修中心到门店</option>
-                                    <option value="3">从门店到客户</option>
+	                                <c:if test="${type eq 'shopToCustomer'}">
+	                                    <option value="3">从门店到客户</option>
+	                                </c:if>
+	                                <c:if test="${type ne 'shopToCustomer'}">
+	                                    <option value="1">从门店到维修中心</option>
+	                                    <option value="2">从维修中心到门店</option>
+	                                    <option value="3">从门店到客户</option>
+	                                </c:if>
                                 </select>
                             </div>
                         </div>

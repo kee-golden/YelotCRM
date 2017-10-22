@@ -2,6 +2,7 @@ package com.yelot.crm.service;
 
 import com.alibaba.fastjson.JSON;
 import com.soecode.wxtools.util.StringUtils;
+import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Category;
 import com.yelot.crm.entity.RepairOrder;
@@ -114,6 +115,8 @@ public class RepairOrderService {
 	public Integer countTotalPage(String extra_search, String type, Long userId) {
 		Long create_user_id = null;
 		String three_days_after = null;
+		String status = null;
+		Long shopId = UserUtil.getCurrentUser().getShop_id();
 		
 		if ("my".equals(type)) {
 			create_user_id = userId;
@@ -121,7 +124,14 @@ public class RepairOrderService {
 		if("warn".equals(type) || "centerWarn".equals(type)){
 			three_days_after = getThreeDaysAfter();
 		}
-		return repairOrderMapper.countTotalPage(extra_search, create_user_id, three_days_after, type);
+		if ("inLibrary".equals(type)) {
+			status = "32";
+		}
+		if(repairOrderMapper.findRoleByUserId(userId) == 1 || shopId == 6){
+			shopId = null;
+		}
+		
+		return repairOrderMapper.countTotalPage(extra_search, create_user_id, three_days_after, type, status, shopId);
 	}
 
 	/**
@@ -133,6 +143,8 @@ public class RepairOrderService {
 	public List<RepairOrder> findByPage(String extra_search, String type, Long userId, PageHelper pageHelper) {
 		Long create_user_id = null;
 		String three_days_after = null;
+		String status = null;
+		Long shopId = UserUtil.getCurrentUser().getShop_id();
 		
 		if ("my".equals(type)) {
 			create_user_id = userId;
@@ -140,8 +152,14 @@ public class RepairOrderService {
 		if("warn".equals(type) || "centerWarn".equals(type)){
 			three_days_after = getThreeDaysAfter();
 		}
+		if ("inLibrary".equals(type)) {
+			status = "32";
+		}
+		if(repairOrderMapper.findRoleByUserId(userId) == 1 || shopId == 6){
+			shopId = null;
+		}
 		
-		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(extra_search, create_user_id, three_days_after, type, pageHelper);
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(extra_search, create_user_id, three_days_after, type, status, shopId, pageHelper);
 		setRepairServiceItem(repairOrderList);
 		setRepairStatus(repairOrderList);
 		return repairOrderList;

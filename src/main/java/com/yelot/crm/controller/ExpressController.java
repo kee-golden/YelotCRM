@@ -71,9 +71,10 @@ public class ExpressController {
      * @return
      */
     @RequestMapping("add")
-    public String add(Model model) {
+    public String add(Model model, String type) {
         Express express = new Express();
         model.addAttribute("bean",express);
+        model.addAttribute("type",type);
         return "express/express_edit";
     }
 
