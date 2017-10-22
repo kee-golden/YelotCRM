@@ -1,6 +1,7 @@
 package com.yelot.crm.service;
 
 import com.alibaba.fastjson.JSON;
+import com.soecode.wxtools.util.StringUtils;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.Category;
 import com.yelot.crm.entity.RepairOrder;
@@ -39,6 +40,8 @@ public class RepairOrderService {
 
 	@Autowired
 	private CategoryMapper categoryMapper;
+	@Autowired
+	private CategoryServiceItemMapper categoryServiceItemMapper;
 
 	RepairOrder find(Long id) {
 		return repairOrderMapper.find(id);
@@ -302,6 +305,26 @@ public class RepairOrderService {
     public void updateExpressByOrderNo(String orderNo, Long expressId, Integer expressMoney){
     	repairOrderMapper.updateExpressByOrderNo(orderNo, expressId, expressMoney);
     }
+
+	/**
+	 * 微信会员查询订单列表
+	 * @param phone
+	 * @param status
+	 * @return
+	 */
+    public List<RepairOrder> findByPhoneAndStatus(String phone,String status){
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPhoneAndStatus(phone,status);
+		for (int i = 0; repairOrderList != null && i < repairOrderList.size(); i++) {
+			RepairOrder repairOrder = repairOrderList.get(i);
+			String imagesJson = repairOrder.getImagesJson();
+			if(StringUtils.isNotEmpty(imagesJson)){
+				List<String> imageList = Arrays.asList(repairOrder.getImagesJson().split(","));
+				repairOrderList.get(i).setImagesList(imageList);
+			}
+			setOneRepairServiceItem(repairOrder);
+		}
+		return repairOrderList;
+	}
     
     /**
      * 获取三天后的日期
@@ -314,5 +337,7 @@ public class RepairOrderService {
 		  String three_days_after = sdf.format(calendar.getTime());
 		  return three_days_after;
     }
+
+
     
 }

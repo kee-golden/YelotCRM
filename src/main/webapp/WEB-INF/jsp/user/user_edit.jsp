@@ -49,7 +49,9 @@
                                     <option value="2">在线客服</option>
                                     <option value="3">维修人员</option>
                                     <option value="4">管理人员</option>
-                                    <option value="5">其他</option>
+                                    <option value="5">质检人员</option>
+                                    <option value="6">仓管人员</option>
+                                    <option value="7">其他</option>
                             </select>
                         </div>
                         <div class="check-box">
@@ -97,7 +99,9 @@
                                 <option value="2" <c:if test="${bean.user_type == 2}">selected="selected"</c:if>>在线客服</option>
                                 <option value="3" <c:if test="${bean.user_type == 3}">selected="selected"</c:if>>维修人员</option>
                                 <option value="4" <c:if test="${bean.user_type == 4}">selected="selected"</c:if>>管理人员</option>
-                                <option value="5" <c:if test="${bean.user_type == 5}">selected="selected"</c:if>>其他</option>
+                                <option value="4" <c:if test="${bean.user_type == 5}">selected="selected"</c:if>>质检人员</option>
+                                <option value="4" <c:if test="${bean.user_type == 6}">selected="selected"</c:if>>仓管人员</option>
+                                <option value="5" <c:if test="${bean.user_type == 7}">selected="selected"</c:if>>其他</option>
                             </select>
                         </div>
                         <%--<div class="check-box">--%>

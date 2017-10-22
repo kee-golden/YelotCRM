@@ -322,4 +322,24 @@
     <update id="updateExpressByOrderNo">
         update t_repair_order set express_id = #{expressId}, express_money = #{expressMoney} where order_no = #{orderNo}
     </update>
+
+    <select id="findByPhoneAndStatus" resultMap="orderResultMap">
+        SELECT ro.*,
+        (select name from t_category where id = ro.first_category_id) first_category_name,
+        (select name from t_category where id = ro.second_category_id) second_category_name,
+        (select name from t_shop where id = ro.shop_id) shop_name
+
+        from t_repair_order ro where customer_phone = #{phone} and type_name = '维修单'
+        <if test="status == 'ongoing'">
+            and status in (2,4,12,16,20,24,28,32)
+        </if>
+        <if test="status == 'finished'">
+            and status = 40
+        </if>
+        <if test="status == 'all'">
+            and status in (2,4,12,16,20,24,28,32,40)
+        </if>
+        order by id DESC
+
+    </select>
 </mapper>

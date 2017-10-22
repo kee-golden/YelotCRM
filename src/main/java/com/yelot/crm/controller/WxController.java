@@ -12,14 +12,18 @@ import com.soecode.wxtools.bean.WxUserList.WxUser.WxUserGet;
 import com.soecode.wxtools.bean.result.WxOAuth2AccessTokenResult;
 import com.soecode.wxtools.bean.result.card.Card;
 import com.soecode.wxtools.exception.WxErrorException;
+import com.soecode.wxtools.util.StringUtils;
 import com.yelot.crm.AppConfig;
 import com.yelot.crm.Util.Constants;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.entity.Account;
+import com.yelot.crm.entity.RepairOrder;
 import com.yelot.crm.entity.SendMessage;
 import com.yelot.crm.enums.VerifyCodeType;
 import com.yelot.crm.mapper.AccountMapper;
+import com.yelot.crm.mapper.RepairOrderMapper;
+import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.service.SendMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +51,7 @@ import java.util.List;
 @RequestMapping("wx")
 public class WxController {
 
-    private IService iService = new WxService();
+    private WxService iService = new WxService();
 
 //    private Logger log = LoggerFactory.getLogger(WxController.class);
 
@@ -57,6 +62,8 @@ public class WxController {
     private SendMessageService sendMessageService;
     @Autowired
     private AppConfig appConfig;
+    @Autowired
+    private RepairOrderService repairOrderService;
 
 
     /**
@@ -80,6 +87,7 @@ public class WxController {
 
     /**
      * 会员 菜单的总入口，统一控制
+     * menu 配置的my-order,my-*，等
      * @return
      */
     @RequestMapping("account")
@@ -106,7 +114,7 @@ public class WxController {
         System.out.println("to-account log");
         System.out.println("to-account menu:"+menu);
 
-        String code = request.getParameter("code");
+        String code = request.getParameter("code");//微信平台的中间结果code
         model.addAttribute("code",code);
         model.addAttribute("menu",menu);
 
@@ -119,38 +127,46 @@ public class WxController {
                 model.addAttribute("openid",result.getOpenid());
                 //step 1,验证用户是否已经绑定账号,如果查不到openid
                 Account account = accountMapper.findByOpenId(result.getOpenid());
-                if(account == null){
-                    System.out.println("kee account == null");
+                if(account == null && !menu.equals("my-order")){//除了my-order页面
                     return "weixin/member/login";
-//                    return "weixin/member/account_register";
-                }else{
-                    UserUtil.setSession(Constants.SessionAccount,account);
+                }else if(account == null && menu.equals("my-order")){//第一次点击的是该订单菜单，直接进入手机号注册页面
+                    String params = "code="+code+"&openid="+result.getOpenid()+"&accessToken="+result.getAccess_token()+"&menu="+menu;
+                    return "redirect:/wx/to-phone-register?"+params;
+                }else if(account != null && menu.equals("my-order") && StringUtils.isEmpty(account.getPhone())){//已经绑定了微信号，但是没有绑定手机号
+                    System.out.println("account phone is empty");
+                    String params = "code="+code+"&openid="+result.getOpenid()+"&accessToken="+result.getAccess_token()+"&menu="+menu;
+                    return "redirect:/wx/to-phone-register?"+params;
+                }else {
+                    //使用openid作为key
+                    UserUtil.setSession(result.getOpenid(),account);
+
                 }
+                String url = jumpMenu(menu,result.getOpenid());
+                if (url != null) return url;
             }
 
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
 
-        String url = jumpMenu(menu);
-        if (url != null) return url;
+
 
         return "redirect:/wx/my-card";
     }
 
-    private String jumpMenu(String menu) {
+    private String jumpMenu(String menu,String openid) {
         if(menu == null){
-            return "redirect:/wx/my-card";
+            return "redirect:/wx/my-card?openid="+openid;
         }else if(menu.equals("my-card")){//虚拟卡
-            return "redirect:/wx/my-card";
+            return "redirect:/wx/my-card?openid="+openid;
         }else if(menu.equals("my-coupon")){//会员专享
-            return "redirect:/wx/my-coupon";
+            return "redirect:/wx/my-coupon?openid="+openid;
         }else if(menu.equals("my-profile")){//更新资料
-            return "redirect:/wx/my-profile";
+            return "redirect:/wx/my-profile?openid="+openid;
         }else if(menu.equals("my-points")){//我的积分
-            return "redirect:/wx/my-points";
-        }else if(menu.equals("my-account")){//个人中心
-            return "redirect:/wx/my-account";
+            return "redirect:/wx/my-points?openid="+openid;
+        }else if(menu.equals("my-order")){//个人中心,判断当前用户是否已经绑定了手机号，否则需要调整到绑定手机号注册页面
+            return "redirect:/wx/my-order?openid="+openid;
         }
         return null;
     }
@@ -175,6 +191,8 @@ public class WxController {
                 System.out.println("wxUser="+JSON.toJSONString(wxUser));
                 Account account = new Account();
                 account.setWxOpenid(result.getOpenid());
+                account.setWxNickname(wxUser.getNickname());
+                account.setCity(wxUser.getCity());
                 account.setPhone("");
                 account.setAccountNo(nextId+"");
                 accountMapper.save(account);
@@ -218,6 +236,7 @@ public class WxController {
         System.out.println("to-phone-register code:"+code);
         model.addAttribute("accessToken", accessToken);
         model.addAttribute("openid", openid);
+        model.addAttribute("menu", menu);
 
         return "weixin/member/account_register";
     }
@@ -235,7 +254,11 @@ public class WxController {
     @ResponseBody
     public ResultData accountRegister(String menu,String openid,String phone,String verifyCode){
         System.out.println("menu:"+menu+",phone:"+phone+",verifyCode:"+verifyCode);
-
+        Account myAccount = accountMapper.findByOpenId(openid);
+        if(myAccount != null){//已经微信登录，绑定手机号
+            accountMapper.updatePhone(phone,openid);
+            return ResultData.ok().putDataValue("action",menu);
+        }
 
         int maxId = accountMapper.findMaxId();//bug 当没有
         int nextId = Constants.FirstAccountNo + maxId;//第一个1001，以后每次增加1，id为自增
@@ -245,7 +268,7 @@ public class WxController {
         account.setPhone(phone);
         account.setAccountNo(nextId+"");
         accountMapper.save(account);
-        UserUtil.setSession(Constants.SessionAccount,account);
+        UserUtil.setSession(openid,account);
         return ResultData.ok().putDataValue("action",menu);
     }
 
@@ -309,7 +332,9 @@ public class WxController {
      * @return
      */
     @RequestMapping("my-card")
-    public String myCard(){
+    public String myCard(String openid,Model model){
+        Account account = UserUtil.getCurrentAccount(openid);
+        model.addAttribute("account",account);
 
         return "weixin/member/my_card";
     }
@@ -332,6 +357,8 @@ public class WxController {
             cardList.get(i).setSignature(signature);
             cardList.get(i).setTimestamp(timestamp);
             cardList.get(i).setNoncestr(noncestr);
+            Date endDate = new Date(cardList.get(i).getCash().getBaseInfo().getDateInfo().getEndTimestamp()*1000);
+            cardList.get(i).setEndDate(endDate);
 
         }
         model.addAttribute("cardList",cardList);
@@ -341,9 +368,7 @@ public class WxController {
         System.out.println("jsConfig:"+JSON.toJSONString(wxJsapiConfig));
         //
 
-//        return "weixin/member/coupon";
-//        return "weixin/member/wx_demo";
-        return "weixin/member/coupon_wx";
+        return "weixin/member/my_coupon";
     }
 
     private WxJsapiConfig initJsConfig(){
@@ -365,6 +390,7 @@ public class WxController {
         return config;
     }
 
+
     @RequestMapping("to-login")
     public String toLogin(String from,Model model){
         return "weixin/member/login";
@@ -375,7 +401,9 @@ public class WxController {
      * @return
      */
     @RequestMapping("my-profile")
-    public String updateProfile(){
+    public String updateProfile(String openid,Model model){
+        Account account = UserUtil.getCurrentAccount(openid);
+        model.addAttribute("account",account);
         return "weixin/member/information";
     }
 
@@ -384,12 +412,12 @@ public class WxController {
      * 我的积分
      */
     @RequestMapping("my-points")
-    public String myPoints(){
+    public String myPoints(String openid){
         //逻辑处理，积分必须要绑定手机号
-        Account account = (Account) UserUtil.getSession(Constants.SessionAccount);
-        if(account.getPhone() == null){
-            return "redirect:to-login?from="+"my-points";
-        }
+        Account account = UserUtil.getCurrentAccount(openid);
+//        if(account.getPhone() == null){
+//            return "redirect:to-login?from="+"my-points";
+//        }
 
         return "weixin/member/score";
     }
@@ -398,14 +426,32 @@ public class WxController {
      * 个人中心
      * @return
      */
-    @RequestMapping("my-account")
-    public String myAccount(){
-        return "weixin/member/personal_center";
-    }
+//    @RequestMapping("my-account")
+//    public String myAccount(){
+//        return "weixin/member/personal_center";
+//    }
 
     @RequestMapping("my-order")
-    public String myOrder(){
+    public String myOrder(Model model,String openid){
+        if(openid == null){
+            openid = "";
+        }
+        System.out.println("openid="+openid);
+        Account account = UserUtil.getCurrentAccount(openid);
+        String testPhone = "15358000878";
+        testPhone = account.getPhone();
+        List<RepairOrder> ongoingList = repairOrderService.findByPhoneAndStatus(testPhone,"ongoing");
+        List<RepairOrder> finishedList = repairOrderService.findByPhoneAndStatus(testPhone,"finished");
+        List<RepairOrder> allList = repairOrderService.findByPhoneAndStatus(testPhone,"all");
+        model.addAttribute("ongoingList",ongoingList);
+        model.addAttribute("finishedList",finishedList);
+        model.addAttribute("allList",allList);
         return "weixin/member/order";
+    }
+
+    @RequestMapping("my-order-detail")
+    public String myOrderDetail(){
+        return "weixin/member/order_detail";
     }
 
     @RequestMapping("my-address")

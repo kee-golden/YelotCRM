@@ -15,10 +15,10 @@ import java.util.Collections;
  * 卡券签名算法，官方提供
  * @author Administrator
  */
-public class WxCardSign
+public class WxSign
 {
 
-    public WxCardSign()
+    public WxSign()
     {
         m_param_to_sign = new ArrayList<String>();
     }

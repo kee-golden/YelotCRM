@@ -55,7 +55,7 @@
             var accessToken = $('#accessToken').val();
 
             var param = 'openid='+openid+'&menu='+menu+'&code='+code+'&accessToken='+accessToken;
-            alert(menu+","+code);
+//            alert(menu+","+code);
             window.location.href = hostUrl+"${ctx}/wx/to-phone-register?"+param;
 
         });

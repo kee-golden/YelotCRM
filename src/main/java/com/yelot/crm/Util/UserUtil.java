@@ -1,5 +1,6 @@
 package com.yelot.crm.Util;
 
+import com.yelot.crm.entity.Account;
 import com.yelot.crm.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -28,6 +29,18 @@ public class UserUtil {
     public static Object getSession(String key){
         Subject subject= SecurityUtils.getSubject();
         return subject.getSession().getAttribute(key);
+
+    }
+
+    /**
+     * 登录的正在访问的客户保存到session中
+     * @param openid
+     * @return
+     */
+    public static Account getCurrentAccount(String openid){
+        Subject subject= SecurityUtils.getSubject();
+        Account account = (Account)subject.getSession().getAttribute(openid);
+        return account;
 
     }
 }

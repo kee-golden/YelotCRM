@@ -151,7 +151,7 @@
                 },
                 success:function(data){
                     if(data.code == 1200){
-                        window.location.href = hostUrl+'/wx/'+data.data.action;
+                        window.location.href = hostUrl+'/wx/'+data.data.action+'?openid='+$('#openid').val();
                     }else {
                         alert('验证失败');
 					}

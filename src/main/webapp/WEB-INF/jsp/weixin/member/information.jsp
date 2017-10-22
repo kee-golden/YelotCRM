@@ -15,10 +15,10 @@
 			<img src="/images/information.jpg">
 			<div class="information-user">
 				<p class="information-name">
-					${sessionScope.account.fullName}
+					${account.fullName}
 				</p>
 				<p class="information-phone">
-					${sessionScope.account.phone}
+					${account.phone}
 				</p>
 			</div>
 		</div>
@@ -29,12 +29,12 @@
 					<%--<input type="text" name="" id="phone" value="${sessionScope.account.phone}" disabled="disabled" class="information-content-hidden" style="background: #fff;">--%>
 				<%--</div>--%>
 			<%--</div>--%>
-				<input type="hidden" id="openid" value="${sessionScope.account.wxOpenid}">
-				<input type="hidden" id="phone" value="${sessionScope.account.phone}">
+				<input type="hidden" id="openid" value="${account.wxOpenid}">
+				<input type="hidden" id="phone" value="${account.phone}">
 			<div class="information-password-wrap">
 				<div class="information-password-label">
 					<div>账户姓名：</div>
-					<input type="text" name="" id="fullName" value="${sessionScope.account.fullName}" style="background: #f3f1f2;" class="information-content-hidden" >
+					<input type="text" name="" id="fullName" value="${account.fullName}" style="background: #f3f1f2;" class="information-content-hidden" >
 				</div>
 				<span id="fullNameBtn" class="information-password-again information-password-new">重置</span>
 			</div>
@@ -42,7 +42,7 @@
 			<div class="information-email-wrap">
 				<div class="information-password-label">
 					<div>电邮：</div>
-					<input type="email" name="" id="email" value="${sessionScope.account.email}" class="information-email-input">
+					<input type="email" name="" id="email" value="${account.email}" class="information-email-input">
 				</div>
 				<span id="emailBtn" class="information-password-again">保存</span>
 			</div>
@@ -77,16 +77,16 @@
 					<label>居住城市：</label>
 					<select class="information-city-select" name="city" id="city">
 						<option>请选择</option>
-						<option value="北京市" <c:if test="${sessionScope.account.city eq '北京市'}">selected="selected"</c:if>>北京市</option>
-						<option value="上海市" <c:if test="${sessionScope.account.city eq '上海市'}">selected="selected"</c:if>>上海市</option>
-						<option value="杭州市" <c:if test="${sessionScope.account.city eq '杭州市'}">selected="selected"</c:if>>杭州市</option>
-						<option value="成都市" <c:if test="${sessionScope.account.city eq '成都市'}">selected="selected"</c:if>>成都市</option>
-						<option value="广州市" <c:if test="${sessionScope.account.city eq '广州市'}">selected="selected"</c:if>>广州市</option>
-						<option value="深圳市" <c:if test="${sessionScope.account.city eq '深圳市'}">selected="selected"</c:if>>深圳市</option>
-						<option value="南京市" <c:if test="${sessionScope.account.city eq '南京市'}">selected="selected"</c:if>>南京市</option>
-						<option value="苏州市" <c:if test="${sessionScope.account.city eq '苏州市'}">selected="selected"</c:if>>苏州市</option>
-						<option value="无锡市" <c:if test="${sessionScope.account.city eq '无锡市'}">selected="selected"</c:if>>无锡市</option>
-						<option value="其他" <c:if test="${sessionScope.account.city eq '其他'}">selected="selected"</c:if>>其他</option>
+						<option value="北京市" <c:if test="${account.city eq '北京市'}">selected="selected"</c:if>>北京市</option>
+						<option value="上海市" <c:if test="${account.city eq '上海市'}">selected="selected"</c:if>>上海市</option>
+						<option value="杭州市" <c:if test="${account.city eq '杭州市'}">selected="selected"</c:if>>杭州市</option>
+						<option value="成都市" <c:if test="${account.city eq '成都市'}">selected="selected"</c:if>>成都市</option>
+						<option value="广州市" <c:if test="${account.city eq '广州市'}">selected="selected"</c:if>>广州市</option>
+						<option value="深圳市" <c:if test="${account.city eq '深圳市'}">selected="selected"</c:if>>深圳市</option>
+						<option value="南京市" <c:if test="${account.city eq '南京市'}">selected="selected"</c:if>>南京市</option>
+						<option value="苏州市" <c:if test="${account.city eq '苏州市'}">selected="selected"</c:if>>苏州市</option>
+						<option value="无锡市" <c:if test="${account.city eq '无锡市'}">selected="selected"</c:if>>无锡市</option>
+						<option value="其他" <c:if test="${account.city eq '其他'}">selected="selected"</c:if>>其他</option>
 					</select>
 				</div>
 				<span id="cityBtn" class="information-password-again" style="top:12px;">保存</span>
@@ -106,7 +106,7 @@
 
 
 	function setInterestStatus() {
-        var interestStr = '${sessionScope.account.interestJson}';
+        var interestStr = '${account.interestJson}';
 //        var interestStr = '["珠宝","奢包","腰带"]';
         var interestValues;
 

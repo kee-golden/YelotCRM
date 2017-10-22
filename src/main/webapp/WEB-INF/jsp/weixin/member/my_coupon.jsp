@@ -37,8 +37,10 @@
 							data-timestamp="${card.timestamp}" data-noncestr="${card.noncestr}">领取</button>
 				</div>
 				<div class="card-content-item-bottom">
-					<div>微信电影票</div>
-					<div>有效期至：<span>2014.1.1</span></div>
+					<div>${card.cash.baseInfo.notice}</div>
+					<%--<div>有效期至：<span>--%>
+						<%--<fmt:formatDate value="${card.endDate}" pattern="yyyy-MM-dd"></fmt:formatDate>--%>
+					<%--</span></div>--%>
 				</div>
 			</div>
 		</c:forEach>
@@ -108,7 +110,7 @@
                 var noncestr2 = $(this).data('noncestr');
                 var signature2 = $(this).data('signature');
 //                alert('cardId:' + cardId2+",  "+timestamp2+" , "+signature2+", "+noncestr2);
-                addCard(cardId2,timestamp2,signature2);
+                addCard(cardId2,timestamp2,noncestr2,signature2);
             });
 
             function addCard(cardId,timestamp,noncestr,signature) {

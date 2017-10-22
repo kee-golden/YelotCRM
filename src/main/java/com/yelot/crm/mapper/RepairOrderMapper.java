@@ -114,4 +114,9 @@ public interface RepairOrderMapper {
 	void updateTypeName(@Param("id") Long id, @Param("typeName") String typeName);
 	
 	void updateExpressByOrderNo(@Param("orderNo") String orderNo, @Param("expressId") Long expressId, @Param("expressMoney") Integer expressMoney);
+
+	/**
+	 * 以下是微信中获取用户订单列表方法。
+	 */
+	List<RepairOrder> findByPhoneAndStatus(@Param("phone") String phone,@Param("status") String status);
 }

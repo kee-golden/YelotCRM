@@ -32,4 +32,6 @@ public interface AccountMapper {
 
     List<Account> findBySearch(@Param("pageHelper") PageHelper pageHelper, @Param("extra_search") String extra_search);
     void updateInterest(@Param("openid")String openid,@Param("phone") String phone,@Param("interestJson") String interestJson);
+
+    void updatePhone(@Param("phone") String phone,@Param("openid") String openid);
 }

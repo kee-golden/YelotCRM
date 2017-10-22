@@ -19,9 +19,7 @@
         insert into t_account(phone,wx_openid,wx_nickname,account_no,full_name,
         express_address,interest_json,create_at) VALUES (#{phone},#{wxOpenid},#{wxNickname},#{accountNo},#{fullName},
         #{expressAddress},#{interestJson},now());
-
     </insert>
-
 
     <update id="update">
         update t_account set account_no = #{accountNo},full_name=#{fullName},
@@ -29,6 +27,11 @@
                 create_at = #{createAt}
 
          where id = #{id};
+    </update>
+
+    <update id="updatePhone">
+        update t_account set phone = #{phone}
+        where wx_openid = #{openid};
     </update>
     <update id="updateFullName">
         update t_account set full_name = #{fullName} where

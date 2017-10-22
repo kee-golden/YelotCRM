@@ -5,6 +5,9 @@ package com.soecode.wxtools.bean.result.card;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import java.util.Date;
+
 /**
  * Auto-generated: 2017-09-24 21:8:33
  *
@@ -25,6 +28,8 @@ public class Card {
     private String signature;
     private Long timestamp;
     private String noncestr;
+
+    private Date endDate;
     public void setCardType(String cardType) {
          this.cardType = cardType;
      }
@@ -61,5 +66,13 @@ public class Card {
 
     public void setNoncestr(String noncestr) {
         this.noncestr = noncestr;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

@@ -11,8 +11,9 @@ import com.soecode.wxtools.exception.WxErrorException;
 import com.soecode.wxtools.util.DateUtil;
 import com.soecode.wxtools.util.PayUtil;
 import com.soecode.wxtools.util.RandomUtils;
+import com.soecode.wxtools.util.crypto.JSSDK_Config;
 import com.soecode.wxtools.util.crypto.SHA1;
-import com.soecode.wxtools.util.crypto.WxCardSign;
+import com.soecode.wxtools.util.crypto.WxSign;
 import com.soecode.wxtools.util.file.FileUtils;
 import com.soecode.wxtools.util.http.*;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -626,7 +627,6 @@ public class WxService implements IService{
 
 	/**
 	 * 获取卡券ticket
-	 * @param forceRefresh
 	 * @return
 	 * @throws WxErrorException
 	 */
@@ -674,16 +674,29 @@ public class WxService implements IService{
 		try {
 			String signature = SHA1.genWithAmple("noncestr="+noncestr,
 					"jsapi_ticket="+jsapiTicket,"timestamp="+timestamp,"url="+url);
+
 			WxJsapiConfig jsapiConfig = new WxJsapiConfig();
 			jsapiConfig.setTimestamp(timestamp);
 			jsapiConfig.setNoncestr(noncestr);
 			jsapiConfig.setUrl(url);
 			jsapiConfig.setSignature(signature);
 			jsapiConfig.setJsApiList(jsApiList);
+			System.out.println("kee jsConfig:"+JSON.toJSONString(jsapiConfig));
 			return jsapiConfig;
 		} catch (NoSuchAlgorithmException e) {
 			throw new WxErrorException("[wx-tools]createJsapiConfig failure.");
 		}
+	}
+
+	public WxJsapiConfig getJsConfig(String url){
+		JSSDK_Config config = new JSSDK_Config();
+		try {
+			HashMap<String, String> map = config.jsSDK_Sign(url);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return  null;
+
 	}
 
 	/**
@@ -703,10 +716,11 @@ public class WxService implements IService{
 			e.printStackTrace();
 		}
 
-		WxCardSign wxCardSign = new WxCardSign();
+		WxSign wxCardSign = new WxSign();
 			wxCardSign.addData(timestamp);
 			wxCardSign.addData(noncestr);
-			wxCardSign.addData(cardApiTicket);
+			//签名的参数
+//			wxCardSign.addData(cardApiTicket);
 			if(code != null){
 				wxCardSign.addData(code);
 			}
