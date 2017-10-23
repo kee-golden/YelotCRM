@@ -114,7 +114,6 @@ require(['jquery', 'yaya', 'datatables.net'], function ($, yaya) {
                                 method: 'post',
                                 dataType: 'json',
                                 success: function (data) {
-                                	debugger
                                     console.log(data.code);
                                     if (data.code==1200) {
                                         table.draw();

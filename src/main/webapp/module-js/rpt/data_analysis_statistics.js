@@ -55,10 +55,13 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
             	
             	if (dateAreaDayInterval == dateArea2DayInterval) {
         			getChartData();
+            		$("#J_statisticsList").css("display", "");
+            		setStatisticsList();
             	} else {
         			yaya.layer.msg("时间区间天数不一致！");
             	}
         	} else {
+         		$("#J_statisticsList_wrapper").css("display", "none");
     			getChartData();
         	}
     		
@@ -74,6 +77,8 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
     		    			yaya.layer.msg("开始日期必须为周一，结束日期必须为周日！");
         				} else {
         					getChartData();
+        		    		$("#J_statisticsList").css("display", "");
+        		    		setStatisticsList();
         				}
 					} else {
 		    			yaya.layer.msg("同一时间区间必须选择同一年的数据！");
@@ -86,6 +91,7 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
     				if(dateAreaStart.getDay() != 1 || dateAreaEnd.getDay() != 0){
 		    			yaya.layer.msg("开始日期必须为周一，结束日期必须为周日！");
     				} else {
+    		     		$("#J_statisticsList_wrapper").css("display", "none");
     					getChartData();
     				}
 				} else {
@@ -105,6 +111,8 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
     		    			yaya.layer.msg("开始日期必须为1号！");
         				} else {
         					getChartData();
+        		    		$("#J_statisticsList").css("display", "");
+        		    		setStatisticsList();
         				}
 					} else {
 		    			yaya.layer.msg("同一时间区间必须选择同一年的数据！");
@@ -118,6 +126,7 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
     				if(dateAreaStart.getDate() != 1){
 		    			yaya.layer.msg("开始日期必须为1号！");
     				} else {
+    		     		$("#J_statisticsList_wrapper").css("display", "none");
     					getChartData();
     				}
 				} else {
@@ -126,14 +135,6 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
         	}
     		
     	}
-
-    	var isChecked = $("#compare").prop("checked");
-    	if(isChecked){
-    		$("#J_statisticsList").css("display", "");
-    		setStatisticsList();
-    	 } else {
-     		$("#J_statisticsList_wrapper").css("display", "none");
-    	 }
     });
 
    /*表格插件*/
