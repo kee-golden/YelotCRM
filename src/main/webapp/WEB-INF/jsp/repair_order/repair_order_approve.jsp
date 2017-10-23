@@ -63,13 +63,40 @@
 				<div class="row">
 					<textarea id="comment" rows="3" cols="20" class="col-md-11" style="margin-left: 30px" placeholder="输入审批备注"></textarea>
 				</div>
-				<c:if test="${orderStatus == 32}">
-					<div><span style="margin-left: 600px;"><a class="btn" id="approveBtn">提货</a><a class="btn" id="refuseBtn">返修</a></span></div>
-				</c:if>
+				<%--<c:if test="${orderStatus == 32}">--%>
+					<div><span style="margin-left: 600px;"><a class="btn" id="approveBtn">
+						<c:choose>
+								<c:when test="${orderStatus == 32}">
+									提货
+								</c:when>
+								<c:otherwise>
+									通过
+								</c:otherwise>
+						</c:choose>
+
+					</a><a class="btn" id="refuseBtn">
+						<c:choose>
+							<c:when test="${orderStatus == 32}">
+								返修
+							</c:when>
+							<c:when test="${orderStatus == 2}">
+								取消订单
+							</c:when>
+							<c:otherwise>
+								拒绝
+							</c:otherwise>
+						</c:choose>
+					</a></span></div>
+				<%--</c:if>--%>
+				<%--<c:if test="${orderStatus == 2}">--%>
+					<%--<div><span style="margin-left: 600px;"><a class="btn" id="approveBtn">通过</a><a class="btn" id="refuseBtn">取消订单</a></span></div>--%>
+				<%--</c:if>--%>
 				
-				<c:if test="${orderStatus != 32}">
-					<div><span style="margin-left: 600px;"><a class="btn" id="approveBtn">通过</a><a class="btn" id="refuseBtn">拒绝</a></span></div>
-				</c:if>
+				<%--<c:if test="${orderStatus != 32}">--%>
+					<%--<div><span style="margin-left: 600px;"><a class="btn" id="approveBtn">通过</a><a class="btn" id="refuseBtn">--%>
+						<%--拒绝--%>
+					<%--</a></span></div>--%>
+				<%--</c:if>--%>
 			</form>
 
 			</c:if>

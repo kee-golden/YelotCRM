@@ -179,6 +179,8 @@ public class WxController {
     public String wechatLogin(String code,HttpServletRequest request,String menu){
         System.out.println("wechat-login code="+code+",menu="+menu);
 
+        String openid = "";
+
 
         try {
 //            //code 只能使用一次
@@ -193,13 +195,17 @@ public class WxController {
                 account.setWxOpenid(result.getOpenid());
                 account.setWxNickname(wxUser.getNickname());
                 account.setCity(wxUser.getCity());
-                account.setPhone("");
+                account.setFullName(wxUser.getNickname());
+//                account.setPhone("");
                 account.setAccountNo(nextId+"");
                 accountMapper.save(account);
                 UserUtil.setSession(Constants.SessionAccount,account);
 
+                openid = result.getOpenid();
+
+
             }else{
-                System.out.println("wxUser is null");
+//                System.out.println("wxUser is null");
 
             }
 //
@@ -207,7 +213,7 @@ public class WxController {
             e.printStackTrace();
         }
 
-        return "redirect:/wx/my-card";
+        return jumpMenu(menu,openid);
 
     }
 
@@ -305,9 +311,9 @@ public class WxController {
     }
 
     @ResponseBody
-    @RequestMapping("update-email")
-    public ResultData updateEmail(String openid,String phone,String email){
-        accountMapper.updateEmail(openid,phone,email);
+    @RequestMapping("update-my-phone")
+    public ResultData updateMyPhone(String openid,String phone,String myPhone){
+        accountMapper.updateMyPhone(openid,phone,myPhone);
         return ResultData.ok();
     }
 
@@ -437,9 +443,12 @@ public class WxController {
             openid = "";
         }
         System.out.println("openid="+openid);
-        Account account = UserUtil.getCurrentAccount(openid);
-        String testPhone = "15358000878";
-        testPhone = account.getPhone();
+        Account account = accountMapper.findByOpenId(openid);
+        String testPhone = "";
+        if(account != null){
+            testPhone = account.getPhone();
+        }
+
         List<RepairOrder> ongoingList = repairOrderService.findByPhoneAndStatus(testPhone,"ongoing");
         List<RepairOrder> finishedList = repairOrderService.findByPhoneAndStatus(testPhone,"finished");
         List<RepairOrder> allList = repairOrderService.findByPhoneAndStatus(testPhone,"all");

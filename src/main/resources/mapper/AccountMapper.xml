@@ -8,7 +8,7 @@
         <result property="wxNickname" column="wx_nickname"/>
         <result property="accountNo" column="account_no"/>
         <result property="fullName" column="full_name"/>
-        <result property="email" column="email"/>
+        <result property="myPhone" column="my_phone"/>
         <result property="city" column="city"/>
         <result property="expressAddress" column="express_address"/>
         <result property="interestJson" column="interest_json"/>
@@ -45,8 +45,8 @@
         </choose>
 
     </update>
-    <update id="updateEmail">
-        update t_account set email = #{email} where
+    <update id="updateMyPhone">
+        update t_account set my_phone = #{myPhone} where
         <choose>
             <when test="phone != null and phone != ''">
                 phone = #{phone}
