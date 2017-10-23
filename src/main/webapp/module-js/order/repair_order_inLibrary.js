@@ -180,12 +180,14 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     
     // 创建物流信息
     $JOrderList.on('click', '.J_createExpress', function () {
+        var orderId = $(this).data("id");
         $.ajax({
             url: ctx + '/express/add',
             method: 'get',
             dataType: 'html',
             data:{
-            	type: "shopToCustomer"
+            	type: "shopToCustomer",
+                orderId:orderId
             },
             success: function (str) {
                 yaya.layer.open({

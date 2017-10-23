@@ -144,7 +144,7 @@
 							<select name="typeName" id="typeName" >
 								<option value="维修单" <c:if test="${repairOrder.typeName == '维修单'}">selected="selected"</c:if>>维修单</option>
 								<option value="内部单" <c:if test="${repairOrder.typeName == '内部单'}">selected="selected"</c:if>>内部单</option>
-								<option value="返修单" <c:if test="${repairOrder.typeName == '返修单'}">selected="selected"</c:if>>返修单</option>
+								<%--<option value="返修单" <c:if test="${repairOrder.typeName == '返修单'}">selected="selected"</c:if>>返修单</option>--%>
 								<option value="评估单" <c:if test="${repairOrder.typeName == '评估单'}">selected="selected"</c:if>>评估单</option>
 							</select>
 							</div>

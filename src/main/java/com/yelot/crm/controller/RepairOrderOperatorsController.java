@@ -165,6 +165,8 @@ public class RepairOrderOperatorsController {
 //            return RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode();
 //        }else if(orderStatus == RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode()){
             return RepairOrderStatus.CUSTOMER_RECEIVE_APPROVE.getCode();
+        }else if(orderStatus == RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode()){
+            return RepairOrderStatus.CUSTOMER_RECEIVE_APPROVE.getCode();
         }
 
         return RepairOrderStatus.SUBMIT.getCode();

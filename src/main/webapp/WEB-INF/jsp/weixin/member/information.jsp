@@ -170,17 +170,17 @@ function interestCheck() {  //jquery获取复选框值
 
 		$("#phoneBtn").click(function () {
 		    if($("#myPhone").val() == ''){
-				alert("邮箱不能为空");
+				alert("手机不能为空");
 				return;
 			}
 			$.ajax({
-				url:"/wx/update-phone",
+				url:"/wx/update-my-phone",
 				method:'post',
 				type:'json',
 				data:{
 				    phone:$("#phone").val(),
 				    openid:$("#openid").val(),
-					myPhone:$("#myphone").val(),
+					myPhone:$("#myPhone").val(),
 				},
 				success:function (data) {
                     if(data.code == 1200){

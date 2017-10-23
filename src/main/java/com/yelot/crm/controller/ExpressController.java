@@ -10,6 +10,7 @@ import com.yelot.crm.entity.Express;
 import com.yelot.crm.entity.RepairOrder;
 import com.yelot.crm.entity.User;
 import com.yelot.crm.mapper.ExpressMapper;
+import com.yelot.crm.mapper.RepairOrderMapper;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.Table;
 
@@ -37,6 +38,9 @@ public class ExpressController {
     
     @Autowired
     private RepairOrderService repairOrderService;
+
+    @Autowired
+    private RepairOrderMapper repairOrderMapper;
 
     @RequestMapping("index")
     public String index(){
@@ -71,10 +75,12 @@ public class ExpressController {
      * @return
      */
     @RequestMapping("add")
-    public String add(Model model, String type) {
+    public String add(Model model, String type,Long orderId) {
+        RepairOrder repairOrder = repairOrderMapper.find(orderId);
         Express express = new Express();
         model.addAttribute("bean",express);
         model.addAttribute("type",type);
+        model.addAttribute("repairOrder",repairOrder);
         return "express/express_edit";
     }
 

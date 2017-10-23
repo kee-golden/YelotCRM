@@ -25,7 +25,7 @@
 
 			<form role="form" id="J_checkForm">
 				<input type="hidden" name="id" id="orderId" value="${orderId}">
-				<c:if test="${(orderStatus == 12 || orderStatus == 44) && (bean.typeName eq '维修单' || bean.typeName eq '内部单' || bean.typeName eq '返修单')}">
+				<c:if test="${(orderStatus == 12 || orderStatus == 44)}">
 				<div class="row">
 					<label style="margin-left: 30px">维修人员：
 					</label><select id="repairUserId" name="repairUserId">
@@ -38,7 +38,7 @@
 				</div>
 				</c:if>
 				
-				<c:if test="${orderStatus == 32 && (bean.typeName eq '维修单' || bean.typeName eq '内部单' || bean.typeName eq '返修单')}">
+				<c:if test="${orderStatus == 32}">
 				<div class="row">
 					<label style="margin-left: 40px">预付款：</label><input type="number" id="advancePayment" disabled="disabled" value="${bean.advancePayment}">
 					<label style="margin-left: 40px">工费金额：</label><input type="number" id="labourPayment" value="${bean.labourPayment == -1 ? null : bean.labourPayment}">
@@ -100,7 +100,7 @@
 			</form>
 
 			</c:if>
-			<c:if test="${(orderStatus == 12 || orderStatus == 16 || orderStatus == 44) && (bean.typeName eq '维修单' || bean.typeName eq '内部单' || bean.typeName eq '返修单')}">
+			<c:if test="${(orderStatus == 12 || orderStatus == 16 || orderStatus == 44)}">
 				<hr/>
 				<div id="uploader">
 					<div class="queueList">
@@ -183,7 +183,7 @@
 		</div>
 	</div>
 </div>
-<c:if test="${(orderStatus == 12 || orderStatus == 16 || orderStatus == 44) && (bean.typeName eq '维修单' || bean.typeName eq '内部单' || bean.typeName eq '返修单')}">
+<c:if test="${(orderStatus == 12 || orderStatus == 16 || orderStatus == 44)}">
 	<script src="${ctx}/module-js/order/webuploader_app.js"></script>
 </c:if>
 

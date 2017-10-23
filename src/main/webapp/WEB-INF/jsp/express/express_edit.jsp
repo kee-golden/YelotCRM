@@ -83,7 +83,7 @@
                             <div class="col-md-12">
                                 <label>关联维修单号(逗号分隔)</label>
                                 <input type="textarea" placeholder="请输入维修单" class="form-control" name="repairOrderNoJson" id="repairOrderNoJson"
-                                       value="">
+                                       value="${repairOrder.orderNo}">
                             </div>
                         </div>
                         <div class="row bottom10">
