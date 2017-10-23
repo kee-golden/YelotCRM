@@ -41,10 +41,10 @@
 
 			<div class="information-email-wrap">
 				<div class="information-password-label">
-					<div>电邮：</div>
-					<input type="email" name="" id="email" value="${account.email}" class="information-email-input">
+					<div>手机：</div>
+					<input type="text" name="" id="myPhone" value="${account.phone}" class="information-email-input">
 				</div>
-				<span id="emailBtn" class="information-password-again">保存</span>
+				<span id="phoneBtn" class="information-password-again">保存</span>
 			</div>
 			<div class="information-interest-wrap">
 				<div class="information-password-label">
@@ -168,19 +168,19 @@ function interestCheck() {  //jquery获取复选框值
 
 		});
 
-		$("#emailBtn").click(function () {
-		    if($("#email").val() == ''){
+		$("#phoneBtn").click(function () {
+		    if($("#myPhone").val() == ''){
 				alert("邮箱不能为空");
 				return;
 			}
 			$.ajax({
-				url:"/wx/update-email",
+				url:"/wx/update-phone",
 				method:'post',
 				type:'json',
 				data:{
 				    phone:$("#phone").val(),
 				    openid:$("#openid").val(),
-					email:$("#email").val(),
+					myPhone:$("#myphone").val(),
 				},
 				success:function (data) {
                     if(data.code == 1200){

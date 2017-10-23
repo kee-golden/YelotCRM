@@ -24,7 +24,7 @@ public interface AccountMapper {
 
     void updateFullName(@Param("openid")String openid,@Param("phone") String phone, @Param("fullName") String fullName);
 
-    void updateEmail(@Param("openid")String openid,@Param("phone") String phone, @Param("email") String email);
+    void updateMyPhone(@Param("openid")String openid,@Param("phone") String phone, @Param("myPhone") String myPhone);
 
     void updateCity(@Param("openid")String openid,@Param("phone") String phone, @Param("city") String city);
 

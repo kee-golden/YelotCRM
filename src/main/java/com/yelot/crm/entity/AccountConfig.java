@@ -1,7 +1,7 @@
 package com.yelot.crm.entity;
 
 /**
- * 会员系统的配置参数
+ * 会员系统的配置参数,系统配置
  * Created by kee on 17/9/20.
  */
 public class AccountConfig {

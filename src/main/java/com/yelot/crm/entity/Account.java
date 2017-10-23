@@ -18,7 +18,7 @@ public class Account {
     private String accountNo;
 
     private String fullName;
-    private String email;
+    private String myPhone;
     private String city;
     private String expressAddress;
     private String interestJson;
@@ -80,12 +80,12 @@ public class Account {
         this.fullName = fullName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMyPhone() {
+        return myPhone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMyPhone(String myPhone) {
+        this.myPhone = myPhone;
     }
 
     public String getCity() {

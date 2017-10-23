@@ -26,7 +26,7 @@
 
                     <%--<li><a href="${ctx}/help"  target="view_window" class="nav_new_font"><i class="glyphicon glyphicon-home"></i>帮助中心</a></li>--%>
                     <%--<li><a href="http://www.itss-china.com/read.php?id=246&classid=34" target='_blank'class="nav_new_font"><i class="glyphicon glyphicon-phone-alt"></i>联系我们</a></li>--%>
-                    <li><a href="" class="nav_new_font" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-bookmark"></i>关于版本</a></li>
+                    <%--<li><a href="" class="nav_new_font" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-bookmark"></i>关于版本</a></li>--%>
                     <li class="dropdown">
                         <a href="" data-toggle="dropdown" class="nav_new_font"><i class="glyphicon glyphicon-user man_icon"></i><span
                                 id="username">${sessionScope.user.name}</span><span class="caret"></span></a>
@@ -36,25 +36,25 @@
                         </ul>
                     </li>
                 </ul>
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title" id="myModalLabel">关于版本</h4>
+                <%--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--%>
+                    <%--<div class="modal-dialog">--%>
+                        <%--<div class="modal-content">--%>
+                            <%--<div class="modal-header">--%>
+                                <%--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>--%>
+                                <%--<h4 class="modal-title" id="myModalLabel">关于版本</h4>--%>
 
-                            </div>
-                            <div class="modal-body">
-                               <input id="version" type="text" readonly style="width: 238px">
-                                <input id="copyright" type="text" readonly>
-                            </div>
-                           <%-- <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>--%>
-                        </div>
-                    </div>
-                </div>
+                            <%--</div>--%>
+                            <%--<div class="modal-body">--%>
+                               <%--<input id="version" type="text" readonly style="width: 238px">--%>
+                                <%--<input id="copyright" type="text" readonly>--%>
+                            <%--</div>--%>
+                           <%--&lt;%&ndash; <div class="modal-footer">--%>
+                                <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
+                                <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
+                            <%--</div>&ndash;%&gt;--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
             </div>
         </div>
     </div>
