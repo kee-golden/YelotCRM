@@ -179,11 +179,19 @@ public class RepairOrderService {
 		return userOrderNo;
 	}
     public int countTotalPageCheckList(String extra_search, List<String> statusList, String type) {
-		return repairOrderMapper.countTotalPageCheckList(extra_search,statusList,type);
+		Long shopId = UserUtil.getCurrentUser().getShop_id();
+		if(repairOrderMapper.findRoleByUserId(UserUtil.getCurrentUser().getId()) == 1 || shopId == 6){
+			shopId = null;
+		}
+		return repairOrderMapper.countTotalPageCheckList(extra_search,statusList,type,shopId);
     }
 
 	public List<RepairOrder> findByPageCheckList(String extra_search, List<String> statusList,PageHelper pageHelper, String type) {
-		List<RepairOrder> repairOrderList =  repairOrderMapper.findByPageCheckList(extra_search,statusList,pageHelper,type);
+		Long shopId = UserUtil.getCurrentUser().getShop_id();
+		if(repairOrderMapper.findRoleByUserId(UserUtil.getCurrentUser().getId()) == 1 || shopId == 6){
+			shopId = null;
+		}
+		List<RepairOrder> repairOrderList =  repairOrderMapper.findByPageCheckList(extra_search,statusList,pageHelper,type,shopId);
 		setRepairServiceItem(repairOrderList);
 		setRepairStatus(repairOrderList);
 		return repairOrderList;

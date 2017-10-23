@@ -269,7 +269,15 @@ public class RepairOrderController {
     }
 
     @RequestMapping("checklist")
-    public String checklist(){
+    public String checklist(Model model){
+    	List<Role> roleList = roleMapper.findByUserId(UserUtil.getCurrentUser().getId());
+    	Boolean isShow = false;
+    	for (Role role : roleList) {
+			if ("客服主管".equals(role.getName())) {
+				isShow = true;
+			}
+		}
+        model.addAttribute("isShow", isShow);
         return "repair_order/repair_order_checklist";
     }
 
@@ -330,6 +338,7 @@ public class RepairOrderController {
     public Table queryCheckOrder(Model model,
                                  @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
                                  @RequestParam(value = "type", defaultValue = "")String type,
+                                 @RequestParam(value = "direction", defaultValue = "")String direction,
                                  @RequestParam(value = "start", defaultValue = "0") int start,
                                  @RequestParam(value = "length", defaultValue = "10") int length){
         PageHelper pageHelper = new PageHelper();
@@ -356,12 +365,19 @@ public class RepairOrderController {
 
         //根据客服主管仅仅能查看自己门店的订单，需要特殊处理一下。
         //角色设置的时候，不能让一个人，同时具有门店权限和维修中心权限
-        if(statusList.contains(RepairOrderStatus.SUBMIT.getCode()+"") || statusList.contains(RepairOrderStatus.CHECKOUT_APPROVE.getCode()+"")
-                || statusList.contains(RepairOrderStatus.SHOP_RECEIVE_APPROVE.getCode()+"")
-                || statusList.contains(RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode()+"")
-                || statusList.contains(RepairOrderStatus.SHOP_EXPRESS_APPROVE.getCode()+"")){//状态为2，客服主管审核状态，必须审核本门店的订单
-            int pageCount = repairOrderService.countTotalPageCheckListAndShop(extra_search, statusList, user.getShop_id(), type);
-            List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckListAndShop(extra_search,statusList,pageHelper,user.getShop_id(),type);
+        if(statusList.contains(RepairOrderStatus.SUBMIT.getCode()+"") 
+        		|| statusList.contains(RepairOrderStatus.CHECKOUT_APPROVE.getCode()+"")
+                || statusList.contains(RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode()+"")){//状态为2，客服主管审核状态，必须审核本门店的订单
+
+            List<String> lastStatusList = new ArrayList<String>();
+        	if("toCenter".equals(direction)){
+        		lastStatusList.add(RepairOrderStatus.SUBMIT.getCode()+"");
+        		lastStatusList.add(RepairOrderStatus.CHECK_EVALUE_APPROVE.getCode()+"");
+        	} else {
+        		lastStatusList.add(RepairOrderStatus.CHECKOUT_APPROVE.getCode()+"");
+        	}
+            int pageCount = repairOrderService.countTotalPageCheckListAndShop(extra_search, lastStatusList, user.getShop_id(), type);
+            List<RepairOrder> repairOrderList = repairOrderService.findByPageCheckListAndShop(extra_search,lastStatusList,pageHelper,user.getShop_id(),type);
             return new Table(pageCount, pageCount, repairOrderList);
         }
 

@@ -155,6 +155,7 @@
         <if test="extra_search != null and extra_search != '' and type == 'centerCheck'">
             and order_no like CONCAT('%', #{extra_search}, '%')
         </if>
+        <if test="shopId != null and shopId != ''">and shop_id = #{shopId}</if>
     </select>
 
     <select id="findByPageCheckList" resultMap="orderResultMap">
@@ -177,6 +178,7 @@
         <if test="extra_search != null and extra_search != ''  and type == 'centerCheck'">
             and t.order_no like CONCAT('%', #{extra_search}, '%')
         </if>
+        <if test="shopId != null and shopId != ''">and t.shop_id = #{shopId}</if>
         order by t.id desc
         limit #{pageHelper.offset},#{pageHelper.size}
     </select>

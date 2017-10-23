@@ -192,7 +192,13 @@
 
 				<div class="ibox float-e-margins">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="active"><a>待审核订单列表</a></li>
+						<c:if test="${!isShow}">
+							<li class="active" id="aaa"><a>待审核订单列表</a></li>
+						</c:if>
+						<c:if test="${isShow}">
+							<li class="active" id="bbb"><a sta="1">发往维修中心待审核</a></li>
+							<li id="ccc"><a sta="2">维修中心返回待审核</a></li>
+						</c:if>
 					</ul>
 
 					<div id="content" class="ibox-content">

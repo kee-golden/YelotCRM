@@ -61,12 +61,14 @@ public interface RepairOrderMapper {
 
     int countTotalPageCheckList(@Param("extra_search") String extra_search, 
     		@Param("statusList") List<String> statusList, 
-    		@Param("type") String type);
+    		@Param("type") String type,
+			@Param("shopId") Long shopId);
 
 	List<RepairOrder> findByPageCheckList(@Param("extra_search") String extra_search, 
 			@Param("statusList") List<String> statusList,
 			@Param("pageHelper") PageHelper pageHelper, 
-			@Param("type") String type);
+			@Param("type") String type,
+			@Param("shopId") Long shopId);
 
 	/**
 	 * 客服主管，仅仅查看自己门店的审核订单

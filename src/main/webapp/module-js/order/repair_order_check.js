@@ -2,6 +2,20 @@
  * Created by kee on 17/7/13.
  */
 require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
+    var direction = 'toCenter';
+	$('#myTab a').click(function (e) {
+        e.preventDefault();//阻止a链接的跳转行为
+        var sta = $(this).attr('sta');
+        if (sta == '1') {
+        	direction = 'toCenter';
+        } else {
+        	direction = 'fromCenter';
+        } 
+        $(this).parent().parent().children().removeClass();
+        $(this).parent().addClass("active");
+        table.draw();
+    });
+	
 	var $JOrderList = $('#J_orderList');
 	// 初始化
     var table = $JOrderList.DataTable({
@@ -11,7 +25,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         'lengthChange': false,
         'sort': false,
         'serverSide': true,
-        'serverSide': true,
+        'destroy': true,
         'lengthMenu': [10, 20, 50, 100],
         'ajax':{
             'url':ctx + '/repair-order/check-query',
@@ -19,6 +33,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             'data': function (d) {
                 d.extra_search = $('#keywords').val();
                 d.type = "check";
+                d.direction = direction;
             }
         },
     	'columns': [
