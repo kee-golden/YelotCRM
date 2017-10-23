@@ -79,7 +79,7 @@
 //    require(['jquery', 'weixin'], function ($, weixin) {
 
         wx.config({
-            debug: true,
+            debug: false,
             appId: appid,
             timestamp: timestamp,
             nonceStr: noncestr,
