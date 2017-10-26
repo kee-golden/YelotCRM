@@ -60,6 +60,30 @@
 						<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control" value="${bean.wechatNickname}">
 					</div>
 					<div class="col-md-2">
+						<label>阿里旺旺账号</label>
+						<input type="text" name="aliNo" id="aliNo" placeholder="阿里旺旺账号" class="form-control" value="${bean.aliNo}">
+					</div>
+					<div class="col-md-2">
+						<label>阿里旺旺昵称</label>
+						<input type="text" name="aliNickname" id="aliNickname" placeholder="阿里旺旺昵称" class="form-control" value="${bean.aliNickname}">
+					</div>
+					<div class="col-md-2">
+						<label>微博账号</label>
+						<input type="text" name="blogNo" id="blogNo" placeholder="微博账号" class="form-control" value="${bean.blogNo}">
+					</div>
+					<div class="col-md-2">
+						<label>微博昵称</label>
+						<input type="text" name="blogNickname" id="blogNickname" placeholder="微博昵称" class="form-control" value="${bean.blogNickname}">
+					</div>
+					<div class="col-md-2">
+						<label>QQ账号</label>
+						<input type="text" name="QQNo" id="QQNo" placeholder="QQ账号" class="form-control" value="${bean.QQNo}">
+					</div>
+					<div class="col-md-2">
+						<label>QQ昵称</label>
+						<input type="text" name="QQNickname" id="QQNickname" placeholder="QQ昵称" class="form-control" value="${bean.QQNickname}">
+					</div>
+					<div class="col-md-2">
 						<label>客户来源</label>
 						<select class="form-control" id="channelSource" name="channelSource">
                             <option value="1" <c:if test="${bean.channelSource == 1}">selected="selected"</c:if>>udesk</option>
@@ -247,6 +271,47 @@
         }
 
         $('#saveBtn').click(function () {
+        	
+        	var customerName = $("#customerName").val();
+            var customerPhone = $('#customerPhone').val();
+            var customerSex = $('#customerSex').val();
+            var customerAddress = $('#customerAddress').val();
+            var wechatNo = $('#wechatNo').val();
+            var wechatNickname = $('#wechatNickname').val();
+            var channelSource = $('#channelSource').val();
+            var repairCommands = $('#repairCommands').val();
+            var province = $('#province').val();
+            var city = $('#city').val();
+            var brandId = $('#brand').val();
+            var firstCategory = $('#firstCategory').val();
+            var secondCategory = $('#secondCategory').val();
+            var channelUrl = $('#channelUrl').val();
+            var keywords = $('#keywords').val();
+            var priceLimit = $('#priceLimit').val();
+            var timeLimit = $('#timeLimit').val();
+            var qulityLimit = $('#qulityLimit').val();
+            var specialCommands = $('#specialCommands').val();
+            var vistorDate = $('#vistorAt').val();
+            var imagesPath = $('.filelist').data('path');
+            var expressNo = $('#expressNo').val();
+            var deliverType = $('#deliverType').val();
+            var comment = $('#commentId').val();
+            var bookShopId = $('#bookShopId').val();
+            var aliNo = $('#aliNo').val();
+            var aliNickname = $('#aliNickname').val();
+            var blogNo = $('#blogNo').val();
+            var blogNickname = $('#blogNickname').val();
+            var QQNo = $('#QQNo').val();
+            var QQNickname = $('#QQNickname').val();
+
+			if(customerPhone == '' && wechatNo == '' && wechatNickname == '' && aliNo == '' && aliNickname == '' && blogNo == '' && blogNickname == '' 
+					&& QQNo == '' && QQNickname == ''){
+                yaya.layer.msg('手机号、微信号、微信昵称、阿里旺旺账号、阿里旺旺昵称、微博账号、微博昵称、QQ账号、QQ昵称，至少要填写一项');
+                return;
+			}else if(customerPhone != '' && !checkIsMobile(customerPhone)){
+			    yaya.layer.msg("手机号输入不正确");
+			    return;
+			}
 
             console.log($('.filelist').data("path"));
             $.ajax({
@@ -255,30 +320,37 @@
                 dataType: 'json',
                 data: {
 				    id:$('#orderId').data("id"),
-                    customerName: $('#customerName').val(),
-                    customerSex:$('#customerSex').val(),
-                    customerPhone:$('#customerPhone').val(),
-                    customerAddress: $('#customerAddress').val(),
-                    province: $('#province').val(),
-                    city: $('#city').val(),
-                    wechatNo: $('#wechatNo').val(),
-                    wechatNickname: $('#wechatNickname').val(),
-                    firstCategoryName: $('#firstCategory').val(),
-                    secondCategoryName: $('#secondCategory').val(),
-                    brandId:$('#brand').val(),
-                    bookShopId:$('#bookShopId').val(),
-                    vistorDate:$('#vistorAt').val(),
-                    repairCommands:$('#repairCommands').val(),
-                    keywords:$('#keywords').val(),
-                    channelUrl:$('#channelUrl').val(),
-                    priceLimit:$('#priceLimit').val(),
-                    timeLimit:$('#timeLimit').val(),
-                    qulityLimit:$('#qulityLimit').val(),
-                    specialCommands:$('#specialCommands').val(),
-                    deliverType:$('#deliverType').val(),
-                    expressNo:$('#expressNo').val(),
-                    comment:$('#commentId').val(),
-                    imagesPath:$('.filelist').data("path"),
+				    customerName: customerName,
+                    customerPhone: customerPhone,
+                    customerSex: customerSex,
+                    customerAddress: customerAddress,
+                    wechatNo:wechatNo,
+                    wechatNickname:wechatNickname,
+                    channelSource:channelSource,
+                    repairCommands:repairCommands,
+                    province:province,
+                    city:city,
+                    brandId:brandId,
+                    firstCategoryName:firstCategory,
+                    secondCategoryName:secondCategory,
+                    channelUrl:channelUrl,
+                    keywords:keywords,
+                    priceLimit:priceLimit,
+                    timeLimit:timeLimit,
+                    qulityLimit:qulityLimit,
+                    specialCommands:specialCommands,
+                    imagesPath:imagesPath,
+                    vistorDate:vistorDate,
+                    expressNo:expressNo,
+                    bookShopId:bookShopId,
+                    deliverType:deliverType,
+                    comment:comment,
+                    aliNo:aliNo,
+                    aliNickname:aliNickname,
+                    blogNo:blogNo,
+                    blogNickname:blogNickname,
+                    QQNo:QQNo,
+                    QQNickname:QQNickname
 
                 },
                 success: function (data) {

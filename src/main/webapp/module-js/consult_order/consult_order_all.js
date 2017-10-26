@@ -92,37 +92,85 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
                     },
                     yes: function (index) {// 保存按钮
+                    	
+                    	var customerName = $("#customerName").val();
+                        var customerPhone = $('#customerPhone').val();
+                        var customerSex = $('#customerSex').val();
+                        var customerAddress = $('#customerAddress').val();
+                        var wechatNo = $('#wechatNo').val();
+                        var wechatNickname = $('#wechatNickname').val();
+                        var channelSource = $('#channelSource').val();
+                        var repairCommands = $('#repairCommands').val();
+                        var province = $('#province').val();
+                        var city = $('#city').val();
+                        var brandId = $('#brand').val();
+                        var firstCategory = $('#firstCategory').val();
+                        var secondCategory = $('#secondCategory').val();
+                        var channelUrl = $('#channelUrl').val();
+                        var keywords = $('#keywords').val();
+                        var priceLimit = $('#priceLimit').val();
+                        var timeLimit = $('#timeLimit').val();
+                        var qulityLimit = $('#qulityLimit').val();
+                        var specialCommands = $('#specialCommands').val();
+                        var vistorDate = $('#vistorAt').val();
+                        var imagesPath = $('.filelist').data('path');
+                        var expressNo = $('#expressNo').val();
+                        var deliverType = $('#deliverType').val();
+                        var comment = $('#commentId').val();
+                        var bookShopId = $('#bookShopId').val();
+                        var aliNo = $('#aliNo').val();
+                        var aliNickname = $('#aliNickname').val();
+                        var blogNo = $('#blogNo').val();
+                        var blogNickname = $('#blogNickname').val();
+                        var QQNo = $('#QQNo').val();
+                        var QQNickname = $('#QQNickname').val();
+
+            			if(customerPhone == '' && wechatNo == '' && wechatNickname == '' && aliNo == '' && aliNickname == '' && blogNo == '' && blogNickname == '' 
+            					&& QQNo == '' && QQNickname == ''){
+                            yaya.layer.msg('手机号、微信号、微信昵称、阿里旺旺账号、阿里旺旺昵称、微博账号、微博昵称、QQ账号、QQ昵称，至少要填写一项');
+                            return;
+            			}else if(customerPhone != '' && !checkIsMobile(customerPhone)){
+            			    yaya.layer.msg("手机号输入不正确");
+            			    return;
+            			}
+                    	
                         $.ajax({
                             url:'/consult-order/update',
                             method: 'post',
                             dataType: 'json',
                             data: {
-                                id:$('#orderId').data("id"),
-                                customerName: $('#customerName').val(),
-                                customerSex:$('#customerSex').val(),
-                                customerPhone:$('#customerPhone').val(),
-                                customerAddress: $('#customerAddress').val(),
-                                province: $('#province').val(),
-                                city: $('#city').val(),
-                                wechatNo: $('#wechatNo').val(),
-                                wechatNickname: $('#wechatNickname').val(),
-                                channelSource: $('#channelSource').val(),
-                                firstCategoryName: $('#firstCategory').val(),
-                                secondCategoryName: $('#secondCategory').val(),
-                                brandId:$('#brand').val(),
-                                bookShopId:$('#bookShopId').val(),
-                                vistorDate:$('#vistorAt').val(),
-                                repairCommands:$('#repairCommands').val(),
-                                keywords:$('#keywords').val(),
-                                channelUrl:$('#channelUrl').val(),
-                                priceLimit:$('#priceLimit').val(),
-                                timeLimit:$('#timeLimit').val(),
-                                qulityLimit:$('#qulityLimit').val(),
-                                specialCommands:$('#specialCommands').val(),
-                                deliverType:$('#deliverType').val(),
-                                expressNo:$('#expressNo').val(),
-                                comment:$('#commentId').val(),
-                                imagesPath:$('.filelist').data("path"),
+                            	id:$('#orderId').data("id"),
+            				    customerName: customerName,
+                                customerPhone: customerPhone,
+                                customerSex: customerSex,
+                                customerAddress: customerAddress,
+                                wechatNo:wechatNo,
+                                wechatNickname:wechatNickname,
+                                channelSource:channelSource,
+                                repairCommands:repairCommands,
+                                province:province,
+                                city:city,
+                                brandId:brandId,
+                                firstCategoryName:firstCategory,
+                                secondCategoryName:secondCategory,
+                                channelUrl:channelUrl,
+                                keywords:keywords,
+                                priceLimit:priceLimit,
+                                timeLimit:timeLimit,
+                                qulityLimit:qulityLimit,
+                                specialCommands:specialCommands,
+                                imagesPath:imagesPath,
+                                vistorDate:vistorDate,
+                                expressNo:expressNo,
+                                bookShopId:bookShopId,
+                                deliverType:deliverType,
+                                comment:comment,
+                                aliNo:aliNo,
+                                aliNickname:aliNickname,
+                                blogNo:blogNo,
+                                blogNickname:blogNickname,
+                                QQNo:QQNo,
+                                QQNickname:QQNickname
 
                             },
                             success: function (data) {
@@ -252,6 +300,11 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
     });
 
+    function checkIsMobile(value){
+        var length = value.length;
+        var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+        return (length == 11 && mobile.test(value));
+    }
 
 
     });

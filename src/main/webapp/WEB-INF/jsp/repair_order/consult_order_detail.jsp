@@ -69,6 +69,30 @@
 						<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control" value="${bean.wechatNickname}" disabled="disabled">
 					</div>
 					<div class="col-md-2">
+						<label>阿里旺旺账号</label>
+						<input type="text" name="aliNo" id="aliNo" placeholder="阿里旺旺账号" class="form-control" value="${bean.aliNo}" disabled="disabled">
+					</div>
+					<div class="col-md-2">
+						<label>阿里旺旺昵称</label>
+						<input type="text" name="aliNickname" id="aliNickname" placeholder="阿里旺旺昵称" class="form-control" value="${bean.aliNickname}" disabled="disabled">
+					</div>
+					<div class="col-md-2">
+						<label>微博账号</label>
+						<input type="text" name="blogNo" id="blogNo" placeholder="微博账号" class="form-control" value="${bean.blogNo}" disabled="disabled">
+					</div>
+					<div class="col-md-2">
+						<label>微博昵称</label>
+						<input type="text" name="blogNickname" id="blogNickname" placeholder="微博昵称" class="form-control" value="${bean.blogNickname}" disabled="disabled">
+					</div>
+					<div class="col-md-2">
+						<label>QQ账号</label>
+						<input type="text" name="QQNo" id="QQNo" placeholder="QQ账号" class="form-control" value="${bean.QQNo}" disabled="disabled">
+					</div>
+					<div class="col-md-2">
+						<label>QQ昵称</label>
+						<input type="text" name="QQNickname" id="QQNickname" placeholder="QQ昵称" class="form-control" value="${bean.QQNickname}" disabled="disabled">
+					</div>
+					<div class="col-md-2">
 						<label>客户来源</label>
 						<select class="form-control" id="channelSource" name="channelSource" disabled="disabled">
                             <option value="1" <c:if test="${bean.channelSource == 1}">selected="selected"</c:if>>udesk</option>

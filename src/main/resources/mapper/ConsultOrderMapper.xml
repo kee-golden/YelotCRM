@@ -35,6 +35,12 @@
         <result property="bookShopName" column="bookShopName"/>
         <result property="deliverType" column="deliver_type"/>
         <result property="comment" column="comment"/>
+        <result property="aliNo" column="ali_no"/>
+        <result property="aliNickname" column="ali_nickname"/>
+        <result property="blogNo" column="blog_no"/>
+        <result property="blogNickname" column="blog_nickname"/>
+        <result property="QQNo" column="QQ_no"/>
+        <result property="QQNickname" column="QQ_nickname"/>
 
     </resultMap>
     
@@ -94,11 +100,11 @@
         insert into t_consult_order(order_no,customer_name,customer_sex,customer_phone,customer_address,wechat_no,wechat_nickname,channel_source,repair_commands,
         province,city,brand_id,first_category_name,second_category_name,channel_url,keywords,price_limit,time_limit,
         qulity_limit,special_commands,images_path,vistor_at,create_at,create_user_id,express_no,status,shop_id,book_shop_id,
-        deliver_type,comment)
+        deliver_type,comment,ali_no,ali_nickname,blog_no,blog_nickname,QQ_no,QQ_nickname)
         VALUES (#{orderNo},#{customerName},#{customerSex},#{customerPhone},#{customerAddress},#{wechatNo},#{wechatNickname},#{channelSource},#{repairCommands},#{province},#{city},
         #{brandId},#{firstCategoryName},#{secondCategoryName},#{channelUrl},#{keywords},#{priceLimit},#{timeLimit},#{qulityLimit},
         #{specialCommands},#{imagesPath},#{vistorAt},#{createAt},#{createUserId},#{expressNo},#{status},#{shopId},#{bookShopId},
-        #{deliverType},#{comment});
+        #{deliverType},#{comment},#{aliNo},#{aliNickname},#{blogNo},#{blogNickname},#{QQNo},#{QQNickname});
 
     </insert>
 
@@ -108,7 +114,8 @@
                province=#{province},city=#{city},brand_id=#{brandId},first_category_name=#{firstCategoryName},second_category_name=#{secondCategoryName},
                book_shop_id=#{bookShopId},channel_url=#{channelUrl},keywords=#{keywords},price_limit=#{priceLimit},time_limit=#{timeLimit},qulity_limit=#{qulityLimit},
                special_commands=#{specialCommands},images_path=#{imagesPath},vistor_at=#{vistorAt},express_no=#{expressNo},
-               deliver_type=#{deliverType},comment=#{comment}
+               deliver_type=#{deliverType},comment=#{comment},ali_no=#{aliNo},ali_nickname=#{aliNickname},blog_no=#{blogNo},blog_nickname=#{blogNickname},
+               QQ_no=#{QQNo},QQ_nickname=#{QQNickname}
          where id = #{id};
     </update>
 

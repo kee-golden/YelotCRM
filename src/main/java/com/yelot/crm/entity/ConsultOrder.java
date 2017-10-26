@@ -8,6 +8,10 @@ import java.util.Date;
  * 意向客户订单
  * Created by kee on 17/8/22.
  */
+/**
+ * @author xyzloveabc
+ * @2017年10月26日
+ */
 public class ConsultOrder {
     private Long id;
     private String orderNo;
@@ -74,7 +78,37 @@ public class ConsultOrder {
     private String deliverType;
 
     private String comment;
+    
+    /**
+     * 阿里旺旺账号
+     */
+    private String aliNo;
 
+    /**
+     * 阿里旺旺昵称
+     */
+    private String aliNickname;
+    
+    /**
+     * 微博账号
+     */
+    private String blogNo;
+    
+    /**
+     * 微博昵称
+     */
+    private String blogNickname;
+    
+    /**
+     * QQ号
+     */
+    private String QQNo;
+    
+    /**
+     * QQ昵称
+     */
+    private String QQNickname;
+    
     public String getCustomerAddress() {
         return customerAddress;
     }
@@ -372,4 +406,53 @@ public class ConsultOrder {
     public void setBookShopName(String bookShopName) {
         this.bookShopName = bookShopName;
     }
+
+	public String getAliNo() {
+		return aliNo;
+	}
+
+	public void setAliNo(String aliNo) {
+		this.aliNo = aliNo;
+	}
+
+	public String getAliNickname() {
+		return aliNickname;
+	}
+
+	public void setAliNickname(String aliNickname) {
+		this.aliNickname = aliNickname;
+	}
+
+	public String getBlogNo() {
+		return blogNo;
+	}
+
+	public void setBlogNo(String blogNo) {
+		this.blogNo = blogNo;
+	}
+
+	public String getBlogNickname() {
+		return blogNickname;
+	}
+
+	public void setBlogNickname(String blogNickname) {
+		this.blogNickname = blogNickname;
+	}
+
+	public String getQQNo() {
+		return QQNo;
+	}
+
+	public void setQQNo(String qQNo) {
+		QQNo = qQNo;
+	}
+
+	public String getQQNickname() {
+		return QQNickname;
+	}
+
+	public void setQQNickname(String qQNickname) {
+		QQNickname = qQNickname;
+	}
+	
 }

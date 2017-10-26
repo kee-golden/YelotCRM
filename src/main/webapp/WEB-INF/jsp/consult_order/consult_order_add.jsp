@@ -41,12 +41,12 @@
 					<div class="row bottom10">
 							<input type="hidden" id="customerId" data-id="" />
 							<div class="col-md-2">
-								<label><span style="color: red">*</span>客户名称</label> <input type="text" placeholder="请输入客户名称" class="form-control" name="customerName" id="customerName"
+								<label>客户名称</label> <input type="text" placeholder="请输入客户名称" class="form-control" name="customerName" id="customerName"
 																						  autocomplete="off" >
 							</div>
 
 							<div class="col-md-2">
-								<label><span style="color: red"></span>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone">
+								<label>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone">
 							</div>
 
 							<div class="col-md-2">
@@ -78,6 +78,30 @@
 						<div class="col-md-2">
 							<label>微信昵称</label>
 							<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>阿里旺旺账号</label>
+							<input type="text" name="aliNo" id="aliNo" placeholder="阿里旺旺账号" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>阿里旺旺昵称</label>
+							<input type="text" name="aliNickname" id="aliNickname" placeholder="阿里旺旺昵称" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>微博账号</label>
+							<input type="text" name="blogNo" id="blogNo" placeholder="微博账号" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>微博昵称</label>
+							<input type="text" name="blogNickname" id="blogNickname" placeholder="微博昵称" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>QQ账号</label>
+							<input type="text" name="QQNo" id="QQNo" placeholder="QQ账号" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>QQ昵称</label>
+							<input type="text" name="QQNickname" id="QQNickname" placeholder="QQ昵称" class="form-control">
 						</div>
 						<div class="col-md-2">
 							<label>客户来源</label>
@@ -292,19 +316,25 @@
             var deliverType = $('#deliverType').val();
             var comment = $('#commentId').val();
             var bookShopId = $('#bookShopId').val();
+            var aliNo = $('#aliNo').val();
+            var aliNickname = $('#aliNickname').val();
+            var blogNo = $('#blogNo').val();
+            var blogNickname = $('#blogNickname').val();
+            var QQNo = $('#QQNo').val();
+            var QQNickname = $('#QQNickname').val();
 
-            if(customerName == ''){
+            /* if(customerName == ''){
                 yaya.layer.msg('用户名不能为空');
                 return;
-			}
-			if(customerPhone == ''  && wechatNo == ''){
-                yaya.layer.msg('用户手机号和微信号至少要填写一项');
+			} */
+			if(customerPhone == '' && wechatNo == '' && wechatNickname == '' && aliNo == '' && aliNickname == '' && blogNo == '' && blogNickname == '' 
+					&& QQNo == '' && QQNickname == ''){
+                yaya.layer.msg('手机号、微信号、微信昵称、阿里旺旺账号、阿里旺旺昵称、微博账号、微博昵称、QQ账号、QQ昵称，至少要填写一项');
                 return;
 			}else if(customerPhone != '' && !checkIsMobile(customerPhone)){
 			    yaya.layer.msg("手机号输入不正确");
 			    return;
 			}
-
 
             $.ajax({
                 url: ctx + '/consult-order/save',
@@ -336,7 +366,12 @@
                     bookShopId:bookShopId,
                     deliverType:deliverType,
                     comment:comment,
-
+                    aliNo:aliNo,
+                    aliNickname:aliNickname,
+                    blogNo:blogNo,
+                    blogNickname:blogNickname,
+                    QQNo:QQNo,
+                    QQNickname:QQNickname
                 },
                 success: function (data) {
                     if(data.code == 1200){
