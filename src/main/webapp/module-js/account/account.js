@@ -34,10 +34,8 @@ require(['jquery', 'yaya', 'datatables.net','dateTimePicker'], function ($, yaya
             {'data': 'wxNickname'},
             {'data': 'accountNo'},
             {'data': 'fullName'},
-            {'data': 'email'},
-            {'data': 'hobbyJson'},
+            {'data': 'interestJson'},
             {'data': 'city'},
-            {'data': 'expressAddress'},
             {'data': 'createAt'},
         ],
         'language': {

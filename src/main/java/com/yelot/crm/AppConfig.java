@@ -15,7 +15,8 @@ public class AppConfig {
     @Value("${image.dataPath}")
     private String dataPath;
 
-    private Boolean isDebug;
+    @Value("${image.isDebug}")
+    private Boolean debug;
 
 
 //一下是，短信接口配置参数
@@ -63,11 +64,11 @@ public class AppConfig {
     }
 
     public Boolean getDebug() {
-        return isDebug;
+        return debug;
     }
 
     public void setDebug(Boolean debug) {
-        isDebug = debug;
+        this.debug = debug;
     }
 
     public String getSmsAccount() {

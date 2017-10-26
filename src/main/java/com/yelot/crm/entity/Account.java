@@ -1,5 +1,7 @@
 package com.yelot.crm.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -56,6 +58,7 @@ public class Account {
         this.wxNickname = wxNickname;
     }
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
     public Date getCreateAt() {
         return createAt;
     }

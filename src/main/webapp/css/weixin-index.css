@@ -509,10 +509,10 @@ height: 28px;
 }
 .score-intro-center .score-intro-orange{
     top: 33%;
-    background: #ff8816;
+    background: #eab300;
 }
 .score-intro-center .score-intro-orange:after,.score-intro-center .score-intro-orange:before{
-    background: #fe883f;
+    background: #eab300;
 }
 .score-intro-center .score-intro-black{
     top: 62%;
