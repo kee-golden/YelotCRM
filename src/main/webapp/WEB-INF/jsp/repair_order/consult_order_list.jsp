@@ -153,7 +153,8 @@
 
 #searchFrom {
 	margin-left: 15px;
-	float: right
+	float: right;
+	width: 60%;
 }
 
 .ibox {
@@ -210,8 +211,26 @@
 		<div class="row animated fadeInRight" id="content-main">
 			<div class="col-xs-12">
 				<div class="ibox float-e-margins">
-					<div id="content" class="ibox-content">
-					<input id="phone" type="hidden" value="${phone}">
+					<div id="content" class="ibox-content"><div class="co_all">
+							<form id="searchFrom" style="margin-top: -10px">
+								<div id="search_Big">
+									<ul class="pull-left" id="otherTab" style="width: 90%">
+										<li style="list-style-type:none;width: 100%"><span>搜索：</span> <input type="text" id="keywords" style="width: 80%" placeholder="请输入手机号、微信、阿里旺旺、微博、QQ">
+											<div class="clearfix"></div></li>
+									</ul>
+									<div class="pull-right search_right">
+										<a id="J_orderSerch" class="searfor"> <i class="glyphicon glyphicon-search sear_icon sear_icon"></i></a>
+									</div>
+									<div class="clearfix"></div>
+									<div class="line"></div>
+									<%--线--%>
+								</div>
+							</form>
+
+							<div class="clearfix"></div>
+						</div>
+						<div class="clearfix"></div>
+					<%-- <input id="phone" type="hidden" value="${phone}"> --%>
 						<table id="J_orderList" class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr>

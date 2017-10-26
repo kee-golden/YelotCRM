@@ -491,8 +491,7 @@ public class RepairOrderController {
     }
 
     @RequestMapping("consultOrderList")
-    public String consultOrderList(Model model, String phone){
-    	model.addAttribute("phone", phone);
+    public String consultOrderList(Model model){
         return "repair_order/consult_order_list";
     }
 
@@ -503,7 +502,7 @@ public class RepairOrderController {
     @ResponseBody
     @RequestMapping("queryConsultOrderList")
     public Table queryOrder(Model model,
-                            @RequestParam(value = "phone", defaultValue = "")String phone,
+                            @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
                             @RequestParam(value = "start", defaultValue = "0") int start,
                             @RequestParam(value = "length", defaultValue = "15") int length) {
 
@@ -511,8 +510,8 @@ public class RepairOrderController {
         pageHelper.setOffset(start);
         pageHelper.setSize(length);
 
-        int pageCount = consultOrderService.countTotalPageAllByPhone(phone);
-        List<ConsultOrder> consultOrderList = consultOrderService.findByPageAllByPhone(phone, pageHelper);
+        int pageCount = consultOrderService.countTotalPageAllByPhone(extra_search);
+        List<ConsultOrder> consultOrderList = consultOrderService.findByPageAllByPhone(extra_search, pageHelper);
         return new Table(pageCount, pageCount, consultOrderList);
     }
 

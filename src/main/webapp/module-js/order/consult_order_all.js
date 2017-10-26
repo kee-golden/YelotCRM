@@ -15,7 +15,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         'serverSide': true,
         'lengthMenu': [10, 20, 50, 100],
         'ajax':{
-            'url':ctx + '/repair-order/queryConsultOrderList?phone=' + phone,
+            'url':ctx + '/repair-order/queryConsultOrderList',
 			'method': 'get',
             'data': function (d) {
                 d.extra_search = $('#keywords').val();
@@ -69,6 +69,10 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                 'last': '尾页'
             }
         }
+    });
+    
+    $("#J_orderSerch").click(function(){
+        table.draw();
     });
 
     //选中行事件

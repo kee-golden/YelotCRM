@@ -35,12 +35,12 @@ public class ConsultOrderService {
         return consultOrderMapper.findByPageAll(startDate, endDate, createUserName, extra_search, pageHelper);
     }
 
-    public int countTotalPageAllByPhone(String phone) {
-        return consultOrderMapper.countTotalPageAllByPhone(phone);
+    public int countTotalPageAllByPhone(String extra_search) {
+        return consultOrderMapper.countTotalPageAllByPhone(extra_search);
     }
 
-    public List<ConsultOrder> findByPageAllByPhone(String phone, PageHelper pageHelper) {
-        return consultOrderMapper.findByPageAllByPhone(phone,pageHelper);
+    public List<ConsultOrder> findByPageAllByPhone(String extra_search, PageHelper pageHelper) {
+        return consultOrderMapper.findByPageAllByPhone(extra_search,pageHelper);
     }
     
     public ConsultOrder findConsultOrderByConsultOrderNo(String consultOrderNo){

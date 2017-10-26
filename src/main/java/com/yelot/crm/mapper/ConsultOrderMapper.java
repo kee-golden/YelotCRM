@@ -29,9 +29,9 @@ public interface ConsultOrderMapper {
 			@Param("extra_search") String extra_search,
 			@Param("pageHelper") PageHelper pageHelper);
 
-    int countTotalPageAllByPhone(@Param("phone")String phone);
+    int countTotalPageAllByPhone(@Param("extra_search")String extra_search);
 
-    List<ConsultOrder> findByPageAllByPhone(@Param("phone") String phone, @Param("pageHelper") PageHelper pageHelper);
+    List<ConsultOrder> findByPageAllByPhone(@Param("extra_search") String extra_search, @Param("pageHelper") PageHelper pageHelper);
     
     ConsultOrder findConsultOrderByConsultOrderNo(@Param("consultOrderNo") String consultOrderNo);
 
