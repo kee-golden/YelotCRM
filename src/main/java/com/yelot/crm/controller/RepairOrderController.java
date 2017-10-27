@@ -170,9 +170,9 @@ public class RepairOrderController {
         repairOrder.setDiscountDesc(discountDesc);
         repairOrder.setChannelSource(customer.getChannelSource());
 
-        //订单号生成规则：门店编号+年月日+流水序号（门店当天第几单）
-        String orderNo = user.getShop_id()+DateUtil.toString(now,"yyyyMMdd");
-        int orderIndex = repairOrderService.countByShopId(user.getShop_id());
+        //订单号生成规则：门店编号+年月日+流水序号（门店当天第几单），第一单从11开始，年只保留后面2位
+        String orderNo = user.getShop_id()+DateUtil.toString(now,"yyMMdd");
+        int orderIndex = repairOrderService.countByShopId(user.getShop_id()) + 11;
         repairOrder.setOrderNo(orderNo+orderIndex);
 
         repairOrder.setStatus(2);//submit
@@ -594,9 +594,16 @@ public class RepairOrderController {
                     attibute.setRealValue(resultList.get(i).getSelectionValues());
                     break;
                 }
-
             }
         }
     }
+
+//    public static void main(String[] args) {
+//
+//        String str = DateUtil.toString(new Date(),"yyyyMMdd");
+//        String str2 = DateUtil.toString(new Date(),"yyMMdd");
+//        System.out.println(str+","+str2);
+//
+//    }
 
 }
