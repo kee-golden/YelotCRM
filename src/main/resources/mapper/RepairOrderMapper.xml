@@ -40,6 +40,7 @@
         <result property="typeName" column="type_name"/>
         <result property="labourPayment" column="labour_payment"/>
         <result property="materialPayment" column="material_payment"/>
+        <result property="materialDesc" column="material_desc"/>
         <result property="discountAmountPayment" column="discount_amount_payment"/>
         <result property="consultOrderId" column="consult_order_id"/>
         <result property="consultOrderNo" column="consult_order_no"/>
@@ -63,12 +64,12 @@
             pickup_type,customer_id,customer_name,customer_phone,customer_phone_second,customer_address,advance_payment,non_payment,
             advance_payment_type,non_payment_type,total_payment,shop_id,images_json,image_desc,product_info_json,
             service_item_ids,first_category_id,second_category_id,brand_id,repair_desc,create_at,update_at,
-            type_name,labour_payment,material_payment,discount_amount_payment,consult_order_id,discount_desc,ref_order_ids,channel_source)
+            type_name,labour_payment,material_payment,material_desc,discount_amount_payment,consult_order_id,discount_desc,ref_order_ids,channel_source)
             values(#{orderNo},#{status},#{createUserId},#{pickupAt},#{pickupType},
             #{customerId},#{customerName},#{customerPhone},#{customerPhoneSecond},#{customerAddress},#{advancePayment},#{nonPayment},
             #{advancePaymentType},#{nonPaymentType},#{totalPayment},#{shopId},#{imagesJson},#{imageDesc},#{productInfoJson},
             #{serviceItemIds},#{firstCategoryId},#{secondCategoryId},#{brandId},#{repairDesc},#{createAt},#{updateAt},
-            #{typeName},#{labourPayment},#{materialPayment},#{discountAmountPayment},#{consultOrderId},#{discountDesc},#{refOrderIds},#{channelSource})
+            #{typeName},#{labourPayment},#{materialPayment},#{materialDesc},#{discountAmountPayment},#{consultOrderId},#{discountDesc},#{refOrderIds},#{channelSource})
     </insert>
 
     <update id="updateOrderStatusAndImagesPath">

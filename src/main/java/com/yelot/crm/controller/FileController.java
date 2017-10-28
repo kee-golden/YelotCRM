@@ -2,6 +2,7 @@ package com.yelot.crm.controller;
 
 
 import com.yelot.crm.AppConfig;
+import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResponseData;
 import com.yelot.crm.Util.ResultData;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
 
 
 /**
@@ -63,7 +65,7 @@ public class FileController {
         String suffix = (multiFile.getOriginalFilename().substring
                 (multiFile.getOriginalFilename().lastIndexOf("."))).toLowerCase();
         /**拼成完整的文件保存路径加文件**/
-        String filePath = realPath + "data" + File.separator;
+        String filePath = realPath + "data" + File.separator+ DateUtil.toString(new Date(),"yyMMdd")+File.separator;
         File docFile = new File(filePath);
         if (!docFile.exists()) {
             docFile.mkdirs();
@@ -71,7 +73,7 @@ public class FileController {
         String fileNameTemp = System.currentTimeMillis() + suffix;
         File file = new File(filePath + fileNameTemp);
         try {
-            resultData.putDataValue("path","/data"+File.separator + fileNameTemp);
+            resultData.putDataValue("path","/data"+File.separator + DateUtil.toString(new Date(),"yyMMdd")+File.separator + fileNameTemp);
             //
 //            String testFilePath = "/usr/crm_images/data/"+fileNameTemp;
             multiFile.transferTo(file);

@@ -15,6 +15,11 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
     generateAttributes(attributesJson);
     generateCategroyServices(categoryServiceJson);
 
+    // 品牌特殊处理
+    $("#brandName").select2({
+        tags: true,
+    });
+
     var prifixAttribute = 'attId_';// 属性前缀
 
     $("#serviceItem").select2({
@@ -154,7 +159,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         var consultOrderId = $('#consultOrderId').val();
         var firstCategory = $('#firstCategory').val();
         var secondCategory = $('#secondCategory').val();
-        var brandId = $('#brandId').val();
+        var brandName = $('#brandName').val();
 
         var valuesAttributeJson =  getAttributeValues(attributesJson);
         var serviceItemJson = $('#serviceItem').val();
@@ -170,9 +175,10 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         var discountAmountPayment = $('#discountAmountPaymentFlag').val() == "0" ? -1 : $('#discountAmountPayment').val();
         var pickupDate = $('#pickupDate').val();
         var discountDesc = $('#discountDesc').val();
-        console.log(labourPayment+","+labourPayment+","+materialPayment);
+        var materialDesc = $('#materialDesc').val();
+        // console.log(labourPayment+","+labourPayment+","+materialPayment);
 
-        console.log(serviceItemJson+","+imagePaths);
+        console.log('materialDesc'+materialDesc);
         //验证必填字段
         if(serviceItemJson==undefined || serviceItemJson == "" || serviceItemJson == null){
             yaya.layer.msg("服务项为必填项，请选择服务项！");
@@ -191,7 +197,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 consultOrderId: consultOrderId,
                 firstCategory: firstCategory,
                 secondCategory: secondCategory,
-                brandId:brandId,
+                brandName:brandName,
                 valuesAttributeJson:JSON.stringify(valuesAttributeJson),
                 serviceItemJson:JSON.stringify(serviceItemJson),
                 refOrderIdsJson:JSON.stringify(refOrderIdsJson),
@@ -204,7 +210,8 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
                 materialPayment:materialPayment,
                 discountAmountPayment:discountAmountPayment,
                 pickupDate:pickupDate,
-                discountDesc:discountDesc
+                discountDesc:discountDesc,
+                materialDesc:materialDesc
             },
             success: function (data) {
                 if(data.code == 1200){
@@ -479,9 +486,3 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
     });
 
 });
-
-
-
-
-
-

@@ -28,7 +28,7 @@
         select * from t_brand where is_alive = '1' and name = #{name}
     </select>
     
-    <insert id="save" parameterType="com.yelot.crm.entity.Brand">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yelot.crm.entity.Brand">
         insert into t_brand(name, first_letter, chinese, is_alive) 
         values(#{name}, #{firstLetter}, #{chinese}, '1')
     </insert>

@@ -129,12 +129,12 @@ public class RepairOrderController {
 
     @ResponseBody
     @RequestMapping("save")
-    public ResultData save(Long customerId,Long consultOrderId,String firstCategory,String secondCategory,Long brandId,String valuesAttributeJson,
+    public ResultData save(Long customerId,Long consultOrderId,String firstCategory,String secondCategory,String brandName,String valuesAttributeJson,
                            String serviceItemJson,String refOrderIdsJson,String imagePaths,String imageDesc,String repairDesc,String typeName,
                            @RequestParam(value = "advancePayment",defaultValue = "0") Integer advancePayment,
                            @RequestParam(value = "labourPayment",defaultValue = "0")Integer labourPayment,
                            @RequestParam(value = "materialPayment",defaultValue = "0")Integer materialPayment,
-                           String pickupDate, String discountDesc){
+                           String pickupDate, String discountDesc,String materialDesc){
         RepairOrder repairOrder = new RepairOrder();
 
         User user = UserUtil.getCurrentUser();
@@ -142,11 +142,22 @@ public class RepairOrderController {
         repairOrder.setShopId(user.getShop_id());
 
         Category category = categoryMapper.findByName(firstCategory,secondCategory);
+        Brand brand = brandMapper.findByName(brandName);
+        Brand newBrand = null;
+        if(brand == null){
+            newBrand = new Brand();
+            newBrand.setName(brandName);
+            brandMapper.save(newBrand);
+        }
 
         repairOrder.setConsultOrderId(consultOrderId);
         repairOrder.setFirstCategoryId(category.getParentId());
         repairOrder.setSecondCategoryId(category.getId());
-        repairOrder.setBrandId(brandId);
+        if(brand == null){
+            repairOrder.setBrandId(newBrand.getId());
+        }else{
+            repairOrder.setBrandId(brand.getId());
+        }
         Customer customer = customerMapper.find(customerId);
         repairOrder.setCustomerId(customerId);
         repairOrder.setCustomerName(customer.getName());
@@ -168,6 +179,7 @@ public class RepairOrderController {
         repairOrder.setCreateAt(now);
         repairOrder.setUpdateAt(now);
         repairOrder.setDiscountDesc(discountDesc);
+        repairOrder.setMaterialDesc(materialDesc);
         repairOrder.setChannelSource(customer.getChannelSource());
 
         //订单号生成规则：门店编号+年月日+流水序号（门店当天第几单），第一单从11开始，年只保留后面2位
@@ -177,7 +189,7 @@ public class RepairOrderController {
 
         repairOrder.setStatus(2);//submit
 
-        repairOrderService.save(repairOrder);
+       // repairOrderService.save(repairOrder);
         
         if (refOrderIdsJson != null && !"null".equals(refOrderIdsJson) && !"".equals(refOrderIdsJson)) {
         	repairOrderService.updateRefOrderIdsByOrderNo(repairOrder.getOrderNo(), refOrderIdsJson);

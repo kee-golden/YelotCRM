@@ -91,10 +91,20 @@ public class RepairOrder {
      * 材料费，保留小数2位，存到数据库中扩大100倍
      */
     private int materialPayment;
+
+    /**
+     * 材料费备注
+     */
+    private String materialDesc;
     /**
      * 优惠金额，保留小数2位，存到数据库中扩大100倍
      */
     private int discountAmountPayment;
+
+    /**
+     * 优惠备注
+     */
+    private String discountDesc;
 
     /**
      * 未付款，代付款，这个值一般需要后期维修鉴定后才能填写完成，保留小数2位，存到数据库中扩大100倍
@@ -205,10 +215,7 @@ public class RepairOrder {
      */
     private Date repairLastAt;
     
-    /**
-     * 优惠备注
-     */
-    private String discountDesc;
+
     
     /**
      * 关联单号
@@ -691,5 +698,12 @@ public class RepairOrder {
 	public void setExpressMoney(int expressMoney) {
 		this.expressMoney = expressMoney;
 	}
-	
+
+    public String getMaterialDesc() {
+        return materialDesc;
+    }
+
+    public void setMaterialDesc(String materialDesc) {
+        this.materialDesc = materialDesc;
+    }
 }

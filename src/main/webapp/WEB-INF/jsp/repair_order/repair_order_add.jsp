@@ -18,6 +18,7 @@
 		var ctx = '${ctx}';
 	    var attributesJson = eval('${attributesJson}');
 	    var categoryServiceJson = eval('${categoryServiceJson}');
+	    var random = Math.random()*10;
 	</script>
 	
 </head>
@@ -138,16 +139,19 @@
 					<div>
 
 						<div id="category" class="row bottom10 left20">
+							<div class="col-md-2">
 							<label class="left20">分类:</label>
 							<select class="prov" name="firstCategory" id="firstCategory"></select>
 							<select class="city" disabled="disabled" name="secondCategory" id="secondCategory"></select>
-							<label class="left20">品牌：</label> <span>
-								<select id="brandId" name="brandId">
+							</div>
+							<div class="left20">
+								<label class="left20">品牌：</label>
+								<select id="brandName" name="brandName" class="col-md-4">
 									<c:forEach items="${brandList}" var="item">
-										<option value="${item.id}">${item.name}</option>
+										<option value="${item.name}">${item.name}</option>
 									</c:forEach>
 							</select>
-							</span>
+							</div>
 						</div>
 						<div id="attributes" class="bottom10"></div>
 
@@ -198,23 +202,22 @@
 					<span class="glyphicon glyphicon-folder-open work"></span>维修详情<i class="pull-right iconfont ">&#xe658;</i>
 					<div class="clearfix"></div>
 				</h6>
-				<div class="row">
-
+				<div class="row bottom10 left20">
+					<div class="col-md-1">
+						<label>类别:</label><br/>
+						<select name="typeName" id="typeName" >
+							<option value="维修单">维修单</option>
+							<option value="内部单">内部单</option>
+							<option value="评估单">评估单</option>
+						</select>
+					</div>
 					<div id="repairContent" class="row">
-						<div class="row bottom10 left20 col-md-9">
+						<div class="row  col-md-9">
 							<label class="">维修内容:</label> <input type="text" class="form-control" id="repairDesc">
 						</div>
 					</div>
-					<div class="row bottom10 left20">
-						<div class="col-md-1">
-							<label>类别:</label><br/>
-							<select name="typeName" id="typeName" >
-								<option value="维修单">维修单</option>
-								<option value="内部单">内部单</option>
-								<%--<option value="返修单">返修单</option> 不是创建的时候产生--%>
-								<option value="评估单">评估单</option>
-							</select>
-						</div>
+				</div>
+				<div class="row bottom10 left20">
 						<div class="col-md-2">
 							<label>预付款:</label> <input type="number"  class="form-control" id="advancePayment">
 						</div>
@@ -234,6 +237,12 @@
 							</select> 
 							 <input type="number" class="form-control" id="materialPayment">
 						</div>
+						<div class="col-md-4">
+							<label>材料费备注：</label>
+							<input type="text" class="form-control" id="materialDesc">
+						</div>
+				</div>
+				<div class="row bottom10 left20">
 						<div class="col-md-2">
 							<label>优惠金额：</label>
 							<select id="discountAmountPaymentFlag">
@@ -242,13 +251,10 @@
 							</select>
 							<input type="number" class="form-control" id="discountAmountPayment">
 						</div>
-						<div class="col-md-2"><label>预计完成时间：</label> <input type="text" class="form-control" id="pickupDate"></div>
-					</div>
-					
-					<div class="row">
-						<div class="row bottom10 left20 col-md-9">
+						<div class="col-md-4">
 							<label class="">优惠备注:</label> <input type="text" class="form-control" id="discountDesc">
 						</div>
+						<div class="col-md-2"><label>预计完成时间：</label> <input type="text" class="form-control" id="pickupDate"></div>
 					</div>
 				</div>
 
@@ -267,13 +273,13 @@
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
 
-<script src="${ctx}/module-js/order/repair_order_add.js?random=Math.random()"></script>
+<script src="${ctx}/module-js/order/repair_order_add.js?version=101"></script>
 <script src="${ctx}/module-js/order/webuploader_app.js"></script>
 
 <script>
     require(['jquery','yaya','cityselect','dateTimePicker'], function ($, yaya,cityselect) {
 
-        var jsonObj = eval(${categoryJson});//转化为json 对象
+		var jsonObj = eval(${categoryJson});//转化为json 对象
         $("#category").citySelect({
             url:jsonObj,
             prov:'${firstCategory}',
@@ -286,6 +292,7 @@
             format: 'Y-m-d',
             timepicker:false
         });
+
     });
 </script>
 </html>
