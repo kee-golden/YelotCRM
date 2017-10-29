@@ -53,7 +53,7 @@ public class WxController {
 
     private WxService iService = new WxService();
 
-//    private Logger log = LoggerFactory.getLogger(WxController.class);
+    private Logger log = LoggerFactory.getLogger(WxController.class);
 
     @Autowired
     private AccountMapper accountMapper;
@@ -351,7 +351,7 @@ public class WxController {
      * @return
      */
     @RequestMapping("my-coupon")
-    public String myCoupon(Model model){
+    public String myCoupon(Model model,String openid){
         List<Card> cardList = iService.getCardList();
         for (int i = 0; cardList != null && i < cardList.size(); i++) {
             String cardId = cardList.get(i).getCash().getBaseInfo().getId();
@@ -368,26 +368,27 @@ public class WxController {
 
         }
         model.addAttribute("cardList",cardList);
-        WxJsapiConfig wxJsapiConfig = initJsConfig();
-//        model.addAttribute("wxConfigJson",JSON.toJSONString(wxJsapiConfig));
+        String url = appConfig.getHostUrl() + "/wx/my-coupon?openid="+openid;
+
+        WxJsapiConfig wxJsapiConfig = initJsConfig(url);
         model.addAttribute("wxConfig",wxJsapiConfig);
         System.out.println("jsConfig:"+JSON.toJSONString(wxJsapiConfig));
+        log.info("kee cardList:"+JSON.toJSONString(cardList));
         //
 
         return "weixin/member/my_coupon";
     }
 
-    private WxJsapiConfig initJsConfig(){
-        List<String> jsApiList = new ArrayList<>();
-        String url = appConfig.getHostUrl()+"/wx/my-coupon";
-        jsApiList.add("chooseImage");
-        jsApiList.add("previewImage");
-        jsApiList.add("addCard");
-        jsApiList.add("chooseCard");
-        jsApiList.add("openCard");
+    private WxJsapiConfig initJsConfig(String url){
+//        List<String> jsApiList = new ArrayList<>();
+//        jsApiList.add("chooseImage");
+//        jsApiList.add("previewImage");
+//        jsApiList.add("addCard");
+//        jsApiList.add("chooseCard");
+//        jsApiList.add("openCard");
         WxJsapiConfig config = null;
         try {
-            config = iService.createJsapiConfig(url, jsApiList);
+            config = iService.createJsapiConfig(url, null);
             config.setAppid(WxConfig.getInstance().getAppId());
         } catch (WxErrorException e) {
             e.printStackTrace();

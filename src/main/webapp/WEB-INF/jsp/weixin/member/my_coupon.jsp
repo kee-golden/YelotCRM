@@ -18,13 +18,7 @@
 	</script>
 </head>
 <body>
-	<%--<div class="card-head">--%>
-		<%--<div class="my-card-head">--%>
-			<%--<img src="/images/card_my.png" alt="">我--%>
-		<%--</div>--%>
-		<%--<button id="add">测试事件</button>--%>
-		<%--卡包--%>
-	<%--</div>--%>
+
 	<div class="card-content-wrap">
 		<c:forEach items="${cardList}" var="card">
 			<%--cardId:${card.cash.baseInfo.id},${card.cash.baseInfo.title}--%>
@@ -45,16 +39,6 @@
 			</div>
 		</c:forEach>
 
-		<%--<div class="card-content-item">--%>
-			<%--<div class="card-content-item-top">--%>
-				<%--<img src="/images/card_pic.jpg" alt="" class="card-content-item-pic">--%>
-				<%--<span>心花路放</span>--%>
-			<%--</div>--%>
-			<%--<div class="card-content-item-bottom">--%>
-				<%--<div>微信电影票</div>--%>
-				<%--<div>有效期至：<span>2014.1.1</span></div>--%>
-			<%--</div>--%>
-		<%--</div>--%>
 
 	</div>
 	
@@ -76,7 +60,6 @@
 	 * 邮件主题：【微信JS-SDK反馈】具体问题
 	 * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
 	 */
-//    require(['jquery', 'weixin'], function ($, weixin) {
 
         wx.config({
             debug: false,
@@ -97,7 +80,7 @@
             ]
         });
 
-
+//        alert(appid+","+timestamp+","+noncestr+","+signature);
 
 
         $(function () {
@@ -123,7 +106,7 @@
                     }], // 需要添加的卡券列表
                     success: function (res) {
                         var cardList = res.cardList; // 添加的卡券列表信息
-//                        alert("添加成功:" + JSON.stringify(cardList));
+                        alert("添加成功:" + JSON.stringify(cardList));
                     },
 					error:function (res) {
 						alert(JSON.stringify(res));
@@ -132,7 +115,6 @@
 
             }
         });
-//    });
 </script>
 <%--<script src="${ctx}/js/weixin_config2.js"></script>--%>
 

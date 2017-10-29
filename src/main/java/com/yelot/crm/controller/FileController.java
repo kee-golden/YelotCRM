@@ -75,7 +75,6 @@ public class FileController {
         try {
             resultData.putDataValue("path","/data"+File.separator + DateUtil.toString(new Date(),"yyMMdd")+File.separator + fileNameTemp);
             //
-//            String testFilePath = "/usr/crm_images/data/"+fileNameTemp;
             multiFile.transferTo(file);
         } catch (IOException e) {
             e.printStackTrace();

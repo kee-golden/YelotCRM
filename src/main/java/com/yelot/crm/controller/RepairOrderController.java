@@ -189,7 +189,7 @@ public class RepairOrderController {
 
         repairOrder.setStatus(2);//submit
 
-       // repairOrderService.save(repairOrder);
+        repairOrderService.save(repairOrder);
         
         if (refOrderIdsJson != null && !"null".equals(refOrderIdsJson) && !"".equals(refOrderIdsJson)) {
         	repairOrderService.updateRefOrderIdsByOrderNo(repairOrder.getOrderNo(), refOrderIdsJson);

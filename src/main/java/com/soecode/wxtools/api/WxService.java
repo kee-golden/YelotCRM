@@ -676,11 +676,12 @@ public class WxService implements IService{
 					"jsapi_ticket="+jsapiTicket,"timestamp="+timestamp,"url="+url);
 
 			WxJsapiConfig jsapiConfig = new WxJsapiConfig();
+			jsapiConfig.setAppid(WxConfig.getInstance().getAppId());
 			jsapiConfig.setTimestamp(timestamp);
 			jsapiConfig.setNoncestr(noncestr);
 			jsapiConfig.setUrl(url);
 			jsapiConfig.setSignature(signature);
-			jsapiConfig.setJsApiList(jsApiList);
+//			jsapiConfig.setJsApiList(jsApiList);
 			System.out.println("kee jsConfig:"+JSON.toJSONString(jsapiConfig));
 			return jsapiConfig;
 		} catch (NoSuchAlgorithmException e) {
