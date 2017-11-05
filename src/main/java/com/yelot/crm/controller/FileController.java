@@ -58,14 +58,15 @@ public class FileController {
 
         String deployPath = appConfig.getDataPath();
         if (appConfig.getDebug()) {
-            realPath = request.getServletContext().getRealPath("/") + File.separator;
+            realPath = request.getServletContext().getRealPath("/");
         } else {
-            realPath = deployPath+File.separator;
+            realPath = deployPath+"/";
         }
         String suffix = (multiFile.getOriginalFilename().substring
                 (multiFile.getOriginalFilename().lastIndexOf("."))).toLowerCase();
         /**拼成完整的文件保存路径加文件**/
-        String filePath = realPath + "data" + File.separator+ DateUtil.toString(new Date(),"yyMMdd")+File.separator;
+        String filePath = realPath + "data/" + DateUtil.toString(new Date(),"yyMMdd")+"/";
+
         File docFile = new File(filePath);
         if (!docFile.exists()) {
             docFile.mkdirs();
@@ -73,7 +74,7 @@ public class FileController {
         String fileNameTemp = System.currentTimeMillis() + suffix;
         File file = new File(filePath + fileNameTemp);
         try {
-            resultData.putDataValue("path","/data"+File.separator + DateUtil.toString(new Date(),"yyMMdd")+File.separator + fileNameTemp);
+            resultData.putDataValue("path","/data/" + DateUtil.toString(new Date(),"yyMMdd")+"/" + fileNameTemp);
             //
             multiFile.transferTo(file);
         } catch (IOException e) {
