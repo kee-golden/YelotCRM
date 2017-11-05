@@ -8,6 +8,7 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
     //获取当前默认的属性json对象,attributeJson,categoryServiceJson,两个对象定义在jsp中
     generateAttributes(attributesJson);
     generateCategroyServices(categoryServiceJson);
+    generateRefOrderIdsJson(refOrderIdsJson);
 
 
     var prifixAttribute = 'attId_';// 属性前缀
@@ -16,6 +17,9 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
         tags: true,
     });
 
+    $("#refOrderIds").select2({
+        tags: true,
+    });
 
     $("#saveBtn").click(function () {
 
@@ -25,8 +29,6 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
             yaya.layer.msg("你还没有选中客户，请先通过电话号码，查询客户！")
             return;
         }
-
-
 
         var firstCategory = $('#firstCategory').val();
         var secondCategory = $('#secondCategory').val();
@@ -234,6 +236,23 @@ require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($
 
         }
 
+    }
+
+    function generateRefOrderIdsJson(refOrderIdsJson) {
+        $("#refOrderIds").empty();
+        if(refOrderIdsJson != null){
+            for(var i = 0;i < refOrderIdsJson.length;i++){
+                var selected = refOrderIdsJson[i].selectedStatus;
+                var selectedStr = '';
+                if(selected){
+                    selectedStr = 'selected=\"selected\"';
+                }else {
+                    selectedStr = '';
+                }
+                var str = '<option value=\"'+refOrderIdsJson[i].orderNo+'\"' + selectedStr+ '>'+refOrderIdsJson[i].orderNo+'</option>';
+                $("#refOrderIds").append(str);
+            }
+        }
     }
 
     $("#labourPaymentFlag").change(function() {

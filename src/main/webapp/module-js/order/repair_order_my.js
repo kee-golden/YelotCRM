@@ -190,7 +190,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             success: function (str) {
                 yaya.layer.open({
                     type: 1,
-                    title: '订单详情',
+                    title: '订单修改',
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: ['1100px','800px'],  //高度默认
                     scrollbar:true,
@@ -270,7 +270,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 
         var valuesAttributeJson =  getAttributeValues(attributesJson);
         var serviceItemJson = $('#serviceItem').val();
-
+        var refOrderIdsJson = $('#refOrderIds').val();
+        
         var imagePaths = $('.filelist').data('path');
         var imageDesc = $('#imageDesc').val();
         var repairDesc = $('#repairDesc').val();
@@ -278,6 +279,9 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         var advancePayment = $('#advancePayment').val();
         var labourPayment = $('#labourPayment').val() == "待定" ? -1 : $('#labourPayment').val();
         var materialPayment = $('#materialPayment').val() == "待定" ? -1 : $('#materialPayment').val();
+        var materialDesc = $('#materialDesc').val();
+        var discountAmountPayment = $('#discountAmountPayment').val();
+        var discountDesc= $('#discountDesc').val();
         var pickupDate = $('#pickupDate').val();
         console.log(labourPayment+","+labourPayment+","+materialPayment);
         $.ajax({
@@ -286,12 +290,14 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             dataType: 'json',
             data: {
                 id:$("#orderId").val(),
+                orderNo:$("#orderNo").val(),
                 customerId: customerId,
                 firstCategory: firstCategory,
                 secondCategory: secondCategory,
                 brandId: brandId,
                 valuesAttributeJson: JSON.stringify(valuesAttributeJson),
                 serviceItemJson: JSON.stringify(serviceItemJson),
+                refOrderIdsJson: JSON.stringify(refOrderIdsJson),
                 imagePaths: imagePaths,
                 imageDesc: imageDesc,
                 repairDesc: repairDesc,
@@ -299,6 +305,9 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                 advancePayment: advancePayment,
                 labourPayment: labourPayment,
                 materialPayment: materialPayment,
+                materialDesc:materialDesc,
+                discountAmountPayment:discountAmountPayment,
+                discountDesc:discountDesc,
                 pickupDate: pickupDate
 
             },

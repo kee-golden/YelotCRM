@@ -48,6 +48,7 @@
         <result property="shopPhone" column="shop_phone"/>
         <result property="discountDesc" column="discount_desc"/>
         <result property="refOrderIds" column="ref_order_ids"/>
+        <result property="channelSource" column="channel_source"/>
     </resultMap>
     
     <resultMap id="monthData" type="com.yelot.crm.entity.MonthData">
@@ -279,6 +280,7 @@
         <if test="secondCategoryId != null">,second_category_id = #{secondCategoryId}</if>
         <if test="productInfoJson != null">,product_info_json = #{productInfoJson}</if>
         <if test="serviceItemIds != null">,service_item_ids = #{serviceItemIds}</if>
+        <if test="refOrderIds != null">,ref_order_ids = #{refOrderIds}</if>
         <if test="imagesJson != null">,images_json = #{imagesJson}</if>
         <if test="imageDesc != null">,image_desc = #{imageDesc}</if>
         <if test="repairDesc != null">,repair_desc = #{repairDesc}</if>
@@ -286,6 +288,9 @@
         <if test="advancePayment != null">,advance_payment = #{advancePayment}</if>
         <if test="labourPayment != null">,labour_payment = #{labourPayment}</if>
         <if test="materialPayment != null">,material_payment = #{materialPayment}</if>
+        <if test="materialDesc != null">,material_desc = #{materialDesc}</if>
+        <if test="discountAmountPayment != null">,discount_amount_payment = #{discountAmountPayment}</if>
+        <if test="discountDesc != null">,discount_desc = #{discountDesc}</if>
         <if test="pickupAt != null">,pickup_at = #{pickupAt}</if>
 		where id = #{id}
     </update>
@@ -316,7 +321,8 @@
     <select id="findUserOrderNoByPhone" resultMap="orderResultMap">
         select t.*
         from t_repair_order t
-        where t.customer_phone = #{phone} and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= t.create_at
+        where t.customer_phone = #{phone} <!-- and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= t.create_at -->
+        <if test="id != null and id != ''"> and id != #{id}</if>
         order by t.create_at desc
     </select>
 

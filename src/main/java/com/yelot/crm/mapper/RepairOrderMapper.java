@@ -120,7 +120,7 @@ public interface RepairOrderMapper {
      */
     public RepairOrder findRepairOrderByOrderNo(String orderNo);
     
-    public List<RepairOrder> findUserOrderNoByPhone(String phone);
+    public List<RepairOrder> findUserOrderNoByPhone(@Param("phone") String phone, @Param("id") Long id);
 
     int countByShopId(Long shopId);
 
@@ -143,4 +143,5 @@ public interface RepairOrderMapper {
 	List<RepairOrder> findByPhoneAndStatus(@Param("phone") String phone,@Param("status") String status);
 	
 	int findRoleByUserId(Long userId);
+	
 }

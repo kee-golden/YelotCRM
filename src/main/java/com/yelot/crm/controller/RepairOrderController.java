@@ -192,7 +192,7 @@ public class RepairOrderController {
         repairOrderService.save(repairOrder);
         
         if (refOrderIdsJson != null && !"null".equals(refOrderIdsJson) && !"".equals(refOrderIdsJson)) {
-        	repairOrderService.updateRefOrderIdsByOrderNo(repairOrder.getOrderNo(), refOrderIdsJson);
+        	repairOrderService.updateRefOrderIdsByOrderNo(repairOrder.getOrderNo(), refOrderIdsJson, "add");
 		}
         
         consultOrderMapper.updateStatus(consultOrderId, 3); // 咨询单已接单
@@ -203,13 +203,14 @@ public class RepairOrderController {
 
     @RequestMapping("update")
     @ResponseBody
-    public ResultData update(Long id,Long customerId,String firstCategory,String secondCategory,Long brandId,String valuesAttributeJson,
-                             String serviceItemJson,String imagePaths,String imageDesc,String repairDesc,
+    public ResultData update(Long id,String orderNo,Long customerId,String firstCategory,String secondCategory,Long brandId,String valuesAttributeJson,
+                             String serviceItemJson,String refOrderIdsJson,String imagePaths,String imageDesc,String repairDesc,
                              String typeName,
                              @RequestParam(value = "advancePayment",defaultValue = "0") Integer advancePayment,
                              @RequestParam(value = "labourPayment",defaultValue = "0")Integer labourPayment,
-                             @RequestParam(value = "materialPayment",defaultValue = "0")Integer materialPayment
-            ,String pickupDate){
+                             @RequestParam(value = "materialPayment",defaultValue = "0")Integer materialPayment,String materialDesc,
+                             @RequestParam(value = "discountAmountPayment",defaultValue = "0")Integer discountAmountPayment,String discountDesc,
+                             String pickupDate){
 
         RepairOrder repairOrder = new RepairOrder();
         repairOrder.setId(id);
@@ -226,6 +227,7 @@ public class RepairOrderController {
         repairOrder.setCustomerPhone(customer.getPhone());
         repairOrder.setProductInfoJson(valuesAttributeJson);
         repairOrder.setServiceItemIds(serviceItemJson);
+        repairOrder.setRefOrderIds(refOrderIdsJson);
         repairOrder.setImagesJson(imagePaths);
         repairOrder.setImageDesc(imageDesc);
         repairOrder.setRepairDesc(repairDesc);
@@ -233,9 +235,16 @@ public class RepairOrderController {
         repairOrder.setLabourPayment(labourPayment);
         repairOrder.setAdvancePayment(advancePayment);
         repairOrder.setMaterialPayment(materialPayment);
+        repairOrder.setMaterialDesc(materialDesc);;
+        repairOrder.setDiscountAmountPayment(discountAmountPayment);
+        repairOrder.setDiscountDesc(discountDesc);
         repairOrder.setPickupAt(DateUtil.toDate(pickupDate,"yyyy-MM-dd"));
 
         repairOrderService.update(repairOrder);
+        
+        if (refOrderIdsJson != null && !"null".equals(refOrderIdsJson) && !"".equals(refOrderIdsJson)) {
+        	repairOrderService.updateRefOrderIdsByOrderNo(orderNo, refOrderIdsJson, "update");
+		}
         return ResultData.ok();
     }
 
@@ -466,7 +475,11 @@ public class RepairOrderController {
         String categoryServiceJson = JSON.toJSONString(categoryServiceItemList);
 
         model.addAttribute("categoryServiceJson",categoryServiceJson);
-
+        
+        List<String> refOrderIdsStrList = repairOrderService.findUserOrderNoByPhone(repairOrder.getCustomerPhone(), id);
+        List<RefOrder> refOrderIdsList = initRefOrder(refOrderIdsStrList, repairOrder);//赋值
+        String refOrderIds = JSON.toJSONString(refOrderIdsList);
+        model.addAttribute("refOrderIdsJson",refOrderIds);
 
         //获取品牌
         List<Brand> brandList = brandMapper.findAll();
@@ -587,6 +600,38 @@ public class RepairOrderController {
         }
 
     }
+    
+    /**
+     * 映射关联单号
+     * @param refOrderIdsList
+     * @param repairOrder
+     */
+	private List<RefOrder> initRefOrder(List<String> refOrderIdsList,
+			RepairOrder repairOrder) {
+
+		if (refOrderIdsList == null || repairOrder == null
+				|| StringUtils.isEmpty(repairOrder.getRefOrderIds())
+				|| "null".equals(repairOrder.getRefOrderIds())) {
+			return null;
+		}
+
+		List<String> orderNoList = JSON.parseArray(repairOrder.getRefOrderIds(),
+				String.class);
+		List<RefOrder> refOrderList = new ArrayList<RefOrder>();
+
+		for (String item : refOrderIdsList) {
+			RefOrder refOrder = new RefOrder();
+			refOrder.setOrderNo(item);
+
+			if (orderNoList.contains(item)) {
+				refOrder.setSelectedStatus(true);
+			} else {
+				refOrder.setSelectedStatus(false);
+			}
+			refOrderList.add(refOrder);
+		}
+		return refOrderList;
+	}
 
     /**
      * 映射属性值

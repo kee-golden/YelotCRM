@@ -170,8 +170,8 @@ public class RepairOrderService {
 	 * @param phone
 	 * @return
 	 */
-	public List<String> findUserOrderNoByPhone(String phone){
-		List<RepairOrder> userOrderList = repairOrderMapper.findUserOrderNoByPhone(phone);
+	public List<String> findUserOrderNoByPhone(String phone, Long id){
+		List<RepairOrder> userOrderList = repairOrderMapper.findUserOrderNoByPhone(phone, id);
 		List<String> userOrderNo = new ArrayList<String>();
 		for (RepairOrder repairOrder : userOrderList) {
 			userOrderNo.add(repairOrder.getOrderNo());
@@ -291,7 +291,7 @@ public class RepairOrderService {
 		repairOrderMapper.update(repairOrder);
     }
 
-    public void updateRefOrderIdsByOrderNo(String orderNo, String refOrderIdsJson) {
+    public void updateRefOrderIdsByOrderNo(String orderNo, String refOrderIdsJson, String type) {
     	List<String> refOrderIdsJsonList = JSON.parseArray(refOrderIdsJson, String.class);
     	List<String> refOrderIdsJsonList2 =  JSON.parseArray(refOrderIdsJson, String.class);
     	
@@ -310,7 +310,9 @@ public class RepairOrderService {
 			}
 		}
     	
-    	refOrderIdsJsonList.add(orderNo);
+    	if ("add".equals(type)) {
+    		refOrderIdsJsonList.add(orderNo);
+		}
     	
     	for (String orderNoTmp : refOrderIdsJsonList) {
     		

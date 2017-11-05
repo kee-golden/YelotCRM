@@ -160,7 +160,7 @@
 						</select>
 						<br>
 						<br>
-						<label class="left20">关联件单号:</label> <select id="refOrderIds" name="serviceItem" multiple class="left20 col-md-6">
+						<label class="left20">关联件单号:</label> <select id="refOrderIds" name="refOrderIds" multiple class="left20 col-md-6">
 						</select>
 					</div>
 
@@ -191,7 +191,7 @@
 						</div>
 					</div>
 					<div id="image-desc" class="row col-md-9 left20">
-						<label class="">外观描述:</label> <input type="text" id="imageDesc" class="form-control bottom10" placeholder="" />
+						<label class="">外观描述:</label> <input type="text" id="imageDesc" class="form-control" placeholder="" />
 
 					</div>
 				</div>

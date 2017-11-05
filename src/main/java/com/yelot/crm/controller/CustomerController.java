@@ -171,7 +171,7 @@ public class CustomerController {
     public ResultData search(String phone){
 
         List<Customer> customerList = customerMapper.findByPhone(phone);
-        List<String> userOrderNo = repairOrderService.findUserOrderNoByPhone(phone);
+        List<String> userOrderNo = repairOrderService.findUserOrderNoByPhone(phone, null);
         
         if(customerList != null && customerList.size() > 0){
             return ResultData.ok().putDataValue("customer",customerList.get(0)).putDataValue("userOrderNoJson", userOrderNo);
