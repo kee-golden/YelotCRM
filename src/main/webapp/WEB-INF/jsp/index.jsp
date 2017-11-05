@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/common/taglibs.jsp" %>
-<%@ taglib prefix="ts" uri="http://www.touch-spring.com" %>
 <%@ taglib prefix="sys" tagdir="/WEB-INF/tags/sys" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
