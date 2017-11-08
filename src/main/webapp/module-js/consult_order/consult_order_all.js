@@ -99,6 +99,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                         var customerAddress = $('#customerAddress').val();
                         var wechatNo = $('#wechatNo').val();
                         var wechatNickname = $('#wechatNickname').val();
+                        var deviceNo = $('#deviceNo').val();
                         var channelSource = $('#channelSource').val();
                         var repairCommands = $('#repairCommands').val();
                         var province = $('#province').val();
@@ -147,6 +148,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                                 customerAddress: customerAddress,
                                 wechatNo:wechatNo,
                                 wechatNickname:wechatNickname,
+                                deviceNo:deviceNo,
                                 channelSource:channelSource,
                                 repairCommands:repairCommands,
                                 province:province,
