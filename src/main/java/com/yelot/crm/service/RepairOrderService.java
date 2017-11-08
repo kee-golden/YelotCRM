@@ -291,9 +291,11 @@ public class RepairOrderService {
 		repairOrderMapper.update(repairOrder);
     }
 
-    public void updateRefOrderIdsByOrderNo(String orderNo, String refOrderIdsJson, String type) {
-    	List<String> refOrderIdsJsonList = JSON.parseArray(refOrderIdsJson, String.class);
-    	List<String> refOrderIdsJsonList2 =  JSON.parseArray(refOrderIdsJson, String.class);
+    public void updateRefOrderIdsByOrderNo(String orderNo, String refOrderIdsJson) {
+    	List<String> refOrderIdsJsonList = JSON.parseArray(refOrderIdsJson, String.class) == null ? new ArrayList<String>() : JSON.parseArray(refOrderIdsJson, String.class);
+    	refOrderIdsJsonList.add(orderNo);
+    	List<String> refOrderIdsJsonList2 =  JSON.parseArray(refOrderIdsJson, String.class) == null ? new ArrayList<String>() : JSON.parseArray(refOrderIdsJson, String.class);
+    	refOrderIdsJsonList2.add(orderNo);
     	
     	for (String orderNoTmp : refOrderIdsJsonList2) {
     		List<RepairOrder> repairOrderList = repairOrderMapper.findRefOrderIdsByOrderNo(orderNoTmp);
@@ -310,8 +312,15 @@ public class RepairOrderService {
 			}
 		}
     	
-    	if ("add".equals(type)) {
-    		refOrderIdsJsonList.add(orderNo);
+    	// 先将历史的关联件删除
+		RepairOrder thisRepairOrder = repairOrderMapper.findRefOrderIdsByOrderNo(orderNo).get(0);
+		List<String> thisRepairOrderRefOrderIds = JSON.parseArray(thisRepairOrder.getRefOrderIds(), String.class) == null ? new ArrayList<String>() : JSON.parseArray(thisRepairOrder.getRefOrderIds(), String.class);
+		thisRepairOrderRefOrderIds.add(orderNo);
+		for (String orderNoStr : thisRepairOrderRefOrderIds) {
+			repairOrderMapper.updateRefOrderIdsByOrderNo(orderNoStr, null);
+			if (!refOrderIdsJsonList2.contains(orderNoStr)) {
+				refOrderIdsJsonList.remove(orderNoStr);
+			}
 		}
     	
     	for (String orderNoTmp : refOrderIdsJsonList) {
@@ -324,9 +333,10 @@ public class RepairOrderService {
 					refOrderIdsJsonListTmp.add(refOrderId);
 				}
 			}
-			
-			String refOrderIds = JSON.toJSONString(refOrderIdsJsonListTmp);
-			repairOrderMapper.updateRefOrderIdsByOrderNo(orderNoTmp, refOrderIds);
+			if(refOrderIdsJsonListTmp.size() != 0){
+				String refOrderIds = JSON.toJSONString(refOrderIdsJsonListTmp);
+				repairOrderMapper.updateRefOrderIdsByOrderNo(orderNoTmp, refOrderIds);
+			}
 		}
     }
     
