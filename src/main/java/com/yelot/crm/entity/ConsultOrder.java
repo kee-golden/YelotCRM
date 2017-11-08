@@ -22,6 +22,7 @@ public class ConsultOrder {
     private String customerAgesAlmost;
     private String wechatNo;
     private String wechatNickname;
+    private String deviceNo;
     private String channelSource;
     private String repairCommands;
     private String province;
@@ -365,6 +366,14 @@ public class ConsultOrder {
 
     public void setWechatNickname(String wechatNickname) {
         this.wechatNickname = wechatNickname;
+    }
+
+    public String getDeviceNo() {
+        return deviceNo;
+    }
+
+    public void setDeviceNo(String deviceNo) {
+        this.deviceNo = deviceNo;
     }
 
     public String getChannelSource() {

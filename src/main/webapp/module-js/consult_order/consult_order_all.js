@@ -129,7 +129,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             					&& QQNo == '' && QQNickname == ''){
                             yaya.layer.msg('手机号、微信号、微信昵称、阿里旺旺账号、阿里旺旺昵称、微博账号、微博昵称、QQ账号、QQ昵称，至少要填写一项');
                             return;
-            			}else if(customerPhone != '' && !checkIsMobile(customerPhone)){
+            			}
+            			else if(customerPhone != '' && !checkIsMobile(customerPhone)){
             			    yaya.layer.msg("手机号输入不正确");
             			    return;
             			}
@@ -301,9 +302,9 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     });
 
     function checkIsMobile(value){
-        var length = value.length;
         var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
-        return (length == 11 && mobile.test(value));
+        var telephone = /\d{3}-\d{8}|\d{4}-\d{7}/;
+        return (mobile.test(value) || telephone.test(value));
     }
 
 

@@ -20,14 +20,14 @@
 				<div class="row bottom10">
 					<input type="hidden" id="orderId" data-id="${bean.id}" />
 					<div class="col-md-2">
-						<label><span style="color: red">*</span>用户名</label>
+						<label><span style="color: red"></span>用户名</label>
 						<input type="text" placeholder="请输入用户名" class="form-control" name="customerName" id="customerName"
 							   autocomplete="off" value="${bean.customerName}">
 					</div>
 
 					<div class="col-md-2">
-						<label><span style="color: red"></span>手机号</label>
-						<input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone" value="${bean.customerPhone}">
+						<label><span style="color: red"></span>电话号码</label>
+						<input type="text" placeholder="请输入手机号或固话" class="form-control" name="customerPhone" id="customerPhone" value="${bean.customerPhone}">
 					</div>
 
 					<div class="col-md-1">
@@ -51,38 +51,6 @@
 					</div>
 				</div>
 				<div class="row bottom10">
-					<div class="col-md-2">
-						<label>微信号</label>
-						<input type="text" name="wechatNo" id="wechatNo" placeholder="微信ID号" class="form-control" value="${bean.wechatNo}">
-					</div>
-					<div class="col-md-2">
-						<label>微信昵称</label>
-						<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control" value="${bean.wechatNickname}">
-					</div>
-					<div class="col-md-2">
-						<label>阿里旺旺账号</label>
-						<input type="text" name="aliNo" id="aliNo" placeholder="阿里旺旺账号" class="form-control" value="${bean.aliNo}">
-					</div>
-					<div class="col-md-2">
-						<label>阿里旺旺昵称</label>
-						<input type="text" name="aliNickname" id="aliNickname" placeholder="阿里旺旺昵称" class="form-control" value="${bean.aliNickname}">
-					</div>
-					<div class="col-md-2">
-						<label>微博账号</label>
-						<input type="text" name="blogNo" id="blogNo" placeholder="微博账号" class="form-control" value="${bean.blogNo}">
-					</div>
-					<div class="col-md-2">
-						<label>微博昵称</label>
-						<input type="text" name="blogNickname" id="blogNickname" placeholder="微博昵称" class="form-control" value="${bean.blogNickname}">
-					</div>
-					<div class="col-md-2">
-						<label>QQ账号</label>
-						<input type="text" name="QQNo" id="QQNo" placeholder="QQ账号" class="form-control" value="${bean.QQNo}">
-					</div>
-					<div class="col-md-2">
-						<label>QQ昵称</label>
-						<input type="text" name="QQNickname" id="QQNickname" placeholder="QQ昵称" class="form-control" value="${bean.QQNickname}">
-					</div>
 					<div class="col-md-2">
 						<label>客户来源</label>
 						<select class="form-control" id="channelSource" name="channelSource">
@@ -110,6 +78,57 @@
 			</div>
 
 		</div>
+		<div class="container top_con" style="width: 100%; min-width: 1000px">
+			<h6>
+				<span class="glyphicon glyphicon-folder-open work"></span>客户更多信息<i class="pull-right iconfont ">&#xe658;</i>
+				<div class="clearfix"></div>
+			</h6>
+			<div id="customerMoreContainer" class="col-md-12 b-r">
+				<div class="row bottom10">
+					<div class="col-md-2">
+						<label>微信号</label>
+						<input type="text" name="wechatNo" id="wechatNo" placeholder="微信ID号" class="form-control" value="${bean.wechatNo}">
+					</div>
+					<div class="col-md-2">
+						<label>微信昵称</label>
+						<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control" value="${bean.wechatNickname}">
+					</div>
+					<div class="col-md-2">
+						<label>设备号</label>
+						<input type="text" name="deviceNo" id="deviceNo" placeholder="设备号" class="form-control" value="${bean.deviceNo}">
+					</div>
+					<div class="col-md-2">
+						<label>阿里旺旺账号</label>
+						<input type="text" name="aliNo" id="aliNo" placeholder="阿里旺旺账号" class="form-control" value="${bean.aliNo}">
+					</div>
+					<div class="col-md-2">
+						<label>阿里旺旺昵称</label>
+						<input type="text" name="aliNickname" id="aliNickname" placeholder="阿里旺旺昵称" class="form-control" value="${bean.aliNickname}">
+					</div>
+				</div>
+				<div class="row bottom10">
+					<div class="col-md-2">
+						<label>微博账号</label>
+						<input type="text" name="blogNo" id="blogNo" placeholder="微博账号" class="form-control" value="${bean.blogNo}">
+					</div>
+					<div class="col-md-2">
+						<label>微博昵称</label>
+						<input type="text" name="blogNickname" id="blogNickname" placeholder="微博昵称" class="form-control" value="${bean.blogNickname}">
+					</div>
+					<div class="col-md-2">
+						<label>QQ账号</label>
+						<input type="text" name="QQNo" id="QQNo" placeholder="QQ账号" class="form-control" value="${bean.QQNo}">
+					</div>
+					<div class="col-md-2">
+						<label>QQ昵称</label>
+						<input type="text" name="QQNickname" id="QQNickname" placeholder="QQ昵称" class="form-control" value="${bean.QQNickname}">
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
 		<div class="container top_con" style="width: 100%; min-width: 1000px">
 			<h6>
 				<span class="glyphicon glyphicon-folder-open work"></span>咨询信息<i class="pull-right iconfont ">&#xe658;</i>
@@ -230,147 +249,9 @@
 	</div>
 </div>
 
-
+<script src="${ctx}/module-js/consult_order/consult_order_edit.js?t=123"></script>
 <script src="${ctx}/module-js/consult_order/webuploader_edit.js"></script>
 
-<script>
-    require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($, yaya,selector2,cityselect) {
 
-        var jsonObj = eval(${categoryJson});//转化为json 对象
-        $("#category").citySelect({
-            url:jsonObj,
-            prov:'${bean.firstCategoryName}',
-            city:'${bean.secondCategoryName}',
-            nodata:"none"
-        });
-
-        $("#prov_city").citySelect({
-            url:"/static/cityselect/js/city.min.js",
-            prov:'${bean.province}',
-            city:'${bean.city}',
-            nodata:"none",
-            required:false
-        });
-
-        $('#vistorAt').datetimepicker({
-            lang: 'ch',
-            format: 'Y-m-d',
-            timepicker:false,
-            beforeShow: function () {
-                setTimeout(function () {
-                        $('.xdsoft_datetimepicker').css("z-index", 99999999);
-                    }, 1000
-                );
-            }
-        });
-
-        function checkIsMobile(value){
-            var length = value.length;
-            var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
-            return (length == 11 && mobile.test(value));
-        }
-
-        $('#saveBtn').click(function () {
-        	
-        	var customerName = $("#customerName").val();
-            var customerPhone = $('#customerPhone').val();
-            var customerSex = $('#customerSex').val();
-            var customerAddress = $('#customerAddress').val();
-            var wechatNo = $('#wechatNo').val();
-            var wechatNickname = $('#wechatNickname').val();
-            var channelSource = $('#channelSource').val();
-            var repairCommands = $('#repairCommands').val();
-            var province = $('#province').val();
-            var city = $('#city').val();
-            var brandId = $('#brand').val();
-            var firstCategory = $('#firstCategory').val();
-            var secondCategory = $('#secondCategory').val();
-            var channelUrl = $('#channelUrl').val();
-            var keywords = $('#keywords').val();
-            var priceLimit = $('#priceLimit').val();
-            var timeLimit = $('#timeLimit').val();
-            var qulityLimit = $('#qulityLimit').val();
-            var specialCommands = $('#specialCommands').val();
-            var vistorDate = $('#vistorAt').val();
-            var imagesPath = $('.filelist').data('path');
-            var expressNo = $('#expressNo').val();
-            var deliverType = $('#deliverType').val();
-            var comment = $('#commentId').val();
-            var bookShopId = $('#bookShopId').val();
-            var aliNo = $('#aliNo').val();
-            var aliNickname = $('#aliNickname').val();
-            var blogNo = $('#blogNo').val();
-            var blogNickname = $('#blogNickname').val();
-            var QQNo = $('#QQNo').val();
-            var QQNickname = $('#QQNickname').val();
-
-			if(customerPhone == '' && wechatNo == '' && wechatNickname == '' && aliNo == '' && aliNickname == '' && blogNo == '' && blogNickname == '' 
-					&& QQNo == '' && QQNickname == ''){
-                yaya.layer.msg('手机号、微信号、微信昵称、阿里旺旺账号、阿里旺旺昵称、微博账号、微博昵称、QQ账号、QQ昵称，至少要填写一项');
-                return;
-			}else if(customerPhone != '' && !checkIsMobile(customerPhone)){
-			    yaya.layer.msg("手机号输入不正确");
-			    return;
-			}
-
-            console.log($('.filelist').data("path"));
-            $.ajax({
-				url:'/consult-order/update',
-                method: 'post',
-                dataType: 'json',
-                data: {
-				    id:$('#orderId').data("id"),
-				    customerName: customerName,
-                    customerPhone: customerPhone,
-                    customerSex: customerSex,
-                    customerAddress: customerAddress,
-                    wechatNo:wechatNo,
-                    wechatNickname:wechatNickname,
-                    channelSource:channelSource,
-                    repairCommands:repairCommands,
-                    province:province,
-                    city:city,
-                    brandId:brandId,
-                    firstCategoryName:firstCategory,
-                    secondCategoryName:secondCategory,
-                    channelUrl:channelUrl,
-                    keywords:keywords,
-                    priceLimit:priceLimit,
-                    timeLimit:timeLimit,
-                    qulityLimit:qulityLimit,
-                    specialCommands:specialCommands,
-                    imagesPath:imagesPath,
-                    vistorDate:vistorDate,
-                    expressNo:expressNo,
-                    bookShopId:bookShopId,
-                    deliverType:deliverType,
-                    comment:comment,
-                    aliNo:aliNo,
-                    aliNickname:aliNickname,
-                    blogNo:blogNo,
-                    blogNickname:blogNickname,
-                    QQNo:QQNo,
-                    QQNickname:QQNickname
-
-                },
-                success: function (data) {
-                    if(data.code == 1200){
-                        yaya.layer.msg("修改成功");
-                        setTimeout(function () {
-                            window.location.href = ctx+'/consult-order/alllist';
-                        },1000);
-
-                    }
-
-                }
-			});
-
-        });
-
-	});
-
-
-
-</script>
 
 
