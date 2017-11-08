@@ -21,6 +21,9 @@
 	    var categoryServiceJson = eval('${categoryServiceJson}');
 	    var refOrderIdsJson = eval('${refOrderIdsJson}');
 	</script>
+<style>
+	#filePicker2 div:nth-child(2){width:100%!important;height:100%!important;}
+</style>
 
 <link rel="stylesheet" type="text/css" href="${ctx}/module-css//webuploader.css">
 <link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">

@@ -34,7 +34,7 @@
 			</div>
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
 				<h6>
-					<span class="glyphicon glyphicon-folder-open work"></span>客户信息<i class="pull-right iconfont ">&#xe658;</i>
+					<span class="glyphicon glyphicon-folder-open work"></span>客户基本信息<i class="pull-right iconfont ">&#xe658;</i>
 					<div class="clearfix"></div>
 				</h6>
 				<div id="customerContainer" class="col-md-12 b-r">
@@ -46,7 +46,7 @@
 							</div>
 
 							<div class="col-md-2">
-								<label>手机号</label> <input type="text" placeholder="请输入手机号" class="form-control" name="customerPhone" id="customerPhone">
+								<label>电话号码</label> <input type="text" placeholder="请输入手机号或固话" class="form-control" name="customerPhone" id="customerPhone">
 							</div>
 
 							<div class="col-md-2">
@@ -71,38 +71,6 @@
 							</div>
 						</div>
 					<div class="row bottom10">
-						<div class="col-md-2">
-							<label>微信号</label>
-							<input type="text" name="wechatNo" id="wechatNo" placeholder="微信ID号" class="form-control">
-						</div>
-						<div class="col-md-2">
-							<label>微信昵称</label>
-							<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control">
-						</div>
-						<div class="col-md-2">
-							<label>阿里旺旺账号</label>
-							<input type="text" name="aliNo" id="aliNo" placeholder="阿里旺旺账号" class="form-control">
-						</div>
-						<div class="col-md-2">
-							<label>阿里旺旺昵称</label>
-							<input type="text" name="aliNickname" id="aliNickname" placeholder="阿里旺旺昵称" class="form-control">
-						</div>
-						<div class="col-md-2">
-							<label>微博账号</label>
-							<input type="text" name="blogNo" id="blogNo" placeholder="微博账号" class="form-control">
-						</div>
-						<div class="col-md-2">
-							<label>微博昵称</label>
-							<input type="text" name="blogNickname" id="blogNickname" placeholder="微博昵称" class="form-control">
-						</div>
-						<div class="col-md-2">
-							<label>QQ账号</label>
-							<input type="text" name="QQNo" id="QQNo" placeholder="QQ账号" class="form-control">
-						</div>
-						<div class="col-md-2">
-							<label>QQ昵称</label>
-							<input type="text" name="QQNickname" id="QQNickname" placeholder="QQ昵称" class="form-control">
-						</div>
 						<div class="col-md-2">
 							<label>客户来源</label>
 							<select class="form-control" id="channelSource" name="channelSource">
@@ -132,6 +100,56 @@
 			</div>
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
 				<h6>
+					<span class="glyphicon glyphicon-folder-open work"></span>客户更多信息<i class="pull-right iconfont ">&#xe658;</i>
+					<div class="clearfix"></div>
+				</h6>
+				<div id="customerMoreContainer" class="col-md-12 b-r">
+					<div class="row bottom10">
+						<div class="col-md-2">
+							<label>微信号</label>
+							<input type="text" name="wechatNo" id="wechatNo" placeholder="微信ID号" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>微信昵称</label>
+							<input type="text" name="wechatNickname" id="wechatNickname" placeholder="微信昵称" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>设备号</label>
+							<input type="text" name="deviceNo" id="deviceNo" placeholder="设备号" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>阿里旺旺账号</label>
+							<input type="text" name="aliNo" id="aliNo" placeholder="阿里旺旺账号" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>阿里旺旺昵称</label>
+							<input type="text" name="aliNickname" id="aliNickname" placeholder="阿里旺旺昵称" class="form-control">
+						</div>
+					</div>
+					<div class="row bottom10">
+						<div class="col-md-2">
+							<label>微博账号</label>
+							<input type="text" name="blogNo" id="blogNo" placeholder="微博账号" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>微博昵称</label>
+							<input type="text" name="blogNickname" id="blogNickname" placeholder="微博昵称" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>QQ账号</label>
+							<input type="text" name="QQNo" id="QQNo" placeholder="QQ账号" class="form-control">
+						</div>
+						<div class="col-md-2">
+							<label>QQ昵称</label>
+							<input type="text" name="QQNickname" id="QQNickname" placeholder="QQ昵称" class="form-control">
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="container top_con" style="width: 100%; min-width: 1000px">
+				<h6>
 					<span class="glyphicon glyphicon-folder-open work"></span>咨询信息<i class="pull-right iconfont ">&#xe658;</i>
 					<div class="clearfix"></div>
 				</h6>
@@ -153,6 +171,10 @@
 								</c:forEach>
 							</select>
 						</div>
+						<div class="col-md-4">
+							<label>维修需求</label>
+							<input type="text" name="repairCommands" id="repairCommands" placeholder="维修需求" class="form-control">
+						</div>
 						<div class="col-md-2">
 							<label>预约门店</label><br/>
 							<select id="bookShopId">
@@ -167,10 +189,7 @@
 							<input type="text" id="vistorAt" name="vistorAt" placeholder="上门时间" class="form-control" >
 						</div>
 
-						<div class="col-md-4">
-							<label>维修需求</label>
-							<input type="text" name="repairCommands" id="repairCommands" placeholder="维修需求" class="form-control">
-						</div>
+						
 					</div>
 
 					<div class="row bottom10">
@@ -250,8 +269,8 @@
 			</div>
 
 			<div class="container top_con" style="width: 100%; min-width: 1000px">
-				<div class="col-md-2 bottom10">
-					<input type="button" class="form-control col-md-2 btn" id="saveBtn" value="保存" />
+				<div class="col-md-2 bottom10" style="float:right;">
+					<input type="button" class="btn btn-success" style="width: 120px;margin-top: 10px;" id="saveBtn" value="保存" />
 				</div>
 			</div>
 		</div>
@@ -297,6 +316,7 @@
             var customerAddress = $('#customerAddress').val();
             var wechatNo = $('#wechatNo').val();
             var wechatNickname = $('#wechatNickname').val();
+            var deviceNo = $('#deviceNo').val();
             var channelSource = $('#channelSource').val();
             var repairCommands = $('#repairCommands').val();
             var province = $('#province').val();
@@ -332,7 +352,7 @@
                 yaya.layer.msg('手机号、微信号、微信昵称、阿里旺旺账号、阿里旺旺昵称、微博账号、微博昵称、QQ账号、QQ昵称，至少要填写一项');
                 return;
 			}else if(customerPhone != '' && !checkIsMobile(customerPhone)){
-			    yaya.layer.msg("手机号输入不正确");
+			    yaya.layer.msg("电话号码不正确，手机号或固话(xxx-12345678),固话注意分隔符号 - ");
 			    return;
 			}
 
@@ -347,6 +367,7 @@
                     customerAddress: customerAddress,
                     wechatNo:wechatNo,
                     wechatNickname:wechatNickname,
+                    deviceNo:deviceNo,
                     channelSource:channelSource,
                     repairCommands:repairCommands,
                     province:province,
@@ -392,7 +413,8 @@
         function checkIsMobile(value){
             var length = value.length;
             var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
-            return (length == 11 && mobile.test(value));
+            var telephone = /\d{3}-\d{8}|\d{4}-\d{7}/;
+            return (mobile.test(value) || telephone.test(value));
         }
 
         });

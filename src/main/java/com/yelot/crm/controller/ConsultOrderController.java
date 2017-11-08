@@ -117,7 +117,7 @@ public class ConsultOrderController {
         model.addAttribute("categoryJson",categoryJson);
         model.addAttribute("bean",consultOrder);
 
-        return "consult_order/consult_order_detail";
+        return "consult_order/consult_order_edit";
 
     }
 

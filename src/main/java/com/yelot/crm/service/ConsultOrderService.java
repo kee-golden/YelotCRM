@@ -51,7 +51,7 @@ public class ConsultOrderService {
         User currentUser = UserUtil.getCurrentUser();
         
         String strDate = DateUtil.toString(new Date(),"yyyyMMdd");
-        int todayCount = consultOrderMapper.findTodayCount();
+        int todayCount = consultOrderMapper.findTodayCount() + 1; //从1开始
         consultOrder.setOrderNo(strDate + todayCount);
         
         consultOrder.setCreateUserId(currentUser.getId());
