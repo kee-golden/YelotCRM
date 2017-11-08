@@ -280,7 +280,6 @@
         <if test="secondCategoryId != null">,second_category_id = #{secondCategoryId}</if>
         <if test="productInfoJson != null">,product_info_json = #{productInfoJson}</if>
         <if test="serviceItemIds != null">,service_item_ids = #{serviceItemIds}</if>
-        <if test="refOrderIds != null">,ref_order_ids = #{refOrderIds}</if>
         <if test="imagesJson != null">,images_json = #{imagesJson}</if>
         <if test="imageDesc != null">,image_desc = #{imageDesc}</if>
         <if test="repairDesc != null">,repair_desc = #{repairDesc}</if>

@@ -316,7 +316,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
                     yaya.layer.msg("提交成功");
                     yaya.layer.close(index);
                     setTimeout(function () {
-                        window.location.href = ctx + '/repair-order/mylist';
+                        window.location.href = ctx + '/repair-order/alllist';
                     }, 1000);
 
                 }

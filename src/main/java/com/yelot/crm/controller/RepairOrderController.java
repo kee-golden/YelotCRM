@@ -191,9 +191,7 @@ public class RepairOrderController {
 
         repairOrderService.save(repairOrder);
         
-        if (refOrderIdsJson != null && !"null".equals(refOrderIdsJson) && !"".equals(refOrderIdsJson)) {
-        	repairOrderService.updateRefOrderIdsByOrderNo(repairOrder.getOrderNo(), refOrderIdsJson, "add");
-		}
+    	repairOrderService.updateRefOrderIdsByOrderNo(repairOrder.getOrderNo(), refOrderIdsJson);
         
         consultOrderMapper.updateStatus(consultOrderId, 3); // 咨询单已接单
 
@@ -242,9 +240,7 @@ public class RepairOrderController {
 
         repairOrderService.update(repairOrder);
         
-        if (refOrderIdsJson != null && !"null".equals(refOrderIdsJson) && !"".equals(refOrderIdsJson)) {
-        	repairOrderService.updateRefOrderIdsByOrderNo(orderNo, refOrderIdsJson, "update");
-		}
+    	repairOrderService.updateRefOrderIdsByOrderNo(orderNo, refOrderIdsJson);
         return ResultData.ok();
     }
 
@@ -609,14 +605,15 @@ public class RepairOrderController {
 	private List<RefOrder> initRefOrder(List<String> refOrderIdsList,
 			RepairOrder repairOrder) {
 
-		if (refOrderIdsList == null || repairOrder == null
-				|| StringUtils.isEmpty(repairOrder.getRefOrderIds())
-				|| "null".equals(repairOrder.getRefOrderIds())) {
+		if (refOrderIdsList == null) {
 			return null;
 		}
+		
+		List<String> orderNoList = new ArrayList<String>();
+		if (!StringUtils.isEmpty(repairOrder.getRefOrderIds()) && !"null".equals(repairOrder.getRefOrderIds())) {
+			orderNoList = JSON.parseArray(repairOrder.getRefOrderIds(), String.class);
+		}
 
-		List<String> orderNoList = JSON.parseArray(repairOrder.getRefOrderIds(),
-				String.class);
 		List<RefOrder> refOrderList = new ArrayList<RefOrder>();
 
 		for (String item : refOrderIdsList) {
