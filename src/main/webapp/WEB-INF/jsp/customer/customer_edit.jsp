@@ -221,24 +221,27 @@
                             <div class="col-md-6">
                                 <label>客户来源</label>
                                 <select class="form-control" name="channelSource" id="channelSource">
-                                    <option value="1" <c:if test="${bean.channelSource == 1}">selected="selected"</c:if>>udesk</option>
-                                    <option value="2" <c:if test="${bean.channelSource == 2}">selected="selected"</c:if>>北京7860</option>
-                                    <option value="3" <c:if test="${bean.channelSource == 3}">selected="selected"</c:if>>上海5588</option>
-                                    <option value="4" <c:if test="${bean.channelSource == 4}">selected="selected"</c:if>>总机400</option>
-                                    <option value="5" <c:if test="${bean.channelSource == 5}">selected="selected"</c:if>>杭州3123</option>
-                                    <option value="6" <c:if test="${bean.channelSource == 6}">selected="selected"</c:if>>上门</option>
-                                    <option value="7" <c:if test="${bean.channelSource == 7}">selected="selected"</c:if>>微博</option>
-                                    <option value="8" <c:if test="${bean.channelSource == 8}">selected="selected"</c:if>>微信</option>
-                                    <option value="9" <c:if test="${bean.channelSource == 9}">selected="selected"</c:if>>淘宝C店</option>
-                                    <option value="10" <c:if test="${bean.channelSource == 10}">selected="selected"</c:if>>淘宝B店</option>
-                                    <option value="11" <c:if test="${bean.channelSource == 11}">selected="selected"</c:if>>大众点评</option>
-                                    <option value="12" <c:if test="${bean.channelSource == 12}">selected="selected"</c:if>>老客介绍</option>
-                                    <option value="13" <c:if test="${bean.channelSource == 13}">selected="selected"</c:if>>品牌介绍</option>
-                                    <option value="14" <c:if test="${bean.channelSource == 14}">selected="selected"</c:if>>员工介绍</option>
-                                    <option value="15" <c:if test="${bean.channelSource == 15}">selected="selected"</c:if>>老板介绍</option>
-                                    <option value="16" <c:if test="${bean.channelSource == 16}">selected="selected"</c:if>>官网留言</option>
-                                    <option value="17" <c:if test="${bean.channelSource == 17}">selected="selected"</c:if>>论坛、博客</option>
-                                    <option value="18" <c:if test="${bean.channelSource == 18}">selected="selected"</c:if>>其他</option>
+                                    <c:forEach items="${channelSourceList}" var="item">
+                                        <option value="${item.id}" <c:if test="${bean.channelSource == item.id}">selected="selected"</c:if>>${item.name}</option>
+                                    </c:forEach>
+                                    <%--<option value="1" <c:if test="${bean.channelSource == 1}">selected="selected"</c:if>>udesk</option>--%>
+                                    <%--<option value="2" <c:if test="${bean.channelSource == 2}">selected="selected"</c:if>>北京7860</option>--%>
+                                    <%--<option value="3" <c:if test="${bean.channelSource == 3}">selected="selected"</c:if>>上海5588</option>--%>
+                                    <%--<option value="4" <c:if test="${bean.channelSource == 4}">selected="selected"</c:if>>总机400</option>--%>
+                                    <%--<option value="5" <c:if test="${bean.channelSource == 5}">selected="selected"</c:if>>杭州3123</option>--%>
+                                    <%--<option value="6" <c:if test="${bean.channelSource == 6}">selected="selected"</c:if>>上门</option>--%>
+                                    <%--<option value="7" <c:if test="${bean.channelSource == 7}">selected="selected"</c:if>>微博</option>--%>
+                                    <%--<option value="8" <c:if test="${bean.channelSource == 8}">selected="selected"</c:if>>微信</option>--%>
+                                    <%--<option value="9" <c:if test="${bean.channelSource == 9}">selected="selected"</c:if>>淘宝C店</option>--%>
+                                    <%--<option value="10" <c:if test="${bean.channelSource == 10}">selected="selected"</c:if>>淘宝B店</option>--%>
+                                    <%--<option value="11" <c:if test="${bean.channelSource == 11}">selected="selected"</c:if>>大众点评</option>--%>
+                                    <%--<option value="12" <c:if test="${bean.channelSource == 12}">selected="selected"</c:if>>老客介绍</option>--%>
+                                    <%--<option value="13" <c:if test="${bean.channelSource == 13}">selected="selected"</c:if>>品牌介绍</option>--%>
+                                    <%--<option value="14" <c:if test="${bean.channelSource == 14}">selected="selected"</c:if>>员工介绍</option>--%>
+                                    <%--<option value="15" <c:if test="${bean.channelSource == 15}">selected="selected"</c:if>>老板介绍</option>--%>
+                                    <%--<option value="16" <c:if test="${bean.channelSource == 16}">selected="selected"</c:if>>官网留言</option>--%>
+                                    <%--<option value="17" <c:if test="${bean.channelSource == 17}">selected="selected"</c:if>>论坛、博客</option>--%>
+                                    <%--<option value="18" <c:if test="${bean.channelSource == 18}">selected="selected"</c:if>>其他</option>--%>
                                 </select>
                             </div>
                             <div class="col-md-6">

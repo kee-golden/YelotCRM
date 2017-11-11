@@ -49,6 +49,8 @@ public class ConsultOrderController {
 
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private ChannelSourceMapper channelSourceMapper;
 
     @RequestMapping("add")
     public String add(Model model){
@@ -61,8 +63,10 @@ public class ConsultOrderController {
         model.addAttribute("secondCategory",secondCategory);
         List<Brand> brandList = brandMapper.findAll();
         List<Shop> shopList = shopMapper.findAll();
+        List<ChannelSource> channelSourceList = channelSourceMapper.findAll();
         model.addAttribute("shopList",shopList);
         model.addAttribute("brandList",brandList);
+        model.addAttribute("channelSourceList",channelSourceList);
         return "consult_order/consult_order_add";
     }
 
@@ -93,6 +97,7 @@ public class ConsultOrderController {
     public String detail(Model model,Long id){
         CityListVo cityListVo = repairOrderService.convertToCityListVo();
         String categoryJson = JSON.toJSONString(cityListVo);
+        System.out.println(categoryJson);
         ConsultOrder consultOrder = consultOrderMapper.find(id);
         Brand brand = brandMapper.find(consultOrder.getBrandId());
         if(brand != null){
@@ -111,10 +116,14 @@ public class ConsultOrderController {
 
         List<Brand> brandList = brandMapper.findAll();
         List<Shop> shopList = shopMapper.findAll();
+        List<ChannelSource> channelSourceList = channelSourceMapper.findAll();
+
         model.addAttribute("shopList",shopList);
         model.addAttribute("brandList",brandList);
+        model.addAttribute("channelSourceList",channelSourceList);
 
         model.addAttribute("categoryJson",categoryJson);
+
         model.addAttribute("bean",consultOrder);
 
         return "consult_order/consult_order_edit";

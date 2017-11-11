@@ -252,7 +252,7 @@
 	</div>
 	<script src="${ctx}/static/require/require.js"></script>
 	<script src="${ctx}/static/require/require.config.js"></script>
-	<script src="${ctx}/module-js/consult_order/consult_order_all.js"></script>
+	<script src="${ctx}/module-js/consult_order/consult_order_all.js?t=1"></script>
 
 	<script>
 	    require(['jquery','dateTimePicker'], function ($) {

@@ -7,8 +7,10 @@ import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResponseData;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.base.PageHelper;
+import com.yelot.crm.entity.ChannelSource;
 import com.yelot.crm.entity.Customer;
 import com.yelot.crm.enums.AliveStatus;
+import com.yelot.crm.mapper.ChannelSourceMapper;
 import com.yelot.crm.mapper.CustomerMapper;
 import com.yelot.crm.service.CustomerService;
 import com.yelot.crm.service.RepairOrderService;
@@ -42,6 +44,8 @@ public class CustomerController {
 
     @Autowired
     private RepairOrderService repairOrderService;
+    @Autowired
+    private ChannelSourceMapper channelSourceMapper;
 
     @RequestMapping("find")
     public Customer find(Long id){
@@ -85,6 +89,9 @@ public class CustomerController {
     public String add(Model model) {
         Customer customer = new Customer();
         model.addAttribute("bean",customer);
+        List<ChannelSource> channelSourceList = channelSourceMapper.findAll();
+        model.addAttribute("channelSourceList",channelSourceList);
+
         return "customer/customer_edit";
     }
 
@@ -97,6 +104,8 @@ public class CustomerController {
     @RequestMapping("edit")
     public String edit(Model model, Long id) {
         Customer customer = customerMapper.find(id);
+        List<ChannelSource> channelSourceList = channelSourceMapper.findAll();
+        model.addAttribute("channelSourceList",channelSourceList);
         model.addAttribute("bean",customer);
 
         return "customer/customer_edit";

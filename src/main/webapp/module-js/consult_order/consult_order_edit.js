@@ -3,33 +3,16 @@
  */
 require(['jquery','yaya','selector2','cityselect','dateTimePicker'], function ($, yaya,selector2,cityselect) {
 
-    var jsonObj = eval(${categoryJson});//转化为json 对象
-    $("#category").citySelect({
-        url:jsonObj,
-        prov:'${bean.firstCategoryName}',
-        city:'${bean.secondCategoryName}',
-        nodata:"none"
-    });
+    // console.log(${categoryJson});
+    // console.log(jsonObj);
+    // $("#category").citySelect({
+    //     url:jsonObj,
+    //     prov:firstCategory,
+    //     city:secondCategory,
+    //     nodata:"none"
+    // });
 
-    $("#prov_city").citySelect({
-        url:"/static/cityselect/js/city.min.js",
-        prov:'${bean.province}',
-        city:'${bean.city}',
-        nodata:"none",
-        required:false
-    });
 
-    $('#vistorAt').datetimepicker({
-        lang: 'ch',
-        format: 'Y-m-d',
-        timepicker:false,
-        beforeShow: function () {
-            setTimeout(function () {
-                    $('.xdsoft_datetimepicker').css("z-index", 99999999);
-                }, 1000
-            );
-        }
-    });
 
 
 
