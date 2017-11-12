@@ -31,9 +31,11 @@ public interface RepairOrderMapper {
 	 * @param extra_search
 	 * @return
 	 */
-	Integer countTotalPage(@Param("extra_search") String extra_search, 
+	Integer countTotalPage(
+			@Param("startDate") String startDate, 
+			@Param("endDate") String endDate, 
+			@Param("extra_search") String extra_search, 
 			@Param("create_user_id") Long create_user_id, 
-			@Param("three_days_after") String three_days_after, 
 			@Param("type") String type,
 			@Param("status") String status,
 			@Param("shopId") Long shopId);
@@ -44,9 +46,11 @@ public interface RepairOrderMapper {
 	 * @param pageHelper
 	 * @return
 	 */
-	List<RepairOrder> findByPage(@Param("extra_search") String extra_search, 
+	List<RepairOrder> findByPage(
+			@Param("startDate") String startDate, 
+			@Param("endDate") String endDate, 
+			@Param("extra_search") String extra_search, 
 			@Param("create_user_id") Long create_user_id, 
-			@Param("three_days_after") String three_days_after, 
 			@Param("type") String type, 
 			@Param("status") String status,
 			@Param("shopId") Long shopId,

@@ -6,8 +6,9 @@
 <title>CRM管理后台</title>
 
 <%@include file="/WEB-INF/common/static.jsp"%>
-	<link href="${ctx}/module-css/repair-order.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/module-css/daterangepicker.css">
+<link href="${ctx}/module-css/repair-order.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="${ctx}/module-css/webuploader_style.css">
 
 <c:set var="PARENT_MENU_CODE" value="RepairOrder_Manage" />
 <c:set var="CHILD_MENU_CODE" value="RepairOrder_WarnList" />
@@ -132,7 +133,8 @@
 
 #searchFrom {
 	margin-left: 15px;
-	float: right
+	float: right;
+	width: 60%
 }
 
 .ibox {
@@ -194,11 +196,14 @@
 
 					<div id="content" class="ibox-content">
 						<div class="co_all">
-							<form id="searchFrom" style="margin-top: -20px">
+							<form id="searchFrom" style="margin-top: -20px;">
 								<div id="search_Big">
-									<ul class="pull-left" id="otherTab">
-										<li><span>搜索：</span> <input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号或手机号">
-											<div class="clearfix"></div></li>
+									<ul class="pull-left" id="otherTab" style="width: 90%">
+										<li style="list-style-type:none;width: 100%"><span>搜索：</span> 
+										<input type="text" style="float: left; width: 40%" id="dateArea" placeholder="到期时间区间">
+										&nbsp;&nbsp;&nbsp;
+										<input type="text" id="keywords" class="inpt_width" placeholder="请输入订单号或手机号">
+										<div class="clearfix"></div></li>
 									</ul>
 									<div class="pull-right search_right">
 										<a id="J_orderSerch" class="searfor"> <i class="glyphicon glyphicon-search sear_icon sear_icon"></i></a>

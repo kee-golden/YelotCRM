@@ -112,17 +112,20 @@ public class RepairOrderService {
 	 * 
 	 * @return 总的记录条数
 	 */
-	public Integer countTotalPage(String extra_search, String type, Long userId) {
+	public Integer countTotalPage(String dateArea, String extra_search, String type, Long userId) {
 		Long create_user_id = null;
-		String three_days_after = null;
 		String status = null;
 		Long shopId = UserUtil.getCurrentUser().getShop_id();
-		
+
+        String startDate = "";
+        String endDate = "";
+        
 		if ("my".equals(type)) {
 			create_user_id = userId;
 		}
 		if("warn".equals(type) || "centerWarn".equals(type)){
-			three_days_after = getThreeDaysAfter();
+        	startDate = dateArea.split("-")[0] + " 00:00:00";
+        	endDate = dateArea.split("-")[1] + " 23:59:59";
 		}
 		if ("inLibrary".equals(type)) {
 			status = "32";
@@ -131,7 +134,7 @@ public class RepairOrderService {
 			shopId = null;
 		}
 		
-		return repairOrderMapper.countTotalPage(extra_search, create_user_id, three_days_after, type, status, shopId);
+		return repairOrderMapper.countTotalPage(startDate, endDate, extra_search, create_user_id, type, status, shopId);
 	}
 
 	/**
@@ -140,17 +143,20 @@ public class RepairOrderService {
 	 * @param pageHelper
 	 * @return
 	 */
-	public List<RepairOrder> findByPage(String extra_search, String type, Long userId, PageHelper pageHelper) {
+	public List<RepairOrder> findByPage(String dateArea, String extra_search, String type, Long userId, PageHelper pageHelper) {
 		Long create_user_id = null;
-		String three_days_after = null;
 		String status = null;
 		Long shopId = UserUtil.getCurrentUser().getShop_id();
-		
+
+        String startDate = "";
+        String endDate = "";
+        
 		if ("my".equals(type)) {
 			create_user_id = userId;
 		}
 		if("warn".equals(type) || "centerWarn".equals(type)){
-			three_days_after = getThreeDaysAfter();
+        	startDate = dateArea.split("-")[0] + " 00:00:00";
+        	endDate = dateArea.split("-")[1] + " 23:59:59";
 		}
 		if ("inLibrary".equals(type)) {
 			status = "32";
@@ -159,7 +165,7 @@ public class RepairOrderService {
 			shopId = null;
 		}
 		
-		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(extra_search, create_user_id, three_days_after, type, status, shopId, pageHelper);
+		List<RepairOrder> repairOrderList = repairOrderMapper.findByPage(startDate, endDate, extra_search, create_user_id, type, status, shopId, pageHelper);
 		setRepairServiceItem(repairOrderList);
 		setRepairStatus(repairOrderList);
 		return repairOrderList;

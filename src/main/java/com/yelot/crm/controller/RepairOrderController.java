@@ -330,6 +330,7 @@ public class RepairOrderController {
     @ResponseBody
     @RequestMapping("query")
     public Table queryOrder(Model model,
+		@RequestParam(value = "dateArea", defaultValue = "") String dateArea,
         @RequestParam(value = "extra_search", defaultValue = "")String extra_search,
         @RequestParam(value = "type", defaultValue = "")String type,
         @RequestParam(value = "start", defaultValue = "0") int start,
@@ -340,8 +341,8 @@ public class RepairOrderController {
         pageHelper.setSize(length);
         
         Long userId = UserUtil.getCurrentUser().getId();
-        int pageCount = repairOrderService.countTotalPage(extra_search, type, userId);
-        List<RepairOrder> repairOrderList = repairOrderService.findByPage(extra_search, type, userId, pageHelper);
+        int pageCount = repairOrderService.countTotalPage(dateArea, extra_search, type, userId);
+        List<RepairOrder> repairOrderList = repairOrderService.findByPage(dateArea, extra_search, type, userId, pageHelper);
         return new Table(pageCount, pageCount, repairOrderList);
     }
 

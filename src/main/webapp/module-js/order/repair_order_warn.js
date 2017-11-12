@@ -1,7 +1,31 @@
 /**
  * Created by kee on 17/7/13.
  */
-require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
+require([ 'jquery', 'yaya', 'datatables.net','daterangepicker' ], function($, yaya, daterangepicker) {
+    var locale = {
+		"format": 'YYYY/MM/DD',
+		"separator": "-",
+		"applyLabel": "确定",
+		"cancelLabel": "取消",
+		"fromLabel": "起始时间",
+		"toLabel": "结束时间'",
+		"customRangeLabel": "自定义",
+		"weekLabel": "W",
+		"daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+		"monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+		"firstDay": 1
+		};
+    var myData = new Date();
+    var endDate = myData.toLocaleDateString();
+    myData.setDate(myData.getDate() - 3);
+    var startDate = myData.toLocaleDateString();
+    $('#dateArea').daterangepicker({
+		"autoApply": true,
+		"startDate": startDate,
+		"endDate": endDate,
+		"locale": locale
+	});
+    
 	var $JOrderList = $('#J_orderList');
 	// 初始化
     var table = $JOrderList.DataTable({
@@ -17,6 +41,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
             'url':ctx + '/repair-order/query',
 			'method': 'get',
             'data': function (d) {
+                d.dateArea = $('#dateArea').val();
                 d.extra_search = $('#keywords').val();
                 d.type = "warn";
             }
