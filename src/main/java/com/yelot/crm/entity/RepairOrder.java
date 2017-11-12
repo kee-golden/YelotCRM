@@ -238,6 +238,9 @@ public class RepairOrder {
      */
     private int expressMoney;
     
+    private String customImagesJson;
+    private String customImagesDesc;
+    
     public Long getId() {
         return id;
     }
@@ -706,4 +709,21 @@ public class RepairOrder {
     public void setMaterialDesc(String materialDesc) {
         this.materialDesc = materialDesc;
     }
+
+	public String getCustomImagesJson() {
+		return customImagesJson;
+	}
+
+	public void setCustomImagesJson(String customImagesJson) {
+		this.customImagesJson = customImagesJson;
+	}
+
+	public String getCustomImagesDesc() {
+		return customImagesDesc;
+	}
+
+	public void setCustomImagesDesc(String customImagesDesc) {
+		this.customImagesDesc = customImagesDesc;
+	}
+    
 }

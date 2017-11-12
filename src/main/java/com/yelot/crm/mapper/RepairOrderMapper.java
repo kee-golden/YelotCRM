@@ -147,5 +147,6 @@ public interface RepairOrderMapper {
 	List<RepairOrder> findByPhoneAndStatus(@Param("phone") String phone,@Param("status") String status);
 	
 	int findRoleByUserId(Long userId);
-	
+
+	void saveCustomImages(RepairOrder repairOrder);
 }

@@ -653,6 +653,85 @@ public class RepairOrderController {
         }
     }
 
+    /**
+     * 根据订单id查看订单定制图片信息
+     * @param model
+     * @param orderId
+     * @return
+     */
+    @RequestMapping("customImage")
+    public String customImage(Model model, Long id, Boolean customerVisable){
+
+        RepairOrder repairOrder = repairOrderMapper.find(id);
+//从add 方法中拷贝过来
+        CityListVo cityListVo = repairOrderService.convertToCityListVo();
+        String categoryJson = JSON.toJSONString(cityListVo);
+        String firstCategory = categoryMapper.find(repairOrder.getFirstCategoryId()).getName();
+        String secondCategory = categoryMapper.find(repairOrder.getSecondCategoryId()).getName();
+        model.addAttribute("categoryJson",categoryJson);
+        model.addAttribute("firstCategory",firstCategory);
+        model.addAttribute("secondCategory",secondCategory);
+
+        Category category = categoryMapper.findByName(firstCategory,secondCategory);
+
+        List<CategoryServiceItem> categoryServiceItemList = categoryServiceItemMapper.findByCategoryId(category.getId());
+        initServiceItem(categoryServiceItemList,repairOrder);//赋值
+        String categoryServiceJson = JSON.toJSONString(categoryServiceItemList);
+
+        model.addAttribute("categoryServiceJson",categoryServiceJson);
+        
+        List<String> refOrderIdsStrList = repairOrderService.findUserOrderNoByPhone(repairOrder.getCustomerPhone(), id);
+        List<RefOrder> refOrderIdsList = initRefOrder(refOrderIdsStrList, repairOrder);//赋值
+        String refOrderIds = JSON.toJSONString(refOrderIdsList);
+        model.addAttribute("refOrderIdsJson",refOrderIds);
+
+        //获取品牌
+        List<Brand> brandList = brandMapper.findAll();
+        model.addAttribute("brandList",brandList);
+
+        List<Attribute> attributeList = categoryAttributeService.findAttributes(firstCategory,secondCategory);
+        initAttributeItem(attributeList,repairOrder);
+
+        String attibutesJson = JSON.toJSONString(attributeList);
+       // System.out.println(attibutesJson);
+        //System.out.println(repairOrder.getProductInfoJson());
+
+        String imagesPath = repairOrder.getCustomImagesJson();
+        if(!StringUtils.isEmpty(imagesPath)){
+            String images[] = repairOrder.getCustomImagesJson().split(",");
+            String imagesJson = JSON.toJSONString(images);
+            model.addAttribute("imagesPath",repairOrder.getCustomImagesJson());
+            model.addAttribute("imagesJson",imagesJson);
+        }else {
+            model.addAttribute("imagesPath","");
+            model.addAttribute("imagesJson","[]");
+        }
+
+        Customer customer = customerMapper.find(repairOrder.getCustomerId());
+
+        model.addAttribute("attributesJson",attibutesJson);
+        model.addAttribute("repairOrder",repairOrder);
+        model.addAttribute("customer",customer);
+        model.addAttribute("customerVisable", customerVisable);
+
+        return "repair_order/repair_order_customImage";
+    }
+    
+    @RequestMapping("saveCustomImages")
+    @ResponseBody
+    public ResultData saveCustomImages(Long id, String customImagesPaths, String customImagesDesc){
+
+        RepairOrder repairOrder = new RepairOrder();
+        repairOrder.setId(id);
+
+        repairOrder.setCustomImagesJson(customImagesPaths);
+        repairOrder.setCustomImagesDesc(customImagesDesc);
+
+        repairOrderService.saveCustomImages(repairOrder);
+        
+        return ResultData.ok();
+    }
+
 //    public static void main(String[] args) {
 //
 //        String str = DateUtil.toString(new Date(),"yyyyMMdd");

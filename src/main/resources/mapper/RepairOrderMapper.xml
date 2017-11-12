@@ -49,6 +49,8 @@
         <result property="discountDesc" column="discount_desc"/>
         <result property="refOrderIds" column="ref_order_ids"/>
         <result property="channelSource" column="channel_source"/>
+        <result property="customImagesJson" column="custom_images_json"/>
+        <result property="customImagesDesc" column="custom_images_desc"/>
     </resultMap>
     
     <resultMap id="monthData" type="com.yelot.crm.entity.MonthData">
@@ -362,4 +364,9 @@
     <select id="findRoleByUserId" resultType="java.lang.Integer">
         select role_id from t_user_role_ref where user_id = #{userId} order by role_id LIMIT 0, 1
     </select>
+    
+    <update id="saveCustomImages">
+        update t_repair_order set custom_images_json = #{customImagesJson}, custom_images_desc = #{customImagesDesc}
+		where id = #{id}
+    </update>
 </mapper>

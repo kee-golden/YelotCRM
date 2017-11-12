@@ -32,7 +32,8 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
     			{'data' : 'createAt'},
     			{'data' : 'id', 'render' : function(data, type,full, meta) {
     				return '<a href="javascript:;;" data-id="' + data + '" class="J_orderDetail"><i class="fa fa-edit" aria-hidden="true"></i>查看详情</a>&nbsp;&nbsp;'
-    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_workflow"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>';
+    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_workflow"><i class="fa fa-edit" aria-hidden="true"></i>审批流程</a>&nbsp;&nbsp;'
+    				+ '<a href="javascript:;;" data-id="' + data + '" class="J_customImage"><i class="fa fa-edit" aria-hidden="true"></i>定制图片</a>';
     			}
     			}],
         'language': {
@@ -135,6 +136,68 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
         });
 
 
+    });
+
+    // 定制图片
+    $JOrderList.on('click', '.J_customImage', function () {
+		$.ajax({
+            url: ctx + '/repair-order/customImage',
+            data: {
+                id: $(this).data('id'),
+                customerVisable: false
+            },
+            method: 'get',
+            dataType: 'html',
+            success: function (str) {
+                yaya.layer.open({
+                    type: 1,
+                    title: '定制详情',
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: ['1100px','800px'],  //高度默认
+                    scrollbar:true,
+                    shadeClose: true,
+                    btn: ['保存','取消'],
+                    success: function (layero, index) {
+
+
+                    },
+                    yes: function (index) {//按钮1
+
+                        var customImagesPaths = $('.filelist').data('path');
+                        var customImagesDesc = $('#customImagesDesc').val();
+                        $.ajax({
+                            url: ctx + '/repair-order/saveCustomImages',
+                            method: 'post',
+                            dataType: 'json',
+                            data: {
+                                id:$("#orderId").val(),
+                            	customImagesPaths:customImagesPaths,
+                                customImagesDesc:customImagesDesc
+                            },
+                            success: function (data) {
+                                if(data.code == 1200){
+                                    yaya.layer.msg("提交成功");
+                                    setTimeout(function () {
+                                        window.location.href = ctx+'/repair-order/centerAlllist';
+                                    },1000);
+
+                                }
+
+                            }
+
+                        });
+
+
+                    },
+                    btn2: function (index) {//按钮2
+
+                    }
+                });
+            },
+            error: function () {
+
+            }
+        });
     });
 
 

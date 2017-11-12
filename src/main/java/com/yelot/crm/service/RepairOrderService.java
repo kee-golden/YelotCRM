@@ -374,14 +374,18 @@ public class RepairOrderService {
      * 获取三天后的日期
      * @return
      */
-    private String getThreeDaysAfter(){
+    /*private String getThreeDaysAfter(){
 		  Calendar calendar = Calendar.getInstance();
 		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		  calendar.add(Calendar.DATE, 3);
 		  String three_days_after = sdf.format(calendar.getTime());
 		  return three_days_after;
     }
+*/
 
+    public void saveCustomImages(RepairOrder repairOrder) {
+		repairOrderMapper.saveCustomImages(repairOrder);
+    }
 
     
 }
