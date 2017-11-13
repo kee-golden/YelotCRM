@@ -138,35 +138,6 @@
 
 			</div>
 		</div>
-		<div class="container top_con" style="width: 100%; min-width: 1000px">
-			<h6>
-				<span class="glyphicon glyphicon-folder-open work"></span>定制详情<i class="pull-right iconfont ">&#xe658;</i>
-				<div class="clearfix"></div>
-			</h6>
-			<div class="row">
-				<div id="uploader">
-					<div class="queueList">
-						<div id="dndArea" class="placeholder">
-							<div id="filePicker"></div>
-							<p>或将照片拖到这里，单次最多可选20张</p>
-						</div>
-					</div>
-					<div class="statusBar" style="display: none;">
-						<div class="progress">
-							<span class="text">0%</span> <span class="percentage"></span>
-						</div>
-						<div class="info"></div>
-						<div class="btns">
-							<div id="filePicker2"></div>
-							<div class="uploadBtn">开始上传</div>
-						</div>
-					</div>
-				</div>
-				<div id="image-desc">
-					<label class="col-md-2">定制描述:</label> <input type="text" id="customImagesDesc" class="form-control bottom10" placeholder="" value="${repairOrder.customImagesDesc}"/>
-				</div>
-			</div>
-		</div>
 
 		<div class="container top_con" style="width: 100%; min-width: 1000px">
 			<h6>
@@ -244,13 +215,116 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="container top_con" style="width: 100%; min-width: 1000px">
+			<h6>
+				<span class="glyphicon glyphicon-folder-open work"></span>定制修改历史<i class="pull-right iconfont ">&#xe658;</i>
+				<div class="clearfix"></div>
+			</h6>
+			<div class="row">
+				<c:forEach items="${customImagesList}" var="item" varStatus="status">
+					<table id="customImageHistory" style="width: 100%">
+						<tr>
+							<td colspan="2">第 ${status.index + 1} 次上传图片,上传者：${item.updateUserName},上传时间：${item.updateAtStr}</td>
+						</tr>
+						<tr>
+							<td width="12%">图片内容：</td>
+							<td width="84%">
+								<table style="width: 100%; border: solid 1px black;">
+									<c:if test="${item.imagesList.size()==0}">
+										<tr height="132px">
+											<td width="96%" colspan="8"></td>
+										</tr>
+									</c:if>
+									
+									<c:if test="${item.imagesList.size()!=0}">
+										<c:forEach items="${item.imagesList}" var="item2" varStatus="status2">
+											<c:if test="${status2.index%8==0}">
+												<tr height="132px">
+											</c:if>
+											<td width="12%"><img src="${item2}" width="100%" height="132px" style="padding: 2px"></td>
+											<c:if test="${status2.index%8==7}">
+												</tr>
+											</c:if>
+										</c:forEach>
+										<c:if test="${item.imagesList.size()%8==1}">
+											<td width="84%" colspan="7"></td>
+											</tr>
+										</c:if>
+										<c:if test="${item.imagesList.size()%8==2}">
+											<td width="72%" colspan="6"></td>
+											</tr>
+										</c:if>
+										<c:if test="${item.imagesList.size()%8==3}">
+											<td width="60%" colspan="5"></td>
+											</tr>
+										</c:if>
+										<c:if test="${item.imagesList.size()%8==4}">
+											<td width="48%" colspan="4"></td>
+											</tr>
+										</c:if>
+										<c:if test="${item.imagesList.size()%8==5}">
+											<td width="36%" colspan="3"></td>
+											</tr>
+										</c:if>
+										<c:if test="${item.imagesList.size()%8==6}">
+											<td width="24%" colspan="2"></td>
+											</tr>
+										</c:if>
+										<c:if test="${item.imagesList.size()%8==7}">
+											<td width="12%" colspan="1"></td>
+											</tr>
+										</c:if>
+									</c:if>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td width="12%">图片备注:</td>
+							<td width="84%">${item.imagesDesc}</td>
+						</tr>
+					</table>
+					<hr>
+				</c:forEach>
+			</div>
+		</div>
+		
+		<div class="container top_con" style="width: 100%; min-width: 1000px">
+			<h6>
+				<span class="glyphicon glyphicon-folder-open work"></span>定制详情<i class="pull-right iconfont ">&#xe658;</i>
+				<div class="clearfix"></div>
+			</h6>
+			<div class="row">
+				<div id="uploader">
+					<div class="queueList">
+						<div id="dndArea" class="placeholder">
+							<div id="filePicker"></div>
+							<p>或将照片拖到这里，单次最多可选15张</p>
+						</div>
+					</div>
+					<div class="statusBar" style="display: none;">
+						<div class="progress">
+							<span class="text">0%</span> <span class="percentage"></span>
+						</div>
+						<div class="info"></div>
+						<div class="btns">
+							<div id="filePicker2"></div>
+							<div class="uploadBtn">开始上传</div>
+						</div>
+					</div>
+				</div>
+				<div id="image-desc">
+					<label class="col-md-2">定制描述:</label> <input type="text" id="customImagesDesc" class="form-control bottom10"/>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
 <script src="${ctx}/module-js/order/repair_order_customImage.js"></script>
-<script src="${ctx}/module-js/order/webuploader_edit.js"></script>
+<script src="${ctx}/module-js/order/webuploader_app.js"></script>
 
 <script>
     require(['jquery','yaya','cityselect','dateTimePicker'], function ($, yaya,cityselect) {
@@ -268,8 +342,11 @@
             format: 'Y-m-d',
             timepicker:false
         });
+		
+        $("img").click(function(){
+			window.open(this.src);
+		});
     });
-
 </script>
 
 

@@ -383,9 +383,4 @@ public class RepairOrderService {
     }
 */
 
-    public void saveCustomImages(RepairOrder repairOrder) {
-		repairOrderMapper.saveCustomImages(repairOrder);
-    }
-
-    
 }

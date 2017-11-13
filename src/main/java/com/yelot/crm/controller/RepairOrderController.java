@@ -10,6 +10,7 @@ import com.yelot.crm.enums.RepairOrderStatus;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.ConsultOrderService;
+import com.yelot.crm.service.CustomImagesService;
 import com.yelot.crm.service.RepairOrderService;
 import com.yelot.crm.vo.CityListVo;
 import com.yelot.crm.vo.Table;
@@ -75,6 +76,9 @@ public class RepairOrderController {
     
     @Autowired
     private ShopMapper shopMapper;
+
+    @Autowired
+    private CustomImagesService customImagesService;
 
     /**
      * 调整到新建页面
@@ -663,6 +667,7 @@ public class RepairOrderController {
     public String customImage(Model model, Long id, Boolean customerVisable){
 
         RepairOrder repairOrder = repairOrderMapper.find(id);
+        
 //从add 方法中拷贝过来
         CityListVo cityListVo = repairOrderService.convertToCityListVo();
         String categoryJson = JSON.toJSONString(cityListVo);
@@ -696,23 +701,15 @@ public class RepairOrderController {
        // System.out.println(attibutesJson);
         //System.out.println(repairOrder.getProductInfoJson());
 
-        String imagesPath = repairOrder.getCustomImagesJson();
-        if(!StringUtils.isEmpty(imagesPath)){
-            String images[] = repairOrder.getCustomImagesJson().split(",");
-            String imagesJson = JSON.toJSONString(images);
-            model.addAttribute("imagesPath",repairOrder.getCustomImagesJson());
-            model.addAttribute("imagesJson",imagesJson);
-        }else {
-            model.addAttribute("imagesPath","");
-            model.addAttribute("imagesJson","[]");
-        }
-
         Customer customer = customerMapper.find(repairOrder.getCustomerId());
 
         model.addAttribute("attributesJson",attibutesJson);
         model.addAttribute("repairOrder",repairOrder);
         model.addAttribute("customer",customer);
         model.addAttribute("customerVisable", customerVisable);
+        
+        List<CustomImages> customImagesList = customImagesService.findByOrderId(id);
+        model.addAttribute("customImagesList",customImagesList);
 
         return "repair_order/repair_order_customImage";
     }
@@ -721,13 +718,14 @@ public class RepairOrderController {
     @ResponseBody
     public ResultData saveCustomImages(Long id, String customImagesPaths, String customImagesDesc){
 
-        RepairOrder repairOrder = new RepairOrder();
-        repairOrder.setId(id);
+    	CustomImages customImages = new CustomImages();
+    	customImages.setOrderId(id);
+    	customImages.setImagesJson(customImagesPaths);
+    	customImages.setImagesDesc(customImagesDesc);
+    	customImages.setUpdateUserId(UserUtil.getCurrentUser().getId());
+    	customImages.setUpdateAt(new Date());
 
-        repairOrder.setCustomImagesJson(customImagesPaths);
-        repairOrder.setCustomImagesDesc(customImagesDesc);
-
-        repairOrderService.saveCustomImages(repairOrder);
+        customImagesService.saveCustomImages(customImages);
         
         return ResultData.ok();
     }
