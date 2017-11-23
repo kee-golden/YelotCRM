@@ -36,6 +36,10 @@ public class Shop {
      */
     private Long user_id;
 
+    private String province;
+
+    private String city;
+
     public Shop(){
 
     }
@@ -103,5 +107,21 @@ public class Shop {
 
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

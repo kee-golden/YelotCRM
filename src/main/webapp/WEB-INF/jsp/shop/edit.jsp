@@ -12,6 +12,13 @@
                                value="${bean.name}">
                     </div>
                     <div class="form-group">
+                        <label>省市</label>
+                        <div id="prov_city">
+                            <select class="prov" name="province"></select>
+                            <select class="city" disabled="disabled" name="city"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label>门店地址</label>
                         <input type="text" placeholder="请输入门店地址" name="address" id="address" class="form-control"
                                value="${bean.address}">
@@ -27,3 +34,34 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/static/cityselect/js/jquery.cityselect.js"></script>
+<script type="text/javascript">
+    require(['jquery', 'yaya', 'datatables.net','dateTimePicker'], function ($, yaya) {
+
+
+        var province = '${bean.province}';
+        var city = '${bean.city}';
+        console.log(province+","+city);
+        if(province != '' || city != ''){
+            $("#prov_city").citySelect({
+                url:"/static/cityselect/js/city.min.js",
+                prov:province,
+                city:city,
+                nodata:"none",
+                required:false
+            });
+        }else {
+            console.log("default  province")
+            $("#prov_city").citySelect({
+                url:"/static/cityselect/js/city.min.js",
+                prov:"上海",
+                city:"黄浦区",
+                nodata:"none",
+                required:false
+            });
+
+        }
+
+    });
+
+</script>

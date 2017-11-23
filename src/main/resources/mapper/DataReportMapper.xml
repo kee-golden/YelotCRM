@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yelot.crm.mapper.DataReportMapper">
+    <resultMap id="orderResultMap" type="com.yelot.crm.entity.StatisticOrder">
+        <id property="userName" column="userName"/>
+        <result property="realname" column="realname"/>
+        <result property="phone" column="phone"/>
+        <result property="shopName" column="shopName"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="time" column="time"/>
+        <result property="totalPayment" column="totalPayment"/>
+        <result property="totalCount" column="totalCount"/>
+
+    </resultMap>
+    
+    <resultMap id="monthData" type="com.yelot.crm.entity.MonthData">
+        <result property="month" column="month"/>
+        <result property="number" column="number"/>
+    </resultMap>
+
+    <resultMap id="dateNumber" type="com.yelot.crm.entity.DateNumber">
+        <result property="date" column="date"/>
+        <result property="number" column="number"/>
+    </resultMap>
+
+    <!-- 1,咨询来源数量 -->
+    <select id="findConsultChannelDataByType" resultMap="dateNumber">
+        SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') date,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') date,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') date,</if>
+        count(*) number from t_consult_order ro
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+
+        <if test="channelSourceId != null and channelSourceId != ''"> and channel_source = #{channelSourceId}</if>
+
+        group by date
+
+    </select>
+    <!-- 2,成交来源数量 -->
+    <select id="findRepairChannelDataByType" resultMap="dateNumber">
+        SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(create_at,'%Y-%m-%d') date,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(create_at,'%Y-%u') date,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(create_at,'%Y-%m') date,</if>
+        count(*) number from t_repair_order ro
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="channelSourceId != null and channelSourceId != ''"> and channel_source = #{channelSourceId}</if>
+        group by date
+    </select>
+
+    <!-- 获取一段时间内的全部省份 -->
+    <select id="findRepairAllProvince" resultType="String">
+
+        select DISTINCT province from t_repair_order ro,t_customer cus where ro.customer_id = cus.id
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+
+    </select>
+    <!-- 3,获取一段时间内的全部省份,件数或者金额 -->
+    <select id="repairOrderAllProvinceRatio" resultMap="orderResultMap">
+        SELECT province,
+        <if test="type != null and type != '' and type == 'TotalAmount'">count(*) totalCount</if>
+        <if test="type != null and type != '' and type == 'TotalPayment'">sum(total_payment) totalPayment</if>
+        from t_repair_order ro,t_customer cus
+        where ro.customer_id = cus.id
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        group by cus.province
+
+    </select>
+
+    <!-- 查询本市的订单情况 -->
+    <select id="repairOrderShopCity" resultMap="orderResultMap">
+        SELECT cust.city city,
+        <if test="type != null and type != '' and type == 'TotalAmount'">count(*) totalCount</if>
+        <if test="type != null and type != '' and type == 'TotalPayment'">sum(total_payment) totalPayment</if>
+        from t_repair_order ro,t_shop shop,t_customer cust
+        where ro.shop_id = shop.id and ro.customer_id = cust.id
+
+               and cust.city = #{city} and cust.province = #{province}
+
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="shopId != null">and shop.id= #{shopId}</if>
+        group by shop.city
+    </select>
+
+    <!-- 查询本省的订单情况 -->
+    <select id="repairOrderShopProvince" resultMap="orderResultMap">
+        SELECT cust.province province,
+        <if test="type != null and type != '' and type == 'TotalAmount'">count(*) totalCount</if>
+        <if test="type != null and type != '' and type == 'TotalPayment'">sum(total_payment) totalPayment</if>
+        from t_repair_order ro,t_shop shop,t_customer cust
+        where ro.shop_id = shop.id and ro.customer_id = cust.id
+        and cust.province = #{province}
+
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="shopId != null">and shop.id= #{shopId}</if>
+        group by shop.province
+    </select>
+
+    <!-- 4, 查询除了本省之外的所有省 -->
+    <select id="repairOrderByShopAndProvinceRatio" resultMap="orderResultMap">
+        SELECT cust.province province,
+        <if test="type != null and type != '' and type == 'TotalAmount'">count(*) totalCount</if>
+        <if test="type != null and type != '' and type == 'TotalPayment'">sum(total_payment) totalPayment</if>
+        from t_repair_order ro,t_shop shop,t_customer cust
+        where ro.shop_id = shop.id and ro.customer_id = cust.id and cust.province != #{province}
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="shopId != null">and shop.id= #{shopId}</if>
+
+        group by cust.province
+    </select>
+
+
+</mapper>

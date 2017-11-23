@@ -16,6 +16,7 @@ public interface ChannelSourceMapper {
 	
 
     List<ChannelSource> findAll();
+    List<String> findAllName();
 
     ChannelSource find(Long id);
     

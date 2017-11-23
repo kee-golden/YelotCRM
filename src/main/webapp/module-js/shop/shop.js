@@ -61,7 +61,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 					type : 1,
 					title : '门店新增',
 					content : str, //注意，如果str是object，那么需要字符拼接。
-					area : '450px',
+					area : '500px',
 					shadeClose : true,
 					btn : ['保存'],
 					success : function(layer,index) {
@@ -130,7 +130,7 @@ require([ 'jquery', 'yaya', 'datatables.net' ], function($, yaya) {
 					type : 1,
 					title : '门店修改',
 					content : str, //注意，如果str是object，那么需要字符拼接。
-					area : '800px',
+					area : '500px',
 					shadeClose : true,
 					shade : [0.7,'#000',true ],
 					btn : [ '保存' ],

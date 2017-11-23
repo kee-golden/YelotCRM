@@ -353,10 +353,13 @@ public class WxController {
     @RequestMapping("my-coupon")
     public String myCoupon(Model model,String openid){
         List<Card> cardList = iService.getCardList();
+        List<Card> returnCardList = new ArrayList<>();
         for (int i = 0; cardList != null && i < cardList.size(); i++) {
+            Card card = cardList.get(i);
+
             String cardId = cardList.get(i).getCash().getBaseInfo().getId();
             WxCardApiSignature wxCardApiSignature = iService.createCardApiConfig(null,null,null);
-            System.out.println("cardSignature:"+JSON.toJSONString(wxCardApiSignature));
+//            System.out.println("cardSignature:"+JSON.toJSONString(wxCardApiSignature));
             String signature = wxCardApiSignature.getSignature();
             Long timestamp = wxCardApiSignature.getTimestamp();
             String noncestr = wxCardApiSignature.getNoncestr();
@@ -366,14 +369,26 @@ public class WxController {
             Date endDate = new Date(cardList.get(i).getCash().getBaseInfo().getDateInfo().getEndTimestamp()*1000);
             cardList.get(i).setEndDate(endDate);
 
+            //  reduce_cost 在微信后台会扩大100倍。如200，实际传过来的值为20000
+            if(card.getCash().getReduceCost() >= 20000){
+                continue;
+            }else {
+                returnCardList.add(card);
+            }
+
+
+
+            //人为过滤条件
+
+
         }
-        model.addAttribute("cardList",cardList);
+//        model.addAttribute("cardList",cardList);
+        model.addAttribute("cardList",returnCardList);
         String url = appConfig.getHostUrl() + "/wx/my-coupon?openid="+openid;
 
         WxJsapiConfig wxJsapiConfig = initJsConfig(url);
         model.addAttribute("wxConfig",wxJsapiConfig);
-        System.out.println("jsConfig:"+JSON.toJSONString(wxJsapiConfig));
-        log.info("kee cardList:"+JSON.toJSONString(cardList));
+        log.info("kee cardList:"+JSON.toJSONString(returnCardList));
         //
 
         return "weixin/member/my_coupon";

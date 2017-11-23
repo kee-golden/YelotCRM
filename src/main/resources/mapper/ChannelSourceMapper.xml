@@ -13,6 +13,10 @@
 		select * from t_channel_source where status = 1 order by sort ASC
 	</select>
 
+	<select id="findAllName" resultType="String">
+		select name from t_channel_source where status = 1 order by sort ASC
+	</select>
+
     <select id="find" resultMap="resultMap">
         SELECT * from t_channel_source where id = #{id} ;
     </select>

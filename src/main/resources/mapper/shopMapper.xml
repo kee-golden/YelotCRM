@@ -9,6 +9,8 @@
 		<result property="create_at" column="create_at" />
 		<result property="update_at" column="update_at" />
 		<result property="user_id" column="user_id" />
+		<result property="province" column="province" />
+		<result property="city" column="city" />
 	</resultMap>
 
     <select id="countTotalPage" resultType="java.lang.Integer">
@@ -31,8 +33,8 @@
     </select>
     
     <insert id="save" parameterType="com.yelot.crm.entity.Shop">
-        insert into t_shop(name, address, phone, is_alive, create_at, update_at) 
-        values(#{name}, #{address}, #{phone}, '1', #{create_at}, #{update_at})
+        insert into t_shop(name, address, phone, is_alive, create_at, update_at,province,city)
+        values(#{name}, #{address}, #{phone}, '1', #{create_at}, #{update_at},#{province},#{city})
     </insert>
     
     <select id="findById" resultMap="shopResultMap">
@@ -50,6 +52,8 @@
 			<if test="address != null">address = #{address},</if>
 			<if test="phone != null">phone = #{phone},</if>
 			<if test="update_at != null">update_at = #{update_at},</if>
+			<if test="province != null">province = #{province},</if>
+			<if test="city != null">city = #{city},</if>
 		</trim>
 		where id = #{id}
 	</update>

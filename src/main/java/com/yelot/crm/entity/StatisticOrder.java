@@ -14,6 +14,8 @@ public class StatisticOrder {
      */
     private String time;
     private String shopName;
+    private String province;
+    private String city;
     /**
      * 总金额
      */
@@ -27,6 +29,13 @@ public class StatisticOrder {
      */
     private Integer totalCount2;
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getUserName() {
         return userName;
@@ -90,5 +99,13 @@ public class StatisticOrder {
 
     public void setTotalCount2(Integer totalCount2) {
         this.totalCount2 = totalCount2;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 }

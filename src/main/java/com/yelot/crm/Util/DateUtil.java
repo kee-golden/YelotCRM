@@ -2,8 +2,10 @@ package com.yelot.crm.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by kee on 16/12/7.
@@ -82,6 +84,64 @@ public class DateUtil {
         Date d = new Date(f.parse(endTm).getTime() + 24 * 3600 * 1000);
         endTm = f.format(d);
         return endTm;
+    }
+
+
+    //以下是转化函数
+    public static List<String> getDayBetweenStartAndEnd(String startStr, String endStr) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = sdf.parse(startStr.replace("/", "-"));
+        Date endDate = sdf.parse(endStr.replace("/", "-"));
+        List<String> result = new ArrayList<String>();
+        Calendar tempStart = Calendar.getInstance();
+        tempStart.setTime(startDate);
+        while (startDate.getTime() <= endDate.getTime()) {
+            result.add(sdf.format(tempStart.getTime()));
+            tempStart.add(Calendar.DAY_OF_YEAR, 1);
+            startDate = tempStart.getTime();
+        }
+        return result;
+    }
+
+    public static  List<String> getWeekBetweenStartAndEnd(String startStr, String endStr) throws ParseException{
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = format.parse(startStr.replace("/", "-"));
+        Date endDate = format.parse(endStr.replace("/", "-"));
+
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        startCalendar.setTime(startDate);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        endCalendar.setTime(endDate);
+
+        List<String> result = new ArrayList<String>();
+
+        for (int i = startCalendar.get(Calendar.WEEK_OF_YEAR); i <= endCalendar.get(Calendar.WEEK_OF_YEAR); i++) {
+            result.add(startCalendar.get(Calendar.YEAR) + "-" + String.format("%02d", i - 1));
+        }
+
+        return result;
+    }
+
+    public static  List<String> getMonthBetweenStartAndEnd(String startStr, String endStr) throws ParseException{
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = format.parse(startStr.replace("/", "-"));
+        Date endDate = format.parse(endStr.replace("/", "-"));
+
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(startDate);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(endDate);
+
+        List<String> result = new ArrayList<String>();
+
+        for (int i = startCalendar.get(Calendar.MONTH); i <= endCalendar.get(Calendar.MONTH); i++) {
+            result.add(startCalendar.get(Calendar.YEAR) + "-" + String.format("%02d", i+1));
+        }
+        return result;
     }
 
     public static void main(String[] argv) {

@@ -6,7 +6,8 @@ import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.base.PageHelper;
 import com.yelot.crm.entity.*;
-import com.yelot.crm.enums.RepairOrderStatus;
+import com.yelot.crm.entity.ChannelSource;
+import com.yelot.crm.enums.*;
 import com.yelot.crm.mapper.*;
 import com.yelot.crm.service.CategoryAttributeService;
 import com.yelot.crm.service.ConsultOrderService;
@@ -79,6 +80,9 @@ public class RepairOrderController {
 
     @Autowired
     private CustomImagesService customImagesService;
+
+    @Autowired
+    private ChannelSourceMapper channelSourceMapper;
 
     /**
      * 调整到新建页面
@@ -446,7 +450,9 @@ public class RepairOrderController {
     @RequestMapping("add-customer")
     public String addCustomer(Model model){
         Customer customer = new Customer();
+        List<ChannelSource> channelSourceList = channelSourceMapper.findAll();
         model.addAttribute("bean",customer);
+        model.addAttribute("channelSourceList",channelSourceList);
         return "repair_order/customer_add";
     }
 
@@ -660,7 +666,6 @@ public class RepairOrderController {
     /**
      * 根据订单id查看订单定制图片信息
      * @param model
-     * @param orderId
      * @return
      */
     @RequestMapping("customImage")

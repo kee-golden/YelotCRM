@@ -1,6 +1,7 @@
 package com.yelot.crm.entity;
 
 /**
+ * key-value vo
  * Created by kee on 17/9/29.
  */
 public class MonthData {

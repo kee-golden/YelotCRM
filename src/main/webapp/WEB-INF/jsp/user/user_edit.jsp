@@ -31,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             <label>门店</label>
-                            <select name="shopId" id="shopId" class="from-control">
+                            <select name="shopId" id="shopId" class="form-control">
                                 <c:forEach items="${shopList}" var="shop">
                                     <option value="${shop.id}"
                                             <c:if test="${bean.shop_id == shop.id}">
