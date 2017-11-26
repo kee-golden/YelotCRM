@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -96,9 +97,20 @@ public class RptRepairOrderService {
 		}
 		
 		List<RptRepairOrder> rptRepairOrderList = rptRepairOrderMapper.findByPage(startDate, endDate, shopId, firstCategory, secondCategory, onLineUser, shopUser, deliverType, customerType, channelSource, getStatusList(status), pageHelper);
-		setRptRepairServiceItem(rptRepairOrderList); // 服务项
-		setRptRepairStatus(rptRepairOrderList); // 订单状态
-		setRptRepairChannelSource(rptRepairOrderList); // 客户来源
+		for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
+			rptRepairOrder.setToday(new Date()); // 今天日期
+			rptRepairOrder.setConsultCreateUserName(rptRepairOrder.getConsultCreateUserName() == null ? rptRepairOrder.getCreateUserName() : rptRepairOrder.getConsultCreateUserName()); // 首接人
+			rptRepairOrder.setDeliverType(rptRepairOrder.getDeliverType() == null ? "客户上门" : rptRepairOrder.getDeliverType()); // 接单方式
+			rptRepairOrder.setMaterialPayment("-1".equals(rptRepairOrder.getMaterialPayment()) ? "待定" : rptRepairOrder.getMaterialPayment()); // 料钱
+			rptRepairOrder.setDiscountAmountPayment("-1".equals(rptRepairOrder.getDiscountAmountPayment()) ? "待定" : rptRepairOrder.getDiscountAmountPayment()); //优惠
+			setOneRptRepairServiceItem(rptRepairOrder); // 服务项
+			setOneRptRepairStatus(rptRepairOrder); // 订单状态
+			setOneRptRepairChannelSource(rptRepairOrder); // 客户来源
+		}
+		
+//		setRptRepairServiceItem(rptRepairOrderList); // 服务项
+//		setRptRepairStatus(rptRepairOrderList); // 订单状态
+//		setRptRepairChannelSource(rptRepairOrderList); // 客户来源
 		return rptRepairOrderList;
 	}
 	

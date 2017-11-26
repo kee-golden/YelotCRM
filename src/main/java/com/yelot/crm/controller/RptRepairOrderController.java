@@ -188,9 +188,9 @@ public class RptRepairOrderController {
 			obj[18] = rptRepairOrder.getServiceItemNames();	// 维修工序
 			obj[19] = "";	// 是否返修
 			obj[20] = rptRepairOrder.getTotalPayment();	// 小结
-			obj[21] = rptRepairOrder.getMaterialPayment() == -1 ? "待定" : rptRepairOrder.getMaterialPayment();	// 料钱
+			obj[21] = "-1".equals(rptRepairOrder.getMaterialPayment())  ? "待定" : rptRepairOrder.getMaterialPayment();	// 料钱
 			obj[22] = "";	// 回收料
-			obj[23] = rptRepairOrder.getDiscountAmountPayment() == -1 ? "待定" : rptRepairOrder.getDiscountAmountPayment();	// 优惠
+			obj[23] = "-1".equals(rptRepairOrder.getDiscountAmountPayment()) ? "待定" : rptRepairOrder.getDiscountAmountPayment();	// 优惠
 			obj[24] = rptRepairOrder.getNonPaymentTypeName();	// 付款方式
 			obj[25] = "";	// 付款金额
 			obj[26] = rptRepairOrder.getAdvancePayment();	// 定金

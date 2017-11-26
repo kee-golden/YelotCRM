@@ -11,11 +11,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @2017年9月1日
  */
 public class RptRepairOrder {
+	
     private Long id;
-    /**
-     * 订单编号，编码规则待定：
-     */
-    private String orderNo;
 
     /**
      * 该字段为冗余字段，主要是为了统计方便（快速获得shop_id），通过create_user_id还需要经过一次查询
@@ -28,12 +25,45 @@ public class RptRepairOrder {
     private String shopName;
 
     /**
-     * 订单状态,提交（2）,最终（1），取消（0）
+     * 接单日期
      */
-    private int status;
+    private Date createAt;
+	
+	/**
+	 * 今天日期
+	 */
+	private Date today;
+	
+    /**
+     * 订单编号，编码规则待定：
+     */
+    private String orderNo;
+
+    /**
+     * 交货日期,预估的时间
+     */
+    private Date pickupAt;
     
-    private String statusName;
+    /**
+     * 到期提醒
+     */
+    private String daoQiTiXing;
+
+    /**
+     * 送回日
+     */
+    private Date songHuiDate;
     
+    /**
+     * 取货日
+     */
+    private Date quHuoDate;
+
+    /**
+     * 首接人
+     */
+    private String consultCreateUserName;
+
     /**
      * 订单创建者
      */
@@ -45,14 +75,129 @@ public class RptRepairOrder {
     private String createUserName;
 
     /**
-     * 交货日期,预估的时间
+     * 接单方式
      */
-    private Date pickupAt;
+    private String deliverType;
 
+    /**
+     * 订单状态,提交（2）,最终（1），取消（0）
+     */
+    private int status;
+    
+    /**
+     * 订单状态名字
+     */
+    private String statusName;
+    
+    /**
+     * 计算月份
+     */
+    private String jiSuanYueFen;
+
+    /**
+     * 品牌id
+     */
+    private Long brandId;
+
+    /**
+     * 品牌名称
+     */
+    private String brandName;
+    
+    /**
+     * 类型id
+     */
+    private Long firstCategoryId;
+    
+    /**
+     * 类型名称
+     */
+    private String firstCategoryName;
+
+    /**
+     * 货品id
+     */
+    private Long secondCategoryId;
+    
+    /**
+     * 货品名称
+     */
+    private String secondCategoryName;
+
+    /**
+     * 维修工序
+     */
+    private String repairDesc;
+    
+    /**
+     * 是否返修
+     */
+    private String isFanXiu;
+
+    /**
+     * 小结
+     */
+    private String totalPayment;
+
+    /**
+     * 料钱
+     */
+    private String materialPayment;
+    
+    /**
+     * 回收料
+     */
+    private String huiShouLiao;
+    
+    /**
+     * 付款金额
+     */
+    private String fuKuanJine;
+    
+    /**
+     * 凭证号
+     */
+    private String pingZhengHao;
+
+    /**
+     * 发票
+     */
+    private String faPiao;
+    
+    /**
+     * 合计支出
+     */
+    private String heJiZhiChu;
+    
+    /**
+     * 设备号
+     */
+    private String sheBeiHao;
+    
+    /**
+     * 搜索关键词
+     */
+    private String guanJianCi;
+    
+    /**
+     * 着陆页链接
+     */
+    private String zhuoLuYe;
+    
+    /**
+     * 备注
+     */
+    private String beiZhu;
+    
+    /**
+     * 对比照片
+     */
+    private String duiBiZhaoPian;
+    
     /**
      * 交货方式：上门自取，快递邮寄
      */
-    private int pickupType;
+    private String pickupType;
 
     /**
      * 客户的id,要把用户信息先插入表t_customer中
@@ -122,25 +267,21 @@ public class RptRepairOrder {
     /**
      * 预付款,保留小数2位，存到数据库中扩大100倍
      */
-    private int advancePayment;
+    private String advancePayment;
 
     /**
      * 未付款，代付款，这个值一般需要后期维修鉴定后才能填写完成
      */
-    private int nonPayment;
+    private String nonPayment;
 
-    private int nonPaymentType;
+    private String nonPaymentType;
     private String nonPaymentTypeName;
 
     /**
      * 付款方式：现金，刷卡，支付宝，微信等
      */
-    private int advancePaymentType;
+    private String advancePaymentType;
 
-    /**
-     * 总价
-     */
-    private int totalPayment;
 
     /**
      * 客服上传的图片，创建时上传的图片
@@ -164,24 +305,11 @@ public class RptRepairOrder {
     private String serviceItemIds;
     
     private String serviceItemNames;
-
-    private Long firstCategoryId;
-
-    private Long secondCategoryId;
     
     private String categoryName;
     
-    private String firstCategoryName;
     
-    private String secondCategoryName;
 
-    private Long brandId;
-
-    private String brandName;
-
-    private String repairDesc;
-
-    private Date createAt;
 
     private Date updateAt;
 
@@ -200,22 +328,16 @@ public class RptRepairOrder {
      */
     private String typeName;
 
-    private int labourPayment;
+    private String labourPayment;
 
-    private int materialPayment;
-    private int discountAmountPayment;
+    private String discountAmountPayment;
     
     private Date consultCreateAt;
-    private Date songHuiDate;
-    private Date quHuoDate;
-    
-    private String consultCreateUserName;
-    private String deliverType;
     
     /**
      * 快递费 
      */
-    private int expressMoney;
+    private String expressMoney;
     
     /**
      * 快递名字
@@ -230,7 +352,7 @@ public class RptRepairOrder {
     /**
      * 保费
      */
-    private int insuranceAmount;
+    private String insuranceAmount;
     
     /**
      * 保单号
@@ -290,6 +412,7 @@ public class RptRepairOrder {
 		this.createUserName = createUserName;
 	}
 
+	@JsonFormat(pattern = "YYYY-MM-dd", timezone = "GMT+8")
     public Date getPickupAt() {
         return pickupAt;
     }
@@ -298,11 +421,11 @@ public class RptRepairOrder {
         this.pickupAt = pickupAt;
     }
 
-    public int getPickupType() {
+    public String getPickupType() {
         return pickupType;
     }
 
-    public void setPickupType(int pickupType) {
+    public void setPickupType(String pickupType) {
         this.pickupType = pickupType;
     }
 
@@ -410,35 +533,35 @@ public class RptRepairOrder {
 		this.channelSource = channelSource;
 	}
 
-	public int getAdvancePayment() {
+	public String getAdvancePayment() {
         return advancePayment;
     }
 
-    public void setAdvancePayment(int advancePayment) {
+    public void setAdvancePayment(String advancePayment) {
         this.advancePayment = advancePayment;
     }
 
-    public int getNonPayment() {
+    public String getNonPayment() {
         return nonPayment;
     }
 
-    public void setNonPayment(int nonPayment) {
+    public void setNonPayment(String nonPayment) {
         this.nonPayment = nonPayment;
     }
 
-    public int getAdvancePaymentType() {
+    public String getAdvancePaymentType() {
         return advancePaymentType;
     }
 
-    public void setAdvancePaymentType(int advancePaymentType) {
+    public void setAdvancePaymentType(String advancePaymentType) {
         this.advancePaymentType = advancePaymentType;
     }
 
-    public int getTotalPayment() {
+    public String getTotalPayment() {
         return totalPayment;
     }
 
-    public void setTotalPayment(int totalPayment) {
+    public void setTotalPayment(String totalPayment) {
         this.totalPayment = totalPayment;
     }
 
@@ -578,11 +701,11 @@ public class RptRepairOrder {
         this.repairDesc = repairDesc;
     }
 
-    public int getNonPaymentType() {
+    public String getNonPaymentType() {
         return nonPaymentType;
     }
 
-    public void setNonPaymentType(int nonPaymentType) {
+    public void setNonPaymentType(String nonPaymentType) {
         this.nonPaymentType = nonPaymentType;
     }
 
@@ -594,7 +717,7 @@ public class RptRepairOrder {
 		this.nonPaymentTypeName = nonPaymentTypeName;
 	}
 
-	@JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+	@JsonFormat(pattern = "YYYY-MM-dd", timezone = "GMT+8")
     public Date getCreateAt() {
         return createAt;
     }
@@ -603,7 +726,7 @@ public class RptRepairOrder {
         this.createAt = createAt;
     }
 
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+    @JsonFormat(pattern = "YYYY-MM-dd", timezone = "GMT+8")
     public Date getUpdateAt() {
         return updateAt;
     }
@@ -636,31 +759,31 @@ public class RptRepairOrder {
         this.typeName = typeName;
     }
 
-    public int getLabourPayment() {
+    public String getLabourPayment() {
         return labourPayment;
     }
 
-    public void setLabourPayment(int labourPayment) {
+    public void setLabourPayment(String labourPayment) {
         this.labourPayment = labourPayment;
     }
 
-    public int getMaterialPayment() {
+    public String getMaterialPayment() {
         return materialPayment;
     }
 
-    public void setMaterialPayment(int materialPayment) {
+    public void setMaterialPayment(String materialPayment) {
         this.materialPayment = materialPayment;
     }
 
-	public int getDiscountAmountPayment() {
+	public String getDiscountAmountPayment() {
 		return discountAmountPayment;
 	}
 
-	public void setDiscountAmountPayment(int discountAmountPayment) {
+	public void setDiscountAmountPayment(String discountAmountPayment) {
 		this.discountAmountPayment = discountAmountPayment;
 	}
 
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+    @JsonFormat(pattern = "YYYY-MM-dd", timezone = "GMT+8")
 	public Date getConsultCreateAt() {
 		return consultCreateAt;
 	}
@@ -669,7 +792,7 @@ public class RptRepairOrder {
 		this.consultCreateAt = consultCreateAt;
 	}
 
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+    @JsonFormat(pattern = "YYYY-MM-dd", timezone = "GMT+8")
 	public Date getSongHuiDate() {
 		return songHuiDate;
 	}
@@ -678,7 +801,7 @@ public class RptRepairOrder {
 		this.songHuiDate = songHuiDate;
 	}
 
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm", timezone = "GMT+8")
+    @JsonFormat(pattern = "YYYY-MM-dd", timezone = "GMT+8")
 	public Date getQuHuoDate() {
 		return quHuoDate;
 	}
@@ -703,11 +826,11 @@ public class RptRepairOrder {
 		this.deliverType = deliverType;
 	}
 
-	public int getExpressMoney() {
+	public String getExpressMoney() {
 		return expressMoney;
 	}
 
-	public void setExpressMoney(int expressMoney) {
+	public void setExpressMoney(String expressMoney) {
 		this.expressMoney = expressMoney;
 	}
 
@@ -727,11 +850,11 @@ public class RptRepairOrder {
 		this.expressNo = expressNo;
 	}
 
-	public int getInsuranceAmount() {
+	public String getInsuranceAmount() {
 		return insuranceAmount;
 	}
 
-	public void setInsuranceAmount(int insuranceAmount) {
+	public void setInsuranceAmount(String insuranceAmount) {
 		this.insuranceAmount = insuranceAmount;
 	}
 
@@ -757,6 +880,119 @@ public class RptRepairOrder {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+    @JsonFormat(pattern = "YYYY-MM-dd", timezone = "GMT+8")
+	public Date getToday() {
+		return today;
+	}
+
+	public void setToday(Date today) {
+		this.today = today;
+	}
+
+	public String getDaoQiTiXing() {
+		return daoQiTiXing;
+	}
+
+	public void setDaoQiTiXing(String daoQiTiXing) {
+		this.daoQiTiXing = daoQiTiXing;
+	}
+
+	public String getJiSuanYueFen() {
+		return jiSuanYueFen;
+	}
+
+	public void setJiSuanYueFen(String jiSuanYueFen) {
+		this.jiSuanYueFen = jiSuanYueFen;
+	}
+
+	public String getIsFanXiu() {
+		return isFanXiu;
+	}
+
+	public void setIsFanXiu(String isFanXiu) {
+		this.isFanXiu = isFanXiu;
+	}
+
+	public String getHuiShouLiao() {
+		return huiShouLiao;
+	}
+
+	public void setHuiShouLiao(String huiShouLiao) {
+		this.huiShouLiao = huiShouLiao;
+	}
+
+	public String getFuKuanJine() {
+		return fuKuanJine;
+	}
+
+	public void setFuKuanJine(String fuKuanJine) {
+		this.fuKuanJine = fuKuanJine;
+	}
+
+	public String getPingZhengHao() {
+		return pingZhengHao;
+	}
+
+	public void setPingZhengHao(String pingZhengHao) {
+		this.pingZhengHao = pingZhengHao;
+	}
+
+	public String getFaPiao() {
+		return faPiao;
+	}
+
+	public void setFaPiao(String faPiao) {
+		this.faPiao = faPiao;
+	}
+
+	public String getHeJiZhiChu() {
+		return heJiZhiChu;
+	}
+
+	public void setHeJiZhiChu(String heJiZhiChu) {
+		this.heJiZhiChu = heJiZhiChu;
+	}
+
+	public String getSheBeiHao() {
+		return sheBeiHao;
+	}
+
+	public void setSheBeiHao(String sheBeiHao) {
+		this.sheBeiHao = sheBeiHao;
+	}
+
+	public String getGuanJianCi() {
+		return guanJianCi;
+	}
+
+	public void setGuanJianCi(String guanJianCi) {
+		this.guanJianCi = guanJianCi;
+	}
+
+	public String getZhuoLuYe() {
+		return zhuoLuYe;
+	}
+
+	public void setZhuoLuYe(String zhuoLuYe) {
+		this.zhuoLuYe = zhuoLuYe;
+	}
+
+	public String getBeiZhu() {
+		return beiZhu;
+	}
+
+	public void setBeiZhu(String beiZhu) {
+		this.beiZhu = beiZhu;
+	}
+
+	public String getDuiBiZhaoPian() {
+		return duiBiZhaoPian;
+	}
+
+	public void setDuiBiZhaoPian(String duiBiZhaoPian) {
+		this.duiBiZhaoPian = duiBiZhaoPian;
 	}
     
 }
