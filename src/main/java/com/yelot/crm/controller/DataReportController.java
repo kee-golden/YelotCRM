@@ -8,7 +8,9 @@ import com.yelot.crm.entity.*;
 import com.yelot.crm.mapper.ChannelSourceMapper;
 import com.yelot.crm.mapper.DataReportMapper;
 import com.yelot.crm.mapper.ShopMapper;
+import com.yelot.crm.service.RptRepairOrderService;
 import com.yelot.crm.vo.ChartPieVo;
+import com.yelot.crm.vo.CityListVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,8 @@ public class DataReportController {
     private DataReportMapper dataReportMapper;
     @Autowired
     private ShopMapper shopMapper;
+    @Autowired
+    private RptRepairOrderService rptRepairOrderService;
 
     private Logger log = LoggerFactory.getLogger(DataReportController.class);
 
@@ -42,6 +46,15 @@ public class DataReportController {
     public String list(Model model){
         List<Shop> shopList = shopMapper.findAll();
         model.addAttribute("shopList",shopList);
+        CityListVo cityListVo = rptRepairOrderService.convertToCityListVo();
+        String categoryJson = JSON.toJSONString(cityListVo);
+        String firstCategory = cityListVo.getCitylist().get(0).getP();
+        String secondCategory = cityListVo.getCitylist().get(0).getC().get(0).getN();
+
+        model.addAttribute("categoryJson",categoryJson);
+        model.addAttribute("firstCategory",firstCategory);
+        model.addAttribute("secondCategory",secondCategory);
+
         return "report/data_report";
     }
 
@@ -208,6 +221,64 @@ public class DataReportController {
         }
         return ResultData.ok().putDataValue("chartPieVoList",chartPieVoList);
 
+    }
+
+    /**
+     * 5.	成交方式占比--数量：客户上门，快递，上门取件
+     * @param dateArea
+     * @param type
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("repair-send-type")
+    public ResultData repairOrderBySendType(String dateArea,String type){
+        List<String> xAxisList = getXAxis(dateArea,type);
+        String [] sendTypes = {"客户上门","快递","上门取件"};
+        List<BarMonthData> barMonthDataList = new ArrayList<>();
+        for (int i = 0; i < sendTypes.length; i++) {
+
+            BarMonthData barMonthData = new BarMonthData();
+            barMonthData.setName(sendTypes[i]);
+            barMonthData.setBarWidth(5);
+            barMonthData.setStack("成交方式");
+            List<Integer> sumList = getAmountRepairOrderBySendType(xAxisList,dateArea,sendTypes[i],type);
+            barMonthData.setData(sumList);
+            barMonthDataList.add(barMonthData);
+        }
+
+        return ResultData.ok().putDataValue("series",barMonthDataList).putDataValue("xAxis",xAxisList);
+
+    }
+
+    /**
+     * 6.	线上咨询地域占比--数量：全国范围（到省，直辖市级）
+     * @param dateArea
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("consult-by-province")
+    public ResultData consultOrderByProvince(String dateArea){
+        List<StatisticOrder> statisticOrderList = dataReportMapper.consultOrderByProvince(dateArea.split("-")[0] + " 00:00:00",dateArea.split("-")[1] + " 23:59:59");
+        List<ChartPieVo> chartPieVoList = new ArrayList<>();
+        for (StatisticOrder statisticOrder: statisticOrderList) {
+                ChartPieVo chartPieVo = new ChartPieVo(statisticOrder.getProvince(),statisticOrder.getTotalCount());
+                chartPieVoList.add(chartPieVo);
+        }
+
+        if(chartPieVoList.size() == 0){
+            ChartPieVo chartPieVo = new ChartPieVo("无数据",0);
+            chartPieVoList.add(chartPieVo);
+        }
+
+        return ResultData.ok().putDataValue("chartPieVoList",chartPieVoList);
+
+    }
+
+    //5,
+    private List<Integer> getAmountRepairOrderBySendType(List<String> xAxisList, String dateArea, String sendType, String type) {
+        List<DateNumber> dataList = dataReportMapper.findRepairByDateSendType(dateArea.split("-")[0] + " 00:00:00",dateArea.split("-")[1] + " 23:59:59",sendType,type);
+
+        return setAllDateNumberList(xAxisList,dataList);
     }
 
     /**

@@ -51,4 +51,8 @@ public interface DataReportMapper {
 
     StatisticOrder repairOrderShopProvince(@Param("startDate") String startDate, @Param("endDate") String endDate,@Param("shopId")Long shopId,@Param("type") String type,
                                        @Param("province")String province);
+
+    List<DateNumber> findRepairByDateSendType(@Param("startDate") String startDate, @Param("endDate") String endDate,@Param("sendType") String sendType, @Param("type") String type);
+//6,
+    List<StatisticOrder> consultOrderByProvince(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

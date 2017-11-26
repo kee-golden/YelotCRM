@@ -119,6 +119,34 @@
 
         group by cust.province
     </select>
-
+    <!-- 5,如果没有关联到咨询单deliver_type 为空，统计为  客户上门 #{startDate} -->
+    <select id="findRepairByDateSendType" resultMap="dateNumber">
+        SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(ro.create_at,'%Y-%m-%d') date,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(ro.create_at,'%Y-%u') date,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(ro.create_at,'%Y-%m') date,</if>
+        count(*) number from t_repair_order ro LEFT JOIN  t_consult_order co on ro.consult_order_id = co.id
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= '2017-11-23 00:00:00'</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <choose>
+            <when test="sendType != null and sendType == '客户上门'">
+                and (co.deliver_type IS NULL  or co.deliver_type = '客户上门')
+            </when>
+            <otherwise>
+                and co.deliver_type = #{sendType}
+            </otherwise>
+        </choose>
+        group by date
+    </select>
+    
+    <select id="consultOrderByProvince" resultMap="orderResultMap">
+        select co.province province,count(*) totalCount
+         from t_consult_order co
+         where 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        group by co.province
+    </select>
 
 </mapper>

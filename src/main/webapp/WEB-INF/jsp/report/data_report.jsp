@@ -126,6 +126,91 @@
 
                 </div>
             </div>
+            <!-- 5,6 -->
+            <div class="line"></div>
+            <div class="row chart-div">
+                <div class="col-md-6">
+                    <div class="header">
+                        <div class="title">成交方式占比(件数)</div>
+                        <div class="condition">
+                            <input type="text" style="float: left; width: 150px;" id="repairOrderBySendTypeRatioDate" class="dateRange"/>
+                            <select name="type" id="repairOrderSendType" class="" style="float:right;">
+                                <option value="Day">按天</option>
+                                <option value="Week">按周</option>
+                                <option value="Month">按月</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chartContainer" id="repairOrderSendTypeRatioChart"></div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="header">
+                        <div class="title">线上咨询地域占比</div>
+                        <div class="condition">
+                            <input type="text" style="float: left; width: 150px;" id="consultOrderProvinceRatioDate" class="dateRange">
+                            <%--<span style="float:right;">--%>
+                            <%--<select name="type" id="consultOrderProvinceType" class="" style="float:right;">--%>
+                                <%--<option value="Day">按天</option>--%>
+                                <%--<option value="Week">按周</option>--%>
+                                <%--<option value="Month">按月</option>--%>
+                            <%--</select>--%>
+                            <%--</span>--%>
+                        </div>
+
+                    </div>
+                    <div class="chartContainer" id="consultOrderProvinceRatioChart"></div>
+
+                </div>
+            </div>
+            <!-- 7,8 -->
+            <div class="line"></div>
+            <div class="row chart-div">
+                <div class="col-md-6">
+                    <div class="header">
+                        <div class="title">成交方式占比(件数)</div>
+                        <div class="condition">
+                            <input type="text" style="float: left; width: 150px;" id="repairOrderByCategoryTypeRatioDate" class="dateRange"/>
+                            <span style="float:right;">
+                                <div id="repairCategory">
+                                <select class="prov col-xs-1" name="firstCategory" id="firstCategory"></select>
+                                <select class="city col-xs-1" disabled="disabled"
+                                        name="secondCategory" id="secondCategory"></select>
+                                    </div>
+                                <select name="type" id="repairOrderCategoryType" class="">
+                                    <option value="Day">按天</option>
+                                    <option value="Week">按周</option>
+                                    <option value="Month">按月</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chartContainer" id="repairOrderCategoryTypeRatioChart"></div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="header">
+                        <div class="title">成交方式占比(件数)</div>
+                        <div class="condition">
+                            <input type="text" style="float: left; width: 150px;" id="consultOrderByCategoryTypeRatioDate" class="dateRange"/>
+                            <span style="float:right;">
+                                <div id="consultCategory">
+                                    <select class="prov col-xs-1" name="firstCategory" id="firstCategory2"></select>
+                                    <select class="city col-xs-1" disabled="disabled"
+                                            name="secondCategory" id="secondCategory2"></select>
+                                    </div>
+                                <select name="type" id="consultOrderCategoryType" class="">
+                                    <option value="Day">按天</option>
+                                    <option value="Week">按周</option>
+                                    <option value="Month">按月</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chartContainer" id="consultOrderCategoryTypeRatioChart"></div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -133,5 +218,26 @@
 
 <script src="${ctx}/static/require/require.js"></script>
 <script src="${ctx}/static/require/require.config.js"></script>
+<script>
+    require(['jquery','yaya','cityselect','daterangepicker'], function ($, yaya,cityselect,daterangepicker) {
+
+        var jsonObj = eval(${categoryJson});//转化为json 对象
+        $("#repairCategory").citySelect({
+            url:jsonObj,
+            prov:'${firstCategory}',
+            city:'${secondCategory}',
+            nodata:"none"
+        });
+
+        $("#consultCategory").citySelect({
+            url:jsonObj,
+            prov:'${firstCategory}',
+            city:'${secondCategory}',
+            nodata:"none"
+        });
+
+
+    });
+</script>
 <script src="${ctx}/module-js/report/data_report.js"></script>
 </html>

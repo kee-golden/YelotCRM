@@ -31,6 +31,9 @@ requirejs.config({
         'cityselect':['jquery','city.min'],
         'daterangepicker':{deps: ['jquery', 'bootstrap', 'moment'], exports: "daterangepicker"},
         'moment':['jquery'],
+        'buttons.html5':['jquery','datatables'],
+        'dataTables.buttons':['jquery','datatables'],
+        'jszip':['jquery','datatables'],
     } ,
 
 
@@ -66,5 +69,8 @@ requirejs.config({
         'weixin':'wx/jweixin-1.2.0',
         'daterangepicker':'daterangepicker/js/daterangepicker',
         'moment':'daterangepicker/js/moment',
+        'buttons.html5':'dataTables-excel/buttons.html5',
+        'dataTables.buttons':'dataTables-excel/dataTables.buttons',
+        'jszip':'dataTables-excel/jszip',
     }
 });

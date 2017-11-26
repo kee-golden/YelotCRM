@@ -45,6 +45,22 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
         "endDate": endDate,
         "locale": locale
     });
+    //5,
+    $('#repairOrderBySendTypeRatioDate').daterangepicker({
+        "autoApply": true,
+        "startDate": startDate,
+        "endDate": endDate,
+        "locale": locale
+    });
+    //6,consultOrderProvinceRatioDate
+    $('#consultOrderProvinceRatioDate').daterangepicker({
+        "autoApply": true,
+        "startDate": startDate,
+        "endDate": endDate,
+        "locale": locale
+    });
+
+
 //首次进入统计的报表
     //1,咨询来源数量
     getConsultChannelAmountChart();
@@ -54,6 +70,10 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
     repairOrderAllProvinceRatioChart();
     //4,
     repairOrderShopRatioChart();
+    //5
+    repairOrderSendTypeRatioChart();
+    //6,
+    consultOrderProvinceRatioChart();
 
     //创建ECharts图表方法
     $(function(){
@@ -92,8 +112,17 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
         $('#repairOrderShopId').change(function () {
             repairOrderShopRatioChart();
         });
-
-
+        //5,
+        $('#repairOrderBySendTypeRatioDate').on('apply.daterangepicker',function(ev, picker) {
+            repairOrderSendTypeRatioChart();
+        });
+        $('#repairOrderSendType').change(function () {
+            repairOrderSendTypeRatioChart();
+        });
+        //6,
+        $('#consultOrderProvinceRatioDate').on('apply.daterangepicker',function(ev, picker) {
+            consultOrderProvinceRatioChart();
+        });
     });
 
 //1,咨询来源数量
@@ -366,8 +395,134 @@ require(['jquery','yaya','echarts','bootstrap','daterangepicker', 'datatables.ne
             }
 
         });
+    }
+    //5,
+    function repairOrderSendTypeRatioChart() {
+        var chart5 = echarts.init(document.getElementById('repairOrderSendTypeRatioChart'));
+        var option5 = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                data:['客户上门','快递','上门取件']
+            },
+            toolbox: {
+                show : true,
+                orient: 'vertical',
+                x: 'right',
+                y: 'center',
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : []
+        };
 
-        
+        $.ajax({
+            url:ctx+"/data-report/repair-send-type",
+            data:{
+                dateArea: $("#repairOrderBySendTypeRatioDate").val(),
+                type: $("#repairOrderSendType").val()
+            },
+            success:function (data) {
+                option5.xAxis[0].data = data.data.xAxis;
+                option5.series= data.data.series;
+                chart5.hideLoading();
+                chart5.setOption(option5);
+            }
+
+        });
+
+
+    }
+    
+    //6,
+    function consultOrderProvinceRatioChart() {
+        var chart6 = echarts.init(document.getElementById('consultOrderProvinceRatioChart'));
+        var option6 = {
+            title : {
+                text: '全部成交地域占比',
+                subtext: '全部成交地域',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient : 'vertical',
+                x : 'left',
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {
+                        show: true,
+                        type: ['pie', 'funnel'],
+                        option: {
+                            funnel: {
+                                x: '25%',
+                                width: '50%',
+                                funnelAlign: 'left',
+                                max: 1548
+                            }
+                        }
+                    },
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            series : [
+                {
+                    name:'全部成交地域',
+                    type:'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:335, name:'客户上门'},
+                        {value:310, name:'快递'},
+                        {value:234, name:'上门取件'},
+                    ]
+                }
+            ]
+        };
+
+        $.ajax({
+            url:ctx+"/data-report/consult-by-province",
+            data:{
+                dateArea: $("#consultOrderProvinceRatioDate").val(),
+            },
+            success:function (data) {
+                option6.series[0].data=data.data.chartPieVoList;
+                chart6.hideLoading();
+                chart6.setOption(option6);
+
+            }
+
+        });
+
     }
 
 
