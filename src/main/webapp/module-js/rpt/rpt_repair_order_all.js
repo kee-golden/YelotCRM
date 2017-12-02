@@ -142,6 +142,17 @@ require([ 'jquery', 'yaya', 'selector2','datatables.net' ], function($, yaya, se
     });
 
     $("#exportExcel").click(function(){
+    	var exportColumnList = document.getElementsByClassName("toggle-vis");
+    	var  exportColumnStr = "";
+    	for(var i=0;i<exportColumnList.length;i++){
+    		if(exportColumnList[i].checked){
+    			if(i<exportColumnList.length-1){
+                    exportColumnStr += exportColumnList[i].id + ",";
+				} else {
+                    exportColumnStr += exportColumnList[i].id;
+				}
+			}
+		}
     	var params = "";
 		params += "&dateArea=" + $('#dateArea').val(); 
 		params += "&shopId=" + $('#shopId').val(); 
@@ -152,8 +163,9 @@ require([ 'jquery', 'yaya', 'selector2','datatables.net' ], function($, yaya, se
 		params += "&deliverType=" + $('#deliverType').val(); 
 		params += "&customerType=" + $('#customerType').val(); 
 		params += "&channelSource=" + $('#channelSource').val(); 
-		params += "&status=" + ($('#status').val() == null ? '' : $('#status').val().toString()); 
-		
-		window.location = ctx + '/rpt-repair-order/exportExcel?' + params;
+		params += "&status=" + ($('#status').val() == null ? '' : $('#status').val().toString());
+        params += "&exportColumnStr=" + exportColumnStr;
+
+        window.location = ctx + '/rpt-repair-order/exportExcel?' + params;
     });
 })

@@ -253,7 +253,7 @@ public class ExlRptExportUtil {
 		sheet.addMergedRegion(region);
 		cellTmp.setCellStyle(styleCenter);
 
-		row = sheet.createRow(1);
+		/*row = sheet.createRow(1);
 		
 		CellStyle styleFirst0 = workbook.createCellStyle();
 		styleFirst0.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
@@ -303,9 +303,9 @@ public class ExlRptExportUtil {
 		Cell cellx8 = row.createCell(48);
 		cellx8.setCellValue("其他");
 		cellx8.setCellStyle(styleFirst0);
-		sheet.addMergedRegion(new CellRangeAddress(1, 1, 49, 51));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 49, 51));*/
 		
-		row = sheet.createRow(2);
+		row = sheet.createRow(1);
 		
 		int i = 0;
 		for (ExlRptCellType b : titleList) {
@@ -331,7 +331,7 @@ public class ExlRptExportUtil {
 			i++;
 		}
 		
-		int j = 3;
+		int j = 2;
 		for (Object[] o : rptList) {
 			row = sheet.createRow(j);
 			for (int k = 0; k < o.length; k++) {

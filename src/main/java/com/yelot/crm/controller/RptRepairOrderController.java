@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -150,8 +152,9 @@ public class RptRepairOrderController {
 			@RequestParam(value = "customerType", defaultValue = "") String customerType,
 			@RequestParam(value = "channelSource", defaultValue = "") String channelSource,
 			@RequestParam(value = "status", defaultValue = "") String status,
+			@RequestParam(value = "exportColumnStr", defaultValue = "") String exportColumnStr,
 			@RequestParam(value = "start", defaultValue = "0") int start,
-			@RequestParam(value = "length", defaultValue = "10") int length) throws IOException {
+			@RequestParam(value = "length", defaultValue = "10") int length) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     	
         PageHelper pageHelper = new PageHelper();
         pageHelper.setOffset(0);
@@ -163,9 +166,9 @@ public class RptRepairOrderController {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
-		for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
+		/*for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
 			setOneRepairStatus(rptRepairOrder);
-			
+
 			Object[] obj = new Object[52];
 			obj[0] = rptRepairOrder.getShopName();	// 门店
 			obj[1] = rptRepairOrder.getCreateAt() != null ? sdf.format(rptRepairOrder.getCreateAt()) : null;	// 接单日
@@ -220,6 +223,25 @@ public class RptRepairOrderController {
 			obj[50] = "";	// 对比照片
 			obj[51] = rptRepairOrder.getConsultCreateAt() != null ? sdf.format(rptRepairOrder.getConsultCreateAt()) : null;	// 起初咨询时间
 			dataList.add(obj);
+		}*/
+
+		String[] exportColumnList = exportColumnStr.split(",");
+
+		for (RptRepairOrder rptRepairOrder : rptRepairOrderList) {
+			setOneRepairStatus(rptRepairOrder);
+			Object[] obj = new Object[exportColumnList.length];
+
+			for (int i=0;i<exportColumnList.length;i++){
+				String firstLetter = exportColumnList[i].substring(0, 1).toUpperCase();
+				String getter = "get" + firstLetter + exportColumnList[i].substring(1);
+				Method method = rptRepairOrder.getClass().getMethod(getter, new Class[] {});
+				if ("java.util.Date".equals(method.getReturnType().getName())){
+					obj[i] = method.invoke(rptRepairOrder, new Object[] {}) != null ? sdf.format(method.invoke(rptRepairOrder, new Object[] {})) : null;
+				} else {
+					obj[i] = method.invoke(rptRepairOrder, new Object[] {});
+				}
+			}
+			dataList.add(obj);
 		}
         
 		response.setContentType("application/msexcel");
@@ -227,14 +249,72 @@ public class RptRepairOrderController {
 				new String(("订单统计报表"+sdf.format(new Date())).getBytes("gb2312"), "iso8859-1")+".xlsx");
 		
 		List<ExlRptCellType> titleList = new ArrayList<ExlRptCellType>();
-		titleList = ExlRptExportUtil.getTitleList(setTitleList());
+		titleList = ExlRptExportUtil.getTitleList(setTitleList(exportColumnList));
 
 		ExlRptExportUtil.makeRepairOrderInfo("订单统计报表", titleList, dataList).write(response.getOutputStream());
     }
     
-    private List<String> setTitleList(){
+    private List<String> setTitleList(String[] exportColumnList){
+
 		List<String> titleList = new ArrayList<String>();
-		titleList.add("门店");
+
+    	for(String exportColumnStr : exportColumnList){
+    		switch (exportColumnStr){
+				case "shopName" : titleList.add("门店"); continue;
+				case "createAt" : titleList.add("接单日"); continue;
+				case "today" : titleList.add("今天日期"); continue;
+				case "orderNo" : titleList.add("单号"); continue;
+				case "pickupAt" : titleList.add("预计归还日"); continue;
+				case "daoQiTiXing" : titleList.add("到期提醒"); continue;
+				case "songHuiDate" : titleList.add("送回日"); continue;
+				case "quHuoDate" : titleList.add("取货日"); continue;
+				case "consultCreateUserName" : titleList.add("首接人"); continue;
+				case "createUserName" : titleList.add("接单人"); continue;
+				case "deliverType" : titleList.add("接单方式"); continue;
+				case "typeName" : titleList.add("订单类型"); continue;
+				case "statusName" : titleList.add("订单状态 "); continue;
+				case "jiSuanYueFen" : titleList.add("计算月份"); continue;
+				case "brandName" : titleList.add("品牌"); continue;
+				case "firstCategoryName" : titleList.add("货品类型"); continue;
+				case "secondCategoryName" : titleList.add("货品名称"); continue;
+				case "repairDesc" : titleList.add("维修内容"); continue;
+				case "serviceItemNames" : titleList.add("维修工序"); continue;
+				case "isFanXiu" : titleList.add("是否返修"); continue;
+				case "totalPayment" : titleList.add("小结"); continue;
+				case "materialPayment" : titleList.add("料钱"); continue;
+				case "huiShouLiao" : titleList.add("回收料"); continue;
+				case "discountAmountPayment" : titleList.add("优惠"); continue;
+				case "nonPaymentTypeName" : titleList.add("付款方式"); continue;
+				case "fuKuanJine" : titleList.add("付款金额"); continue;
+				case "advancePayment" : titleList.add("定金"); continue;
+				case "pingZhengHao" : titleList.add("凭证号"); continue;
+				case "faPiao" : titleList.add("发票"); continue;
+				case "expressMoney" : titleList.add("快递费"); continue;
+				case "expressName" : titleList.add("快递公司"); continue;
+				case "expressNo" : titleList.add("快递单号"); continue;
+				case "insuranceAmount" : titleList.add("保费"); continue;
+				case "insuranceNo" : titleList.add("保单号"); continue;
+				case "heJiZhiChu" : titleList.add("合计支出"); continue;
+				case "customerName" : titleList.add("姓名"); continue;
+				case "customerSex" : titleList.add("性别"); continue;
+				case "customerPhone" : titleList.add("电话"); continue;
+				case "province" : titleList.add("省"); continue;
+				case "city" : titleList.add("市"); continue;
+				case "customerAddress" : titleList.add("快递地址"); continue;
+				case "wechatNickname" : titleList.add("微信名称"); continue;
+				case "wechatId" : titleList.add("微信号"); continue;
+				case "customerQQ" : titleList.add("其他账号"); continue;
+				case "sheBeiHao" : titleList.add("设备号"); continue;
+				case "customerType" : titleList.add("客户类型"); continue;
+				case "channelSource" : titleList.add("来源"); continue;
+				case "guanJianCi" : titleList.add("搜索关键词"); continue;
+				case "zhuoLuYe" : titleList.add("着陆页链接"); continue;
+				case "beiZhu" : titleList.add("备注"); continue;
+				case "duiBiZhaoPian" : titleList.add("对比照片"); continue;
+				case "consultCreateAt" : titleList.add("起初咨询时间"); continue;
+			}
+		}
+		/*titleList.add("门店");
 		titleList.add("接单日");
 		titleList.add("今天日期");
 		titleList.add("单号");
@@ -285,7 +365,7 @@ public class RptRepairOrderController {
 		titleList.add("着陆页链接");
 		titleList.add("备注");
 		titleList.add("对比照片");
-		titleList.add("起初咨询时间");
+		titleList.add("起初咨询时间");*/
 		return titleList;
     }
 

@@ -286,58 +286,58 @@
 								<input type="submit" id="showcol" value="列段显示/隐藏">
 								<ul class="showul"
 									style="list-style: none; display: none; position: absolute; left: 80px; top: 10px; background: #FFFFFF; border: 1px solid #ccc; width: 500px; z-index: 9; text-align: left;float: left">
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="0" />门店</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="1" />接单日</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="2" />今天日期</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="3" />单号</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="4" />预计归还日</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="5" />到期提醒</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="6" />送回日</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="7" />取货日</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="8" />首接人</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="9" />接单人</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="10" />接单方式</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="11" />订单类型</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="12" />订单状态</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="13" />计算月份</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="14" />品牌</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="15" />货品类型</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="16" />货品名称</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="17" />维修内容</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="18" />维修工序</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="19" />是否返修</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="20" />小结</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="21" />料钱</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="22" />回收料</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="23" />优惠</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="24" />付款方式</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="25" />付款金额</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="26" />定金</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="27" />凭证号</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="28" />发票</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="29" />快递费</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="30" />快递公司</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="31" />快递单号</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="32" />保费</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="33" />保单号</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="34" />合计支出</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="35" />姓名</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="36" />性别</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="37" />电话</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="38" />省</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="39" />市</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="40" />快递地址</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="41" />微信名称</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="42" />微信号</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="43" />其他账号（QQ，淘宝，微博等）</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="44" />设备号</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="45" />客户类型</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="46" />来源</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="47" />搜索关键词</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="48" />着陆页链接</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="49" />备注</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="50" />对比照片</li>
-									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" data-column="51" />起初咨询时间</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="shopName" data-column="0" />门店</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="createAt" data-column="1" />接单日</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="today" data-column="2" />今天日期</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="orderNo" data-column="3" />单号</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="pickupAt" data-column="4" />预计归还日</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="daoQiTiXing" data-column="5" />到期提醒</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="songHuiDate" data-column="6" />送回日</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="quHuoDate" data-column="7" />取货日</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="consultCreateUserName" data-column="8" />首接人</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="createUserName" data-column="9" />接单人</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="deliverType" data-column="10" />接单方式</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="typeName" data-column="11" />订单类型</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="statusName" data-column="12" />订单状态</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="jiSuanYueFen" data-column="13" />计算月份</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="brandName" data-column="14" />品牌</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="firstCategoryName" data-column="15" />货品类型</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="secondCategoryName" data-column="16" />货品名称</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="repairDesc" data-column="17" />维修内容</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="serviceItemNames" data-column="18" />维修工序</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="isFanXiu" data-column="19" />是否返修</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="totalPayment" data-column="20" />小结</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="materialPayment" data-column="21" />料钱</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="huiShouLiao" data-column="22" />回收料</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="discountAmountPayment" data-column="23" />优惠</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="nonPaymentTypeName" data-column="24" />付款方式</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="fuKuanJine" data-column="25" />付款金额</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="advancePayment" data-column="26" />定金</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="pingZhengHao" data-column="27" />凭证号</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="faPiao" data-column="28" />发票</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="expressMoney" data-column="29" />快递费</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="expressName" data-column="30" />快递公司</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="expressNo" data-column="31" />快递单号</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="insuranceAmount" data-column="32" />保费</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="insuranceNo" data-column="33" />保单号</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="heJiZhiChu" data-column="34" />合计支出</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="customerName" data-column="35" />姓名</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="customerSex" data-column="36" />性别</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="customerPhone" data-column="37" />电话</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="province" data-column="38" />省</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="city" data-column="39" />市</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="customerAddress" data-column="40" />快递地址</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="wechatNickname" data-column="41" />微信名称</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="wechatId" data-column="42" />微信号</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="customerQQ" data-column="43" />其他账号（QQ，淘宝，微博等）</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="sheBeiHao" data-column="44" />设备号</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="customerType" data-column="45" />客户类型</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="channelSource" data-column="46" />来源</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="guanJianCi" data-column="47" />搜索关键词</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="zhuoLuYe" data-column="48" />着陆页链接</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="beiZhu" data-column="49" />备注</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="duiBiZhaoPian" data-column="50" />对比照片</li>
+									<li style="width: 100px; float: left;"><input type="checkbox" class="toggle-vis" checked="checked" id="consultCreateAt" ] data-column="51" />起初咨询时间</li>
 								</ul>
 							</div>
     						<div style="clear:both;"></div>
