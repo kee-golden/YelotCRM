@@ -30,7 +30,16 @@ public interface CategoryMapper {
      */
     List<Category> findChildren(Long parentId);
 
+    /**
+     * 获取二级分类
+     * @param parentName
+     * @return
+     */
+    List<Category> findChildrenByParentName(String parentName);
+
+    //获取二级分类对象
     Category findByName(@Param("firstCategory") String firstCategory, @Param("secondCategory") String secondCategory);
 
     Category find(Long id);
+    Category findFirstCategory(String name);
 }

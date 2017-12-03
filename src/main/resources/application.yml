@@ -39,8 +39,9 @@ server:
     timeout: 12000
   max-http-header-size: 51250
 logging:
-  file: /usr/apache-tomcat-8.5.15/logs/crm.log
-  level: info
+  #file: /usr/apache-tomcat-8.5.15/logs/crm.log
+  level: debug
+
 
 
 

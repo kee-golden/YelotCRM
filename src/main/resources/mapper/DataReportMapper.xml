@@ -7,6 +7,7 @@
         <result property="phone" column="phone"/>
         <result property="shopName" column="shopName"/>
         <result property="province" column="province"/>
+        <result property="brandName" column="brandName"/>
         <result property="city" column="city"/>
         <result property="time" column="time"/>
         <result property="totalPayment" column="totalPayment"/>
@@ -127,7 +128,7 @@
         <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(ro.create_at,'%Y-%m') date,</if>
         count(*) number from t_repair_order ro LEFT JOIN  t_consult_order co on ro.consult_order_id = co.id
         where 1 = 1
-        <if test="startDate != null and startDate != ''">and ro.create_at >= '2017-11-23 00:00:00'</if>
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
         <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
         <choose>
             <when test="sendType != null and sendType == '客户上门'">
@@ -148,5 +149,76 @@
         <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
         group by co.province
     </select>
+
+    <!-- 7, -->
+    <select id="findRepairByDateCategoryType" resultMap="dateNumber">
+        SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(ro.create_at,'%Y-%m-%d') date,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(ro.create_at,'%Y-%u') date,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(ro.create_at,'%Y-%m') date,</if>
+        <if test="categoryType != null and categoryType == 'TotalAmount'">
+            count(*) number
+        </if>
+        <if test="categoryType != null and categoryType == 'TotalPayment'">
+            sum(total_payment) number
+        </if>
+        from t_repair_order ro
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ro.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ro.create_at &lt;= #{endDate}</if>
+        <if test="firstCategoryId != null">and ro.first_category_id = #{firstCategoryId}</if>
+        <if test="firstCategoryId == null and secondCategoryId != null  ">and ro.second_category_id = #{secondCategoryId}</if>
+        <if test="firstCategoryId != null and secondCategoryId != null">and ro.first_category_id = #{firstCategoryId}
+            and ro.second_category_id = #{secondCategoryId}</if>
+
+        group by date
+
+    </select>
+
+    <!-- 8, -->
+    <select id="findConsultByDateCategoryType" resultMap="dateNumber">
+        SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(co.create_at,'%Y-%m-%d') date,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(co.create_at,'%Y-%u') date,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(co.create_at,'%Y-%m') date,</if>
+         count(*) number
+        from t_consult_order co
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        <if test="firstCategoryName != null">and co.first_category_name = #{firstCategoryName}</if>
+        <if test="firstCategoryName == null and secondCategoryName != null  ">and co.second_category_name = #{secondCategoryName}</if>
+        <if test="firstCategoryName != null and secondCategoryName != null">and co.first_category_name = #{firstCategoryName}
+            and co.second_category_name = #{secondCategoryName}</if>
+        group by date
+    </select>
+    <!-- 9, -->
+    <select id="orderByBrand" resultMap="orderResultMap">
+        select name brandName,totalCount from (select brand_id,count(*) totalCount
+        <if test="orderType != null and orderType == 'RepairOrderType'">
+            from t_repair_order ord
+        </if>
+        <if test="orderType != null and orderType == 'ConsultOrderType'">
+            from t_consult_order ord
+        </if>
+        where 1 = 1
+        <if test="startDate != null and startDate != ''">and ord.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and ord.create_at &lt;= #{endDate}</if>
+        group by ord.brand_id) temp LEFT JOIN t_brand br on brand_id = br.id
+    </select>
+    <!-- 10, -->
+    <select id="findConsultFinishedDays" resultMap="dateNumber">
+        SELECT
+        <if test="type != null and type != '' and type == 'Day'">DATE_FORMAT(co.create_at,'%Y-%m-%d') date,</if>
+        <if test="type != null and type != '' and type == 'Week'">DATE_FORMAT(co.create_at,'%Y-%u') date,</if>
+        <if test="type != null and type != '' and type == 'Month'">DATE_FORMAT(co.create_at,'%Y-%m') date,</if>
+        round(avg(DATEDIFF(ro.create_at,co.create_at))) number
+        from t_consult_order co,t_repair_order ro
+        where co.id = ro.consult_order_id
+        <if test="startDate != null and startDate != ''">and co.create_at >= #{startDate}</if>
+        <if test="endDate != null and endDate != ''">and co.create_at &lt;= #{endDate}</if>
+        group by date
+    </select>
+
 
 </mapper>

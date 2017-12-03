@@ -5,12 +5,14 @@ import com.yelot.crm.Util.DateUtil;
 import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.Util.UserUtil;
 import com.yelot.crm.entity.*;
+import com.yelot.crm.mapper.CategoryMapper;
 import com.yelot.crm.mapper.ChannelSourceMapper;
 import com.yelot.crm.mapper.DataReportMapper;
 import com.yelot.crm.mapper.ShopMapper;
 import com.yelot.crm.service.RptRepairOrderService;
 import com.yelot.crm.vo.ChartPieVo;
 import com.yelot.crm.vo.CityListVo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class DataReportController {
     private ShopMapper shopMapper;
     @Autowired
     private RptRepairOrderService rptRepairOrderService;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     private Logger log = LoggerFactory.getLogger(DataReportController.class);
 
@@ -274,12 +278,207 @@ public class DataReportController {
 
     }
 
+    //7,
+    @ResponseBody
+    @RequestMapping("repair-by-category-type")
+    public ResultData repairOrderByCategory(String dateArea,String firstCategory,String secondCategory,String categoryType,String categoryDateType){
+        List<String> xAxisList = getXAxis(dateArea,categoryDateType);
+        List<Long> categoryIdList = new ArrayList<>();
+        List<BarMonthData> barMonthDataList = new ArrayList<>();
+
+
+        if(firstCategory != null && firstCategory.equals("全部")){//查询一级分类汇总
+            List<Category> categoryList = categoryMapper.findAllFirstClass();
+            for (Category category: categoryList) {
+                categoryIdList.add(category.getId());
+
+                BarMonthData barMonthData = new BarMonthData();
+                barMonthData.setName(category.getName());
+                barMonthData.setBarWidth(5);
+                barMonthData.setStack("成交方式");
+                List<Integer> sumList = getAmountRepairOrderByCategoryType(xAxisList,dateArea,category.getId(),null,categoryType,categoryDateType);
+                barMonthData.setData(sumList);
+                barMonthDataList.add(barMonthData);
+
+            }
+        }else if(!firstCategory.equals("全部") && !StringUtils.isEmpty(secondCategory) && secondCategory.equals("全部")){//当有子分类，就以子分类为主
+            List<Category> categoryList = categoryMapper.findChildrenByParentName(firstCategory);
+            for (Category category: categoryList) {
+                categoryIdList.add(category.getId());
+
+                BarMonthData barMonthData = new BarMonthData();
+                barMonthData.setName(category.getName());
+                barMonthData.setBarWidth(5);
+                barMonthData.setStack("成交方式");
+                List<Integer> sumList = getAmountRepairOrderByCategoryType(xAxisList,dateArea,null,category.getId(),categoryType,categoryDateType);
+                barMonthData.setData(sumList);
+                barMonthDataList.add(barMonthData);
+            }
+        }else if(!firstCategory.equals("全部") && !StringUtils.isEmpty(secondCategory)){//查询某一个二级分类的统计值
+            Category second = categoryMapper.findByName(firstCategory,secondCategory);
+            Category first = categoryMapper.findFirstCategory(firstCategory);
+
+            BarMonthData barMonthData = new BarMonthData();
+            barMonthData.setName(first.getName()+"/"+second.getName());
+            barMonthData.setBarWidth(5);
+            barMonthData.setStack("成交方式");
+            List<Integer> sumList = getAmountRepairOrderByCategoryType(xAxisList,dateArea,first.getId(),second.getId(),categoryType,categoryDateType);
+            barMonthData.setData(sumList);
+            barMonthDataList.add(barMonthData);
+        }
+
+
+        return ResultData.ok().putDataValue("series",barMonthDataList).putDataValue("xAxis",xAxisList);
+    }
+
+    @RequestMapping("consult-by-category-type")
+    @ResponseBody
+    public ResultData consultOrderByCategory(String dateArea,String firstCategory,String secondCategory,String categoryDateType){
+        List<String> xAxisList = getXAxis(dateArea,categoryDateType);
+        List<BarMonthData> barMonthDataList = new ArrayList<>();
+
+        if(firstCategory != null && firstCategory.equals("全部")){//查询一级分类汇总
+            List<Category> categoryList = categoryMapper.findAllFirstClass();
+            for (Category category: categoryList) {
+
+                BarMonthData barMonthData = new BarMonthData();
+                barMonthData.setName(category.getName());
+                barMonthData.setBarWidth(5);
+                barMonthData.setStack("成交方式");
+                List<Integer> sumList = getAmountConsultOrderByCategoryType(xAxisList,dateArea,category.getName(),null,categoryDateType);
+                barMonthData.setData(sumList);
+                barMonthDataList.add(barMonthData);
+
+            }
+        }else if(!firstCategory.equals("全部") && !StringUtils.isEmpty(secondCategory) && secondCategory.equals("全部")){//当有子分类，就以子分类为主
+            List<Category> categoryList = categoryMapper.findChildrenByParentName(firstCategory);
+            for (Category category: categoryList) {
+
+                BarMonthData barMonthData = new BarMonthData();
+                barMonthData.setName(category.getName());
+                barMonthData.setBarWidth(5);
+                barMonthData.setStack("成交方式");
+                List<Integer> sumList = getAmountConsultOrderByCategoryType(xAxisList,dateArea,null,category.getName(),categoryDateType);
+                barMonthData.setData(sumList);
+                barMonthDataList.add(barMonthData);
+            }
+        }else if(!firstCategory.equals("全部") && !StringUtils.isEmpty(secondCategory)){//查询某一个二级分类的统计值
+            Category second = categoryMapper.findByName(firstCategory,secondCategory);
+            Category first = categoryMapper.findFirstCategory(firstCategory);
+
+            BarMonthData barMonthData = new BarMonthData();
+            barMonthData.setName(first.getName()+"/"+second.getName());
+            barMonthData.setBarWidth(5);
+            barMonthData.setStack("成交方式");
+            List<Integer> sumList = getAmountConsultOrderByCategoryType(xAxisList,dateArea,first.getName(),second.getName(),categoryDateType);
+            barMonthData.setData(sumList);
+            barMonthDataList.add(barMonthData);
+
+
+
+        }
+
+
+        return ResultData.ok().putDataValue("series",barMonthDataList).putDataValue("xAxis",xAxisList);
+
+    }
+
+    /**
+     * 9,  bug 咨询单是否存在无法查询到的品牌名
+     * @return
+     */
+    @RequestMapping("order-by-brand")
+    @ResponseBody
+    public ResultData orderByBrand(String dateArea,String orderType){
+        List<StatisticOrder> statisticOrderList = dataReportMapper.orderByBrand(dateArea.split("-")[0] + " 00:00:00",dateArea.split("-")[1] + " 23:59:59",orderType);
+        List<ChartPieVo> chartPieVoList = new ArrayList<>();
+        for (StatisticOrder statisticOrder: statisticOrderList) {
+            ChartPieVo chartPieVo = new ChartPieVo(statisticOrder.getBrandName(),statisticOrder.getTotalCount());
+            chartPieVoList.add(chartPieVo);
+        }
+
+        if(chartPieVoList.size() == 0){
+            ChartPieVo chartPieVo = new ChartPieVo("无数据",0);
+            chartPieVoList.add(chartPieVo);
+        }
+
+        return ResultData.ok().putDataValue("chartPieVoList",chartPieVoList);
+
+    }
+
+    /**
+     * 10,咨询单成交周期，平均天数
+     * @param dateArea
+     * @param dateType
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("consult-finished-days")
+    public ResultData consultFinishedDays(String dateArea,String dateType){
+        List<String> xAxisList = getXAxis(dateArea,dateType);
+        List<BarMonthData> barMonthDataList = new ArrayList<>();
+
+            BarMonthData barMonthData = new BarMonthData();
+            barMonthData.setBarWidth(5);
+        barMonthData.setName("平均天数");
+        List<Integer> sumList = getDaysByConsultOrderFinished(xAxisList,dateArea,dateType);
+            barMonthData.setData(sumList);
+            barMonthDataList.add(barMonthData);
+
+        return ResultData.ok().putDataValue("series",barMonthDataList).putDataValue("xAxis",xAxisList);
+
+    }
+
+    //10,计算公式
+    private List<Integer> getDaysByConsultOrderFinished(List<String> xAxisList, String dateArea, String dateType) {
+        List<DateNumber> dataList = dataReportMapper.findConsultFinishedDays(dateArea.split("-")[0] + " 00:00:00",dateArea.split("-")[1] + " 23:59:59",dateType);
+
+        return setAllDateNumberList(xAxisList,dataList);
+
+    }
+
+    private List<Long> getCategoryIds(String firstCategory,String seconcdCategory){
+        List<Long> categoryIds = new ArrayList<>();
+        if(StringUtils.isEmpty(firstCategory)){
+            List<Category> categoryList = categoryMapper.findAllFirstClass();
+            for (int i = 0; categoryList != null && i < categoryList.size(); i++) {
+                categoryIds.add(categoryList.get(i).getId());
+            }
+            return categoryIds;
+        }else if(StringUtils.isEmpty(seconcdCategory)){//查询一级分类下面的二级分类
+            List<Category> secondCategoryList = categoryMapper.findChildrenByParentName(firstCategory);
+            for (int i = 0; secondCategoryList != null &&  i < secondCategoryList.size(); i++) {
+                categoryIds.add(secondCategoryList.get(i).getId());
+            }
+        }
+
+        return null;
+    }
+
     //5,
     private List<Integer> getAmountRepairOrderBySendType(List<String> xAxisList, String dateArea, String sendType, String type) {
         List<DateNumber> dataList = dataReportMapper.findRepairByDateSendType(dateArea.split("-")[0] + " 00:00:00",dateArea.split("-")[1] + " 23:59:59",sendType,type);
 
         return setAllDateNumberList(xAxisList,dataList);
     }
+
+    //7,
+    private List<Integer> getAmountRepairOrderByCategoryType(List<String> xAxisList, String dateArea, Long firstCategoryId,Long secondCategoryId,String categoryType, String categoryDateType) {
+        List<DateNumber> dataList = dataReportMapper.findRepairByDateCategoryType(dateArea.split("-")[0] + " 00:00:00",dateArea.split("-")[1] + " 23:59:59",
+                firstCategoryId,secondCategoryId,categoryType,categoryDateType);
+
+        return setAllDateNumberList(xAxisList,dataList);
+    }
+
+    //8,
+    private List<Integer> getAmountConsultOrderByCategoryType(List<String> xAxisList, String dateArea, String firstCategoryName,String secondCategoryName, String categoryDateType) {
+        List<DateNumber> dataList = dataReportMapper.findConsultByDateCategoryType(dateArea.split("-")[0] + " 00:00:00",dateArea.split("-")[1] + " 23:59:59",
+                firstCategoryName,secondCategoryName,categoryDateType);
+
+        return setAllDateNumberList(xAxisList,dataList);
+    }
+
+
 
     /**
      * 根据来源条件过滤，根据时间进行分类汇总，如：udesk下，时间从11-1到11-7 者7天每天的来源总量

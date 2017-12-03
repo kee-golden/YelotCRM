@@ -168,16 +168,20 @@
             <div class="row chart-div">
                 <div class="col-md-6">
                     <div class="header">
-                        <div class="title">成交方式占比(件数)</div>
+                        <div class="title">成交品类占比</div>
                         <div class="condition">
                             <input type="text" style="float: left; width: 150px;" id="repairOrderByCategoryTypeRatioDate" class="dateRange"/>
                             <span style="float:right;">
-                                <div id="repairCategory">
-                                <select class="prov col-xs-1" name="firstCategory" id="firstCategory"></select>
-                                <select class="city col-xs-1" disabled="disabled"
+                                <span id="repairCategory">
+                                <select class="prov" name="firstCategory" id="firstCategory"></select>
+                                <select class="city" disabled="disabled"
                                         name="secondCategory" id="secondCategory"></select>
-                                    </div>
-                                <select name="type" id="repairOrderCategoryType" class="">
+                                    </span>
+                                <select name="type" id="repairOrderCategoryType"  style="margin-left: 5px;">
+                                <option value="TotalAmount">总件数</option>
+                                <option value="TotalPayment">总金额</option>
+                                 </select>
+                                <select name="type" id="repairOrderCategoryDateType" class="">
                                     <option value="Day">按天</option>
                                     <option value="Week">按周</option>
                                     <option value="Month">按月</option>
@@ -190,16 +194,20 @@
                 </div>
                 <div class="col-md-6">
                     <div class="header">
-                        <div class="title">成交方式占比(件数)</div>
+                        <div class="title">咨询品类占比(件数)</div>
                         <div class="condition">
                             <input type="text" style="float: left; width: 150px;" id="consultOrderByCategoryTypeRatioDate" class="dateRange"/>
                             <span style="float:right;">
-                                <div id="consultCategory">
-                                    <select class="prov col-xs-1" name="firstCategory" id="firstCategory2"></select>
-                                    <select class="city col-xs-1" disabled="disabled"
+                                <span id="consultCategory">
+                                    <select class="prov" name="firstCategory" id="firstCategory2"></select>
+                                    <select class="city" disabled="disabled"
                                             name="secondCategory" id="secondCategory2"></select>
-                                    </div>
-                                <select name="type" id="consultOrderCategoryType" class="">
+                                    </span>
+                                <%--<select name="type" id="consultOrderCategoryType"  style="margin-left: 5px;">--%>
+                                <%--<option value="TotalAmount">总件数</option>--%>
+                                <%--<option value="TotalPayment">总金额</option>--%>
+                                 <%--</select>--%>
+                                <select name="type" id="consultOrderCategoryDateType" class="">
                                     <option value="Day">按天</option>
                                     <option value="Week">按周</option>
                                     <option value="Month">按月</option>
@@ -208,6 +216,51 @@
                         </div>
                     </div>
                     <div class="chartContainer" id="consultOrderCategoryTypeRatioChart"></div>
+
+                </div>
+            </div>
+
+            <!-- 9,10 -->
+            <div class="line"></div>
+            <div class="row chart-div">
+                <div class="col-md-6">
+                    <div class="header">
+                        <div class="title">品牌占比</div>
+                        <div class="condition">
+                            <input type="text" style="float: left; width: 150px;" id="orderBrandRatioDate" class="dateRange"/>
+                            <span style="float:right;">
+
+                                <select name="type" id="orderType"  style="margin-left: 5px;">
+                                <option value="RepairOrderType">维修单</option>
+                                <option value="ConsultOrderType">咨询单</option>
+                                 </select>
+                                <%--<select name="type" id="orderBrandDateType" class="">--%>
+                                    <%--<option value="Day">按天</option>--%>
+                                    <%--<option value="Week">按周</option>--%>
+                                    <%--<option value="Month">按月</option>--%>
+                                <%--</select>--%>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chartContainer" id="orderBrandRatioChart"></div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="header">
+                        <div class="title">咨询-成交周期（天数）</div>
+                        <div class="condition">
+                            <input type="text" style="float: left; width: 150px;" id="consultOrderFinishedRatioDate" class="dateRange"/>
+                            <span style="float:right;">
+
+                                <select name="type" id="consultOrderFinishedDateType" class="">
+                                    <option value="Day">按天</option>
+                                    <option value="Week">按周</option>
+                                    <option value="Month">按月</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chartContainer" id="consultOrderFinishedRatioChart"></div>
 
                 </div>
             </div>
@@ -235,8 +288,6 @@
             city:'${secondCategory}',
             nodata:"none"
         });
-
-
     });
 </script>
 <script src="${ctx}/module-js/report/data_report.js"></script>

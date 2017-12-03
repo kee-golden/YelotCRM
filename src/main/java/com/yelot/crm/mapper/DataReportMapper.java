@@ -55,4 +55,18 @@ public interface DataReportMapper {
     List<DateNumber> findRepairByDateSendType(@Param("startDate") String startDate, @Param("endDate") String endDate,@Param("sendType") String sendType, @Param("type") String type);
 //6,
     List<StatisticOrder> consultOrderByProvince(@Param("startDate") String startDate, @Param("endDate") String endDate);
+
+    //7,
+    List<DateNumber> findRepairByDateCategoryType(@Param("startDate") String startDate, @Param("endDate") String endDate,@Param("firstCategoryId") Long firstCategoryId,
+                                                  @Param("secondCategoryId") Long secondCategoryId,@Param("categoryType")String categoryType,@Param("type")String type);
+
+    //8,
+    List<DateNumber> findConsultByDateCategoryType(@Param("startDate") String startDate, @Param("endDate") String endDate,@Param("firstCategoryName") String firstCategoryName,
+                                                   @Param("secondCategoryName") String secondCategoryName,@Param("type")String type);
+
+    //9,品牌占比
+    List<StatisticOrder> orderByBrand(@Param("startDate") String startDate, @Param("endDate") String endDate,@Param("orderType")String orderType);
+    //10,
+    List<DateNumber> findConsultFinishedDays(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("type") String dateType);
+    //11,
 }

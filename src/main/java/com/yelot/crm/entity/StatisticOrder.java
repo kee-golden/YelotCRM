@@ -16,6 +16,7 @@ public class StatisticOrder {
     private String shopName;
     private String province;
     private String city;
+    private String brandName;
     /**
      * 总金额
      */
@@ -107,5 +108,13 @@ public class StatisticOrder {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 }
